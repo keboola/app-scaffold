@@ -1,0 +1,1514 @@
+{
+    "components": [
+        {
+            "type": "extractor",
+            "id": "htns.ex-salesforce",
+            "name": "KBC Scaffold SF",
+            "rows": [
+                {
+                    "name": "Account",
+                    "description": "",
+                    "configuration": {
+                        "parameters": {
+                            "sinceLast": false,
+                            "objects": [
+                                {
+                                    "name": "account",
+                                    "soql": ""
+                                }
+                            ]
+                        }
+                    }
+                },
+                {
+                    "name": "Order",
+                    "description": "",
+                    "configuration": {
+                        "parameters": {
+                            "sinceLast": false,
+                            "objects": [
+                                {
+                                    "name": "order",
+                                    "soql": ""
+                                }
+                            ]
+                        }
+                    }
+                },
+                {
+                    "name": "Order Item",
+                    "description": "",
+                    "configuration": {
+                        "parameters": {
+                            "sinceLast": false,
+                            "objects": [
+                                {
+                                    "name": "orderitem",
+                                    "soql": ""
+                                }
+                            ]
+                        }
+                    }
+                },
+                {
+                    "name": "Product",
+                    "description": "",
+                    "configuration": {
+                        "parameters": {
+                            "sinceLast": false,
+                            "objects": [
+                                {
+                                    "name": "product2",
+                                    "soql": ""
+                                }
+                            ]
+                        }
+                    }
+                },
+                {
+                    "name": "User",
+                    "description": "",
+                    "configuration": {
+                        "parameters": {
+                            "sinceLast": false,
+                            "objects": [
+                                {
+                                    "name": "user",
+                                    "soql": ""
+                                }
+                            ]
+                        }
+                    }
+                },
+                {
+                    "name": "Lead",
+                    "description": "",
+                    "configuration": {
+                        "parameters": {
+                            "sinceLast": false,
+                            "objects": [
+                                {
+                                    "name": "lead",
+                                    "soql": ""
+                                }
+                            ]
+                        }
+                    }
+                },
+                {
+                    "name": "Contact",
+                    "description": "",
+                    "configuration": {
+                        "parameters": {
+                            "sinceLast": false,
+                            "objects": [
+                                {
+                                    "name": "contact",
+                                    "soql": ""
+                                }
+                            ]
+                        }
+                    }
+                },
+                {
+                    "name": "Opportunity Contact Role",
+                    "description": "",
+                    "configuration": {
+                        "parameters": {
+                            "sinceLast": false,
+                            "objects": [
+                                {
+                                    "name": "opportunitycontactrole",
+                                    "soql": ""
+                                }
+                            ]
+                        }
+                    }
+                }
+            ]
+        },
+        {
+            "type": "transformation",
+            "id": "transformation",
+            "name": "KBC Scaffold Salesforce CRM & MRR",
+            "changeDescription": "Change Queries in Contracts, Opportunities & Auxiliary Snapshot",
+            "rows": [
+                {
+                    "name": "Company",
+                    "description": "",
+                    "configuration": {
+                        "output": [
+                            {
+                                "destination": "out.c-crm.company",
+                                "primaryKey": [
+                                    "company_id"
+                                ],
+                                "incremental": true,
+                                "deleteWhereColumn": "",
+                                "deleteWhereOperator": "eq",
+                                "deleteWhereValues": [],
+                                "source": "out_company"
+                            }
+                        ],
+                        "queries": [
+                            "--create output table with companies\n--cast timestamp to date\nCREATE TABLE \"out_company\"\nAS\n  SELECT DISTINCT\n    \"Id\"                                  AS \"company_id\",\n    \"Name\"                                AS \"company\",\n    \"Website\"                             AS \"website\",\n    to_date(\"CreatedDate\") :: VARCHAR(10) AS \"date_created\"\n  FROM \"account\"\n  WHERE \"IsDeleted\" = 'false';",
+                            "--fake row to keep referential integrity if child tables are missing existing company ids\nINSERT INTO \"out_company\"\n  (\"company_id\", \"company\", \"website\", \"date_created\")\nVALUES\n  ('0', 'Unknown', '', '');"
+                        ],
+                        "input": [
+                            {
+                                "source": "in.c-salesforce.account",
+                                "destination": "account",
+                                "datatypes": {},
+                                "whereColumn": "",
+                                "whereValues": [],
+                                "whereOperator": "eq",
+                                "columns": [],
+                                "loadType": "clone"
+                            }
+                        ],
+                        "name": "Company",
+                        "backend": "snowflake",
+                        "type": "simple",
+                        "phase": 1,
+                        "description": ""
+                    }
+                },
+                {
+                    "name": "Product",
+                    "description": "",
+                    "configuration": {
+                        "output": [
+                            {
+                                "destination": "out.c-crm.product",
+                                "source": "out_product",
+                                "primaryKey": [
+                                    "product_id"
+                                ]
+                            }
+                        ],
+                        "queries": [
+                            "--create output table with products\nCREATE TABLE \"out_product\"\nAS\n  SELECT\n    \"Id\"     AS \"product_id\",\n    \"Name\"   AS \"product\",\n    \"Family\" AS \"product_family\"\n  FROM \"product\";"
+                        ],
+                        "input": [
+                            {
+                                "source": "in.c-salesforce.product2",
+                                "destination": "product",
+                                "datatypes": {},
+                                "whereColumn": "",
+                                "whereValues": [],
+                                "whereOperator": "eq",
+                                "columns": [],
+                                "loadType": "clone"
+                            }
+                        ],
+                        "name": "Product",
+                        "backend": "snowflake",
+                        "type": "simple",
+                        "phase": 1,
+                        "description": ""
+                    }
+                },
+                {
+                    "name": "Contracts, Opportunities & Auxiliary Snapshot",
+                    "description": "",
+                    "configuration": {
+                        "output": [
+                            {
+                                "destination": "out.c-crm.opportunity",
+                                "source": "out_opportunity",
+                                "primaryKey": [
+                                    "opportunity_id"
+                                ]
+                            },
+                            {
+                                "destination": "out.c-crm.contract",
+                                "source": "out_contract",
+                                "primaryKey": [
+                                    "contract_id"
+                                ]
+                            },
+                            {
+                                "destination": "out.c-crm.contract_line",
+                                "source": "out_contract_line",
+                                "primaryKey": [
+                                    "contract_line_id"
+                                ]
+                            },
+                            {
+                                "destination": "out.c-crm-auxiliary-tables.opportunity_snapshot",
+                                "source": "out_opportunity_snapshot",
+                                "primaryKey": [
+                                    "opportunity_id",
+                                    "snapshot_date"
+                                ],
+                                "incremental": true,
+                                "deleteWhereColumn": "",
+                                "deleteWhereOperator": "eq",
+                                "deleteWhereValues": []
+                            }
+                        ],
+                        "queries": [
+                            "--output opportunity table\n--change false\/true to No\/Yes as boolean value\nCREATE TABLE \"out_opportunity\"\nAS\n    SELECT\n        \"o\".\"Id\"                                    AS \"opportunity_id\",\n        \"c\".\"company_id\",\n        ifnull(\"e\".\"employee_id\", '0')\t\t  \t  \tAS \"employee_id\",\n        \"o\".\"Name\"                                  AS \"opportunity\",\n        left(\"o\".\"CreatedDate\", 10)                 AS \"created_date\",\n        \"o\".\"CloseDate\"                             AS \"close_date\",\n        \"o\".\"StageName\"                             AS \"stage\",\n        iff(\"o\".\"IsClosed\" = 'false', 'No', 'Yes')  AS \"is_closed\",\n        iff(\"o\".\"IsWon\" = 'false', 'No', 'Yes')     AS \"is_won\",\n        \"LeadSource\"\t\t\t\t\t\t\t\tAS \"lead_source\",\n        iff(\"o\".\"Amount\" = '', '0.0', \"o\".\"Amount\") AS \"opportunity_value\"\n    FROM \"opportunity\" \"o\"\n             LEFT JOIN \"company\" \"c\"\n                       ON \"o\".\"AccountId\" = \"c\".\"company_id\"\n             LEFT JOIN \"employee\" \"e\"\n                       ON \"o\".\"OwnerId\" = \"e\".\"employee_id\"\n    WHERE \"o\".\"IsDeleted\" = 'false';",
+                            "--create opportunity for contracts without opportunity\nINSERT INTO \"out_opportunity\"\n    (\"opportunity_id\", \"company_id\", \"employee_id\", \"opportunity\", \"created_date\", \"close_date\", \"stage\", \"is_closed\",\n     \"is_won\", \"lead_source\", \"opportunity_value\")\nSELECT\n    \"o\".\"AccountId\" || '-' || \"o\".\"Id\" || '_opp' AS \"opportunity_id\",\n    \"o\".\"AccountId\"                              AS \"company_id\",\n    ifnull(\"e\".\"employee_id\", '0')\t\t  \t  \t AS \"employee_id\",\n    \"o\".\"Name\"                                   AS \"opportunity\",\n    \"o\".\"EffectiveDate\"                          AS \"created_date\",\n    \"o\".\"EffectiveDate\"                          AS \"close_date\",\n    'Closed Won'                                 AS \"stage\",\n    'Yes'                                        AS \"is_closed\",\n    'Yes'                                        AS \"is_won\",\n    ''                                        \t AS \"lead_source\",\n    '0.0'                                        AS \"opportunity_value\"\nFROM \"order\" \"o\"\n         LEFT JOIN \"out_opportunity\" \"p\"\n                   ON \"o\".\"OpportunityId\" = \"p\".\"opportunity_id\"\n             LEFT JOIN \"employee\" \"e\"\n                       ON \"o\".\"OwnerId\" = \"e\".\"employee_id\"\nWHERE \"p\".\"opportunity_id\" IS NULL\n  AND \"o\".\"IsDeleted\" = 'false';",
+                            "--contract table\nCREATE TABLE \"out_contract\"\nAS\n    SELECT\n        \"o\".\"Id\"            \t\t\tAS \"contract_id\",\n        \"o\".\"AccountId\"     \t\t\tAS \"company_id\",\n        ifnull(\"e\".\"employee_id\", '0')\tAS \"employee_id\",\n        \"o\".\"Name\"          \t\t\tAS \"contract\",\n        \"o\".\"OrderNumber\"   \t\t\tAS \"contract_number\",\n        \"o\".\"EffectiveDate\" \t\t\tAS \"contract_start_date\",\n        \"o\".\"EndDate\"       \t\t\tAS \"contract_end_date\",\n        \"p\".\"lead_source\"\t\t\t\tAS \"lead_source\"\n    FROM \"order\" \"o\"\n             LEFT JOIN \"out_opportunity\" \"p\"\n                       ON iff(\"o\".\"OpportunityId\" = '', \"o\".\"AccountId\" || '-' || \"o\".\"Id\" || '_opp',\n                              \"o\".\"OpportunityId\") = \"p\".\"opportunity_id\"\n             LEFT JOIN \"employee\" \"e\"\n                       ON \"o\".\"OwnerId\" = \"e\".\"employee_id\"\n    WHERE \"o\".\"IsDeleted\" = 'false';",
+                            "--contract lines table\nCREATE TABLE \"out_contract_line\"\nAS\n    SELECT\n        \"i\".\"Id\"                                                             AS \"contract_line_id\",\n        \"p\".\"opportunity_id\",\n        \"o\".\"Id\"                                                             AS \"contract_id\",\n        \"i\".\"Product2Id\"                                                     AS \"product_id\",\n        IFF(\"i\".\"ServiceDate\" <> '', \"i\".\"ServiceDate\", \"o\".\"EffectiveDate\") AS \"contract_line_start_date\",\n        IFF(\"i\".\"EndDate\" <> '', \"i\".\"EndDate\", \"o\".\"EndDate\")               AS \"contract_line_end_date\",\n        \"i\".\"Quantity\"                                                       AS \"contract_line_quantity\",\n        \"i\".\"UnitPrice\"                                                 \t AS \"contract_line_unit_price\",\n        \"i\".\"CurrencyIsoCode\"                                                AS \"contract_line_currency\"\n    FROM \"order\" \"o\"\n             LEFT JOIN \"out_opportunity\" \"p\"\n                       ON iff(\"o\".\"OpportunityId\" = '', \"o\".\"AccountId\" || '-' || \"o\".\"Id\" || '_opp',\n                              \"o\".\"OpportunityId\") = \"p\".\"opportunity_id\"\n             JOIN \"order_item\" \"i\"\n                  ON \"o\".\"Id\" = \"i\".\"OrderId\"\n    WHERE \"o\".\"IsDeleted\" = 'false';",
+                            "--snapshots\n--set timezone to UTC (ALTER according to your TIMEZONE)\nALTER SESSION\n    SET TIMEZONE = 'UTC';",
+                            "--create snapshot of the output table to track chanes throughout time\n--snapshot will be used in another transformation where it will be adjusted for a better final analysis\nCREATE TABLE \"out_opportunity_snapshot\"\nAS\n    SELECT\n        current_date AS \"snapshot_date\",\n        \"o\".*\n    FROM \"out_opportunity\" \"o\";"
+                        ],
+                        "input": [
+                            {
+                                "source": "in.c-salesforce.order",
+                                "destination": "order",
+                                "datatypes": {},
+                                "whereColumn": "",
+                                "whereValues": [],
+                                "whereOperator": "eq",
+                                "columns": [],
+                                "loadType": "clone"
+                            },
+                            {
+                                "source": "in.c-salesforce.orderitem",
+                                "destination": "order_item",
+                                "datatypes": {},
+                                "whereColumn": "",
+                                "whereValues": [],
+                                "whereOperator": "eq",
+                                "columns": [],
+                                "loadType": "clone"
+                            },
+                            {
+                                "source": "out.c-crm.product",
+                                "destination": "product",
+                                "datatypes": {},
+                                "whereColumn": "",
+                                "whereValues": [],
+                                "whereOperator": "eq",
+                                "columns": [],
+                                "loadType": "clone"
+                            },
+                            {
+                                "source": "in.c-salesforce.opportunity",
+                                "destination": "opportunity",
+                                "datatypes": {},
+                                "whereColumn": "",
+                                "whereValues": [],
+                                "whereOperator": "eq",
+                                "columns": [],
+                                "loadType": "clone"
+                            },
+                            {
+                                "source": "out.c-crm.company",
+                                "destination": "company",
+                                "datatypes": {},
+                                "whereColumn": "",
+                                "whereValues": [],
+                                "whereOperator": "eq",
+                                "columns": [],
+                                "loadType": "clone"
+                            },
+                            {
+                                "source": "out.c-crm.employee",
+                                "destination": "employee",
+                                "datatypes": {},
+                                "whereColumn": "",
+                                "whereValues": [],
+                                "whereOperator": "eq",
+                                "columns": [],
+                                "loadType": "clone"
+                            }
+                        ],
+                        "name": "Contracts, Opportunities & Auxiliary Snapshot",
+                        "backend": "snowflake",
+                        "type": "simple",
+                        "phase": "2",
+                        "description": ""
+                    }
+                },
+                {
+                    "name": "MRR - Contract Line",
+                    "description": "",
+                    "configuration": {
+                        "output": [
+                            {
+                                "destination": "out.c-mrr.mrr",
+                                "source": "mrr_contract_line.csv",
+                                "primaryKey": [
+                                    "mrr_id"
+                                ]
+                            }
+                        ],
+                        "queries": [
+                            "import calendar\nimport csv\nimport datetime as dt\nimport pandas as pd\n\n\ndef str_to_dt(str, format='%Y-%m-%d'):\n    \"\"\"\n    Dummy function, that converts string to datetime\n    in a given format\n    \"\"\"\n    \n    return dt.datetime.strptime(str, format)\n\n\ndef dt_to_str(dt, format='%Y-%m-%d'):\n    \"\"\"\n    Dummy function, that convert datetime.datetime to string\n    in a given format\n    \"\"\"\n    \n    return dt.strftime(format)\n\n\ndef add_months(sourcedate, months):\n    \"\"\"\n    Adds desired number of months to a date\n    \"\"\"\n    \n    month = sourcedate.month - 1 + months\n    year = sourcedate.year + month \/\/ 12\n    month = month % 12 + 1\n    day = min(sourcedate.day, calendar.monthrange(year, month)[1])\n    return dt.date(year, month, day)\n\n\ndef generate_date_range(start_date\n                        ,end_date\n                        ,dt_freq='MS'\n                        ,dt_format='%Y-%m-%d'):\n    \"\"\"\n    Generates a date range between desired dates.\n    Returns a list of dates in specified format.\n    \"\"\"\n    \n    return [d.strftime(dt_format) for d in pd.date_range(start_date\n                                                        ,end_date\n                                                        ,freq=dt_freq)]\n\n\ndef main():\n    today = dt.datetime.now()\n    \n    with open('\/data\/in\/tables\/contract_line.csv') as _f_line, \\\n         open('\/data\/out\/tables\/mrr_contract_line.csv', 'w') as _out_line:\n        \n        _writer_fields = ['mrr_id'\n                         ,'contract_line_id'\n                         ,'contract_line_currency'\n                         ,'date'\n                         ,'contract_line_quantity'\n                         ,'contract_line_unit_price'\n                         ,'previous_contract_line_quantity'\n                         ,'previous_contract_line_unit_price']\n        \n        _reader_line = csv.DictReader(_f_line)\n        _writer_line = csv.DictWriter(_out_line,\n                                      fieldnames=_writer_fields,\n                                      extrasaction='ignore')\n        _writer_line.writeheader()\n        \n        for row in _reader_line:\n            start_D_str = row['contract_line_start_date']\n            end_D_str = row['contract_line_end_date']\n            contract_line_id = row['contract_line_id']\n            \n            if end_D_str == '':\n                end_D_str = dt.date(today.year, 12, 31).strftime('%Y-%m-%d')\n            \n            start_D_dt = str_to_dt(start_D_str)\n            end_D_dt = str_to_dt(end_D_str)\n                \n            end_D_dt_ext = add_months(end_D_dt, 1)\n            \n            dt_gen = generate_date_range(start_D_dt, end_D_dt_ext)\n            max_dt_gen = max(dt_gen)\n            \n            previous_quantity = '0.0'\n            previous_price = '0.0'\n            \n            for d in dt_gen:\n                if d != max_dt_gen:\n                    _out_row = {**row,\n                                 **{'date': d\n                                   ,'previous_contract_line_quantity': previous_quantity\n                                   ,'previous_contract_line_unit_price': previous_price\n                                   ,'mrr_id':'|'.join([contract_line_id, d])}}\n                    _writer_line.writerow(_out_row)\n                    \n                    previous_quantity = row['contract_line_quantity']\n                    previous_price = row['contract_line_unit_price']\n                else:\n                    row['contract_line_quantity'] = '0.0'\n                    row['contract_line_unit_price'] = '0.0'\n                    \n                    _out_row = {**row,\n                                 **{'date': d\n                                   ,'previous_contract_line_quantity': previous_quantity\n                                   ,'previous_contract_line_unit_price': previous_price\n                                   ,'mrr_id':'|'.join([contract_line_id, d])}}\n                    _writer_line.writerow(_out_row)\n\n\nmain()\n"
+                        ],
+                        "input": [
+                            {
+                                "source": "out.c-crm.contract_line",
+                                "destination": "contract_line.csv",
+                                "whereColumn": "",
+                                "whereValues": [],
+                                "whereOperator": "eq",
+                                "columns": []
+                            }
+                        ],
+                        "name": "MRR - Contract Line",
+                        "backend": "docker",
+                        "type": "python",
+                        "phase": "3",
+                        "description": ""
+                    }
+                },
+                {
+                    "name": "Opportunity Snapshot",
+                    "description": "",
+                    "configuration": {
+                        "output": [
+                            {
+                                "destination": "out.c-crm.opportunity_snapshot",
+                                "primaryKey": [
+                                    "opportunity_id",
+                                    "snapshot_date"
+                                ],
+                                "incremental": true,
+                                "deleteWhereColumn": "",
+                                "deleteWhereOperator": "eq",
+                                "deleteWhereValues": [],
+                                "source": "out_opportunity_snapshot"
+                            }
+                        ],
+                        "queries": [
+                            "--create temporary table for additional calculations\n--add previous values of pipeline, stage and value, so we can define if there has been any change\nCREATE TABLE \"opportunity_snapshot_tmp\"\nAS\n  SELECT\n    \"opportunity_id\",\n    \"snapshot_date\",\n    \"employee_id\",\n    \"company_id\",\n    \"stage\",\n    ifnull(lag(\"stage\") OVER (PARTITION BY \"opportunity_id\" ORDER BY \"snapshot_date\"),\n           \"stage\")                            AS \"previous_stage\",\n    \"opportunity_value\",\n    ifnull(lag(\"opportunity_value\") OVER (PARTITION BY \"opportunity_id\" ORDER BY \"snapshot_date\"),\n           \"opportunity_value\")                AS \"previous_opportunity_value\"\n  FROM\n    \"opportunity_snapshot\";",
+                            "--create opportunity snapshot table\n--define if there has been change of pipeline, stage or value\nCREATE TABLE \"out_opportunity_snapshot\"\nAS\n  SELECT\n    \"opportunity_id\",\n    \"snapshot_date\",\n    \"employee_id\",\n    \"stage\",\n    iff(\"stage\" <> \"previous_stage\", 'Yes', 'No')                         AS \"stage_change\",\n    \"opportunity_value\",\n    \"previous_opportunity_value\",\n    iff(\"opportunity_value\" <> \"previous_opportunity_value\", 'Yes', 'No') AS \"opportunity_value_change\"\n  FROM\n    \"opportunity_snapshot_tmp\";"
+                        ],
+                        "input": [
+                            {
+                                "source": "out.c-crm-auxiliary-tables.opportunity_snapshot",
+                                "destination": "opportunity_snapshot",
+                                "datatypes": {},
+                                "whereColumn": "",
+                                "whereValues": [],
+                                "whereOperator": "eq",
+                                "columns": [],
+                                "loadType": "clone"
+                            }
+                        ],
+                        "name": "Opportunity Snapshot",
+                        "backend": "snowflake",
+                        "type": "simple",
+                        "phase": "3",
+                        "description": ""
+                    }
+                },
+                {
+                    "name": "Employee",
+                    "description": "",
+                    "configuration": {
+                        "output": [
+                            {
+                                "destination": "out.c-crm.employee",
+                                "source": "out_employee",
+                                "primaryKey": [
+                                    "employee_id"
+                                ]
+                            }
+                        ],
+                        "queries": [
+                            "--create output table with employees\nCREATE TABLE \"out_employee\"\nAS\n  SELECT\n    \"Id\"    AS \"employee_id\",\n    \"Name\"  AS \"employee\",\n    \"Email\" AS \"email\",\n    \"Title\" AS \"position\"\n  FROM \"user\";",
+                            "--fake row to keep referential integrity if child tables are missing existing employee ids\nINSERT INTO \"out_employee\"\n  (\"employee_id\", \"employee\", \"email\", \"position\")\nVALUES\n  ('0', 'Unknown', '', '');"
+                        ],
+                        "input": [
+                            {
+                                "source": "in.c-salesforce.user",
+                                "destination": "user",
+                                "datatypes": {},
+                                "whereColumn": "",
+                                "whereValues": [],
+                                "whereOperator": "eq",
+                                "columns": [],
+                                "loadType": "clone"
+                            }
+                        ],
+                        "name": "Employee",
+                        "backend": "snowflake",
+                        "type": "simple",
+                        "phase": 1,
+                        "description": ""
+                    }
+                },
+                {
+                    "name": "MRR - Aggregation",
+                    "description": "",
+                    "configuration": {
+                        "output": [
+                            {
+                                "destination": "out.c-mrr.mrr_aggregated",
+                                "source": "out_mrr_aggregated",
+                                "primaryKey": [
+                                    "mrr_aggregated_id"
+                                ]
+                            }
+                        ],
+                        "queries": [
+                            "-- Aggregation\nCREATE TABLE \"tmp_mrr_aggregated\"\nAS\n    SELECT\n        \"c\".\"company_id\",\n        \"m\".\"date\",\n        \"m\".\"contract_line_currency\",\n        SUM(\"m\".\"contract_line_quantity\" * \"m\".\"contract_line_unit_price\")                   AS \"gross_mrr\",\n        SUM(\"m\".\"previous_contract_line_quantity\" * \"m\".\"previous_contract_line_unit_price\") AS \"previous_gross_mrr\"\n    FROM \"mrr\" \"m\"\n             LEFT JOIN \"contract_line\" \"l\"\n                       ON \"m\".\"contract_line_id\" = \"l\".\"contract_line_id\"\n             LEFT JOIN \"contract\" \"c\"\n                       ON \"l\".\"contract_id\" = \"c\".\"contract_id\"\n    GROUP BY 1, 2, 3;",
+                            "-- Add changes and flags\nCREATE TABLE \"out_mrr_aggregated\"\nAS\n    SELECT\n        \"company_id\" || '_' || \"date\"      AS \"mrr_aggregated_id\",\n        *,\n        \"gross_mrr\" - \"previous_gross_mrr\" AS \"gross_mrr_change\",\n        (CASE\n             WHEN \"gross_mrr\" = 0 AND \"previous_gross_mrr\" > 0\n                 THEN 'Churn'\n             WHEN \"gross_mrr\" > 0 AND \"previous_gross_mrr\" = 0\n                 THEN 'Net New'\n             WHEN \"gross_mrr\" > \"previous_gross_mrr\"\n                 THEN 'Upgrade'\n             WHEN \"gross_mrr\" < \"previous_gross_mrr\"\n                 THEN 'Downgrade'\n             ELSE 'No Change'\n         END)                              AS \"gross_action\",\n        (CASE\n             WHEN \"gross_mrr\" = 0 AND \"previous_gross_mrr\" > 0\n                 THEN -1\n             WHEN \"gross_mrr\" > 0 AND \"previous_gross_mrr\" = 0\n                 THEN 1\n             ELSE 0\n         END)                              AS \"count_change\"\n    FROM \"tmp_mrr_aggregated\";"
+                        ],
+                        "input": [
+                            {
+                                "source": "out.c-mrr.mrr",
+                                "destination": "mrr",
+                                "datatypes": {},
+                                "whereColumn": "",
+                                "whereValues": [],
+                                "whereOperator": "eq",
+                                "columns": [],
+                                "loadType": "clone"
+                            },
+                            {
+                                "source": "out.c-crm.contract_line",
+                                "destination": "contract_line",
+                                "datatypes": {},
+                                "whereColumn": "",
+                                "whereValues": [],
+                                "whereOperator": "eq",
+                                "columns": [],
+                                "loadType": "clone"
+                            },
+                            {
+                                "source": "out.c-crm.contract",
+                                "destination": "contract",
+                                "datatypes": {},
+                                "whereColumn": "",
+                                "whereValues": [],
+                                "whereOperator": "eq",
+                                "columns": [],
+                                "loadType": "clone"
+                            }
+                        ],
+                        "name": "MRR - Aggregation",
+                        "backend": "snowflake",
+                        "type": "simple",
+                        "phase": "4",
+                        "description": ""
+                    }
+                },
+                {
+                    "name": "Contact",
+                    "description": "",
+                    "configuration": {
+                        "output": [
+                            {
+                                "destination": "out.c-crm.contact",
+                                "source": "out_contact",
+                                "primaryKey": [
+                                    "contact_id"
+                                ]
+                            }
+                        ],
+                        "queries": [
+                            "--create output table with contacts\nCREATE TABLE \"out_contact\"\nAS\n  SELECT\n    \"c\".\"Id\"                                  AS \"contact_id\",\n    ifnull(\"y\".\"company_id\", '0')\t\t  \t  AS \"company_id\",\n    ifnull(\"e\".\"employee_id\", '0')\t\t  \t  AS \"employee_id\",\n    \"c\".\"Name\"                                AS \"contact\",\n    \"c\".\"Email\"                               AS \"email\",\n    'Contact'                             \t  AS \"contact_type\",\n    to_date(\"c\".\"CreatedDate\") :: VARCHAR(10) AS \"date_created\",\n    \"c\".\"LeadSource\"                          AS \"lead_source\",\n    'Is Contact'                          \t  AS \"lead_converted\"\n  FROM \"contact\" \"c\"\n             LEFT JOIN \"company\" \"y\"\n                       ON \"c\".\"AccountId\" = \"y\".\"company_id\"\n             LEFT JOIN \"employee\" \"e\"\n                       ON \"c\".\"OwnerId\" = \"e\".\"employee_id\"\n  WHERE lower(\"IsDeleted\") = 'false'\n  UNION ALL\n  --insert leads and mark if they are already converted\n  SELECT\n    \"l\".\"Id\"                                      AS \"contact_id\",\n    '0'\t\t\t\t\t\t\t\t\t\t  \t  AS \"company_id\",\n    ifnull(\"e\".\"employee_id\", '0')\t\t  \t  \t  AS \"employee_id\",\n    \"l\".\"Name\"                                    AS \"contact\",\n    \"l\".\"Email\"                                   AS \"email\",\n    'Lead'                                    \t  AS \"contact_type\",\n    to_date(\"l\".\"CreatedDate\") :: VARCHAR(10)     AS \"date_created\",\n    \"l\".\"LeadSource\"                              AS \"lead_source\",\n    iff(\"l\".\"IsConverted\" = 'false', 'No', 'Yes') AS \"lead_converted\"\n  FROM \"lead\" \"l\"\n             LEFT JOIN \"employee\" \"e\"\n                       ON \"l\".\"OwnerId\" = \"e\".\"employee_id\"\n  WHERE lower(\"IsDeleted\") = 'false';",
+                            "--fake row to keep referential integrity if child tables are missing existing contact ids\nINSERT INTO \"out_contact\"\n  (\"contact_id\", \"company_id\", \"employee_id\", \"contact\", \"email\", \"contact_type\", \"date_created\", \"lead_source\", \"lead_converted\")\nVALUES\n  ('0', '0', '0', 'Unknown', '', 'Lead', '', '', 'No');"
+                        ],
+                        "input": [
+                            {
+                                "source": "in.c-salesforce.contact",
+                                "destination": "contact",
+                                "datatypes": {},
+                                "whereColumn": "",
+                                "whereValues": [],
+                                "whereOperator": "eq",
+                                "columns": [],
+                                "loadType": "clone"
+                            },
+                            {
+                                "source": "in.c-salesforce.lead",
+                                "destination": "lead",
+                                "datatypes": {},
+                                "whereColumn": "",
+                                "whereValues": [],
+                                "whereOperator": "eq",
+                                "columns": [],
+                                "loadType": "clone"
+                            },
+                            {
+                                "source": "out.c-crm.company",
+                                "destination": "company",
+                                "datatypes": {},
+                                "whereColumn": "",
+                                "whereValues": [],
+                                "whereOperator": "eq",
+                                "columns": [],
+                                "loadType": "clone"
+                            },
+                            {
+                                "source": "out.c-crm.employee",
+                                "destination": "employee",
+                                "datatypes": {},
+                                "whereColumn": "",
+                                "whereValues": [],
+                                "whereOperator": "eq",
+                                "columns": [],
+                                "loadType": "clone"
+                            }
+                        ],
+                        "name": "Contact",
+                        "backend": "snowflake",
+                        "type": "simple",
+                        "phase": "2",
+                        "description": ""
+                    }
+                },
+                {
+                    "name": "Opportunity Contact",
+                    "description": "",
+                    "configuration": {
+                        "output": [
+                            {
+                                "destination": "out.c-crm.opportunity_contact",
+                                "source": "out_opportunity_contact",
+                                "primaryKey": [
+                                    "opportunity_contact_id"
+                                ]
+                            }
+                        ],
+                        "queries": [
+                            "--create output paring table for opportunities and contacts\n--merge both tables ids as paring table id\n--use inner joins and ids from referring tables to make sure referential integrity is intact\n--change boolean values to commonly used format in KBC scaffolds\nCREATE TABLE \"out_opportunity_contact\"\nAS\n  SELECT\n    \"o\".\"opportunity_id\" || '-' || \"c\".\"contact_id\" AS \"opportunity_contact_id\",\n    \"o\".\"opportunity_id\",\n    \"c\".\"contact_id\",\n    iff(\"r\".\"IsPrimary\" = 'false', 'No', 'Yes')     AS \"is_primary_contact\",\n    \"r\".\"Role\"                                      AS \"role\"\n  FROM \"opportunity_contact_role\" \"r\"\n         INNER JOIN \"opportunity\" \"o\"\n                    ON \"r\".\"OpportunityId\" = \"o\".\"opportunity_id\"\n         INNER JOIN \"contact\" \"c\"\n                    ON \"r\".\"ContactId\" = \"c\".\"contact_id\"\n  WHERE lower(\"r\".\"IsDeleted\") = 'false';"
+                        ],
+                        "input": [
+                            {
+                                "source": "in.c-salesforce.opportunitycontactrole",
+                                "destination": "opportunity_contact_role",
+                                "datatypes": {},
+                                "whereColumn": "",
+                                "whereValues": [],
+                                "whereOperator": "eq",
+                                "columns": [],
+                                "loadType": "clone"
+                            },
+                            {
+                                "source": "out.c-crm.contact",
+                                "destination": "contact",
+                                "datatypes": {},
+                                "whereColumn": "",
+                                "whereValues": [],
+                                "whereOperator": "eq",
+                                "columns": [],
+                                "loadType": "clone"
+                            },
+                            {
+                                "source": "out.c-crm.opportunity",
+                                "destination": "opportunity",
+                                "datatypes": {},
+                                "whereColumn": "",
+                                "whereValues": [],
+                                "whereOperator": "eq",
+                                "columns": [],
+                                "loadType": "clone"
+                            }
+                        ],
+                        "name": "Opportunity Contact",
+                        "backend": "snowflake",
+                        "type": "simple",
+                        "phase": "3",
+                        "description": ""
+                    }
+                }
+            ]
+        },
+        {
+            "id": "keboola.wr-db-snowflake",
+            "type": "writer",
+            "name": "Snowflake",
+            "configuration": {
+                "parameters": {
+                    "tables": [
+                        {
+                            "dbName": "COMPANY",
+                            "export": true,
+                            "tableId": "out.c-crm.company",
+                            "items": [
+                                {
+                                    "name": "company_id",
+                                    "dbName": "COMPANY_ID",
+                                    "type": "varchar",
+                                    "size": 255,
+                                    "nullable": false,
+                                    "default": ""
+                                },
+                                {
+                                    "name": "company",
+                                    "dbName": "COMPANY",
+                                    "type": "varchar",
+                                    "size": 255,
+                                    "nullable": false,
+                                    "default": ""
+                                },
+                                {
+                                    "name": "website",
+                                    "dbName": "WEBSITE",
+                                    "type": "varchar",
+                                    "size": 255,
+                                    "nullable": false,
+                                    "default": ""
+                                },
+                                {
+                                    "name": "date_created",
+                                    "dbName": "DATE_CREATED",
+                                    "type": "date",
+                                    "size": "",
+                                    "nullable": true,
+                                    "default": ""
+                                }
+                            ],
+                            "primaryKey": [
+                                "COMPANY_ID"
+                            ]
+                        },
+                        {
+                            "dbName": "CONTRACT",
+                            "export": true,
+                            "tableId": "out.c-crm.contract",
+                            "items": [
+                                {
+                                    "name": "contract_id",
+                                    "dbName": "CONTRACT_ID",
+                                    "type": "varchar",
+                                    "size": 255,
+                                    "nullable": false,
+                                    "default": ""
+                                },
+                                {
+                                    "name": "company_id",
+                                    "dbName": "COMPANY_ID",
+                                    "type": "varchar",
+                                    "size": 255,
+                                    "nullable": false,
+                                    "default": ""
+                                },
+                                {
+                                    "name": "employee_id",
+                                    "dbName": "EMPLOYEE_ID",
+                                    "type": "varchar",
+                                    "size": "255",
+                                    "nullable": false,
+                                    "default": ""
+                                },
+                                {
+                                    "name": "contract",
+                                    "dbName": "CONTRACT",
+                                    "type": "varchar",
+                                    "size": 255,
+                                    "nullable": false,
+                                    "default": ""
+                                },
+                                {
+                                    "name": "contract_number",
+                                    "dbName": "CONTRACT_NUMBER",
+                                    "type": "varchar",
+                                    "size": 255,
+                                    "nullable": false,
+                                    "default": ""
+                                },
+                                {
+                                    "name": "contract_start_date",
+                                    "dbName": "CONTRACT_START_DATE",
+                                    "type": "date",
+                                    "size": "",
+                                    "nullable": true,
+                                    "default": ""
+                                },
+                                {
+                                    "name": "contract_end_date",
+                                    "dbName": "CONTRACT_END_DATE",
+                                    "type": "date",
+                                    "size": "",
+                                    "nullable": true,
+                                    "default": ""
+                                },
+                                {
+                                    "name": "lead_source",
+                                    "dbName": "LEAD_SOURCE",
+                                    "type": "varchar",
+                                    "size": "255",
+                                    "nullable": false,
+                                    "default": ""
+                                }
+                            ],
+                            "primaryKey": [
+                                "CONTRACT_ID"
+                            ]
+                        },
+                        {
+                            "dbName": "CONTRACT_LINE",
+                            "export": true,
+                            "tableId": "out.c-crm.contract_line",
+                            "items": [
+                                {
+                                    "name": "contract_line_id",
+                                    "dbName": "CONTRACT_LINE_ID",
+                                    "type": "varchar",
+                                    "size": 255,
+                                    "nullable": false,
+                                    "default": ""
+                                },
+                                {
+                                    "name": "opportunity_id",
+                                    "dbName": "OPPORTUNITY_ID",
+                                    "type": "varchar",
+                                    "size": 255,
+                                    "nullable": false,
+                                    "default": ""
+                                },
+                                {
+                                    "name": "contract_id",
+                                    "dbName": "CONTRACT_ID",
+                                    "type": "varchar",
+                                    "size": 255,
+                                    "nullable": false,
+                                    "default": ""
+                                },
+                                {
+                                    "name": "product_id",
+                                    "dbName": "PRODUCT_ID",
+                                    "type": "varchar",
+                                    "size": 255,
+                                    "nullable": false,
+                                    "default": ""
+                                },
+                                {
+                                    "name": "contract_line_start_date",
+                                    "dbName": "CONTRACT_LINE_START_DATE",
+                                    "type": "date",
+                                    "size": "",
+                                    "nullable": true,
+                                    "default": ""
+                                },
+                                {
+                                    "name": "contract_line_end_date",
+                                    "dbName": "CONTRACT_LINE_END_DATE",
+                                    "type": "date",
+                                    "size": "",
+                                    "nullable": true,
+                                    "default": ""
+                                },
+                                {
+                                    "name": "contract_line_quantity",
+                                    "dbName": "CONTRACT_LINE_QUANTITY",
+                                    "type": "number",
+                                    "size": "12,5",
+                                    "nullable": true,
+                                    "default": ""
+                                },
+                                {
+                                    "name": "contract_line_unit_price",
+                                    "dbName": "CONTRACT_LINE_UNIT_PRICE",
+                                    "type": "number",
+                                    "size": "12,5",
+                                    "nullable": true,
+                                    "default": ""
+                                },
+                                {
+                                    "name": "contract_line_currency",
+                                    "dbName": "CONTRACT_LINE_CURRENCY",
+                                    "type": "varchar",
+                                    "size": 255,
+                                    "nullable": true,
+                                    "default": ""
+                                }
+                            ],
+                            "primaryKey": [
+                                "CONTRACT_LINE_ID"
+                            ]
+                        },
+                        {
+                            "dbName": "EMPLOYEE",
+                            "export": true,
+                            "tableId": "out.c-crm.employee",
+                            "items": [
+                                {
+                                    "name": "employee_id",
+                                    "dbName": "EMPLOYEE_ID",
+                                    "type": "varchar",
+                                    "size": 255,
+                                    "nullable": false,
+                                    "default": ""
+                                },
+                                {
+                                    "name": "employee",
+                                    "dbName": "EMPLOYEE",
+                                    "type": "varchar",
+                                    "size": 255,
+                                    "nullable": false,
+                                    "default": ""
+                                },
+                                {
+                                    "name": "email",
+                                    "dbName": "EMAIL",
+                                    "type": "varchar",
+                                    "size": 255,
+                                    "nullable": false,
+                                    "default": ""
+                                },
+                                {
+                                    "name": "position",
+                                    "dbName": "POSITION",
+                                    "type": "varchar",
+                                    "size": 255,
+                                    "nullable": false,
+                                    "default": ""
+                                }
+                            ],
+                            "primaryKey": [
+                                "EMPLOYEE_ID"
+                            ]
+                        },
+                        {
+                            "dbName": "OPPORTUNITY",
+                            "export": true,
+                            "tableId": "out.c-crm.opportunity",
+                            "items": [
+                                {
+                                    "name": "opportunity_id",
+                                    "dbName": "OPPORTUNITY_ID",
+                                    "type": "varchar",
+                                    "size": "255",
+                                    "nullable": false,
+                                    "default": ""
+                                },
+                                {
+                                    "name": "company_id",
+                                    "dbName": "COMPANY_ID",
+                                    "type": "varchar",
+                                    "size": "255",
+                                    "nullable": false,
+                                    "default": ""
+                                },
+                                {
+                                    "name": "employee_id",
+                                    "dbName": "EMPLOYEE_ID",
+                                    "type": "varchar",
+                                    "size": "255",
+                                    "nullable": false,
+                                    "default": ""
+                                },
+                                {
+                                    "name": "opportunity",
+                                    "dbName": "OPPORTUNITY",
+                                    "type": "varchar",
+                                    "size": "255",
+                                    "nullable": false,
+                                    "default": ""
+                                },
+                                {
+                                    "name": "created_date",
+                                    "dbName": "CREATED_DATE",
+                                    "type": "date",
+                                    "size": "",
+                                    "nullable": true,
+                                    "default": ""
+                                },
+                                {
+                                    "name": "close_date",
+                                    "dbName": "CLOSE_DATE",
+                                    "type": "date",
+                                    "size": "",
+                                    "nullable": true,
+                                    "default": ""
+                                },
+                                {
+                                    "name": "stage",
+                                    "dbName": "STAGE",
+                                    "type": "varchar",
+                                    "size": "255",
+                                    "nullable": false,
+                                    "default": ""
+                                },
+                                {
+                                    "name": "is_closed",
+                                    "dbName": "IS_CLOSED",
+                                    "type": "varchar",
+                                    "size": "255",
+                                    "nullable": false,
+                                    "default": ""
+                                },
+                                {
+                                    "name": "is_won",
+                                    "dbName": "IS_WON",
+                                    "type": "varchar",
+                                    "size": "255",
+                                    "nullable": false,
+                                    "default": ""
+                                },
+                                {
+                                    "name": "lead_source",
+                                    "dbName": "LEAD_SOURCE",
+                                    "type": "varchar",
+                                    "size": "255",
+                                    "nullable": false,
+                                    "default": ""
+                                },
+                                {
+                                    "name": "opportunity_value",
+                                    "dbName": "OPPORTUNITY_VALUE",
+                                    "type": "number",
+                                    "size": "12,5",
+                                    "nullable": true,
+                                    "default": ""
+                                }
+                            ],
+                            "primaryKey": [
+                                "OPPORTUNITY_ID"
+                            ]
+                        },
+                        {
+                            "dbName": "OPPORTUNITY_SNAPSHOT",
+                            "export": true,
+                            "tableId": "out.c-crm.opportunity_snapshot",
+                            "items": [
+                                {
+                                    "name": "opportunity_id",
+                                    "dbName": "OPPORTUNITY_ID",
+                                    "type": "varchar",
+                                    "size": 255,
+                                    "nullable": false,
+                                    "default": ""
+                                },
+                                {
+                                    "name": "snapshot_date",
+                                    "dbName": "SNAPSHOT_DATE",
+                                    "type": "date",
+                                    "size": "",
+                                    "nullable": true,
+                                    "default": ""
+                                },
+                                {
+                                    "name": "employee_id",
+                                    "dbName": "EMPLOYEE_ID",
+                                    "type": "varchar",
+                                    "size": 255,
+                                    "nullable": false,
+                                    "default": ""
+                                },
+                                {
+                                    "name": "stage",
+                                    "dbName": "STAGE",
+                                    "type": "varchar",
+                                    "size": 255,
+                                    "nullable": false,
+                                    "default": ""
+                                },
+                                {
+                                    "name": "stage_change",
+                                    "dbName": "STAGE_CHANGE",
+                                    "type": "varchar",
+                                    "size": 255,
+                                    "nullable": false,
+                                    "default": ""
+                                },
+                                {
+                                    "name": "opportunity_value",
+                                    "dbName": "OPPORTUNITY_VALUE",
+                                    "type": "number",
+                                    "size": "12,5",
+                                    "nullable": true,
+                                    "default": ""
+                                },
+                                {
+                                    "name": "previous_opportunity_value",
+                                    "dbName": "PREVIOUS_OPPORTUNITY_VALUE",
+                                    "type": "number",
+                                    "size": "12,5",
+                                    "nullable": true,
+                                    "default": ""
+                                },
+                                {
+                                    "name": "opportunity_value_change",
+                                    "dbName": "OPPORTUNITY_VALUE_CHANGE",
+                                    "type": "varchar",
+                                    "size": 255,
+                                    "nullable": false,
+                                    "default": ""
+                                }
+                            ],
+                            "primaryKey": [
+                                "OPPORTUNITY_ID",
+                                "SNAPSHOT_DATE"
+                            ]
+                        },
+                        {
+                            "dbName": "PRODUCT",
+                            "export": true,
+                            "tableId": "out.c-crm.product",
+                            "items": [
+                                {
+                                    "name": "product_id",
+                                    "dbName": "PRODUCT_ID",
+                                    "type": "varchar",
+                                    "size": 255,
+                                    "nullable": false,
+                                    "default": ""
+                                },
+                                {
+                                    "name": "product",
+                                    "dbName": "PRODUCT",
+                                    "type": "varchar",
+                                    "size": 255,
+                                    "nullable": false,
+                                    "default": ""
+                                },
+                                {
+                                    "name": "product_family",
+                                    "dbName": "PRODUCT_FAMILY",
+                                    "type": "varchar",
+                                    "size": 255,
+                                    "nullable": false,
+                                    "default": ""
+                                }
+                            ],
+                            "primaryKey": [
+                                "PRODUCT_ID"
+                            ]
+                        },
+                        {
+                            "dbName": "MRR",
+                            "export": true,
+                            "tableId": "out.c-mrr.mrr",
+                            "items": [
+                                {
+                                    "name": "mrr_id",
+                                    "dbName": "MRR_ID",
+                                    "type": "varchar",
+                                    "size": 255,
+                                    "nullable": false,
+                                    "default": ""
+                                },
+                                {
+                                    "name": "contract_line_id",
+                                    "dbName": "CONTRACT_LINE_ID",
+                                    "type": "varchar",
+                                    "size": 255,
+                                    "nullable": false,
+                                    "default": ""
+                                },
+                                {
+                                    "name": "contract_line_currency",
+                                    "dbName": "CONTRACT_LINE_CURRENCY",
+                                    "type": "varchar",
+                                    "size": 255,
+                                    "nullable": false,
+                                    "default": ""
+                                },
+                                {
+                                    "name": "date",
+                                    "dbName": "DATE",
+                                    "type": "date",
+                                    "size": "",
+                                    "nullable": true,
+                                    "default": ""
+                                },
+                                {
+                                    "name": "contract_line_quantity",
+                                    "dbName": "CONTRACT_LINE_QUANTITY",
+                                    "type": "number",
+                                    "size": "12,5",
+                                    "nullable": true,
+                                    "default": ""
+                                },
+                                {
+                                    "name": "contract_line_unit_price",
+                                    "dbName": "CONTRACT_LINE_UNIT_PRICE",
+                                    "type": "number",
+                                    "size": "12,5",
+                                    "nullable": true,
+                                    "default": ""
+                                },
+                                {
+                                    "name": "previous_contract_line_quantity",
+                                    "dbName": "PREVIOUS_CONTRACT_LINE_QUANTITY",
+                                    "type": "number",
+                                    "size": "12,5",
+                                    "nullable": true,
+                                    "default": ""
+                                },
+                                {
+                                    "name": "previous_contract_line_unit_price",
+                                    "dbName": "PREVIOUS_CONTRACT_LINE_UNIT_PRICE",
+                                    "type": "number",
+                                    "size": "12,5",
+                                    "nullable": true,
+                                    "default": ""
+                                }
+                            ],
+                            "primaryKey": [
+                                "MRR_ID"
+                            ]
+                        },
+                        {
+                            "dbName": "MRR_AGGREGATED",
+                            "export": true,
+                            "tableId": "out.c-mrr.mrr_aggregated",
+                            "items": [
+                                {
+                                    "name": "mrr_aggregated_id",
+                                    "dbName": "MRR_AGGREGATED_ID",
+                                    "type": "varchar",
+                                    "size": 255,
+                                    "nullable": false,
+                                    "default": ""
+                                },
+                                {
+                                    "name": "company_id",
+                                    "dbName": "COMPANY_ID",
+                                    "type": "varchar",
+                                    "size": 255,
+                                    "nullable": false,
+                                    "default": ""
+                                },
+                                {
+                                    "name": "date",
+                                    "dbName": "DATE",
+                                    "type": "date",
+                                    "size": "",
+                                    "nullable": true,
+                                    "default": ""
+                                },
+                                {
+                                    "name": "contract_line_currency",
+                                    "dbName": "CURRENCY",
+                                    "type": "varchar",
+                                    "size": 255,
+                                    "nullable": false,
+                                    "default": ""
+                                },
+                                {
+                                    "name": "gross_mrr",
+                                    "dbName": "GROSS_MRR",
+                                    "type": "number",
+                                    "size": "12,5",
+                                    "nullable": true,
+                                    "default": ""
+                                },
+                                {
+                                    "name": "previous_gross_mrr",
+                                    "dbName": "PREVIOUS_GROSS_MRR",
+                                    "type": "number",
+                                    "size": "12,5",
+                                    "nullable": true,
+                                    "default": ""
+                                },
+                                {
+                                    "name": "gross_mrr_change",
+                                    "dbName": "GROSS_MRR_CHANGE",
+                                    "type": "number",
+                                    "size": "12,5",
+                                    "nullable": true,
+                                    "default": ""
+                                },
+                                {
+                                    "name": "gross_action",
+                                    "dbName": "GROSS_ACTION",
+                                    "type": "varchar",
+                                    "size": 255,
+                                    "nullable": false,
+                                    "default": ""
+                                },
+                                {
+                                    "name": "count_change",
+                                    "dbName": "COUNT_CHANGE",
+                                    "type": "integer",
+                                    "size": "",
+                                    "nullable": true,
+                                    "default": ""
+                                }
+                            ],
+                            "primaryKey": [
+                                "MRR_AGGREGATED_ID"
+                            ]
+                        },
+                        {
+                            "dbName": "CONTACT",
+                            "export": true,
+                            "tableId": "out.c-crm.contact",
+                            "items": [
+                                {
+                                    "name": "contact_id",
+                                    "dbName": "CONTACT_ID",
+                                    "type": "varchar",
+                                    "size": "255",
+                                    "nullable": false,
+                                    "default": ""
+                                },
+                                {
+                                    "name": "company_id",
+                                    "dbName": "COMPANY_ID",
+                                    "type": "varchar",
+                                    "size": "255",
+                                    "nullable": false,
+                                    "default": ""
+                                },
+                                {
+                                    "name": "employee_id",
+                                    "dbName": "EMPLOYEE_ID",
+                                    "type": "varchar",
+                                    "size": "255",
+                                    "nullable": false,
+                                    "default": ""
+                                },
+                                {
+                                    "name": "contact",
+                                    "dbName": "CONTACT",
+                                    "type": "varchar",
+                                    "size": "255",
+                                    "nullable": false,
+                                    "default": ""
+                                },
+                                {
+                                    "name": "email",
+                                    "dbName": "EMAIL",
+                                    "type": "varchar",
+                                    "size": "255",
+                                    "nullable": false,
+                                    "default": ""
+                                },
+                                {
+                                    "name": "contact_type",
+                                    "dbName": "CONTACT_TYPE",
+                                    "type": "varchar",
+                                    "size": "255",
+                                    "nullable": false,
+                                    "default": ""
+                                },
+                                {
+                                    "name": "date_created",
+                                    "dbName": "DATE_CREATED",
+                                    "type": "date",
+                                    "size": "",
+                                    "nullable": true,
+                                    "default": ""
+                                },
+                                {
+                                    "name": "lead_source",
+                                    "dbName": "LEAD_SOURCE",
+                                    "type": "varchar",
+                                    "size": "255",
+                                    "nullable": false,
+                                    "default": ""
+                                },
+                                {
+                                    "name": "lead_converted",
+                                    "dbName": "LEAD_CONVERTED",
+                                    "type": "varchar",
+                                    "size": "255",
+                                    "nullable": false,
+                                    "default": ""
+                                }
+                            ],
+                            "primaryKey": [
+                                "CONTACT_ID"
+                            ]
+                        },
+                        {
+                            "dbName": "OPPORTUNITY_CONTACT",
+                            "export": true,
+                            "tableId": "out.c-crm.opportunity_contact",
+                            "items": [
+                                {
+                                    "name": "opportunity_contact_id",
+                                    "dbName": "OPPORTUNITY_CONTACT_ID",
+                                    "type": "varchar",
+                                    "size": "255",
+                                    "nullable": false,
+                                    "default": ""
+                                },
+                                {
+                                    "name": "opportunity_id",
+                                    "dbName": "OPPORTUNITY_ID",
+                                    "type": "varchar",
+                                    "size": "255",
+                                    "nullable": false,
+                                    "default": ""
+                                },
+                                {
+                                    "name": "contact_id",
+                                    "dbName": "CONTACT_ID",
+                                    "type": "varchar",
+                                    "size": "255",
+                                    "nullable": false,
+                                    "default": ""
+                                },
+                                {
+                                    "name": "is_primary_contact",
+                                    "dbName": "IS_PRIMARY_CONTACT",
+                                    "type": "varchar",
+                                    "size": "255",
+                                    "nullable": false,
+                                    "default": ""
+                                },
+                                {
+                                    "name": "role",
+                                    "dbName": "ROLE",
+                                    "type": "varchar",
+                                    "size": "255",
+                                    "nullable": false,
+                                    "default": ""
+                                }
+                            ],
+                            "primaryKey": [
+                                "OPPORTUNITY_CONTACT_ID"
+                            ]
+                        }
+                    ]
+                },
+                "storage": {
+                    "input": {
+                        "tables": [
+                            {
+                                "source": "out.c-crm.company",
+                                "destination": "out.c-crm.company.csv",
+                                "columns": [
+                                    "company_id",
+                                    "company",
+                                    "website",
+                                    "date_created"
+                                ]
+                            },
+                            {
+                                "source": "out.c-crm.contract",
+                                "destination": "out.c-crm.contract.csv",
+                                "columns": [
+                                    "contract_id",
+                                    "company_id",
+                                    "employee_id",
+                                    "contract",
+                                    "contract_number",
+                                    "contract_start_date",
+                                    "contract_end_date",
+                                    "lead_source"
+                                ]
+                            },
+                            {
+                                "source": "out.c-crm.contract_line",
+                                "destination": "out.c-crm.contract_line.csv",
+                                "columns": [
+                                    "contract_line_id",
+                                    "opportunity_id",
+                                    "contract_id",
+                                    "product_id",
+                                    "contract_line_start_date",
+                                    "contract_line_end_date",
+                                    "contract_line_quantity",
+                                    "contract_line_unit_price",
+                                    "contract_line_currency"
+                                ]
+                            },
+                            {
+                                "source": "out.c-crm.employee",
+                                "destination": "out.c-crm.employee.csv",
+                                "columns": [
+                                    "employee_id",
+                                    "employee",
+                                    "email",
+                                    "position"
+                                ]
+                            },
+                            {
+                                "source": "out.c-crm.opportunity",
+                                "destination": "out.c-crm.opportunity.csv",
+                                "columns": [
+                                    "opportunity_id",
+                                    "company_id",
+                                    "employee_id",
+                                    "opportunity",
+                                    "created_date",
+                                    "close_date",
+                                    "stage",
+                                    "is_closed",
+                                    "is_won",
+                                    "lead_source",
+                                    "opportunity_value"
+                                ]
+                            },
+                            {
+                                "source": "out.c-crm.opportunity_snapshot",
+                                "destination": "out.c-crm.opportunity_snapshot.csv",
+                                "columns": [
+                                    "opportunity_id",
+                                    "snapshot_date",
+                                    "employee_id",
+                                    "stage",
+                                    "stage_change",
+                                    "opportunity_value",
+                                    "previous_opportunity_value",
+                                    "opportunity_value_change"
+                                ]
+                            },
+                            {
+                                "source": "out.c-crm.product",
+                                "destination": "out.c-crm.product.csv",
+                                "columns": [
+                                    "product_id",
+                                    "product",
+                                    "product_family"
+                                ]
+                            },
+                            {
+                                "source": "out.c-mrr.mrr",
+                                "destination": "out.c-mrr.mrr.csv",
+                                "columns": [
+                                    "mrr_id",
+                                    "contract_line_id",
+                                    "contract_line_currency",
+                                    "date",
+                                    "contract_line_quantity",
+                                    "contract_line_unit_price",
+                                    "previous_contract_line_quantity",
+                                    "previous_contract_line_unit_price"
+                                ]
+                            },
+                            {
+                                "source": "out.c-mrr.mrr_aggregated",
+                                "destination": "out.c-mrr.mrr_aggregated.csv",
+                                "columns": [
+                                    "mrr_aggregated_id",
+                                    "company_id",
+                                    "date",
+                                    "contract_line_currency",
+                                    "gross_mrr",
+                                    "previous_gross_mrr",
+                                    "gross_mrr_change",
+                                    "gross_action",
+                                    "count_change"
+                                ]
+                            },
+                            {
+                                "source": "out.c-crm.contact",
+                                "destination": "out.c-crm.contact.csv",
+                                "columns": [
+                                    "contact_id",
+                                    "company_id",
+                                    "employee_id",
+                                    "contact",
+                                    "email",
+                                    "contact_type",
+                                    "date_created",
+                                    "lead_source",
+                                    "lead_converted"
+                                ]
+                            },
+                            {
+                                "source": "out.c-crm.opportunity_contact",
+                                "destination": "out.c-crm.opportunity_contact.csv",
+                                "columns": [
+                                    "opportunity_contact_id",
+                                    "opportunity_id",
+                                    "contact_id",
+                                    "is_primary_contact",
+                                    "role"
+                                ]
+                            }
+                        ]
+                    }
+                }
+            }
+        }
+    ]
+}
+

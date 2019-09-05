@@ -20,22 +20,35 @@ class Component extends BaseComponent
         /** @var Config $config */
         $config = $this->getConfig();
 
-        $scaffoldImageParameters = $config->getValue(['image_parameters', 'scaffold']);
+        //only one scaffold can be passed in parameters
+        $scaffoldParameters = $config->getScaffoldParameters();
 
         $fs = new Filesystem;
-        $scaffoldConfiguration = $this->getScaffoldConfiguration($fs, $scaffoldImageParameters);
+        $scaffoldConfiguration = $this->getScaffoldConfiguration($fs, $config->getScaffoldName());
 
         $client = new Client(
             [
-                'token'  => getenv('KBC_TOKEN'),
-                'url'    => getenv('KBC_URL'),
+                'token' => getenv('KBC_TOKEN'),
+                'url' => getenv('KBC_URL'),
                 'logger' => $this->getLogger(),
             ]
         );
         $componentApi = new Components($client);
 
         foreach ($scaffoldConfiguration['components'] as $component) {
-            $this->createComponent($component, $componentApi);
+            // component ID must be transformed "." are not allowed by symfony configuration and "-" are replaced by "_"
+            /** @var string $transformetComponentId */
+            $transformetComponentId = str_replace(['.', '-'], ['#', '_'], $component['id']);
+
+            if (array_key_exists($transformetComponentId, $scaffoldParameters)) {
+                $this->createComponentConfiguraion(
+                    $component,
+                    $componentApi,
+                    $scaffoldParameters[$transformetComponentId]
+                );
+            } else {
+                $this->createComponentConfiguraion($component, $componentApi);
+            }
         }
     }
 
@@ -49,13 +62,14 @@ class Component extends BaseComponent
         return ConfigDefinition::class;
     }
 
-    private function getScaffoldConfiguration(Filesystem $fs, array $scaffoldImageParameters): array
+    // load scaffold config.json file
+    private function getScaffoldConfiguration(Filesystem $fs, string $scaffoldName): array
     {
-        $scaffoldFolder = '/code/scaffolds/' . $scaffoldImageParameters['name'];
+        $scaffoldFolder = '/code/scaffolds/' . $scaffoldName;
         $scaffoldConfigFile = $scaffoldFolder . '/config.json';
 
         if (!$fs->exists($scaffoldFolder)) {
-            throw new Exception(sprintf('Scaffold name: %s does\'t exists.', $scaffoldImageParameters['name']));
+            throw new Exception(sprintf('Scaffold name: %s does\'t exists.', $scaffoldName));
         }
 
         $fileHandler = new SplFileInfo($scaffoldConfigFile, '', 'config.json');
@@ -63,21 +77,49 @@ class Component extends BaseComponent
         return json_decode($fileHandler->getContents(), true);
     }
 
-    private function createComponent(array $component, Components $componentApi): void
-    {
+    private function createComponentConfiguraion(
+        array $componentConfig,
+        Components $componentApi,
+        ?array $parameters = null
+    ): void {
+        $this->getLogger()->info(
+            sprintf(
+                'Creating configuration for component %s with name %s',
+                $componentConfig['id'],
+                $componentConfig['name']
+            )
+        );
         $componentConfiguration = new Configuration;
-        $componentConfiguration->setComponentId($component['id']);
-        $componentConfiguration->setName($component['name']);
-        $componentConfiguration->setChangeDescription(sprintf('KBC Scaffold component %s created', $component['name']));
+        $componentConfiguration->setComponentId($componentConfig['id']);
+        $componentConfiguration->setName($componentConfig['name']);
+        $componentConfiguration->setChangeDescription(
+            sprintf(
+                'KBC Scaffold component %s created',
+                $componentConfig['name']
+            )
+        );
+
+        //merge static configuration with dynamic parameters
+        $configuration = [];
+        if (array_key_exists('configuration', $componentConfig)) {
+            $configuration = $componentConfig['configuration'];
+        }
+        if ($parameters !== null) {
+            $configuration = array_merge_recursive($configuration, $parameters);
+        }
+        $componentConfiguration->setConfiguration($configuration);
+
         $response = $componentApi->addConfiguration($componentConfiguration);
         $componentConfiguration->setConfigurationId($response['id']);
 
-        foreach ($component['rows'] as $row) {
-            $rowConfiguration = new ConfigurationRow($componentConfiguration);
-            $rowConfiguration->setName($row['name']);
-            $rowConfiguration->setConfiguration($row['configuration']);
-            $rowConfiguration->setChangeDescription(sprintf('KBC Scaffold row %s added', $row['name']));
-            $componentApi->addConfigurationRow($rowConfiguration);
+        if (array_key_exists('rows', $componentConfig)) {
+            foreach ($componentConfig['rows'] as $row) {
+                $rowConfiguration = new ConfigurationRow($componentConfiguration);
+                $rowConfiguration->setName($row['name']);
+                $rowConfiguration->setConfiguration($row['configuration']);
+                $rowConfiguration->setChangeDescription(sprintf('KBC Scaffold row %s added', $row['name']));
+                $componentApi->addConfigurationRow($rowConfiguration);
+            }
         }
     }
 }
