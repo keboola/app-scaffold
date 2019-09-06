@@ -36,9 +36,8 @@ class Component extends BaseComponent
         $componentApi = new Components($client);
 
         foreach ($scaffoldConfiguration['components'] as $component) {
-            // component ID must be transformed "." are not allowed by symfony configuration and "-" are replaced by "_"
             /** @var string $transformetComponentId */
-            $transformetComponentId = str_replace(['.', '-'], ['#', '_'], $component['id']);
+            $transformetComponentId = str_replace('-', '_', $component['id']);
 
             if (array_key_exists($transformetComponentId, $scaffoldParameters)) {
                 $this->createComponentConfiguraion(

@@ -11,6 +11,8 @@ use Symfony\Component\Config\Definition\Builder\TreeBuilder;
 
 class ConfigDefinition extends BaseConfigDefinition
 {
+    private const PATH_SEPARATOR = '#';
+
     protected function getParametersDefinition(): ArrayNodeDefinition
     {
         $parametersNode = parent::getParametersDefinition();
@@ -28,9 +30,10 @@ class ConfigDefinition extends BaseConfigDefinition
         $scaffoldNode = $treeBuilder->getRootNode();
 
         // @formatter:off
-        $treeBuilder = new TreeBuilder('htns#ex_salesforce');
+        $treeBuilder = new TreeBuilder('htns.ex_salesforce');
         /** @var ArrayNodeDefinition $node */
         $node = $treeBuilder->getRootNode();
+        $node->setPathSeparator(self::PATH_SEPARATOR);
         $node->children()
                 ->scalarNode('loginname')
                     ->isRequired()
@@ -51,9 +54,10 @@ class ConfigDefinition extends BaseConfigDefinition
         ;
         $scaffoldNode->append($node);
 
-        $treeBuilder = new TreeBuilder('keboola#wr_db_snowflake');
+        $treeBuilder = new TreeBuilder('keboola.wr_db_snowflake');
         /** @var ArrayNodeDefinition $node */
         $node = $treeBuilder->getRootNode();
+        $node->setPathSeparator(self::PATH_SEPARATOR);
         $node
             ->children()
                 ->arrayNode('parameters')
