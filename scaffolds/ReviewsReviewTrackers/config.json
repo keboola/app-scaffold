@@ -1194,7 +1194,9 @@
                     "advanced": {}
                 }
             }
-        },
+        }
+    ],
+    "orchestrations": [
         {
             "type": "orchestration",
             "name": "Reviews",
