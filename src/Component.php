@@ -65,9 +65,10 @@ class Component extends BaseComponent
                 // primary used is id key which must be unique when two same components are used
                 // otherwise sapiComponentId is used TODO: name this, maybe KBCComponentId?
                 if (array_key_exists('id', $component)) {
+                    /** @var string $componentId */
                     $componentId = str_replace('-', '_', $component['id']);
                 } else {
-                    /** @var string $transformetComponentId */
+                    /** @var string $componentId */
                     $componentId = str_replace('-', '_', $component['sapiComponentId']);
                 }
 
@@ -164,7 +165,7 @@ class Component extends BaseComponent
         if (array_key_exists('tasks', $orchestratorConfig)) {
             $orchestratorOptions['tasks'] = [];
             foreach ($orchestratorConfig['tasks'] as $task) {
-                /** @var string $transformetComponentId */
+                /** @var string $componentConfigurationId */
                 $componentConfigurationId = str_replace('-', '_', $task['id']);
                 $orchestratorOptions['tasks'][] = array_merge(
                     $task,
