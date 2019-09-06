@@ -12,9 +12,26 @@ use Keboola\StorageApi\Options\Components\Configuration;
 use Keboola\StorageApi\Options\Components\ConfigurationRow;
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\Finder\SplFileInfo;
+use Keboola\Orchestrator\Client as OrchestratorClient;
 
 class Component extends BaseComponent
 {
+    /**
+     * @var array
+     * aggreage configurations ids for use in orchestrations
+     */
+    private $configurationIdStorage = [];
+
+    protected function getConfigClass(): string
+    {
+        return Config::class;
+    }
+
+    protected function getConfigDefinitionClass(): string
+    {
+        return ConfigDefinition::class;
+    }
+
     protected function run(): void
     {
         /** @var Config $config */
@@ -36,29 +53,32 @@ class Component extends BaseComponent
         $componentApi = new Components($client);
 
         foreach ($scaffoldConfiguration['components'] as $component) {
-            /** @var string $transformetComponentId */
-            $transformetComponentId = str_replace('-', '_', $component['id']);
-
-            if (array_key_exists($transformetComponentId, $scaffoldParameters)) {
-                $this->createComponentConfiguraion(
-                    $component,
-                    $componentApi,
-                    $scaffoldParameters[$transformetComponentId]
-                );
+            if ($component['type'] === 'orchestration') {
+                // create orchestration
+                $orchestratorClient = OrchestratorClient::factory([
+                    'token' => getenv('KBC_TOKEN'),
+                ]);
+                $this->createOrchestrationConfiguraion($component, $orchestratorClient);
             } else {
-                $this->createComponentConfiguraion($component, $componentApi);
+                // create component
+
+                // primary used is id key which must be unique when two same components are used
+                // otherwise sapiComponentId is used TODO: name this, maybe KBCComponentId?
+                if (array_key_exists('id', $component)) {
+                    $componentId = str_replace('-', '_', $component['id']);
+                } else {
+                    /** @var string $transformetComponentId */
+                    $componentId = str_replace('-', '_', $component['sapiComponentId']);
+                }
+
+                $parameters = null;
+                if (array_key_exists($componentId, $scaffoldParameters)) {
+                    $parameters = $scaffoldParameters[$componentId];
+                }
+
+                $this->createComponentConfiguraion($component, $componentId, $componentApi, $parameters);
             }
         }
-    }
-
-    protected function getConfigClass(): string
-    {
-        return Config::class;
-    }
-
-    protected function getConfigDefinitionClass(): string
-    {
-        return ConfigDefinition::class;
     }
 
     // load scaffold config.json file
@@ -78,18 +98,19 @@ class Component extends BaseComponent
 
     private function createComponentConfiguraion(
         array $componentConfig,
+        string $componentId,
         Components $componentApi,
-        ?array $parameters = null
+        ?array $parameters
     ): void {
         $this->getLogger()->info(
             sprintf(
                 'Creating configuration for component %s with name %s',
-                $componentConfig['id'],
+                $componentConfig['sapiComponentId'],
                 $componentConfig['name']
             )
         );
         $componentConfiguration = new Configuration;
-        $componentConfiguration->setComponentId($componentConfig['id']);
+        $componentConfiguration->setComponentId($componentConfig['sapiComponentId']);
         $componentConfiguration->setName($componentConfig['name']);
         $componentConfiguration->setChangeDescription(
             sprintf(
@@ -111,6 +132,17 @@ class Component extends BaseComponent
         $response = $componentApi->addConfiguration($componentConfiguration);
         $componentConfiguration->setConfigurationId($response['id']);
 
+        $this->getLogger()->info(
+            sprintf(
+                'Configuration for component %s with id %s created',
+                $componentId,
+                $response['id']
+            )
+        );
+
+        // save id for use in orchestration
+        $this->configurationIdStorage[$componentId] = $response['id'];
+
         if (array_key_exists('rows', $componentConfig)) {
             foreach ($componentConfig['rows'] as $row) {
                 $rowConfiguration = new ConfigurationRow($componentConfiguration);
@@ -120,5 +152,33 @@ class Component extends BaseComponent
                 $componentApi->addConfigurationRow($rowConfiguration);
             }
         }
+    }
+
+    private function createOrchestrationConfiguraion(
+        array $orchestratorConfig,
+        OrchestratorClient $orchestratorApi
+    ): void {
+        $this->getLogger()->info(sprintf('Creating configuration for orchstration'));
+        $orchestratorOptions = [];
+
+        if (array_key_exists('tasks', $orchestratorConfig)) {
+            $orchestratorOptions['tasks'] = [];
+            foreach ($orchestratorConfig['tasks'] as $task) {
+                /** @var string $transformetComponentId */
+                $componentConfigurationId = str_replace('-', '_', $task['id']);
+                $orchestratorOptions['tasks'][] = array_merge(
+                    $task,
+                    [
+                        'actionParameters' => [
+                            'config' => $this->configurationIdStorage[$componentConfigurationId],
+                        ],
+                    ]
+                );
+            }
+        }
+
+        $orchestratorApi->createOrchestration($orchestratorConfig['name'], $orchestratorOptions);
+
+        $this->getLogger()->info(sprintf('Orchestration created'));
     }
 }

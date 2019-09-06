@@ -1,6 +1,7 @@
 {
     "require": {
         "php": "^7.1",
+        "keboola/orchestrator-php-client": "^1.2",
         "keboola/php-component": "^7.0.1",
         "keboola/storage-api-client": "^10"
     },
@@ -15,7 +16,8 @@
     },
     "autoload": {
         "psr-4": {
-            "MyComponent\\": "src/"
+            "MyComponent\\": "src/",
+            "Scaffolds\\": "scaffolds/"
         }
     },
     "autoload-dev": {
