@@ -58,7 +58,7 @@ class Component extends BaseComponent
                 $orchestratorClient = OrchestratorClient::factory([
                     'token' => getenv('KBC_TOKEN'),
                 ]);
-                $this->createOrchestrationConfiguraion($component, $orchestratorClient);
+                $this->createOrchestrationConfiguration($component, $orchestratorClient);
             } else {
                 // create component
 
@@ -77,7 +77,7 @@ class Component extends BaseComponent
                     $parameters = $scaffoldParameters[$componentId];
                 }
 
-                $this->createComponentConfiguraion($component, $componentId, $componentApi, $parameters);
+                $this->createComponentConfiguration($component, $componentId, $componentApi, $parameters);
             }
         }
     }
@@ -97,7 +97,7 @@ class Component extends BaseComponent
         return json_decode($fileHandler->getContents(), true);
     }
 
-    private function createComponentConfiguraion(
+    private function createComponentConfiguration(
         array $componentConfig,
         string $componentId,
         Components $componentApi,
@@ -155,7 +155,7 @@ class Component extends BaseComponent
         }
     }
 
-    private function createOrchestrationConfiguraion(
+    private function createOrchestrationConfiguration(
         array $orchestratorConfig,
         OrchestratorClient $orchestratorApi
     ): void {
