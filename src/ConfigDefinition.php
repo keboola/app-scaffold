@@ -5,8 +5,9 @@ declare(strict_types=1);
 namespace MyComponent;
 
 use Keboola\Component\Config\BaseConfigDefinition;
-use Scaffolds\ReviewsReviewTrackers\ConfigDefinition as ReviewsReviewTrackersConfigDefinition;
 use Symfony\Component\Config\Definition\Builder\ArrayNodeDefinition;
+use Symfony\Component\Config\Definition\ConfigurationInterface;
+use Symfony\Component\Finder\Finder;
 
 class ConfigDefinition extends BaseConfigDefinition
 {
@@ -15,11 +16,17 @@ class ConfigDefinition extends BaseConfigDefinition
     protected function getParametersDefinition(): ArrayNodeDefinition
     {
         $parametersNode = parent::getParametersDefinition();
-        // @formatter:off
-        /** @noinspection NullPointerExceptionInspection */
-        $def = new ReviewsReviewTrackersConfigDefinition();
-        $parametersNode->append($def->getConfigTreeBuilder()->getRootNode());
-        // @formatter:on
+
+        $finder = new Finder();
+        $finder->files()->in(__DIR__.'/../scaffolds/*')->name('ConfigDefinition.php');
+
+        foreach ($finder as $file) {
+            /** @var ConfigurationInterface $configDefinition */
+            $class = 'Scaffolds\\'.$file->getPathInfo()->getBasename().'\\'.'ConfigDefinition';
+            $configDefinition = new $class;
+            $parametersNode->append($configDefinition->getConfigTreeBuilder()->getRootNode());
+        }
+
         return $parametersNode;
     }
 }
