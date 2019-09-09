@@ -62,7 +62,7 @@ class Component extends BaseComponent
     // load scaffold config.json file
     private function getScaffoldConfiguration(string $scaffoldName): array
     {
-        $scaffoldFolder = '/code/scaffolds/' . $scaffoldName;
+        $scaffoldFolder = __DIR__.'/../scaffolds/' . $scaffoldName;
         $scaffoldConfigFile = $scaffoldFolder . '/config.json';
 
         $fs = new Filesystem;
