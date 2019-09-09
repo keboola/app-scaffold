@@ -22,7 +22,7 @@ class App
      * @var array
      * Static config loaded from FS
      */
-    private $scaffoldStatisConfiguration;
+    private $scaffoldStaticConfiguration;
 
     /**
      * @var array
@@ -46,13 +46,13 @@ class App
     private $orchestrationApiClient;
 
     public function __construct(
-        array $scaffoldStatisConfiguration,
+        array $scaffoldStaticConfiguration,
         array $scaffoldParameters,
         Components $componentsApiClient,
         OrchestratorClient $orchestrationApiClient,
         LoggerInterface $logger
     ) {
-        $this->scaffoldStatisConfiguration = $scaffoldStatisConfiguration;
+        $this->scaffoldStaticConfiguration = $scaffoldStaticConfiguration;
         $this->scaffoldParameters = $scaffoldParameters;
         $this->logger = $logger;
         $this->componentsApiClient = $componentsApiClient;
@@ -61,8 +61,8 @@ class App
 
     public function createComponentsConfigurations(): void
     {
-        if (array_key_exists('components', $this->scaffoldStatisConfiguration)) {
-            foreach ($this->scaffoldStatisConfiguration['components'] as $component) {
+        if (array_key_exists('components', $this->scaffoldStaticConfiguration)) {
+            foreach ($this->scaffoldStaticConfiguration['components'] as $component) {
                 // primary used is id key which must be unique when two same components are used
                 // otherwise sapiComponentId is used TODO: name this, maybe KBCComponentId?
                 if (array_key_exists('id', $component)) {
@@ -83,8 +83,8 @@ class App
 
     public function createOrchestrations(): void
     {
-        if (array_key_exists('orchestrations', $this->scaffoldStatisConfiguration)) {
-            foreach ($this->scaffoldStatisConfiguration['orchestrations'] as $orchestration) {
+        if (array_key_exists('orchestrations', $this->scaffoldStaticConfiguration)) {
+            foreach ($this->scaffoldStaticConfiguration['orchestrations'] as $orchestration) {
                 $this->createOrchestrationConfiguration($orchestration);
             }
         }
