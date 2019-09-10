@@ -116,6 +116,9 @@ class App
             $orchestratorOptions
         );
 
+        // save id, this for tests
+        $this->configurationIdStorage[$orchestratorConfig['name']] = $response['id'];
+
         $this->logger->info(sprintf('Orchestration %s created', $response['id']));
     }
 

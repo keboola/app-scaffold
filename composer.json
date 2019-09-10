@@ -28,7 +28,7 @@
         }
     },
     "scripts": {
-        "tests-phpunit": "phpunit -vvv",
+        "tests-phpunit": "phpunit",
         "tests-datadir": "phpunit tests/functional",
         "tests": [
             "@tests-phpunit",

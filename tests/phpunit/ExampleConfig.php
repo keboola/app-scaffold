@@ -14,8 +14,71 @@ class ExampleConfig
     public const TRANSFORMATION = [
         'type' => 'transformation',
         'sapiComponentId' => 'transformation',
-        'id' => 'KBC_TEST_TRANS',
+        'id' => 'transformation1',
         'name' => 'TEST KBC Scaffold Transformation',
+        'changeDescription' => 'TEST KBC Scaffold',
+        'rows' => [
+            0 =>
+                [
+                    'name' => 'Company',
+                    'description' => '',
+                    'configuration' =>
+                        [
+                            'output' =>
+                                [
+                                    0 =>
+                                        [
+                                            'destination' => 'out.c-crm.company',
+                                            'primaryKey' =>
+                                                [
+                                                    0 => 'company_id',
+                                                ],
+                                            'incremental' => true,
+                                            'deleteWhereColumn' => '',
+                                            'deleteWhereOperator' => 'eq',
+                                            'deleteWhereValues' =>
+                                                [
+                                                ],
+                                            'source' => 'out_company',
+                                        ],
+                                ],
+                            'queries' =>
+                                [
+                                ],
+                            'input' =>
+                                [
+                                    0 =>
+                                        [
+                                            'source' => 'in.c-salesforce.account',
+                                            'destination' => 'account',
+                                            'datatypes' =>
+                                                [
+                                                ],
+                                            'whereColumn' => '',
+                                            'whereValues' =>
+                                                [
+                                                ],
+                                            'whereOperator' => 'eq',
+                                            'columns' =>
+                                                [
+                                                ],
+                                            'loadType' => 'clone',
+                                        ],
+                                ],
+                            'name' => 'Company',
+                            'backend' => 'snowflake',
+                            'type' => 'simple',
+                            'phase' => 1,
+                            'description' => '',
+                        ],
+                ],
+        ],
+    ];
+    public const TRANSFORMATION2 = [
+        'type' => 'transformation',
+        'sapiComponentId' => 'transformation',
+        'id' => 'transformation2',
+        'name' => 'TEST KBC Scaffold Transformation 2',
         'changeDescription' => 'TEST KBC Scaffold',
         'rows' => [
             0 =>
