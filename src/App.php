@@ -6,7 +6,6 @@ namespace Keboola\ScaffoldApp;
 
 use Exception;
 use Keboola\Orchestrator\Client as OrchestratorClient;
-use Keboola\ScaffoldApp\ActionConfig\ConfigRowIterator;
 use Keboola\ScaffoldApp\ActionConfig\CreateCofigRowActionConfig;
 use Keboola\ScaffoldApp\ActionConfig\CreateComponentConfigurationActionConfig;
 use Keboola\ScaffoldApp\ActionConfig\CreateOrchestrationActionConfig;
@@ -77,7 +76,7 @@ class App
         $actionConfig->populateOrchestrationTasksWithConfigurationIds($this->configurationIdStorage);
         $response = $this->orchestrationApiClient->createOrchestration(
             $actionConfig->getOrchestrationName(),
-            $actionConfig->getTasks()
+            $actionConfig->getPayload()
         );
 
         // save id, this for tests

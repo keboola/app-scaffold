@@ -81,7 +81,7 @@ class CreateOrchestrationActionConfigTest extends TestCase
                     ],
                 ],
             ],
-            $instance->getTasks()
+            $instance->getPayload()['tasks']
         );
     }
 }

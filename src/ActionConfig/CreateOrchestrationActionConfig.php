@@ -74,8 +74,10 @@ class CreateOrchestrationActionConfig extends AbstractActionConfig
         return $this->orchestrationName;
     }
 
-    public function getTasks(): array
+    public function getPayload(): array
     {
-        return $this->tasks;
+        $payload = $this->payload;
+        $payload['tasks'] = $this->tasks;
+        return $payload;
     }
 }
