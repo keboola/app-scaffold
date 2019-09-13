@@ -13,9 +13,15 @@ class ComponentTest extends TestCase
 {
     public function testGetScaffoldConfigurationNotExisting(): void
     {
+        putenv('KBC_DATADIR=' . __DIR__ . '/mock/datadir_empty_config');
         $component = new Component(new NullLogger);
 
         $reflection = new \ReflectionClass(get_class($component));
+
+        $prop = $reflection->getParentClass()->getProperty('dataDir');
+        $prop->setAccessible(true);
+        $prop->setValue($component, __DIR__);
+
         $method = $reflection->getMethod('getScaffoldConfiguration');
         $method->setAccessible(true);
 
