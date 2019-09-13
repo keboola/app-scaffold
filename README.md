@@ -8,7 +8,7 @@
 
 Scaffolds are saved in `scaffolds` directory, each scaffold has own directory named after scaffold and must contain `config.json` file
 
-There are 3 actions available `create.component` , `create.configrows`, `create.orchestration`
+There are 3 actions available `create.configuration` , `create.configrows`, `create.orchestration`
 
 component path `payload.configuration.parameters` can be set with component parameters injected by runner
 
@@ -28,7 +28,7 @@ example config:
 {
     "actions": [
             {
-                "action": "create.component",
+                "action": "create.configuration",
                 "id": "customId",
                 "KBCComponentId": "component name in storage",
                 "saveConfigId": true, // if true save configId after creation

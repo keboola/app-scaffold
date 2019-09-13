@@ -87,9 +87,11 @@ class App
 
     private function createConfigurationRows(CreateCofigRowActionConfig $actionConfig): void
     {
+        $this->logger->info(sprintf('Creating config rows for %s', $actionConfig->getRefConfigId()));
+
         if (!array_key_exists($actionConfig->getRefConfigId(), $this->configurationIdStorage)) {
             throw new Exception(sprintf(
-                'Action create.configrows refConfigId: %s wasn\'t created',
+                'Configuration for component refConfigId: %s wasn\'t created.',
                 $actionConfig->getRefConfigId()
             ));
         }
@@ -136,7 +138,7 @@ class App
     {
         foreach ($this->scaffoldStaticConfiguration['actions'] as $actionConfig) {
             switch ($actionConfig['action']) {
-                case 'create.component':
+                case 'create.configuration':
                     $this->createComponentConfiguration(
                         CreateComponentConfigurationActionConfig::create($actionConfig, $this->scaffoldParameters)
                     );

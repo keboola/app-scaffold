@@ -35,7 +35,7 @@ class CreateComponentConfigurationActionConfig extends AbstractActionConfig
         if (array_key_exists('KBCComponentId', $actionConfig)) {
             $config->KBCComponentId = $actionConfig['KBCComponentId'];
         } else {
-            throw new Exception('Actions create.component missing KBCComponentId');
+            throw new Exception('Actions create.configuration missing KBCComponentId');
         }
         if (array_key_exists('saveConfigId', $actionConfig)) {
             $config->saveConfigId = (bool) $actionConfig['saveConfigId'];
@@ -43,12 +43,12 @@ class CreateComponentConfigurationActionConfig extends AbstractActionConfig
         if (array_key_exists('payload', $actionConfig)) {
             $config->payload = $actionConfig['payload'];
         } else {
-            throw new Exception('Actions create.component missing payload');
+            throw new Exception('Actions create.configuration missing payload');
         }
         if (array_key_exists('name', $config->payload)) {
             $config->configrationName = $config->payload['name'];
         } else {
-            throw new Exception('Actions create.component payload missing component name');
+            throw new Exception('Actions create.configuration payload missing component name');
         }
 
         if ($config->getId() !== null && array_key_exists($config->getId(), $parameters)) {

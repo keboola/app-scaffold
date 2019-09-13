@@ -1,7 +1,7 @@
 {
     "actions": [
         {
-            "action": "create.component",
+            "action": "create.configuration",
             "id": "ex01",
             "KBCComponentId": "kds-team.ex-reviewtrackers",
             "saveConfigId": true,
@@ -52,7 +52,7 @@
             }
         },
         {
-            "action": "create.component",
+            "action": "create.configuration",
             "id": "app01",
             "KBCComponentId": "geneea.nlp-analysis-v2",
             "saveConfigId": true,
@@ -111,7 +111,7 @@
             }
         },
         {
-            "action": "create.component",
+            "action": "create.configuration",
             "id": "transformation01",
             "KBCComponentId": "transformation",
             "saveConfigId": true,
@@ -275,7 +275,7 @@
             ]
         },
         {
-            "action": "create.component",
+            "action": "create.configuration",
             "id": "transformation02",
             "KBCComponentId": "transformation",
             "saveConfigId": true,
@@ -434,7 +434,7 @@
             ]
         },
         {
-            "action": "create.component",
+            "action": "create.configuration",
             "id": "writer01",
             "KBCComponentId": "keboola.wr-db-snowflake",
             "saveConfigId": true,
