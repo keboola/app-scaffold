@@ -20,10 +20,10 @@ class ConfigRowIterator implements Iterator
     private $componentConfiguration;
 
     public function __construct(
-        CreateCofigRowActionConfig $createCofigRowActionConfig,
+        array $rows,
         Configuration $componentConfiguration
     ) {
-        $this->rows = $createCofigRowActionConfig->getRows();
+        $this->rows = $rows;
         $this->componentConfiguration = $componentConfiguration;
     }
 

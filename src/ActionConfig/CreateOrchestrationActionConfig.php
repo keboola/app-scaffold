@@ -24,7 +24,6 @@ class CreateOrchestrationActionConfig extends AbstractActionConfig
     public static function create(array $actionConfig, ?array $parameters): ActionConfigInterface
     {
         $config = new self();
-        $config->action = $actionConfig['action'];
 
         if (array_key_exists('id', $actionConfig)) {
             $config->id = $actionConfig['id'];
@@ -73,11 +72,6 @@ class CreateOrchestrationActionConfig extends AbstractActionConfig
     public function getOrchestrationName(): string
     {
         return $this->orchestrationName;
-    }
-
-    public function getPayload(): array
-    {
-        return $this->payload;
     }
 
     public function getTasks(): array

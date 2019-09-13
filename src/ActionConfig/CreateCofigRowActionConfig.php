@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Keboola\ScaffoldApp\ActionConfig;
 
 use Exception;
+use Keboola\StorageApi\Options\Components\Configuration;
 
 class CreateCofigRowActionConfig extends AbstractActionConfig
 {
@@ -20,7 +21,6 @@ class CreateCofigRowActionConfig extends AbstractActionConfig
     public static function create(array $actionConfig, ?array $parameters): ActionConfigInterface
     {
         $config = new self();
-        $config->action = $actionConfig['action'];
 
         if (array_key_exists('id', $actionConfig)) {
             $config->id = $actionConfig['id'];
@@ -44,8 +44,8 @@ class CreateCofigRowActionConfig extends AbstractActionConfig
         return $this->refConfigId;
     }
 
-    public function getRows(): array
+    public function getIterator(Configuration $componentConfiguration): ConfigRowIterator
     {
-        return $this->rows;
+        return new ConfigRowIterator($this->rows, $componentConfiguration);
     }
 }

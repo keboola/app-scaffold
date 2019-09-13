@@ -27,7 +27,6 @@ class CreateComponentConfigurationActionConfig extends AbstractActionConfig
     public static function create(array $actionConfig, ?array $parameters): ActionConfigInterface
     {
         $config = new self();
-        $config->action = $actionConfig['action'];
 
         if (array_key_exists('id', $actionConfig)) {
             $config->id = $actionConfig['id'];
@@ -51,7 +50,7 @@ class CreateComponentConfigurationActionConfig extends AbstractActionConfig
             throw new Exception('Actions create.configuration payload missing component name');
         }
 
-        if ($config->getId() !== null && array_key_exists($config->getId(), $parameters)) {
+        if (is_array($parameters) && $config->getId() !== null && array_key_exists($config->getId(), $parameters)) {
             // actions has parameters merge it with paylod configuration
             if (!array_key_exists('configuration', $config->payload)) {
                 $config->payload['configuration'] = [];

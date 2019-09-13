@@ -75,11 +75,11 @@ class App
         $this->logger->info('Creating configuration for orchstration');
 
         $actionConfig->populateOrchestrationTasksWithConfigurationIds($this->configurationIdStorage);
-
         $response = $this->orchestrationApiClient->createOrchestration(
             $actionConfig->getOrchestrationName(),
             $actionConfig->getTasks()
         );
+
         // save id, this for tests
         $this->configurationIdStorage[$actionConfig->getOrchestrationName()] = $response['id'];
         $this->logger->info(sprintf('Orchestration %s created', $response['id']));
@@ -89,9 +89,9 @@ class App
     {
         $this->logger->info(sprintf('Creating config rows for %s', $actionConfig->getRefConfigId()));
 
-        if (!array_key_exists($actionConfig->getRefConfigId(), $this->configurationIdStorage)) {
+        if (!$this->isConfigurationCreated($actionConfig->getRefConfigId())) {
             throw new Exception(sprintf(
-                'Configuration for component refConfigId: %s wasn\'t created.',
+                'Configuration for component refConfigId: %s wasn\'t created or saved.',
                 $actionConfig->getRefConfigId()
             ));
         }
@@ -99,7 +99,7 @@ class App
         /** @var Configuration $componentConfiguration */
         $componentConfiguration = $this->configurationIdStorage[$actionConfig->getRefConfigId()];
 
-        foreach ((new ConfigRowIterator($actionConfig, $componentConfiguration)) as $row) {
+        foreach ($actionConfig->getIterator($componentConfiguration) as $row) {
             $response = $this->componentsApiClient->addConfigurationRow($row);
             $this->logger->info(sprintf('Row for %s created', $response['id']));
         }
@@ -157,5 +157,10 @@ class App
                     throw new Exception(sprintf('Unknown action %s', $actionConfig['action']));
             }
         }
+    }
+
+    private function isConfigurationCreated(string $refConfigId): bool
+    {
+        return array_key_exists($refConfigId, $this->configurationIdStorage);
     }
 }
