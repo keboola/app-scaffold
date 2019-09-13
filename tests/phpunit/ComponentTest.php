@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Keboola\ScaffoldApp\Tests;
 
+use ReflectionClass;
 use Throwable;
 use Keboola\ScaffoldApp\Component;
 use PHPUnit\Framework\TestCase;
@@ -16,9 +17,12 @@ class ComponentTest extends TestCase
         putenv('KBC_DATADIR=' . __DIR__ . '/mock/datadir_empty_config');
         $component = new Component(new NullLogger);
 
-        $reflection = new \ReflectionClass(get_class($component));
+        $reflection = new ReflectionClass(get_class($component));
 
-        $prop = $reflection->getParentClass()->getProperty('dataDir');
+        /** @var ReflectionClass $refParentClass */
+        $refParentClass = $reflection->getParentClass();
+
+        $prop = $refParentClass->getProperty('dataDir');
         $prop->setAccessible(true);
         $prop->setValue($component, __DIR__);
 
