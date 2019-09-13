@@ -6,10 +6,13 @@ namespace Keboola\ScaffoldApp;
 
 use Exception;
 use Keboola\Orchestrator\Client as OrchestratorClient;
+use Keboola\ScaffoldApp\ActionConfig\ConfigRowIterator;
 use Keboola\ScaffoldApp\ActionConfig\CreateCofigRowActionConfig;
-use Keboola\ScaffoldApp\ActionConfig\CreateComponentActionConfig;
+use Keboola\ScaffoldApp\ActionConfig\CreateComponentConfigurationActionConfig;
 use Keboola\ScaffoldApp\ActionConfig\CreateOrchestrationActionConfig;
 use Keboola\StorageApi\Client as StorageClient;
+use Keboola\StorageApi\Components;
+use Keboola\StorageApi\Options\Components\Configuration;
 use Psr\Log\LoggerInterface;
 
 class App
@@ -47,6 +50,11 @@ class App
      */
     private $orchestrationApiClient;
 
+    /**
+     * @var Components
+     */
+    private $componentsApiClient;
+
     public function __construct(
         array $scaffoldStaticConfiguration,
         array $scaffoldParameters,
@@ -59,6 +67,7 @@ class App
         $this->logger = $logger;
         $this->storageApiClient = $storageApiClient;
         $this->orchestrationApiClient = $orchestrationApiClient;
+        $this->componentsApiClient = new Components($this->storageApiClient);
     }
 
     private function createOrchestration(CreateOrchestrationActionConfig $actionConfig): void
@@ -76,56 +85,50 @@ class App
         $this->logger->info(sprintf('Orchestration %s created', $response['id']));
     }
 
-    private function createConfigRows(CreateCofigRowActionConfig $actionConfig): void
+    private function createConfigurationRows(CreateCofigRowActionConfig $actionConfig): void
     {
-        foreach ($actionConfig->getRows() as $row) {
-            if (array_key_exists($actionConfig->getRefConfigId(), $this->configurationIdStorage)) {
-                throw new Exception(sprintf(
-                    'Action create.configrows refConfigId: %s wasn\'t create',
-                    $actionConfig->getRefConfigId()
-                ));
-            }
+        if (!array_key_exists($actionConfig->getRefConfigId(), $this->configurationIdStorage)) {
+            throw new Exception(sprintf(
+                'Action create.configrows refConfigId: %s wasn\'t created',
+                $actionConfig->getRefConfigId()
+            ));
+        }
 
-            $this->storageApiClient->apiPost(
-                sprintf(
-                    'storage/components/%s/configs/%s/rows',
-                    $this->configurationIdStorage[$actionConfig->getRefConfigId()]['component'],
-                    $this->configurationIdStorage[$actionConfig->getRefConfigId()]['configId']
-                ),
-                $row
-            );
+        /** @var Configuration $componentConfiguration */
+        $componentConfiguration = $this->configurationIdStorage[$actionConfig->getRefConfigId()];
+
+        foreach ((new ConfigRowIterator($actionConfig, $componentConfiguration)) as $row) {
+            $response = $this->componentsApiClient->addConfigurationRow($row);
+            $this->logger->info(sprintf('Row for %s created', $response['id']));
         }
     }
 
-    private function createComponent(CreateComponentActionConfig $actionConfig): void
+    private function createComponentConfiguration(CreateComponentConfigurationActionConfig $actionConfig): void
     {
+        $configuration = $actionConfig->getRequestConfiguration();
+
         $this->logger->info(
             sprintf(
                 'Creating configuration for component %s with name %s',
-                $actionConfig->getKBCComponentId(),
-                $actionConfig->getComponentName()
+                $configuration->getComponentId(),
+                $configuration->getName()
             )
         );
 
-        $response = $this->storageApiClient->apiPost(
-            "storage/components/{$actionConfig->getKBCComponentId()}/configs",
-            $actionConfig->getPayload()
-        );
+        $response = $this->componentsApiClient->addConfiguration($configuration);
+        $configuration->setConfigurationId($response['id']);
 
         $this->logger->info(
             sprintf(
                 'Configuration for component %s with id %s created',
-                $actionConfig->getKBCComponentId(),
-                $response['id']
+                $configuration->getComponentId(),
+                $configuration->getConfigurationId()
             )
         );
 
         if ($actionConfig->isSaveConfigId()) {
             // save id for use in orchestration
-            $this->configurationIdStorage[$actionConfig->getId()] = [
-                'configId' => $response['id'],
-                'component' => $actionConfig->getKBCComponentId(),
-            ];
+            $this->configurationIdStorage[$actionConfig->getId()] = $configuration;
         }
     }
 
@@ -134,12 +137,12 @@ class App
         foreach ($this->scaffoldStaticConfiguration['actions'] as $actionConfig) {
             switch ($actionConfig['action']) {
                 case 'create.component':
-                    $this->createComponent(
-                        CreateComponentActionConfig::create($actionConfig, $this->scaffoldParameters)
+                    $this->createComponentConfiguration(
+                        CreateComponentConfigurationActionConfig::create($actionConfig, $this->scaffoldParameters)
                     );
                     break;
                 case 'create.configrows':
-                    $this->createConfigRows(
+                    $this->createConfigurationRows(
                         CreateCofigRowActionConfig::create($actionConfig, null)
                     );
                     break;

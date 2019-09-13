@@ -48,7 +48,7 @@ class ConfigDefinition implements ConfigurationInterface
                             ->cannotBeEmpty()
                         ->end()
                         ->scalarNode('clear_state')
-                            ->defaultValue("true")
+                            ->defaultValue('true')
                         ->end()
                     ->end()
                 ->end() // parameters

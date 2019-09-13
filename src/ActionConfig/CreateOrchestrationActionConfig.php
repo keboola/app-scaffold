@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Keboola\ScaffoldApp\ActionConfig;
 
 use Exception;
+use Keboola\StorageApi\Options\Components\Configuration;
 
 class CreateOrchestrationActionConfig extends AbstractActionConfig
 {
@@ -41,24 +42,28 @@ class CreateOrchestrationActionConfig extends AbstractActionConfig
             throw new Exception('Actions create.orchestration missing name');
         }
 
-        if (array_key_exists('tasks', $config->payload)) {
+        if (array_key_exists('tasks', $config->payload) && 0 !== count($config->payload['tasks'])) {
             $config->tasks = $config->payload['tasks'];
+        } else {
+            throw new Exception('Actions create.orchestration tasks are empty');
         }
 
         return $config;
     }
 
+    /**
+     * @param array<Configuration> $createdConfigurations
+     */
     public function populateOrchestrationTasksWithConfigurationIds(array $createdConfigurations): void
     {
-        // TODO: validate if tasks are set
-        // TODO: validate if all tasks has config
-
         foreach ($this->tasks as &$task) {
+            /** @var Configuration $componentConfiguration */
+            $componentConfiguration = $createdConfigurations[$task['refConfigId']];
             $task = array_merge(
                 $task,
                 [
                     'actionParameters' => [
-                        'config' => $createdConfigurations[$task['id']],
+                        'config' => $componentConfiguration->getConfigurationId(),
                     ],
                 ]
             );

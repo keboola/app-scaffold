@@ -439,8 +439,8 @@
             "KBCComponentId": "keboola.wr-db-snowflake",
             "saveConfigId": true,
             "payload": {
+                "name": "Looker",
                 "configuration": {
-                    "name": "Looker",
                     "parameters": {
                         "tables": [
                             {
@@ -1390,7 +1390,7 @@
                     },
                     {
                         "component": "geneea.nlp-analysis-v2",
-                        "refConfigId": "application01",
+                        "refConfigId": "app01",
                         "action": "run",
                         "timeoutMinutes": null,
                         "active": true,

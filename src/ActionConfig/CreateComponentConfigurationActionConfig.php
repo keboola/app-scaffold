@@ -5,8 +5,9 @@ declare(strict_types=1);
 namespace Keboola\ScaffoldApp\ActionConfig;
 
 use Exception;
+use Keboola\StorageApi\Options\Components\Configuration;
 
-class CreateComponentActionConfig extends AbstractActionConfig
+class CreateComponentConfigurationActionConfig extends AbstractActionConfig
 {
     /** @var string */
     private $KBCComponentId;
@@ -18,10 +19,10 @@ class CreateComponentActionConfig extends AbstractActionConfig
     private $payload = [];
 
     /** @var string */
-    private $componentName;
+    private $configrationName;
 
     /**
-     * @return CreateComponentActionConfig
+     * @return CreateComponentConfigurationActionConfig
      */
     public static function create(array $actionConfig, ?array $parameters): ActionConfigInterface
     {
@@ -45,7 +46,7 @@ class CreateComponentActionConfig extends AbstractActionConfig
             throw new Exception('Actions create.component missing payload');
         }
         if (array_key_exists('name', $config->payload)) {
-            $config->componentName = $config->payload['name'];
+            $config->configrationName = $config->payload['name'];
         } else {
             throw new Exception('Actions create.component payload missing component name');
         }
@@ -64,23 +65,21 @@ class CreateComponentActionConfig extends AbstractActionConfig
         return $config;
     }
 
-    public function getComponentName(): string
-    {
-        return $this->componentName;
-    }
-
-    public function getKBCComponentId(): string
-    {
-        return $this->KBCComponentId;
-    }
-
     public function isSaveConfigId(): bool
     {
         return $this->saveConfigId;
     }
 
-    public function getPayload(): array
+    public function getRequestConfiguration(): Configuration
     {
-        return $this->payload;
+        $configuration = new Configuration;
+        $configuration->setComponentId($this->KBCComponentId);
+        $configuration->setName($this->configrationName);
+
+        if (array_key_exists('configuration', $this->payload)) {
+            $configuration->setConfiguration($this->payload['configuration']);
+        }
+
+        return $configuration;
     }
 }
