@@ -2,15 +2,21 @@
 
 declare(strict_types=1);
 
-namespace MyComponent;
+namespace Keboola\ScaffoldApp;
 
 use Keboola\Component\Config\BaseConfig;
 
 class Config extends BaseConfig
 {
-    // @todo implement your custom getters
-    public function getFoo(): string
+    public function getScaffoldName(): string
     {
-        return $this->getValue(['parameters', 'foo']);
+        //only one scaffold can be passed in parameters
+        return array_keys($this->getParameters())[0];
+    }
+
+    public function getScaffoldParameters(): array
+    {
+        //only one scaffold can be passed in parameters
+        return $this->getParameters()[$this->getScaffoldName()];
     }
 }

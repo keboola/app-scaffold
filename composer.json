@@ -1,7 +1,9 @@
 {
     "require": {
         "php": "^7.1",
-        "keboola/php-component": "^7.0.1"
+        "keboola/orchestrator-php-client": "^1.2",
+        "keboola/php-component": "^7.0.1",
+        "keboola/storage-api-client": "^10.7"
     },
     "require-dev": {
         "jakub-onderka/php-parallel-lint": "^1.0",
@@ -14,13 +16,14 @@
     },
     "autoload": {
         "psr-4": {
-            "MyComponent\\": "src/"
+            "Keboola\\ScaffoldApp\\": "src/",
+            "Keboola\\Scaffolds\\": "scaffolds/"
         }
     },
     "autoload-dev": {
         "psr-4": {
-            "MyComponent\\Tests\\": "tests/phpunit/",
-            "MyComponent\\FunctionalTests\\": "tests/functional/"
+            "Keboola\\ScaffoldApp\\Tests\\": "tests/phpunit/",
+            "Keboola\\ScaffoldApp\\FunctionalTests\\": "tests/functional/"
         }
     },
     "scripts": {
