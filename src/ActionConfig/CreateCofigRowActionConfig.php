@@ -7,7 +7,7 @@ namespace Keboola\ScaffoldApp\ActionConfig;
 use Exception;
 use Keboola\StorageApi\Options\Components\Configuration;
 
-class CreateCofigRowActionConfig extends AbstractActionConfig
+class CreateCofigRowActionConfig implements ActionConfigInterface
 {
     /** @var string */
     private $refConfigId;
@@ -22,19 +22,15 @@ class CreateCofigRowActionConfig extends AbstractActionConfig
     {
         $config = new self();
 
-        if (array_key_exists('id', $actionConfig)) {
-            $config->id = $actionConfig['id'];
-        }
-        if (array_key_exists('refConfigId', $actionConfig)) {
-            $config->refConfigId = $actionConfig['refConfigId'];
-        } else {
+        if (empty($actionConfig['refConfigId'])) {
             throw new Exception('Actions create.configrows missing refConfigId');
         }
-        if (array_key_exists('rows', $actionConfig) && 0 !== count($actionConfig['rows'])) {
-            $config->rows = $actionConfig['rows'];
-        } else {
+        $config->refConfigId = $actionConfig['refConfigId'];
+
+        if (empty($actionConfig['rows'])) {
             throw new Exception('Actions create.configrows has no rows');
         }
+        $config->rows = $actionConfig['rows'];
 
         return $config;
     }

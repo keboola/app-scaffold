@@ -4,7 +4,6 @@
             "action": "create.configuration",
             "id": "ex01",
             "KBCComponentId": "kds-team.ex-reviewtrackers",
-            "saveConfigId": true,
             "payload": {
                 "name": "KBC Scaffold reviewtrackers",
                 "configuration": {
@@ -55,7 +54,6 @@
             "action": "create.configuration",
             "id": "app01",
             "KBCComponentId": "geneea.nlp-analysis-v2",
-            "saveConfigId": true,
             "payload": {
                 "name": "Reviews & Responses analysis",
                 "configuration": {
@@ -114,7 +112,6 @@
             "action": "create.configuration",
             "id": "transformation01",
             "KBCComponentId": "transformation",
-            "saveConfigId": true,
             "payload": {
                 "name": "KBC Scaffold 01 Reviews (pre-NLP)",
                 "configuration": {
@@ -278,7 +275,6 @@
             "action": "create.configuration",
             "id": "transformation02",
             "KBCComponentId": "transformation",
-            "saveConfigId": true,
             "payload": {
                 "name": "KBC Scaffold 02 Reviews (post-NLP)",
                 "configuration": {
@@ -437,7 +433,6 @@
             "action": "create.configuration",
             "id": "writer01",
             "KBCComponentId": "keboola.wr-db-snowflake",
-            "saveConfigId": true,
             "payload": {
                 "name": "Looker",
                 "configuration": {

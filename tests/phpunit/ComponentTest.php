@@ -19,13 +19,6 @@ class ComponentTest extends TestCase
 
         $reflection = new ReflectionClass(get_class($component));
 
-        /** @var ReflectionClass $refParentClass */
-        $refParentClass = $reflection->getParentClass();
-
-        $prop = $refParentClass->getProperty('dataDir');
-        $prop->setAccessible(true);
-        $prop->setValue($component, __DIR__);
-
         $method = $reflection->getMethod('getScaffoldConfiguration');
         $method->setAccessible(true);
 

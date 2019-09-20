@@ -10,13 +10,13 @@ Scaffolds are saved in `scaffolds` directory, each scaffold has own directory na
 
 There are 3 actions available `create.configuration` , `create.configrows`, `create.orchestration`
 
-component path `payload.configuration.parameters` can be set with component parameters injected by runner
+Action path `payload.configuration.parameters` can be overide with parameters injected by runner.
 
 ```
 {
     "parameters": {
         "ReviewsReviewTrackers": {
-            "writer01": {
+            "writer01": {  // refer to component config id
                 "parameters":{...}
             }
         }
@@ -28,10 +28,9 @@ example config:
 {
     "actions": [
             {
-                "action": "create.configuration",
-                "id": "customId",
-                "KBCComponentId": "component name in storage",
-                "saveConfigId": true, // if true save configId after creation
+                "action": "create.configuration", // required
+                "id": "customId", // required
+                "KBCComponentId": "component name in storage",  // required
                 "payload": {
                     "name": "Component name",
                     "configuration": {

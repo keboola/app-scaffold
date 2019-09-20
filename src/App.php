@@ -127,10 +127,8 @@ class App
             )
         );
 
-        if ($actionConfig->isSaveConfigId()) {
-            // save id for use in orchestration
-            $this->configurationIdStorage[$actionConfig->getId()] = $configuration;
-        }
+        // save id for use in orchestration
+        $this->configurationIdStorage[$actionConfig->getId()] = $configuration;
     }
 
     public function run(): void

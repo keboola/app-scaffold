@@ -29,20 +29,30 @@ class CreateComponentConfigurationActionConfigTest extends TestCase
 
     public function testValidation(): void
     {
+        // misisng component internal id
+        $this->expectException(Throwable::class);
+        $this->expectExceptionMessage('Actions create.configuration missing id or is empty');
+        CreateComponentConfigurationActionConfig::create([], null);
+
         // misisng SAPI component id
         $this->expectException(Throwable::class);
-        $this->expectExceptionMessage('Actions create.configuration missing KBCComponentId');
-        CreateComponentConfigurationActionConfig::create(['action' => 'action'], null);
+        $this->expectExceptionMessage('Actions create.configuration missing KBCComponentId or is empty');
+        CreateComponentConfigurationActionConfig::create(['id' => 'id', 'action' => 'action'], null);
 
         // missing payload
         $this->expectException(Throwable::class);
         $this->expectExceptionMessage('Actions create.configuration missing payload');
-        CreateComponentConfigurationActionConfig::create(['action' => 'action', 'KBCComponentId' => 'ex01',], null);
+        CreateComponentConfigurationActionConfig::create([
+            'id' => 'id',
+            'action' => 'action',
+            'KBCComponentId' => 'ex01',
+        ], null);
 
         // missing name
         $this->expectException(Throwable::class);
         $this->expectExceptionMessage('Actions create.configuration payload missing component name');
         CreateComponentConfigurationActionConfig::create([
+            'id' => 'id',
             'action' => 'action',
             'KBCComponentId' => 'ex01',
             'payload' => [],

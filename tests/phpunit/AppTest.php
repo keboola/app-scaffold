@@ -55,7 +55,6 @@ class AppTest extends TestCase
                         'action' => 'create.configuration',
                         'id' => 'ex01',
                         'KBCComponentId' => 'ex01',
-                        'saveConfigId' => true,
                         'payload' => [
                             'name' => 'ex01',
                         ],
@@ -107,45 +106,5 @@ class AppTest extends TestCase
         $this->assertArrayHasKey('storage/components/ex01/configs', $posts);
         $this->assertArrayHasKey('storage/components/ex01/configs/1/rows', $posts);
         $this->assertArrayHasKey('orch01', $orchestrations);
-    }
-
-    public function testRunConfigurationForRowWasNotCreated(): void
-    {
-        $app = $this->createApp(
-            [
-                'actions' => [
-                    [
-                        'action' => 'create.configuration',
-                        'id' => 'ex01',
-                        'KBCComponentId' => 'ex01',
-                        'saveConfigId' => false, // configuration is not saved
-                        'payload' => [
-                            'name' => 'ex01',
-                        ],
-                    ],
-                    [
-                        'action' => 'create.configrows',
-                        'refConfigId' => 'ex01',
-                        'rows' => [
-                            [
-                                'name' => 'row01',
-                                'configuration' => [],
-                            ],
-                        ],
-                    ],
-                ],
-            ],
-            [],
-            function ($url): void {
-                $this->assertEquals('storage/components/ex01/configs', $url);
-            },
-            function (): void {
-            }
-        );
-
-        $this->expectException(Throwable::class);
-        $this->expectExceptionMessage('Configuration for component refConfigId: ex01 wasn\'t created or saved.');
-
-        $app->run();
     }
 }

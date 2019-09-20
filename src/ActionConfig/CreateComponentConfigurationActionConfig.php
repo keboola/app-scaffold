@@ -7,13 +7,13 @@ namespace Keboola\ScaffoldApp\ActionConfig;
 use Exception;
 use Keboola\StorageApi\Options\Components\Configuration;
 
-class CreateComponentConfigurationActionConfig extends AbstractActionConfig
+class CreateComponentConfigurationActionConfig implements ActionConfigInterface
 {
     /** @var string */
-    private $KBCComponentId;
+    protected $id;
 
-    /** @var bool */
-    private $saveConfigId = false;
+    /** @var string */
+    private $KBCComponentId;
 
     /** @var array */
     private $payload = [];
@@ -28,34 +28,32 @@ class CreateComponentConfigurationActionConfig extends AbstractActionConfig
     {
         $config = new self();
 
-        if (array_key_exists('id', $actionConfig)) {
-            $config->id = $actionConfig['id'];
+        if (empty($actionConfig['id'])) {
+            throw new Exception('Actions create.configuration missing id or is empty');
         }
-        if (array_key_exists('KBCComponentId', $actionConfig)) {
-            $config->KBCComponentId = $actionConfig['KBCComponentId'];
-        } else {
-            throw new Exception('Actions create.configuration missing KBCComponentId');
-        }
-        if (array_key_exists('saveConfigId', $actionConfig)) {
-            $config->saveConfigId = (bool) $actionConfig['saveConfigId'];
-        }
-        if (array_key_exists('payload', $actionConfig)) {
-            $config->payload = $actionConfig['payload'];
-        } else {
-            throw new Exception('Actions create.configuration missing payload');
-        }
-        if (array_key_exists('name', $config->payload)) {
-            $config->configrationName = $config->payload['name'];
-        } else {
-            throw new Exception('Actions create.configuration payload missing component name');
-        }
+        $config->id = $actionConfig['id'];
 
-        if (is_array($parameters) && $config->getId() !== null && array_key_exists($config->getId(), $parameters)) {
-            // actions has parameters merge it with paylod configuration
-            if (!array_key_exists('configuration', $config->payload)) {
+        if (empty($actionConfig['KBCComponentId'])) {
+            throw new Exception('Actions create.configuration missing KBCComponentId or is empty');
+        }
+        $config->KBCComponentId = $actionConfig['KBCComponentId'];
+
+        if (empty($actionConfig['payload'])) {
+            throw new Exception('Actions create.configuration missing payload or is empty');
+        }
+        $config->payload = $actionConfig['payload'];
+
+        if (empty($config->payload['name'])) {
+            throw new Exception('Actions create.configuration payload missing component name or is empty');
+        }
+        $config->configrationName = $config->payload['name'];
+
+        if (is_array($parameters) && array_key_exists($config->getId(), $parameters)) {
+            // actions has parameters merge it with payload configuration
+            if (empty($config->payload['configuration'])) {
                 $config->payload['configuration'] = [];
             }
-            $config->payload['configuration'] = array_merge_recursive(
+            $config->payload['configuration'] = array_merge(
                 $config->payload['configuration'],
                 $parameters[$config->getId()]
             );
@@ -64,9 +62,9 @@ class CreateComponentConfigurationActionConfig extends AbstractActionConfig
         return $config;
     }
 
-    public function isSaveConfigId(): bool
+    public function getId(): string
     {
-        return $this->saveConfigId;
+        return $this->id;
     }
 
     public function getRequestConfiguration(): Configuration
@@ -75,7 +73,7 @@ class CreateComponentConfigurationActionConfig extends AbstractActionConfig
         $configuration->setComponentId($this->KBCComponentId);
         $configuration->setName($this->configrationName);
 
-        if (array_key_exists('configuration', $this->payload)) {
+        if (!empty($this->payload['configuration'])) {
             $configuration->setConfiguration($this->payload['configuration']);
         }
 
