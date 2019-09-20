@@ -15,10 +15,10 @@ class ConfigDefinition extends BaseConfigDefinition
     {
         $parametersNode = parent::getParametersDefinition();
         $finder = new Finder();
-        $finder->files()->in(__DIR__ . '/../scaffolds/*')->name('ConfigDefinition.php');
+        $finder->files()->in(__DIR__ . '/../scaffolds/*')->name('ScaffoldDefinition.php');
         foreach ($finder as $file) {
             /** @var ConfigurationInterface $configDefinition */
-            $class = 'Keboola\\Scaffolds\\' . $file->getPathInfo()->getBasename() . '\\' . 'ConfigDefinition';
+            $class = 'Keboola\\Scaffolds\\' . $file->getPathInfo()->getBasename() . '\\' . 'ScaffoldDefinition';
             $configDefinition = new $class;
             $parametersNode->append($configDefinition->getConfigTreeBuilder()->getRootNode());
         }

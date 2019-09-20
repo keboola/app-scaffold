@@ -2,12 +2,12 @@
 
 declare(strict_types=1);
 
-namespace Keboola\ScaffoldApp\ActionConfig;
+namespace Keboola\ScaffoldApp\OperationConfig;
 
 use Exception;
 use Keboola\StorageApi\Options\Components\Configuration;
 
-class CreateCofigRowActionConfig implements ActionConfigInterface
+class CreateCofigRowOperationConfig implements OperationConfigInterface
 {
     /** @var string */
     private $refConfigId;
@@ -16,19 +16,19 @@ class CreateCofigRowActionConfig implements ActionConfigInterface
     private $rows = [];
 
     /**
-     * @return CreateCofigRowActionConfig
+     * @return CreateCofigRowOperationConfig
      */
-    public static function create(array $actionConfig, ?array $parameters): ActionConfigInterface
+    public static function create(array $actionConfig, ?array $parameters): OperationConfigInterface
     {
         $config = new self();
 
         if (empty($actionConfig['refConfigId'])) {
-            throw new Exception('Actions create.configrows missing refConfigId');
+            throw new Exception('Operation create.configrows missing refConfigId');
         }
         $config->refConfigId = $actionConfig['refConfigId'];
 
         if (empty($actionConfig['rows'])) {
-            throw new Exception('Actions create.configrows has no rows');
+            throw new Exception('Operation create.configrows has no rows');
         }
         $config->rows = $actionConfig['rows'];
 

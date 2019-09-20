@@ -50,9 +50,9 @@ class AppTest extends TestCase
 
         $app = $this->createApp(
             [
-                'actions' => [
+                'operations' => [
                     [
-                        'action' => 'create.configuration',
+                        'operation' => 'create.configuration',
                         'id' => 'ex01',
                         'KBCComponentId' => 'ex01',
                         'payload' => [
@@ -60,7 +60,7 @@ class AppTest extends TestCase
                         ],
                     ],
                     [
-                        'action' => 'create.configrows',
+                        'operation' => 'create.configrows',
                         'refConfigId' => 'ex01',
                         'rows' => [
                             [
@@ -70,7 +70,7 @@ class AppTest extends TestCase
                         ],
                     ],
                     [
-                        'action' => 'create.orchestration',
+                        'operation' => 'create.orchestration',
                         'payload' => [
                             'name' => 'orch01',
                             'tasks' => [

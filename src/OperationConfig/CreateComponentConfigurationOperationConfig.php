@@ -2,12 +2,12 @@
 
 declare(strict_types=1);
 
-namespace Keboola\ScaffoldApp\ActionConfig;
+namespace Keboola\ScaffoldApp\OperationConfig;
 
 use Exception;
 use Keboola\StorageApi\Options\Components\Configuration;
 
-class CreateComponentConfigurationActionConfig implements ActionConfigInterface
+class CreateComponentConfigurationOperationConfig implements OperationConfigInterface
 {
     /** @var string */
     protected $id;
@@ -22,29 +22,29 @@ class CreateComponentConfigurationActionConfig implements ActionConfigInterface
     private $configrationName;
 
     /**
-     * @return CreateComponentConfigurationActionConfig
+     * @return CreateComponentConfigurationOperationConfig
      */
-    public static function create(array $actionConfig, ?array $parameters): ActionConfigInterface
+    public static function create(array $actionConfig, ?array $parameters): OperationConfigInterface
     {
         $config = new self();
 
         if (empty($actionConfig['id'])) {
-            throw new Exception('Actions create.configuration missing id or is empty');
+            throw new Exception('Operation create.configuration missing id or is empty');
         }
         $config->id = $actionConfig['id'];
 
         if (empty($actionConfig['KBCComponentId'])) {
-            throw new Exception('Actions create.configuration missing KBCComponentId or is empty');
+            throw new Exception('Operation create.configuration missing KBCComponentId or is empty');
         }
         $config->KBCComponentId = $actionConfig['KBCComponentId'];
 
         if (empty($actionConfig['payload'])) {
-            throw new Exception('Actions create.configuration missing payload or is empty');
+            throw new Exception('Operation create.configuration missing payload or is empty');
         }
         $config->payload = $actionConfig['payload'];
 
         if (empty($config->payload['name'])) {
-            throw new Exception('Actions create.configuration payload missing component name or is empty');
+            throw new Exception('Operation create.configuration payload missing component name or is empty');
         }
         $config->configrationName = $config->payload['name'];
 

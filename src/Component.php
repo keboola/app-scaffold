@@ -45,7 +45,7 @@ class Component extends BaseComponent
     private function getScaffoldConfiguration(string $scaffoldName): array
     {
         $scaffoldFolder = __DIR__ . '/../scaffolds/' . $scaffoldName;
-        $scaffoldConfigFile = $scaffoldFolder . '/config.json';
+        $scaffoldConfigFile = $scaffoldFolder . '/scaffold.json';
         $fs = new Filesystem();
         if (!$fs->exists($scaffoldFolder)) {
             throw new Exception(sprintf('Scaffold name: %s does\'t exists.', $scaffoldName));

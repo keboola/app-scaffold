@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace Keboola\ScaffoldApp\Tests\ActionConfig;
+namespace Keboola\ScaffoldApp\Tests\OperationConfig;
 
 use Iterator;
-use Keboola\ScaffoldApp\ActionConfig\ConfigRowIterator;
+use Keboola\ScaffoldApp\OperationConfig\ConfigRowIterator;
 use Keboola\StorageApi\Options\Components\Configuration;
 use Keboola\StorageApi\Options\Components\ConfigurationRow;
 use PHPUnit\Framework\TestCase;

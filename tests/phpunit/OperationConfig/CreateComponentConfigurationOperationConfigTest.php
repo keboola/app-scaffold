@@ -2,14 +2,14 @@
 
 declare(strict_types=1);
 
-namespace Keboola\ScaffoldApp\Tests\ActionConfig;
+namespace Keboola\ScaffoldApp\Tests\OperationConfig;
 
 use Throwable;
-use Keboola\ScaffoldApp\ActionConfig\ActionConfigInterface;
-use Keboola\ScaffoldApp\ActionConfig\CreateComponentConfigurationActionConfig;
+use Keboola\ScaffoldApp\OperationConfig\OperationConfigInterface;
+use Keboola\ScaffoldApp\OperationConfig\CreateComponentConfigurationOperationConfig;
 use PHPUnit\Framework\TestCase;
 
-class CreateComponentConfigurationActionConfigTest extends TestCase
+class CreateComponentConfigurationOperationConfigTest extends TestCase
 {
     private const WORKING_CONFIGURATION = [
         'action' => 'create.configuration',
@@ -23,26 +23,26 @@ class CreateComponentConfigurationActionConfigTest extends TestCase
 
     public function testImplements(): void
     {
-        $instance = CreateComponentConfigurationActionConfig::create(self::WORKING_CONFIGURATION, null);
-        $this->assertInstanceOf(ActionConfigInterface::class, $instance);
+        $instance = CreateComponentConfigurationOperationConfig::create(self::WORKING_CONFIGURATION, null);
+        $this->assertInstanceOf(OperationConfigInterface::class, $instance);
     }
 
     public function testValidation(): void
     {
         // misisng component internal id
         $this->expectException(Throwable::class);
-        $this->expectExceptionMessage('Actions create.configuration missing id or is empty');
-        CreateComponentConfigurationActionConfig::create([], null);
+        $this->expectExceptionMessage('Operation create.configuration missing id or is empty');
+        CreateComponentConfigurationOperationConfig::create([], null);
 
         // misisng SAPI component id
         $this->expectException(Throwable::class);
-        $this->expectExceptionMessage('Actions create.configuration missing KBCComponentId or is empty');
-        CreateComponentConfigurationActionConfig::create(['id' => 'id', 'action' => 'action'], null);
+        $this->expectExceptionMessage('Operation create.configuration missing KBCComponentId or is empty');
+        CreateComponentConfigurationOperationConfig::create(['id' => 'id', 'action' => 'action'], null);
 
         // missing payload
         $this->expectException(Throwable::class);
-        $this->expectExceptionMessage('Actions create.configuration missing payload');
-        CreateComponentConfigurationActionConfig::create([
+        $this->expectExceptionMessage('Operation create.configuration missing payload');
+        CreateComponentConfigurationOperationConfig::create([
             'id' => 'id',
             'action' => 'action',
             'KBCComponentId' => 'ex01',
@@ -50,8 +50,8 @@ class CreateComponentConfigurationActionConfigTest extends TestCase
 
         // missing name
         $this->expectException(Throwable::class);
-        $this->expectExceptionMessage('Actions create.configuration payload missing component name');
-        CreateComponentConfigurationActionConfig::create([
+        $this->expectExceptionMessage('Operation create.configuration payload missing component name');
+        CreateComponentConfigurationOperationConfig::create([
             'id' => 'id',
             'action' => 'action',
             'KBCComponentId' => 'ex01',
@@ -61,7 +61,7 @@ class CreateComponentConfigurationActionConfigTest extends TestCase
 
     public function testMergeParameters(): void
     {
-        $instance = CreateComponentConfigurationActionConfig::create(
+        $instance = CreateComponentConfigurationOperationConfig::create(
             self::WORKING_CONFIGURATION,
             ['ex01' => ['parameters' => ['params1' => ['param1Value']]]]
         );

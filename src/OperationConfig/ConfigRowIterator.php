@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Keboola\ScaffoldApp\ActionConfig;
+namespace Keboola\ScaffoldApp\OperationConfig;
 
 use Iterator;
 use Keboola\StorageApi\Options\Components\Configuration;

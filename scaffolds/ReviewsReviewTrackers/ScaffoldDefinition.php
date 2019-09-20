@@ -9,7 +9,7 @@ use Symfony\Component\Config\Definition\Builder\ArrayNodeDefinition;
 use Symfony\Component\Config\Definition\Builder\TreeBuilder;
 use Symfony\Component\Config\Definition\ConfigurationInterface;
 
-class ConfigDefinition implements ConfigurationInterface
+class ScaffoldDefinition implements ConfigurationInterface
 {
     /**
      * Generates the configuration tree builder.

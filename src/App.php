@@ -6,9 +6,9 @@ namespace Keboola\ScaffoldApp;
 
 use Exception;
 use Keboola\Orchestrator\Client as OrchestratorClient;
-use Keboola\ScaffoldApp\ActionConfig\CreateCofigRowActionConfig;
-use Keboola\ScaffoldApp\ActionConfig\CreateComponentConfigurationActionConfig;
-use Keboola\ScaffoldApp\ActionConfig\CreateOrchestrationActionConfig;
+use Keboola\ScaffoldApp\OperationConfig\CreateCofigRowOperationConfig;
+use Keboola\ScaffoldApp\OperationConfig\CreateComponentConfigurationOperationConfig;
+use Keboola\ScaffoldApp\OperationConfig\CreateOrchestrationOperationConfig;
 use Keboola\StorageApi\Client as StorageClient;
 use Keboola\StorageApi\Components;
 use Keboola\StorageApi\Options\Components\Configuration;
@@ -69,44 +69,44 @@ class App
         $this->componentsApiClient = new Components($this->storageApiClient);
     }
 
-    private function createOrchestration(CreateOrchestrationActionConfig $actionConfig): void
+    private function createOrchestration(CreateOrchestrationOperationConfig $operationConfig): void
     {
         $this->logger->info('Creating configuration for orchstration');
 
-        $actionConfig->populateOrchestrationTasksWithConfigurationIds($this->configurationIdStorage);
+        $operationConfig->populateOrchestrationTasksWithConfigurationIds($this->configurationIdStorage);
         $response = $this->orchestrationApiClient->createOrchestration(
-            $actionConfig->getOrchestrationName(),
-            $actionConfig->getPayload()
+            $operationConfig->getOrchestrationName(),
+            $operationConfig->getPayload()
         );
 
         // save id, this for tests
-        $this->configurationIdStorage[$actionConfig->getOrchestrationName()] = $response['id'];
+        $this->configurationIdStorage[$operationConfig->getOrchestrationName()] = $response['id'];
         $this->logger->info(sprintf('Orchestration %s created', $response['id']));
     }
 
-    private function createConfigurationRows(CreateCofigRowActionConfig $actionConfig): void
+    private function createConfigurationRows(CreateCofigRowOperationConfig $operationConfig): void
     {
-        $this->logger->info(sprintf('Creating config rows for %s', $actionConfig->getRefConfigId()));
+        $this->logger->info(sprintf('Creating config rows for %s', $operationConfig->getRefConfigId()));
 
-        if (!$this->isConfigurationCreated($actionConfig->getRefConfigId())) {
+        if (!$this->isConfigurationCreated($operationConfig->getRefConfigId())) {
             throw new Exception(sprintf(
                 'Configuration for component refConfigId: %s wasn\'t created or saved.',
-                $actionConfig->getRefConfigId()
+                $operationConfig->getRefConfigId()
             ));
         }
 
         /** @var Configuration $componentConfiguration */
-        $componentConfiguration = $this->configurationIdStorage[$actionConfig->getRefConfigId()];
+        $componentConfiguration = $this->configurationIdStorage[$operationConfig->getRefConfigId()];
 
-        foreach ($actionConfig->getIterator($componentConfiguration) as $row) {
+        foreach ($operationConfig->getIterator($componentConfiguration) as $row) {
             $response = $this->componentsApiClient->addConfigurationRow($row);
             $this->logger->info(sprintf('Row for %s created', $response['id']));
         }
     }
 
-    private function createComponentConfiguration(CreateComponentConfigurationActionConfig $actionConfig): void
+    private function createComponentConfiguration(CreateComponentConfigurationOperationConfig $operationConfig): void
     {
-        $configuration = $actionConfig->getRequestConfiguration();
+        $configuration = $operationConfig->getRequestConfiguration();
 
         $this->logger->info(
             sprintf(
@@ -128,30 +128,30 @@ class App
         );
 
         // save id for use in orchestration
-        $this->configurationIdStorage[$actionConfig->getId()] = $configuration;
+        $this->configurationIdStorage[$operationConfig->getId()] = $configuration;
     }
 
     public function run(): void
     {
-        foreach ($this->scaffoldStaticConfiguration['actions'] as $actionConfig) {
-            switch ($actionConfig['action']) {
+        foreach ($this->scaffoldStaticConfiguration['operations'] as $operationConfig) {
+            switch ($operationConfig['operation']) {
                 case 'create.configuration':
                     $this->createComponentConfiguration(
-                        CreateComponentConfigurationActionConfig::create($actionConfig, $this->scaffoldParameters)
+                        CreateComponentConfigurationOperationConfig::create($operationConfig, $this->scaffoldParameters)
                     );
                     break;
                 case 'create.configrows':
                     $this->createConfigurationRows(
-                        CreateCofigRowActionConfig::create($actionConfig, null)
+                        CreateCofigRowOperationConfig::create($operationConfig, null)
                     );
                     break;
                 case 'create.orchestration':
                     $this->createOrchestration(
-                        CreateOrchestrationActionConfig::create($actionConfig, null)
+                        CreateOrchestrationOperationConfig::create($operationConfig, null)
                     );
                     break;
                 default:
-                    throw new Exception(sprintf('Unknown action %s', $actionConfig['action']));
+                    throw new Exception(sprintf('Unknown action %s', $operationConfig['action']));
             }
         }
     }

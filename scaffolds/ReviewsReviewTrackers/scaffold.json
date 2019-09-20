@@ -1,7 +1,7 @@
 {
-    "actions": [
+    "operations": [
         {
-            "action": "create.configuration",
+            "operation": "create.configuration",
             "id": "ex01",
             "KBCComponentId": "kds-team.ex-reviewtrackers",
             "payload": {
@@ -51,7 +51,7 @@
             }
         },
         {
-            "action": "create.configuration",
+            "operation": "create.configuration",
             "id": "app01",
             "KBCComponentId": "geneea.nlp-analysis-v2",
             "payload": {
@@ -109,7 +109,7 @@
             }
         },
         {
-            "action": "create.configuration",
+            "operation": "create.configuration",
             "id": "transformation01",
             "KBCComponentId": "transformation",
             "payload": {
@@ -149,7 +149,7 @@
             }
         },
         {
-            "action": "create.configrows",
+            "operation": "create.configrows",
             "refConfigId": "transformation01",
             "rows": [
                 {
@@ -272,7 +272,7 @@
             ]
         },
         {
-            "action": "create.configuration",
+            "operation": "create.configuration",
             "id": "transformation02",
             "KBCComponentId": "transformation",
             "payload": {
@@ -322,7 +322,7 @@
             }
         },
         {
-            "action": "create.configrows",
+            "operation": "create.configrows",
             "refConfigId": "transformation02",
             "rows": [
                 {
@@ -430,7 +430,7 @@
             ]
         },
         {
-            "action": "create.configuration",
+            "operation": "create.configuration",
             "id": "writer01",
             "KBCComponentId": "keboola.wr-db-snowflake",
             "payload": {
@@ -1361,7 +1361,7 @@
             }
         },
         {
-            "action": "create.orchestration",
+            "operation": "create.orchestration",
             "payload": {
                 "name": "Reviews",
                 "tasks": [

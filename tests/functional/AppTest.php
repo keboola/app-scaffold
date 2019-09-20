@@ -16,9 +16,9 @@ use ReflectionClass;
 class AppTest extends TestCase
 {
     private const MOCK_CONFIG = [
-        'actions' => [
+        'operations' => [
             [
-                'action' => 'create.configuration',
+                'operation' => 'create.configuration',
                 'id' => 'ex01',
                 'KBCComponentId' => 'kds-team.ex-reviewtrackers',
                 'saveConfigId' => true,
@@ -27,7 +27,7 @@ class AppTest extends TestCase
                 ],
             ],
             [
-                'action' => 'create.configrows',
+                'operation' => 'create.configrows',
                 'refConfigId' => 'ex01',
                 'rows' => [
                     [
@@ -37,7 +37,7 @@ class AppTest extends TestCase
                 ],
             ],
             [
-                'action' => 'create.orchestration',
+                'operation' => 'create.orchestration',
                 'payload' => [
                     'name' => 'orch01',
                     'tasks' => [

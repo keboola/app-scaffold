@@ -2,19 +2,19 @@
 
 declare(strict_types=1);
 
-namespace Keboola\ScaffoldApp\Tests\ActionConfig;
+namespace Keboola\ScaffoldApp\Tests\OperationConfig;
 
 use Throwable;
-use Keboola\ScaffoldApp\ActionConfig\ActionConfigInterface;
-use Keboola\ScaffoldApp\ActionConfig\ConfigRowIterator;
-use Keboola\ScaffoldApp\ActionConfig\CreateCofigRowActionConfig;
+use Keboola\ScaffoldApp\OperationConfig\OperationConfigInterface;
+use Keboola\ScaffoldApp\OperationConfig\ConfigRowIterator;
+use Keboola\ScaffoldApp\OperationConfig\CreateCofigRowOperationConfig;
 use Keboola\StorageApi\Options\Components\Configuration;
 use PHPUnit\Framework\TestCase;
 
-class CreateConfigRowActionConfigTest extends TestCase
+class CreateConfigRowOperationConfigTest extends TestCase
 {
     private const WORKING_CONFIGURATION = [
-        'action' => 'create.configrows',
+        'operation' => 'create.configrows',
         'refConfigId' => 'ex01',
         'rows' => [
             [
@@ -26,28 +26,28 @@ class CreateConfigRowActionConfigTest extends TestCase
 
     public function testImplements(): void
     {
-        $instance = CreateCofigRowActionConfig::create(self::WORKING_CONFIGURATION, null);
-        $this->assertInstanceOf(ActionConfigInterface::class, $instance);
+        $instance = CreateCofigRowOperationConfig::create(self::WORKING_CONFIGURATION, null);
+        $this->assertInstanceOf(OperationConfigInterface::class, $instance);
     }
 
     public function testvalidation(): void
     {
         // missing refConfigId
         $this->expectException(Throwable::class);
-        $this->expectExceptionMessage('Actions create.configrows missing refConfigId');
-        CreateCofigRowActionConfig::create([], null);
+        $this->expectExceptionMessage('Operation create.configrows missing refConfigId');
+        CreateCofigRowOperationConfig::create([], null);
 
         // missing rows
         $this->expectException(Throwable::class);
-        $this->expectExceptionMessage('Actions create.configrows has no rows');
-        CreateCofigRowActionConfig::create([
+        $this->expectExceptionMessage('Operation create.configrows has no rows');
+        CreateCofigRowOperationConfig::create([
             'refConfigId' => 'id',
         ], null);
 
         // empty rows
         $this->expectException(Throwable::class);
-        $this->expectExceptionMessage('Actions create.configrows has no rows');
-        CreateCofigRowActionConfig::create([
+        $this->expectExceptionMessage('Operation create.configrows has no rows');
+        CreateCofigRowOperationConfig::create([
             'refConfigId' => 'id',
             'rows' => [],
         ], null);
@@ -55,7 +55,7 @@ class CreateConfigRowActionConfigTest extends TestCase
 
     public function testGetIterator(): void
     {
-        $instance = CreateCofigRowActionConfig::create(self::WORKING_CONFIGURATION, null);
+        $instance = CreateCofigRowOperationConfig::create(self::WORKING_CONFIGURATION, null);
 
         $iterator = $instance->getIterator((new Configuration())->setConfigurationId('id'));
         $this->assertInstanceOf(ConfigRowIterator::class, $iterator);
