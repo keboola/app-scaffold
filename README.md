@@ -1,16 +1,17 @@
 # Scaffolds
 
-[![Build Status](https://travis-ci.com/keboola/scaffolds.svg?branch=master)](https://travis-ci.com/keboola/scaffolds)
+[![Build Status](https://travis-ci.com/keboola/app-scaffold.svg?branch=master)](https://travis-ci.com/keboola/app-scaffold)
 
 > Fill in description
 
 # Usage
 
-Scaffolds are saved in `scaffolds` directory, each scaffold has own directory named after scaffold and must contain `config.json` file
+Scaffolds are saved in `scaffolds` directory, each scaffold has own directory named after scaffold and must contain `scaffold.json` file.
+Optionally parameters from runner can be validated with `ScaffoldDefinition.php`
 
-There are 3 actions available `create.configuration` , `create.configrows`, `create.orchestration`
+There are 3 operations available `create.configuration` , `create.configrows`, `create.orchestration`
 
-Action path `payload.configuration.parameters` can be overide with parameters injected by runner.
+Operation path `payload.configuration.parameters` can be overide with parameters injected by runner.
 
 ```
 {
@@ -26,9 +27,9 @@ Action path `payload.configuration.parameters` can be overide with parameters in
 example config:
 ```
 {
-    "actions": [
+    "opeartions": [
             {
-                "action": "create.configuration", // required
+                "operation": "create.configuration", // required
                 "id": "customId", // required
                 "KBCComponentId": "component name in storage",  // required
                 "payload": {
@@ -39,12 +40,12 @@ example config:
                 }
             },
             {
-                "action": "create.configrows",
+                "operation": "create.configrows",
                 "refConfigId": "customId", // refer to component config id
                 "rows": [...]
             },
             {
-                "action": "create.orchestration",
+                "operation": "create.orchestration",
                 "payload": {
                     "name": "Reviews",
                     "tasks": [
@@ -63,8 +64,8 @@ example config:
 Clone this repository and init the workspace with following command:
 
 ```
-git clone https://github.com/keboola/my-component
-cd my-component
+git clone https://github.com/keboola/app-scaffold
+cd app-scaffold
 docker-compose build
 docker-compose run --rm dev composer install --no-scripts
 ```
