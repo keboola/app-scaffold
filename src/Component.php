@@ -29,6 +29,7 @@ class Component extends BaseComponent
             ]
         );
         $orchestrationApiClient = OrchestratorClient::factory([
+            'url' => getenv('ORCHESTRATOR_URL'),
             'token' => getenv('KBC_TOKEN'),
         ]);
         $app = new App(
