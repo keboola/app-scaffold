@@ -7,7 +7,7 @@
 # Usage
 
 Scaffolds are saved in `scaffolds` directory, each scaffold has own directory named after scaffold and must contain `scaffold.json` file.
-Optionally parameters from runner can be validated with `ScaffoldDefinition.php`
+Optionally parameters from runner can be validated with `ScaffoldDefinition.php` *ScaffoldDefinition.php must exist and provide at least scaffold name see example*
 
 There are 3 operations available `create.configuration` , `create.configrows`, `create.orchestration`
 
@@ -16,7 +16,7 @@ Operation path `payload.configuration.parameters` can be overide with parameters
 ```
 {
     "parameters": {
-        "ReviewsReviewTrackers": {
+        "ReviewsReviewTrackers": { // match scaffold directory name
             "writer01": {  // refer to component config id
                 "parameters":{...}
             }
@@ -24,7 +24,7 @@ Operation path `payload.configuration.parameters` can be overide with parameters
 }
 ```
 
-example config:
+example `scaffold.json`:
 ```
 {
     "opeartions": [
@@ -56,6 +56,27 @@ example config:
                     ]
             }
     ]
+}
+```
+
+example `ScaffoldDefinition.php`
+```
+<?php
+
+declare(strict_types=1);
+
+namespace Keboola\Scaffolds\ReviewsReviewTrackers;
+
+use Symfony\Component\Config\Definition\Builder\TreeBuilder;
+use Symfony\Component\Config\Definition\ConfigurationInterface;
+
+class ScaffoldDefinition implements ConfigurationInterface
+{
+    public function getConfigTreeBuilder(): TreeBuilder
+    {
+        $treeBuilder = new TreeBuilder('ReviewsReviewTrackers'); // node name must much own scaffold directory/name
+        return $treeBuilder;
+    }
 }
 ```
 
