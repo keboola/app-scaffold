@@ -47,8 +47,8 @@ class Component extends BaseComponent
         $scaffoldFolder = __DIR__ . '/../scaffolds/' . $scaffoldName;
         $scaffoldConfigFile = $scaffoldFolder . '/scaffold.json';
         $fs = new Filesystem();
-        if (!$fs->exists($scaffoldFolder)) {
-            throw new Exception(sprintf('Scaffold name: %s does\'t exists.', $scaffoldName));
+        if (!$fs->exists($scaffoldConfigFile)) {
+            throw new Exception(sprintf('Scaffold name: %s missing scaffold.json configuration file.', $scaffoldName));
         }
         return JsonHelper::readFile($scaffoldConfigFile);
     }
