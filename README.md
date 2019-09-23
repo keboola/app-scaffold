@@ -1,8 +1,8 @@
-# Scaffolds
+# Application Scaffold
 
 [![Build Status](https://travis-ci.com/keboola/app-scaffold.svg?branch=master)](https://travis-ci.com/keboola/app-scaffold)
 
-> Fill in description
+> Scaffold application can setup project using list of oprerations.
 
 # Usage
 
@@ -27,7 +27,7 @@ Operation path `payload.configuration.parameters` can be overide with parameters
 example `scaffold.json`:
 ```
 {
-    "opeartions": [
+    "operations": [
             {
                 "operation": "create.configuration", // required
                 "id": "customId", // required
