@@ -87,6 +87,8 @@ Clone this repository and init the workspace with following command:
 ```
 git clone https://github.com/keboola/app-scaffold
 cd app-scaffold
+cp .env.template .env
+#don't forget to setup env variables for yout need
 docker-compose build
 docker-compose run --rm dev composer install --no-scripts
 ```
