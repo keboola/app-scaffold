@@ -18,18 +18,18 @@ class ScaffoldDefinition implements ConfigurationInterface
      */
     public function getConfigTreeBuilder(): TreeBuilder
     {
-        $treeBuilder = new TreeBuilder('ReviewsReviewTrackers');
-        /** @var ArrayNodeDefinition $scaffoldNode */
-        $scaffoldNode = $treeBuilder->getRootNode();
-        $this->appendExtractors($scaffoldNode);
+        $treeBuilder = new TreeBuilder('parameters');
+        /** @var ArrayNodeDefinition $parametersNode */
+        $parametersNode = $treeBuilder->getRootNode();
+        $this->appendExtractors($parametersNode);
         // writer parameters
         $snowflakeTreeBuilder = new TreeBuilder('writer01');
         $node = CommonDefinitions::getSnowflakeWriterConfig($snowflakeTreeBuilder);
-        $scaffoldNode->append($node);
+        $parametersNode->append($node);
         return $treeBuilder;
     }
 
-    private function appendExtractors(ArrayNodeDefinition $scaffoldNode): void
+    private function appendExtractors(ArrayNodeDefinition $parametersNode): void
     {
         // @formatter:off
         $treeBuilder = new TreeBuilder('ex01');
@@ -55,6 +55,6 @@ class ScaffoldDefinition implements ConfigurationInterface
             ->end()
         ;
         // @formatter:on
-        $scaffoldNode->append($node);
+        $parametersNode->append($node);
     }
 }

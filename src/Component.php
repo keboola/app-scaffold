@@ -7,12 +7,16 @@ namespace Keboola\ScaffoldApp;
 use Exception;
 use Keboola\Component\BaseComponent;
 use Keboola\Component\JsonHelper;
+use Keboola\Component\UserException;
 use Keboola\Orchestrator\Client as OrchestratorClient;
 use Keboola\StorageApi\Client;
+use Symfony\Component\Config\Definition\Exception\InvalidConfigurationException;
 use Symfony\Component\Filesystem\Filesystem;
 
 class Component extends BaseComponent
 {
+    private const SYRUP_SERVICE_ID = 'syrup';
+
     protected function run(): void
     {
         /** @var Config $config */
@@ -29,9 +33,10 @@ class Component extends BaseComponent
             ]
         );
         $orchestrationApiClient = OrchestratorClient::factory([
-            'url' => getenv('ORCHESTRATOR_URL'),
+            'url' => $this->getSyrupApiUrl($client),
             'token' => getenv('KBC_TOKEN'),
         ]);
+
         $app = new App(
             $scaffoldConfiguration,
             $scaffoldParameters,
@@ -40,6 +45,18 @@ class Component extends BaseComponent
             $this->getLogger()
         );
         $app->run();
+    }
+
+    private function getSyrupApiUrl(Client $sapiClient): string
+    {
+        $index = $sapiClient->indexAction();
+        foreach ($index['services'] as $service) {
+            if ($service['id'] === self::SYRUP_SERVICE_ID) {
+                return $service['url'] . '/orchestrator';
+            }
+        }
+        $tokenData = $sapiClient->verifyToken();
+        throw new UserException(sprintf('Syrup not found in %s region', $tokenData['owner']['region']));
     }
 
     // load scaffold config.json file
@@ -54,13 +71,21 @@ class Component extends BaseComponent
         return JsonHelper::readFile($scaffoldConfigFile);
     }
 
-    protected function getConfigClass(): string
+    protected function loadConfig(): void
     {
-        return Config::class;
-    }
-
-    protected function getConfigDefinitionClass(): string
-    {
-        return ConfigDefinition::class;
+        try {
+            // first validate configuration without scaffolds name
+            $generalConfig = new Config(
+                $this->getRawConfig(),
+                new ConfigDefinition(null)
+            );
+            // set config from configuration with scaffold name known
+            $this->setConfig(new Config(
+                $this->getRawConfig(),
+                new ConfigDefinition($generalConfig)
+            ));
+        } catch (InvalidConfigurationException $e) {
+            throw new UserException($e->getMessage(), 0, $e);
+        }
     }
 }

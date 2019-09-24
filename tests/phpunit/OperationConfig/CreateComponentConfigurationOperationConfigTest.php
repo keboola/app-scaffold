@@ -12,10 +12,9 @@ use PHPUnit\Framework\TestCase;
 class CreateComponentConfigurationOperationConfigTest extends TestCase
 {
     private const WORKING_CONFIGURATION = [
-        'action' => 'create.configuration',
+        'operation' => 'create.configuration',
         'id' => 'ex01',
         'KBCComponentId' => 'ex01',
-        'saveConfigId' => false, // configuration is not saved
         'payload' => [
             'name' => 'ex01',
         ],
@@ -23,7 +22,7 @@ class CreateComponentConfigurationOperationConfigTest extends TestCase
 
     public function testImplements(): void
     {
-        $instance = CreateComponentConfigurationOperationConfig::create(self::WORKING_CONFIGURATION, null);
+        $instance = CreateComponentConfigurationOperationConfig::create(self::WORKING_CONFIGURATION, []);
         $this->assertInstanceOf(OperationConfigInterface::class, $instance);
     }
 
@@ -32,12 +31,12 @@ class CreateComponentConfigurationOperationConfigTest extends TestCase
         // misisng component internal id
         $this->expectException(Throwable::class);
         $this->expectExceptionMessage('Operation create.configuration missing id or is empty');
-        CreateComponentConfigurationOperationConfig::create([], null);
+        CreateComponentConfigurationOperationConfig::create([], []);
 
         // misisng SAPI component id
         $this->expectException(Throwable::class);
         $this->expectExceptionMessage('Operation create.configuration missing KBCComponentId or is empty');
-        CreateComponentConfigurationOperationConfig::create(['id' => 'id', 'action' => 'action'], null);
+        CreateComponentConfigurationOperationConfig::create(['id' => 'id', 'action' => 'action'], []);
 
         // missing payload
         $this->expectException(Throwable::class);
@@ -56,7 +55,7 @@ class CreateComponentConfigurationOperationConfigTest extends TestCase
             'action' => 'action',
             'KBCComponentId' => 'ex01',
             'payload' => [],
-        ], null);
+        ], []);
     }
 
     public function testMergeParameters(): void

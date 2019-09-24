@@ -7,7 +7,7 @@
 # Usage
 
 Scaffolds are saved in `scaffolds` directory, each scaffold has own directory named after scaffold and must contain `scaffold.json` file.
-Optionally parameters from runner can be validated with `ScaffoldDefinition.php` *ScaffoldDefinition.php must exist and provide at least scaffold name see example*
+Optionally parameters from runner can be validated with `ScaffoldDefinition.php`
 
 There are 3 operations available `create.configuration` , `create.configrows`, `create.orchestration`
 
@@ -16,11 +16,17 @@ Operation path `payload.configuration.parameters` can be overide with parameters
 ```
 {
     "parameters": {
-        "ReviewsReviewTrackers": { // match scaffold directory name
-            "writer01": {  // refer to component config id
-                "parameters":{...}
+        "scaffolds": [ // only one scaffold allowed
+            {
+                "name": "ReviewsReviewTrackers", // match scaffold directory name
+                "parameters": {
+                    "writer01": { // refer to component config id
+                        "parameters": {...} // this parameter will overide payload.configuration.parameters
+                    }
+                }
             }
-        }
+        ]
+    }
 }
 ```
 
@@ -74,7 +80,7 @@ class ScaffoldDefinition implements ConfigurationInterface
 {
     public function getConfigTreeBuilder(): TreeBuilder
     {
-        $treeBuilder = new TreeBuilder('ReviewsReviewTrackers'); // node name must much own scaffold directory/name
+        $treeBuilder = new TreeBuilder('parameters');
         return $treeBuilder;
     }
 }

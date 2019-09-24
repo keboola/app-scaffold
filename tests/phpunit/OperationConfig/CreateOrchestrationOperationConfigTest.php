@@ -26,7 +26,7 @@ class CreateOrchestrationOperationConfigTest extends TestCase
 
     public function testImplements(): void
     {
-        $instance = CreateOrchestrationOperationConfig::create(self::WORKING_CONFIGURATION, null);
+        $instance = CreateOrchestrationOperationConfig::create(self::WORKING_CONFIGURATION, []);
         $this->assertInstanceOf(OperationConfigInterface::class, $instance);
     }
 
@@ -35,7 +35,7 @@ class CreateOrchestrationOperationConfigTest extends TestCase
         // missing payload
         $this->expectException(Throwable::class);
         $this->expectExceptionMessage('Operation create.orchestration missing payload');
-        CreateOrchestrationOperationConfig::create(['action' => 'action'], null);
+        CreateOrchestrationOperationConfig::create(['action' => 'action'], []);
 
         // missing name
         $this->expectException(Throwable::class);
@@ -43,7 +43,7 @@ class CreateOrchestrationOperationConfigTest extends TestCase
         CreateOrchestrationOperationConfig::create([
             'action' => 'action',
             'payload' => [],
-        ], null);
+        ], []);
 
         // missing tasks
         $this->expectException(Throwable::class);
@@ -51,7 +51,7 @@ class CreateOrchestrationOperationConfigTest extends TestCase
         CreateOrchestrationOperationConfig::create([
             'action' => 'action',
             'payload' => ['name' => 'orch01'],
-        ], null);
+        ], []);
 
         // empty tasks
         $this->expectException(Throwable::class);
@@ -59,12 +59,12 @@ class CreateOrchestrationOperationConfigTest extends TestCase
         CreateOrchestrationOperationConfig::create([
             'action' => 'action',
             'payload' => ['name' => 'orch01', 'tasks' => []],
-        ], null);
+        ], []);
     }
 
     public function testPopulateOrchestrationTasksWithConfigurationIds(): void
     {
-        $instance = CreateOrchestrationOperationConfig::create(self::WORKING_CONFIGURATION, null);
+        $instance = CreateOrchestrationOperationConfig::create(self::WORKING_CONFIGURATION, []);
 
         $instance->populateOrchestrationTasksWithConfigurationIds(
             [

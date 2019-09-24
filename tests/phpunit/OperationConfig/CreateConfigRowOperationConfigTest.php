@@ -26,7 +26,7 @@ class CreateConfigRowOperationConfigTest extends TestCase
 
     public function testImplements(): void
     {
-        $instance = CreateCofigRowOperationConfig::create(self::WORKING_CONFIGURATION, null);
+        $instance = CreateCofigRowOperationConfig::create(self::WORKING_CONFIGURATION, []);
         $this->assertInstanceOf(OperationConfigInterface::class, $instance);
     }
 
@@ -35,14 +35,14 @@ class CreateConfigRowOperationConfigTest extends TestCase
         // missing refConfigId
         $this->expectException(Throwable::class);
         $this->expectExceptionMessage('Operation create.configrows missing refConfigId');
-        CreateCofigRowOperationConfig::create([], null);
+        CreateCofigRowOperationConfig::create([], []);
 
         // missing rows
         $this->expectException(Throwable::class);
         $this->expectExceptionMessage('Operation create.configrows has no rows');
         CreateCofigRowOperationConfig::create([
             'refConfigId' => 'id',
-        ], null);
+        ], []);
 
         // empty rows
         $this->expectException(Throwable::class);
@@ -50,12 +50,12 @@ class CreateConfigRowOperationConfigTest extends TestCase
         CreateCofigRowOperationConfig::create([
             'refConfigId' => 'id',
             'rows' => [],
-        ], null);
+        ], []);
     }
 
     public function testGetIterator(): void
     {
-        $instance = CreateCofigRowOperationConfig::create(self::WORKING_CONFIGURATION, null);
+        $instance = CreateCofigRowOperationConfig::create(self::WORKING_CONFIGURATION, []);
 
         $iterator = $instance->getIterator((new Configuration())->setConfigurationId('id'));
         $this->assertInstanceOf(ConfigRowIterator::class, $iterator);
