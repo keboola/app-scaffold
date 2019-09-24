@@ -21,7 +21,7 @@ class CreateOrchestrationOperationConfig implements OperationConfigInterface
     /**
      * @return CreateOrchestrationOperationConfig
      */
-    public static function create(array $actionConfig, ?array $parameters): OperationConfigInterface
+    public static function create(array $actionConfig, array $parameters): OperationConfigInterface
     {
         $config = new self();
 

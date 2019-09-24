@@ -18,7 +18,7 @@ class CreateCofigRowOperationConfig implements OperationConfigInterface
     /**
      * @return CreateCofigRowOperationConfig
      */
-    public static function create(array $actionConfig, ?array $parameters): OperationConfigInterface
+    public static function create(array $actionConfig, array $parameters): OperationConfigInterface
     {
         $config = new self();
 

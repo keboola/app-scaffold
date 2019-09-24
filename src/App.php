@@ -142,12 +142,12 @@ class App
                     break;
                 case 'create.configrows':
                     $this->createConfigurationRows(
-                        CreateCofigRowOperationConfig::create($operationConfig, null)
+                        CreateCofigRowOperationConfig::create($operationConfig, [])
                     );
                     break;
                 case 'create.orchestration':
                     $this->createOrchestration(
-                        CreateOrchestrationOperationConfig::create($operationConfig, null)
+                        CreateOrchestrationOperationConfig::create($operationConfig, [])
                     );
                     break;
                 default:

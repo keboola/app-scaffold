@@ -6,5 +6,5 @@ namespace Keboola\ScaffoldApp\OperationConfig;
 
 interface OperationConfigInterface
 {
-    public static function create(array $actionConfig, ?array $parameters): OperationConfigInterface;
+    public static function create(array $actionConfig, array $parameters): OperationConfigInterface;
 }
