@@ -23,7 +23,7 @@ class ConfigDefinition extends BaseConfigDefinition
     }
 
     private function getGeneralDefinition(
-        ArrayNodeDefinition &$parametersNode,
+        ArrayNodeDefinition $parametersNode,
         ArrayNodeDefinition $scafoldParametersNode
     ): void {
         // @formatter:off
@@ -31,10 +31,14 @@ class ConfigDefinition extends BaseConfigDefinition
         $parametersNode
             ->children()
                 ->arrayNode('scaffolds')
+                    ->isRequired()
                     ->requiresAtLeastOneElement()
                         ->arrayPrototype()
                             ->children()
-                                ->scalarNode('name')->isRequired()->end()
+                                ->scalarNode('name')
+                                    ->cannotBeEmpty()
+                                    ->isRequired()
+                                ->end()
                             ->end()
                             ->append($scafoldParametersNode)
                         ->end()
@@ -57,7 +61,8 @@ class ConfigDefinition extends BaseConfigDefinition
             $treeBuilder = new TreeBuilder('parameters');
             /** @var ArrayNodeDefinition $node */
             $node = $treeBuilder->getRootNode();
-            $node->ignoreExtraKeys();
+            $node->ignoreExtraKeys(false);
+            $node->isRequired();
             $this->getGeneralDefinition($parametersNode, $node);
             return $parametersNode;
         }
@@ -77,7 +82,7 @@ class ConfigDefinition extends BaseConfigDefinition
         }
 
         if ((new Filesystem())->exists(__DIR__ . '/../scaffolds/' . $generalConfig->getScaffoldName())) {
-            return 'Keboola\\Scaffolds\\' . $generalConfig->getScaffoldName() . '\\' . 'ScaffoldDefinition';
+            return 'Keboola\\Scaffolds\\' . $generalConfig->getScaffoldName() . '\\ScaffoldDefinition';
         }
 
         return null;

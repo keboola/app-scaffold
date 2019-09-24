@@ -76,12 +76,13 @@ namespace Keboola\Scaffolds\ReviewsReviewTrackers;
 use Symfony\Component\Config\Definition\Builder\TreeBuilder;
 use Symfony\Component\Config\Definition\ConfigurationInterface;
 
-class ScaffoldDefinition implements ConfigurationInterface
+class ScaffoldDefinition extends BaseConfigDefinition
 {
-    public function getConfigTreeBuilder(): TreeBuilder
+    protected function getParametersDefinition(): ArrayNodeDefinition
     {
-        $treeBuilder = new TreeBuilder('parameters');
-        return $treeBuilder;
+        $parametersNode = parent::getParametersDefinition();
+        // TODO: definition
+        return $parametersNode;
     }
 }
 ```

@@ -4,29 +4,26 @@ declare(strict_types=1);
 
 namespace Keboola\Scaffolds\ReviewsReviewTrackers;
 
+use Keboola\Component\Config\BaseConfigDefinition;
 use Keboola\Scaffolds\CommonDefinitions;
 use Symfony\Component\Config\Definition\Builder\ArrayNodeDefinition;
 use Symfony\Component\Config\Definition\Builder\TreeBuilder;
-use Symfony\Component\Config\Definition\ConfigurationInterface;
 
-class ScaffoldDefinition implements ConfigurationInterface
+class ScaffoldDefinition extends BaseConfigDefinition
 {
-    /**
-     * Generates the configuration tree builder.
-     *
-     * @return TreeBuilder The tree builder
-     */
-    public function getConfigTreeBuilder(): TreeBuilder
+    protected function getParametersDefinition(): ArrayNodeDefinition
     {
-        $treeBuilder = new TreeBuilder('parameters');
-        /** @var ArrayNodeDefinition $parametersNode */
-        $parametersNode = $treeBuilder->getRootNode();
+        $parametersNode = parent::getParametersDefinition();
+
+        // extractor parameters
         $this->appendKdsTeamExReviewtrackers($parametersNode);
+
         // writer parameters
         $snowflakeTreeBuilder = new TreeBuilder('writer01');
         $node = CommonDefinitions::getSnowflakeWriterConfig($snowflakeTreeBuilder);
         $parametersNode->append($node);
-        return $treeBuilder;
+
+        return $parametersNode;
     }
 
     private function appendKdsTeamExReviewtrackers(ArrayNodeDefinition $parametersNode): void
