@@ -1,0 +1,32 @@
+{
+    "parameters": {
+        "scaffolds": [
+            {
+                "name": "ReviewsReviewTrackers",
+                "parameters": {
+                    "writer01": {
+                        "parameters": {
+                            "db": {
+                                "host": "keboola.snowflakecomputing.com",
+                                "database": "",
+                                "password": "",
+                                "user": "",
+                                "schema": "",
+                                "warehouse": "KEBOOLA_PROD",
+                                "port": "443",
+                                "driver": "snowflake"
+                            }
+                        }
+                    },
+                    "ex01": {
+                        "parameters": {
+                            "#password": "",
+                            "clear_state": "true",
+                            "username": ""
+                        }
+                    }
+                }
+            }
+        ]
+    }
+}

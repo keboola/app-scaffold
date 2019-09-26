@@ -61,18 +61,17 @@
                         "input": {
                             "tables": [
                                 {
-                                    "type": "metadata",
-                                    "key": "bdm.scaffold.table.tag",
-                                    "value": "bdm.keboola.transformation-01.pre_nlp_review_response",
-                                    "configuration": {
-                                        "destination": "out.c-reviews.pre_nlp_review_response",
-                                        "changed_since": "-2 days",
-                                        "columns": [
-                                            "review_response_id",
-                                            "text",
-                                            "review_title"
-                                        ]
-                                    }
+                                    "source_search": {
+                                        "key": "bdm.scaffold.table.tag",
+                                        "value": "bdm.keboola.transformation-01.pre_nlp_review_response"
+                                    },
+                                    "destination": "out.c-reviews.pre_nlp_review_response",
+                                    "changed_since": "-2 days",
+                                    "columns": [
+                                        "review_response_id",
+                                        "text",
+                                        "review_title"
+                                    ]
                                 }
                             ]
                         }
@@ -104,6 +103,46 @@
                         "correction": "none",
                         "diacritization": "none",
                         "advanced": {}
+                    },
+                    "processors": {
+                        "after": [
+                            {
+                                "definition": {
+                                    "component": "keboola.processor-create-manifest"
+                                },
+                                "parameters": {
+                                    "delimiter": ",",
+                                    "enclosure": "\"",
+                                    "incremental": false,
+                                    "primary_key": [],
+                                    "columns_from": "header"
+                                }
+                            },
+                            {
+                                "definition": {
+                                    "component": "keboola.processor-add-metadata"
+                                },
+                                "parameters": {
+                                    "metadata": [
+                                        {
+                                            "table": "analysis-result-documents",
+                                            "key": "bdm.scaffold.table.tag",
+                                            "value": "bdm.geneea.nlp-analysis-v2.analysis-result-documents"
+                                        },
+                                        {
+                                            "table": "analysis-result-entities",
+                                            "key": "bdm.scaffold.table.tag",
+                                            "value": "bdm.geneea.nlp-analysis-v2.analysis-result-entities"
+                                        },
+                                        {
+                                            "table": "analysis-result-relations",
+                                            "key": "bdm.scaffold.table.tag",
+                                            "value": "bdm.geneea.nlp-analysis-v2.analysis-result-relations"
+                                        }
+                                    ]
+                                }
+                            }
+                        ]
                     }
                 }
             }
@@ -173,18 +212,17 @@
                         ],
                         "input": [
                             {
-                                "type": "metadata",
-                                "key": "bdm.scaffold.table.tag",
-                                "value": "bdm.kds-team.ex-reviewtrackers.locations",
-                                "configuration": {
-                                    "destination": "locations",
-                                    "datatypes": {},
-                                    "whereColumn": "",
-                                    "whereValues": [],
-                                    "whereOperator": "eq",
-                                    "columns": [],
-                                    "loadType": "clone"
-                                }
+                                "source_search": {
+                                    "key": "bdm.scaffold.table.tag",
+                                    "value": "bdm.kds-team.ex-reviewtrackers.locations"
+                                },
+                                "destination": "locations",
+                                "datatypes": {},
+                                "whereColumn": "",
+                                "whereValues": [],
+                                "whereOperator": "eq",
+                                "columns": [],
+                                "loadType": "clone"
                             }
                         ],
                         "name": "Locations",
@@ -220,32 +258,30 @@
                         ],
                         "input": [
                             {
-                                "type": "metadata",
-                                "key": "bdm.scaffold.table.tag",
-                                "value": "bdm.kds-team.ex-reviewtrackers.reviews",
-                                "configuration": {
-                                    "destination": "reviews",
-                                    "datatypes": {},
-                                    "whereColumn": "",
-                                    "whereValues": [],
-                                    "whereOperator": "eq",
-                                    "columns": [],
-                                    "loadType": "clone"
-                                }
+                                "source_search": {
+                                    "key": "bdm.scaffold.table.tag",
+                                    "value": "bdm.kds-team.ex-reviewtrackers.reviews"
+                                },
+                                "destination": "reviews",
+                                "datatypes": {},
+                                "whereColumn": "",
+                                "whereValues": [],
+                                "whereOperator": "eq",
+                                "columns": [],
+                                "loadType": "clone"
                             },
                             {
-                                "type": "metadata",
-                                "key": "bdm.scaffold.table.tag",
-                                "value": "bdm.kds-team.ex-reviewtrackers.responses",
-                                "configuration": {
-                                    "destination": "responses",
-                                    "datatypes": {},
-                                    "whereColumn": "",
-                                    "whereValues": [],
-                                    "whereOperator": "eq",
-                                    "columns": [],
-                                    "loadType": "clone"
-                                }
+                                "source_search": {
+                                    "key": "bdm.scaffold.table.tag",
+                                    "value": "bdm.kds-team.ex-reviewtrackers.responses"
+                                },
+                                "destination": "responses",
+                                "datatypes": {},
+                                "whereColumn": "",
+                                "whereValues": [],
+                                "whereOperator": "eq",
+                                "columns": [],
+                                "loadType": "clone"
                             },
                             {
                                 "source": "out.c-reviews.location",
@@ -383,21 +419,23 @@
                                 "loadType": "clone"
                             },
                             {
-                                "type": "metadata",
-                                "key": "bdm.scaffold.table.tag",
-                                "value": "bdm.geneea.nlp-analysis-v2.locations",
-                                "configuration": {
-                                    "destination": "locations",
-                                    "datatypes": {},
-                                    "whereColumn": "",
-                                    "whereValues": [],
-                                    "whereOperator": "eq",
-                                    "columns": [],
-                                    "loadType": "clone"
-                                }
+                                "source_search": {
+                                    "key": "bdm.scaffold.table.tag",
+                                    "value": "bdm.geneea.nlp-analysis-v2.locations"
+                                },
+                                "destination": "locations",
+                                "datatypes": {},
+                                "whereColumn": "",
+                                "whereValues": [],
+                                "whereOperator": "eq",
+                                "columns": [],
+                                "loadType": "clone"
                             },
                             {
-                                "source": "out.c-geneea-nlp-analysis-v2-504294988.analysis-result-documents",
+                                "source_search": {
+                                    "key": "bdm.scaffold.table.tag",
+                                    "value": "bdm.geneea.nlp-analysis-v2.analysis-result-documents"
+                                },
                                 "destination": "nlp_documents",
                                 "datatypes": {},
                                 "whereColumn": "",
@@ -407,7 +445,10 @@
                                 "loadType": "clone"
                             },
                             {
-                                "source": "out.c-geneea-nlp-analysis-v2-504294988.analysis-result-relations",
+                                "source_search": {
+                                    "key": "bdm.scaffold.table.tag",
+                                    "value": "bdm.geneea.nlp-analysis-v2.analysis-result-relations"
+                                },
                                 "destination": "nlp_relations",
                                 "datatypes": {},
                                 "whereColumn": "",
@@ -1263,95 +1304,6 @@
                                         "topic_id",
                                         "sentiment_label",
                                         "sentiment_value"
-                                    ]
-                                },
-                                {
-                                    "source": "in.c-Radim_test_FHS.nlp_feedback",
-                                    "destination": "in.c-Radim_test_FHS.nlp_feedback.csv",
-                                    "columns": [
-                                        "feedback_id",
-                                        "restaurant_id",
-                                        "source",
-                                        "review_date",
-                                        "visit_date",
-                                        "rating",
-                                        "comment",
-                                        "sentiment",
-                                        "sentiment_label",
-                                        "sentiment_polarity"
-                                    ],
-                                    "where_column": "review_date",
-                                    "where_operator": "ne",
-                                    "where_values": [
-                                        "",
-                                        " "
-                                    ]
-                                },
-                                {
-                                    "source": "in.c-Radim_test_FHS.nlp_topic",
-                                    "destination": "in.c-Radim_test_FHS.nlp_topic.csv",
-                                    "columns": [
-                                        "topic_id",
-                                        "topic",
-                                        "type",
-                                        "category_type"
-                                    ]
-                                },
-                                {
-                                    "source": "in.c-Radim_test_FHS.nlp_sentences",
-                                    "destination": "in.c-Radim_test_FHS.nlp_sentences.csv",
-                                    "columns": [
-                                        "UID",
-                                        "sentence_id",
-                                        "index",
-                                        "text",
-                                        "Sentiment_Value",
-                                        "Sentiment_Polarity",
-                                        "Sentiment_Label"
-                                    ]
-                                },
-                                {
-                                    "source": "in.c-Radim_test_FHS.nlp_topic_relation",
-                                    "destination": "in.c-Radim_test_FHS.nlp_topic_relation.csv",
-                                    "columns": [
-                                        "conn_id",
-                                        "review_id",
-                                        "topic_id",
-                                        "sentiment_value",
-                                        "sentiment_polarity",
-                                        "sentiment_label"
-                                    ]
-                                },
-                                {
-                                    "source": "in.c-Radim_test_FHS.restaurants",
-                                    "destination": "in.c-Radim_test_FHS.restaurants.csv",
-                                    "columns": [
-                                        "Id",
-                                        "Restaurant",
-                                        "RestaurantLabel",
-                                        "CenterName",
-                                        "Address",
-                                        "AreaRegion",
-                                        "AreaRep",
-                                        "OpeningDate",
-                                        "TerminationDate",
-                                        "DMA",
-                                        "Region",
-                                        "Region_hq",
-                                        "ZipPostalCode",
-                                        "City",
-                                        "StateProvince",
-                                        "Country",
-                                        "Latitude",
-                                        "Longitude",
-                                        "geo_pushpin",
-                                        "BuildingSize",
-                                        "TypeofPremises",
-                                        "NumberofSeats_Inside",
-                                        "NumberofSeats_Outside",
-                                        "EncaporInlineorOther",
-                                        "StreetAddress",
-                                        "training38loc"
                                     ]
                                 }
                             ]
