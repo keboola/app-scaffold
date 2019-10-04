@@ -16,6 +16,7 @@ use Symfony\Component\Filesystem\Filesystem;
 class Component extends BaseComponent
 {
     private const SYRUP_SERVICE_ID = 'syrup';
+    private const ENCRYPTION_SERVICE_ID = 'encryption';
 
     protected function run(): void
     {
@@ -42,9 +43,22 @@ class Component extends BaseComponent
             $scaffoldParameters,
             $client,
             $orchestrationApiClient,
-            $this->getLogger()
+            $this->getLogger(),
+            $this->getEncryptionApiUrl($client)
         );
         $app->run();
+    }
+
+    private function getEncryptionApiUrl(Client $sapiClient): string
+    {
+        $index = $sapiClient->indexAction();
+        foreach ($index['services'] as $service) {
+            if ($service['id'] === self::ENCRYPTION_SERVICE_ID) {
+                return $service['url'];
+            }
+        }
+        $tokenData = $sapiClient->verifyToken();
+        throw new UserException(sprintf('Encryption service not found in %s region', $tokenData['owner']['region']));
     }
 
     private function getSyrupApiUrl(Client $sapiClient): string

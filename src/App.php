@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Keboola\ScaffoldApp;
 
 use Exception;
+use GuzzleHttp\Client;
 use Keboola\Orchestrator\Client as OrchestratorClient;
 use Keboola\ScaffoldApp\OperationConfig\CreateCofigRowOperationConfig;
 use Keboola\ScaffoldApp\OperationConfig\CreateComponentConfigurationOperationConfig;
@@ -54,12 +55,16 @@ class App
      */
     private $componentsApiClient;
 
+    /** @var string */
+    private $encryptionApiUrl;
+
     public function __construct(
         array $scaffoldStaticConfiguration,
         array $scaffoldParameters,
         StorageClient $storageApiClient,
         OrchestratorClient $orchestrationApiClient,
-        LoggerInterface $logger
+        LoggerInterface $logger,
+        string $encryptionApiUrl
     ) {
         $this->scaffoldStaticConfiguration = $scaffoldStaticConfiguration;
         $this->scaffoldParameters = $scaffoldParameters;
@@ -67,6 +72,7 @@ class App
         $this->storageApiClient = $storageApiClient;
         $this->orchestrationApiClient = $orchestrationApiClient;
         $this->componentsApiClient = new Components($this->storageApiClient);
+        $this->encryptionApiUrl = $encryptionApiUrl;
     }
 
     private function createOrchestration(CreateOrchestrationOperationConfig $operationConfig): void
@@ -104,6 +110,26 @@ class App
         }
     }
 
+    private function encryptConfigurationData(array $data, string $componentId, string $projectId)
+    {
+        $client = new Client(['base_uri' => $this->encryptionApiUrl]);
+        $response = $client->request('POST', 'encrypt',
+            [
+                'headers' =>
+                    [
+                        'X-StorageApi-Token' => $this->storageApiClient->getTokenString(),
+                        'Content-Type' => 'application/json',
+                    ],
+                'query' => [
+                    'componentId' => $componentId,
+                    'projectId' => $projectId,
+                ],
+                'body' => json_encode($data),
+            ]
+        );
+        return json_decode($response->getBody()->getContents(), true);
+    }
+
     private function createComponentConfiguration(CreateComponentConfigurationOperationConfig $operationConfig): void
     {
         $configuration = $operationConfig->getRequestConfiguration();
@@ -116,6 +142,12 @@ class App
             )
         );
 
+        $tokenInfo = $this->storageApiClient->verifyToken();
+        $configuration->setConfiguration($this->encryptConfigurationData(
+            $configuration->getConfiguration(),
+            $configuration->getComponentId(),
+            (string) $tokenInfo['owner']['id']
+        ));
         $response = $this->componentsApiClient->addConfiguration($configuration);
         $configuration->setConfigurationId($response['id']);
 
