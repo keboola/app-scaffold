@@ -29,22 +29,22 @@ class CreateComponentConfigurationOperationConfig implements OperationConfigInte
         $config = new self();
 
         if (empty($actionConfig['id'])) {
-            throw new Exception('Operation create.configuration missing id or is empty');
+            throw new Exception(sprintf('Operation ID is missing in create.configuration operation "%s".', json_encode($actionConfig)));
         }
         $config->id = $actionConfig['id'];
 
         if (empty($actionConfig['KBCComponentId'])) {
-            throw new Exception('Operation create.configuration missing KBCComponentId or is empty');
+            throw new Exception(sprintf('Component Id is missing in operation create.configuration with id "%s".', $config->getId()));
         }
         $config->KBCComponentId = $actionConfig['KBCComponentId'];
 
         if (empty($actionConfig['payload'])) {
-            throw new Exception('Operation create.configuration missing payload or is empty');
+            throw new Exception(sprintf('Configuration payload is missing in operation create.configuration with id "%s".', $config->getId()));
         }
         $config->payload = $actionConfig['payload'];
 
         if (empty($config->payload['name'])) {
-            throw new Exception('Operation create.configuration payload missing component name or is empty');
+            throw new Exception(sprintf('Configuration name is missing in operation create.configuration payload with id "%s".', $config->getId()));
         }
         $config->configrationName = $config->payload['name'];
 
