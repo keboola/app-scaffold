@@ -19,10 +19,8 @@ Operation path `payload.configuration.parameters` can be overide with parameters
         "scaffolds": [ // only one scaffold allowed
             {
                 "name": "ReviewsReviewTrackers", // match scaffold directory name
-                "parameters": {
-                    "writer01": { // refer to component config id
-                        "parameters": {...} // this parameter will overide payload.configuration.parameters
-                    }
+                "writer01": { // refer to component config id
+                    "parameters": {...} // this parameter will overide payload.configuration.parameters
                 }
             }
         ]

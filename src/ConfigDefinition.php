@@ -54,7 +54,7 @@ class ConfigDefinition extends BaseConfigDefinition
         $parametersNode = parent::getParametersDefinition();
 
         $scaffoldDefinitionClass = $this->getScaffoldDefinitionClass($this->generalConfig);
-        
+
         if ($scaffoldDefinitionClass === null || !class_exists($scaffoldDefinitionClass)) {
             // if no definition class or missing scaffoldName add empty parameters
             // this is used to validate structure before scaffold name is known
@@ -70,7 +70,7 @@ class ConfigDefinition extends BaseConfigDefinition
         /** @var ConfigurationInterface $scaffoldDefinition */
         $scaffoldDefinition = new $scaffoldDefinitionClass;
         /** @var ArrayNodeDefinition $definitionNode */
-        $definitionNode = $scaffoldDefinition->getConfigTreeBuilder()->getRootNode();
+        $definitionNode = $scaffoldDefinition->getParametersDefinition();
         $this->getGeneralDefinition($parametersNode, $definitionNode);
         return $parametersNode;
     }
