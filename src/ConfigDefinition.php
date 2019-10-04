@@ -24,7 +24,7 @@ class ConfigDefinition extends BaseConfigDefinition
 
     private function getGeneralDefinition(
         ArrayNodeDefinition $parametersNode,
-        ArrayNodeDefinition $scafoldParametersNode
+        ArrayNodeDefinition $scaffoldParametersNode
     ): void {
         // @formatter:off
         /** @noinspection NullPointerExceptionInspection */
@@ -40,7 +40,7 @@ class ConfigDefinition extends BaseConfigDefinition
                                     ->isRequired()
                                 ->end()
                             ->end()
-                            ->append($scafoldParametersNode)
+                            ->append($scaffoldParametersNode)
                         ->end()
                     ->end()
                 ->end()
