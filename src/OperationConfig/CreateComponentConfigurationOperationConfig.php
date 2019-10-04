@@ -53,7 +53,7 @@ class CreateComponentConfigurationOperationConfig implements OperationConfigInte
             if (empty($config->payload['configuration'])) {
                 $config->payload['configuration'] = [];
             }
-            $config->payload['configuration'] = array_merge(
+            $config->payload['configuration'] = array_merge_recursive(
                 $config->payload['configuration'],
                 $parameters[$config->getId()]
             );
