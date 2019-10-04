@@ -54,8 +54,8 @@ class ConfigDefinition extends BaseConfigDefinition
         $parametersNode = parent::getParametersDefinition();
 
         $scaffoldDefinitionClass = $this->getScaffoldDefinitionClass($this->generalConfig);
-
-        if ($scaffoldDefinitionClass === null) {
+        
+        if ($scaffoldDefinitionClass === null || !class_exists($scaffoldDefinitionClass)) {
             // if no definition class or missing scaffoldName add empty parameters
             // this is used to validate structure before scaffold name is known
             $treeBuilder = new TreeBuilder('parameters');
