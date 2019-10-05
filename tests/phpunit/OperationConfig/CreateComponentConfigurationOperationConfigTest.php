@@ -30,7 +30,7 @@ class CreateComponentConfigurationOperationConfigTest extends TestCase
     {
         // misisng component internal id
         $this->expectException(Throwable::class);
-        $this->expectExceptionMessage('Operation create.configuration missing id or is empty');
+        $this->expectExceptionMessage('Operation ID is missing in create.configuration operation "[]".');
         CreateComponentConfigurationOperationConfig::create([], []);
 
         // misisng SAPI component id

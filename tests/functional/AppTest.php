@@ -81,7 +81,8 @@ class AppTest extends TestCase
             $scaffoldParameters,
             $this->createStorageApiClient(),
             $this->createOrchestrationApiClient(),
-            new NullLogger()
+            new NullLogger(),
+            'https://encryption.keboola.com'
         );
     }
 

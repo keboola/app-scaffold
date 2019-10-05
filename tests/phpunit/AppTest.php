@@ -39,7 +39,8 @@ class AppTest extends TestCase
             $scaffoldParameters,
             $sapiClientMock,
             $orchestratorApiMock,
-            new NullLogger()
+            new NullLogger(),
+            'https://encryption.keboola.com'
         );
     }
 

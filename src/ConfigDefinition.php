@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Keboola\ScaffoldApp;
 
 use Keboola\Component\Config\BaseConfigDefinition;
+use Keboola\Scaffolds\ReviewsReviewTrackers\ScaffoldDefinition;
 use Symfony\Component\Config\Definition\Builder\ArrayNodeDefinition;
 use Symfony\Component\Config\Definition\Builder\TreeBuilder;
 use Symfony\Component\Config\Definition\ConfigurationInterface;
@@ -67,7 +68,7 @@ class ConfigDefinition extends BaseConfigDefinition
             return $parametersNode;
         }
 
-        /** @var ConfigurationInterface $scaffoldDefinition */
+        /** @var ScaffoldDefinition $scaffoldDefinition */
         $scaffoldDefinition = new $scaffoldDefinitionClass;
         /** @var ArrayNodeDefinition $definitionNode */
         $definitionNode = $scaffoldDefinition->getParametersDefinition();

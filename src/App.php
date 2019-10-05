@@ -110,10 +110,12 @@ class App
         }
     }
 
-    private function encryptConfigurationData(array $data, string $componentId, string $projectId)
+    private function encryptConfigurationData(array $data, string $componentId, string $projectId): array
     {
         $client = new Client(['base_uri' => $this->encryptionApiUrl]);
-        $response = $client->request('POST', 'encrypt',
+        $response = $client->request(
+            'POST',
+            'encrypt',
             [
                 'headers' =>
                     [
