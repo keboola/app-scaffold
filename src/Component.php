@@ -22,7 +22,7 @@ class Component extends BaseComponent
         /** @var Config $config */
         $config = $this->getConfig();
         //only one scaffold can be passed in parameters
-        $scaffoldParameters = $config->getScaffoldParameters();
+        $scaffoldParameters = $this->getConfig()->getScaffoldInputs();
         $scaffoldConfiguration = $this->getScaffoldConfiguration($config->getScaffoldName());
 
         $client = new Client(
@@ -48,6 +48,81 @@ class Component extends BaseComponent
             $this->getLogger()
         );
         $app->run();
+    }
+
+    public function getSyncActions(): array
+    {
+        return [
+            'listScaffolds' => 'actionListScaffolds',
+            'useScaffold' => 'actionUseScaffold',
+        ];
+    }
+
+    public function actionListScaffolds()
+    {
+        return [
+            [
+                'id' => 'PassThroughTest',
+                'author' => 'John Doe',
+                'description' => 'Sample Description',
+                'inputs' => [
+                    [
+                        "id" => "connectionWriter",
+                        "componentId" => "keboola.wr-storage",
+                        "schema" => [
+                            "type" => "object",
+                            "required" => ["#token"],
+                            "properties" => [
+                                "#token" => [
+                                    "type" => "string",
+                                ],
+                            ],
+                        ],
+                    ],
+                    [
+                        "id" => "snowflakeExtractor",
+                        "componentId" => "keboola.ex-snowflake",
+                        "schema" => [
+                            "type" => "object",
+                            "required" => ["db"],
+                            "properties" => [
+                                "db" => [
+                                    "type" => "object",
+                                    "required" => ["host", "user", "#password", "database", "schema", "warehouse"],
+                                    "properties" => [
+                                        "host" => [
+                                            "type" => "string",
+                                        ],
+                                        "user" => [
+                                            "type" => "string",
+                                        ],
+                                        "schema" => [
+                                            "type" => "string",
+                                        ],
+                                        "database" => [
+                                            "type" => "string",
+                                        ],
+                                        "#password" => [
+                                            "type" => "string",
+                                        ],
+                                        "warehouse" => [
+                                            "type" => "string",
+                                        ]
+                                    ]
+                                ]
+                            ]
+                        ]
+                    ]
+                ],
+            ],
+        ];
+    }
+
+    public function actionUseScaffold()
+    {
+        return [
+
+        ];
     }
 
     private function getSyrupApiUrl(Client $sapiClient): string

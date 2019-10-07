@@ -5,23 +5,25 @@ declare(strict_types=1);
 namespace Keboola\ScaffoldApp;
 
 use Keboola\Component\Config\BaseConfig;
+use Keboola\Component\Config\BaseConfigDefinition;
+use Symfony\Component\Config\Definition\Processor;
 
 class Config extends BaseConfig
 {
-    public function getScaffold(): array
-    {
-        return $this->getParameters()['scaffolds'][0];
-    }
-
+    /**
+     * @return string
+     */
     public function getScaffoldName(): string
     {
-        //only one scaffold can be passed in parameters
-        return $this->getScaffold()['name'];
+        return $this->getParameters()['id'];
     }
 
-    public function getScaffoldParameters(): array
+    public function getScaffoldInputs(): array
     {
-        //only one scaffold can be passed in parameters
-        return $this->getScaffold()['parameters'];
+        $scaffoldInputsDefinition = new ScaffoldInputsDefinition($this->getScaffoldName());
+        $scaffoldInputsDefinition->getConfigTreeBuilder();
+        $processor = new Processor();
+        $processedConfig = $processor->processConfiguration($scaffoldInputsDefinition, [$this->getParameters()['inputs']]);
+        return $processedConfig;
     }
 }

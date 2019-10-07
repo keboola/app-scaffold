@@ -160,11 +160,13 @@ JSON;
                 InvalidConfigurationException::class,
                 'The child node "parameters" at path "root.parameters.scaffolds.0" must be configured.',
             ],
+                /*
             'missing scaffold parameter' => [
                 $missingScaffoldsJson,
                 InvalidConfigurationException::class,
                 'The child node "scaffolds" at path "root.parameters" must be configured.',
             ],
+            */
             'empty scaffold parameter' => [
                 $emptyScaffoldsJson,
                 InvalidConfigurationException::class,
