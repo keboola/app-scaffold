@@ -10,9 +10,6 @@ use Symfony\Component\Config\Definition\Processor;
 
 class Config extends BaseConfig
 {
-    /**
-     * @return string
-     */
     public function getScaffoldName(): string
     {
         return $this->getParameters()['id'];
@@ -23,7 +20,10 @@ class Config extends BaseConfig
         $scaffoldInputsDefinition = new ScaffoldInputsDefinition($this->getScaffoldName());
         $scaffoldInputsDefinition->getConfigTreeBuilder();
         $processor = new Processor();
-        $processedConfig = $processor->processConfiguration($scaffoldInputsDefinition, [$this->getParameters()['inputs']]);
+        $processedConfig = $processor->processConfiguration(
+            $scaffoldInputsDefinition,
+            [$this->getParameters()['inputs']]
+        );
         return $processedConfig;
     }
 }

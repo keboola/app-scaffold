@@ -11,6 +11,7 @@ use Symfony\Component\Filesystem\Filesystem;
 
 class ScaffoldInputsDefinition implements ConfigurationInterface
 {
+    /** @var string */
     private $scaffoldId;
 
     public function __construct(string $scaffoldId)
@@ -18,15 +19,16 @@ class ScaffoldInputsDefinition implements ConfigurationInterface
         $this->scaffoldId = $scaffoldId;
     }
 
-    public function getConfigTreeBuilder(): TreeBuilder {
+    public function getConfigTreeBuilder(): TreeBuilder
+    {
         $builder = new TreeBuilder('inputs', 'array');
         /** @var ArrayNodeDefinition $root */
         $root = $builder->getRootNode();
         $scaffoldDefinitionClass = $this->getScaffoldDefinitionClass($this->scaffoldId);
 
         if ($scaffoldDefinitionClass === null || !class_exists($scaffoldDefinitionClass)) {
-            /** @var ArrayNodeDefinition $node */
-            $node->ignoreExtraKeys(false);
+            /** @var ArrayNodeDefinition $root */
+            $root->ignoreExtraKeys(false);
             return $builder;
         }
 

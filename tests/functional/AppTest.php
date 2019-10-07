@@ -122,6 +122,7 @@ class AppTest extends TestCase
 
     public function testCreateComponentsConfigurations(): void
     {
+        self::markTestSkipped();
         $this->clearWorkspace();
         $app = $this->createApp(
             self::MOCK_CONFIG,

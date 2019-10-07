@@ -22,7 +22,7 @@ class Component extends BaseComponent
         /** @var Config $config */
         $config = $this->getConfig();
         //only one scaffold can be passed in parameters
-        $scaffoldParameters = $this->getConfig()->getScaffoldInputs();
+        $scaffoldParameters = $config->getScaffoldInputs();
         $scaffoldConfiguration = $this->getScaffoldConfiguration($config->getScaffoldName());
 
         $client = new Client(
@@ -58,7 +58,7 @@ class Component extends BaseComponent
         ];
     }
 
-    public function actionListScaffolds()
+    public function actionListScaffolds(): array
     {
         return [
             [
@@ -67,61 +67,77 @@ class Component extends BaseComponent
                 'description' => 'Sample Description',
                 'inputs' => [
                     [
-                        "id" => "connectionWriter",
-                        "componentId" => "keboola.wr-storage",
-                        "schema" => [
-                            "type" => "object",
-                            "required" => ["#token"],
-                            "properties" => [
-                                "#token" => [
-                                    "type" => "string",
+                        'id' => 'connectionWriter',
+                        'componentId' => 'keboola.wr-storage',
+                        'schema' => [
+                            'type' => 'object',
+                            'required' => ['#token'],
+                            'properties' => [
+                                '#token' => [
+                                    'type' => 'string',
                                 ],
                             ],
                         ],
                     ],
                     [
-                        "id" => "snowflakeExtractor",
-                        "componentId" => "keboola.ex-snowflake",
-                        "schema" => [
-                            "type" => "object",
-                            "required" => ["db"],
-                            "properties" => [
-                                "db" => [
-                                    "type" => "object",
-                                    "required" => ["host", "user", "#password", "database", "schema", "warehouse"],
-                                    "properties" => [
-                                        "host" => [
-                                            "type" => "string",
+                        'id' => 'snowflakeExtractor',
+                        'componentId' => 'keboola.ex-snowflake',
+                        'schema' => [
+                            'type' => 'object',
+                            'required' => ['db'],
+                            'properties' => [
+                                'db' => [
+                                    'type' => 'object',
+                                    'required' => ['host', 'user', '#password', 'database', 'schema', 'warehouse'],
+                                    'properties' => [
+                                        'host' => [
+                                            'type' => 'string',
                                         ],
-                                        "user" => [
-                                            "type" => "string",
+                                        'user' => [
+                                            'type' => 'string',
                                         ],
-                                        "schema" => [
-                                            "type" => "string",
+                                        'schema' => [
+                                            'type' => 'string',
                                         ],
-                                        "database" => [
-                                            "type" => "string",
+                                        'database' => [
+                                            'type' => 'string',
                                         ],
-                                        "#password" => [
-                                            "type" => "string",
+                                        '#password' => [
+                                            'type' => 'string',
                                         ],
-                                        "warehouse" => [
-                                            "type" => "string",
-                                        ]
-                                    ]
-                                ]
-                            ]
-                        ]
-                    ]
+                                        'warehouse' => [
+                                            'type' => 'string',
+                                        ],
+                                    ],
+                                ],
+                            ],
+                        ],
+                    ],
                 ],
             ],
         ];
     }
 
-    public function actionUseScaffold()
+    public function actionUseScaffold(): array
     {
         return [
-
+            'id' => 'PassThroughTest',
+            'configurations' => [
+                [
+                    'id' => '12345',
+                    'componentId' => 'keboola.ex-db-snowflake',
+                    'actionRequired' => 'oauth',
+                ],
+                [
+                    'id' => '123456',
+                    'componentId' => 'keboola.wr-storage',
+                ],
+                [
+                    'id' => '12345678',
+                    'component' => 'orchestrator',
+                    'actionRequired' => 'setSchedule',
+                ],
+            ],
         ];
     }
 
@@ -147,23 +163,5 @@ class Component extends BaseComponent
             throw new Exception(sprintf('Scaffold name: %s missing scaffold.json configuration file.', $scaffoldName));
         }
         return JsonHelper::readFile($scaffoldConfigFile);
-    }
-
-    protected function loadConfig(): void
-    {
-        try {
-            // first validate configuration without scaffolds name
-            $generalConfig = new Config(
-                $this->getRawConfig(),
-                new ConfigDefinition(null)
-            );
-            // set config from configuration with scaffold name known
-            $this->setConfig(new Config(
-                $this->getRawConfig(),
-                new ConfigDefinition($generalConfig)
-            ));
-        } catch (InvalidConfigurationException $e) {
-            throw new UserException($e->getMessage(), 0, $e);
-        }
     }
 }
