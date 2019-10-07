@@ -63,7 +63,7 @@ class App
         array $scaffoldParameters,
         StorageClient $storageApiClient,
         OrchestratorClient $orchestrationApiClient,
-        EncryptionClient $encriptionApiClient,
+        EncryptionClient $encryptionApiClient,
         LoggerInterface $logger
     ) {
         $this->scaffoldStaticConfiguration = $scaffoldStaticConfiguration;
@@ -72,7 +72,7 @@ class App
         $this->storageApiClient = $storageApiClient;
         $this->orchestrationApiClient = $orchestrationApiClient;
         $this->componentsApiClient = new Components($this->storageApiClient);
-        $this->encryptionApiClient = $encriptionApiClient;
+        $this->encryptionApiClient = $encryptionApiClient;
     }
 
     private function createOrchestration(CreateOrchestrationOperationConfig $operationConfig): void
