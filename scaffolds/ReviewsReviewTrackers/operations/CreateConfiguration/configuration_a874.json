@@ -1,0 +1,469 @@
+{
+    "componentId": "keboola.wr-db-snowflake",
+    "payload": {
+        "name": "Looker",
+        "configuration": {
+            "parameters": {
+                "tables": [
+                    {
+                        "dbName": "LOCATION",
+                        "export": true,
+                        "tableId": "out.c-reviews.location",
+                        "items": [
+                            {
+                                "name": "location_id",
+                                "dbName": "LOCATION_ID",
+                                "type": "string",
+                                "size": "255",
+                                "nullable": false,
+                                "default": ""
+                            },
+                            {
+                                "name": "location",
+                                "dbName": "LOCATION",
+                                "type": "string",
+                                "size": "255",
+                                "nullable": false,
+                                "default": ""
+                            },
+                            {
+                                "name": "street",
+                                "dbName": "STREET",
+                                "type": "string",
+                                "size": "255",
+                                "nullable": false,
+                                "default": ""
+                            },
+                            {
+                                "name": "city",
+                                "dbName": "CITY",
+                                "type": "string",
+                                "size": "255",
+                                "nullable": false,
+                                "default": ""
+                            },
+                            {
+                                "name": "zipcode",
+                                "dbName": "ZIPCODE",
+                                "type": "string",
+                                "size": "255",
+                                "nullable": false,
+                                "default": ""
+                            },
+                            {
+                                "name": "country",
+                                "dbName": "COUNTRY",
+                                "type": "string",
+                                "size": "255",
+                                "nullable": false,
+                                "default": ""
+                            },
+                            {
+                                "name": "state",
+                                "dbName": "STATE",
+                                "type": "string",
+                                "size": "255",
+                                "nullable": false,
+                                "default": ""
+                            },
+                            {
+                                "name": "latitude",
+                                "dbName": "LATITUDE",
+                                "type": "string",
+                                "size": "255",
+                                "nullable": false,
+                                "default": ""
+                            },
+                            {
+                                "name": "longitude",
+                                "dbName": "LONGITUDE",
+                                "type": "string",
+                                "size": "255",
+                                "nullable": false,
+                                "default": ""
+                            }
+                        ],
+                        "primaryKey": [
+                            "LOCATION_ID"
+                        ]
+                    },
+                    {
+                        "dbName": "REVIEWS_RESPONSE",
+                        "export": true,
+                        "tableId": "out.c-reviews.reviews_response",
+                        "items": [
+                            {
+                                "name": "review_response_id",
+                                "dbName": "REVIEW_RESPONSE_ID",
+                                "type": "string",
+                                "size": "255",
+                                "nullable": false,
+                                "default": ""
+                            },
+                            {
+                                "name": "review_id",
+                                "dbName": "REVIEW_ID",
+                                "type": "string",
+                                "size": "255",
+                                "nullable": false,
+                                "default": ""
+                            },
+                            {
+                                "name": "type",
+                                "dbName": "TYPE",
+                                "type": "string",
+                                "size": "255",
+                                "nullable": false,
+                                "default": ""
+                            },
+                            {
+                                "name": "location_id",
+                                "dbName": "LOCATION_ID",
+                                "type": "string",
+                                "size": "255",
+                                "nullable": false,
+                                "default": ""
+                            },
+                            {
+                                "name": "published_at",
+                                "dbName": "PUBLISHED_AT",
+                                "type": "timestamp",
+                                "size": "",
+                                "nullable": true,
+                                "default": ""
+                            },
+                            {
+                                "name": "review_title",
+                                "dbName": "REVIEW_TITLE",
+                                "type": "string",
+                                "size": "255",
+                                "nullable": false,
+                                "default": ""
+                            },
+                            {
+                                "name": "text",
+                                "dbName": "TEXT",
+                                "type": "string",
+                                "size": "1024",
+                                "nullable": false,
+                                "default": ""
+                            },
+                            {
+                                "name": "rating",
+                                "dbName": "RATING",
+                                "type": "numeric",
+                                "size": "12,5",
+                                "nullable": true,
+                                "default": ""
+                            },
+                            {
+                                "name": "source",
+                                "dbName": "SOURCE",
+                                "type": "string",
+                                "size": "255",
+                                "nullable": false,
+                                "default": ""
+                            },
+                            {
+                                "name": "source_url",
+                                "dbName": "SOURCE_URL",
+                                "type": "string",
+                                "size": "1000",
+                                "nullable": false,
+                                "default": ""
+                            },
+                            {
+                                "name": "sentiment_label",
+                                "dbName": "SENTIMENT_LABEL",
+                                "type": "string",
+                                "size": "255",
+                                "nullable": false,
+                                "default": ""
+                            },
+                            {
+                                "name": "sentiment_value",
+                                "dbName": "SENTIMENT_VALUE",
+                                "type": "numeric",
+                                "size": "12,5",
+                                "nullable": true,
+                                "default": ""
+                            },
+                            {
+                                "name": "text_length",
+                                "dbName": "TEXT_LENGTH",
+                                "type": "integer",
+                                "size": "",
+                                "nullable": true,
+                                "default": ""
+                            }
+                        ],
+                        "primaryKey": [
+                            "REVIEW_RESPONSE_ID"
+                        ]
+                    },
+                    {
+                        "dbName": "TOPIC",
+                        "export": true,
+                        "tableId": "out.c-reviews.topic",
+                        "items": [
+                            {
+                                "name": "topic_id",
+                                "dbName": "TOPIC_ID",
+                                "type": "string",
+                                "size": "255",
+                                "nullable": false,
+                                "default": ""
+                            },
+                            {
+                                "name": "topic_group",
+                                "dbName": "TOPIC_GROUP",
+                                "type": "string",
+                                "size": "255",
+                                "nullable": false,
+                                "default": ""
+                            },
+                            {
+                                "name": "topic",
+                                "dbName": "TOPIC",
+                                "type": "string",
+                                "size": "255",
+                                "nullable": false,
+                                "default": ""
+                            },
+                            {
+                                "name": "subject",
+                                "dbName": "SUBJECT",
+                                "type": "string",
+                                "size": "255",
+                                "nullable": false,
+                                "default": ""
+                            },
+                            {
+                                "name": "object",
+                                "dbName": "OBJECT",
+                                "type": "string",
+                                "size": "255",
+                                "nullable": false,
+                                "default": ""
+                            },
+                            {
+                                "name": "type",
+                                "dbName": "TYPE",
+                                "type": "string",
+                                "size": "255",
+                                "nullable": false,
+                                "default": ""
+                            },
+                            {
+                                "name": "category_type",
+                                "dbName": "CATEGORY_TYPE",
+                                "type": "string",
+                                "size": "255",
+                                "nullable": false,
+                                "default": ""
+                            }
+                        ],
+                        "primaryKey": [
+                            "TOPIC_ID"
+                        ]
+                    },
+                    {
+                        "dbName": "REVIEW_RESPONSE_TOPIC",
+                        "export": true,
+                        "tableId": "out.c-reviews.review_response_topic",
+                        "items": [
+                            {
+                                "name": "review_response_id",
+                                "dbName": "REVIEW_RESPONSE_ID",
+                                "type": "string",
+                                "size": "255",
+                                "nullable": false,
+                                "default": ""
+                            },
+                            {
+                                "name": "topic_id",
+                                "dbName": "TOPIC_ID",
+                                "type": "string",
+                                "size": "255",
+                                "nullable": false,
+                                "default": ""
+                            },
+                            {
+                                "name": "sentiment_label",
+                                "dbName": "SENTIMENT_LABEL",
+                                "type": "string",
+                                "size": "255",
+                                "nullable": false,
+                                "default": ""
+                            },
+                            {
+                                "name": "sentiment_value",
+                                "dbName": "SENTIMENT_VALUE",
+                                "type": "numeric",
+                                "size": "12,5",
+                                "nullable": true,
+                                "default": ""
+                            }
+                        ],
+                        "primaryKey": [
+                            "REVIEW_RESPONSE_ID",
+                            "TOPIC_ID"
+                        ]
+                    }
+                ]
+            },
+            "storage": {
+                "input": {
+                    "tables": [
+                        {
+                            "source": "out.c-reviews.location",
+                            "destination": "out.c-reviews.location.csv",
+                            "columns": [
+                                "location_id",
+                                "location",
+                                "street",
+                                "city",
+                                "zipcode",
+                                "country",
+                                "state",
+                                "latitude",
+                                "longitude"
+                            ]
+                        },
+                        {
+                            "source": "out.c-reviews.reviews_response",
+                            "destination": "out.c-reviews.reviews_response.csv",
+                            "columns": [
+                                "review_response_id",
+                                "review_id",
+                                "type",
+                                "location_id",
+                                "published_at",
+                                "review_title",
+                                "text",
+                                "rating",
+                                "source",
+                                "source_url",
+                                "sentiment_label",
+                                "sentiment_value",
+                                "text_length"
+                            ]
+                        },
+                        {
+                            "source": "out.c-reviews.topic",
+                            "destination": "out.c-reviews.topic.csv",
+                            "columns": [
+                                "topic_id",
+                                "topic_group",
+                                "topic",
+                                "subject",
+                                "object",
+                                "type",
+                                "category_type"
+                            ]
+                        },
+                        {
+                            "source": "out.c-reviews.review_response_topic",
+                            "destination": "out.c-reviews.review_response_topic.csv",
+                            "columns": [
+                                "review_response_id",
+                                "topic_id",
+                                "sentiment_label",
+                                "sentiment_value"
+                            ]
+                        },
+                        {
+                            "source": "in.c-Radim_test_FHS.nlp_feedback",
+                            "destination": "in.c-Radim_test_FHS.nlp_feedback.csv",
+                            "columns": [
+                                "feedback_id",
+                                "restaurant_id",
+                                "source",
+                                "review_date",
+                                "visit_date",
+                                "rating",
+                                "comment",
+                                "sentiment",
+                                "sentiment_label",
+                                "sentiment_polarity"
+                            ],
+                            "where_column": "review_date",
+                            "where_operator": "ne",
+                            "where_values": [
+                                "",
+                                " "
+                            ]
+                        },
+                        {
+                            "source": "in.c-Radim_test_FHS.nlp_topic",
+                            "destination": "in.c-Radim_test_FHS.nlp_topic.csv",
+                            "columns": [
+                                "topic_id",
+                                "topic",
+                                "type",
+                                "category_type"
+                            ]
+                        },
+                        {
+                            "source": "in.c-Radim_test_FHS.nlp_sentences",
+                            "destination": "in.c-Radim_test_FHS.nlp_sentences.csv",
+                            "columns": [
+                                "UID",
+                                "sentence_id",
+                                "index",
+                                "text",
+                                "Sentiment_Value",
+                                "Sentiment_Polarity",
+                                "Sentiment_Label"
+                            ]
+                        },
+                        {
+                            "source": "in.c-Radim_test_FHS.nlp_topic_relation",
+                            "destination": "in.c-Radim_test_FHS.nlp_topic_relation.csv",
+                            "columns": [
+                                "conn_id",
+                                "review_id",
+                                "topic_id",
+                                "sentiment_value",
+                                "sentiment_polarity",
+                                "sentiment_label"
+                            ]
+                        },
+                        {
+                            "source": "in.c-Radim_test_FHS.restaurants",
+                            "destination": "in.c-Radim_test_FHS.restaurants.csv",
+                            "columns": [
+                                "Id",
+                                "Restaurant",
+                                "RestaurantLabel",
+                                "CenterName",
+                                "Address",
+                                "AreaRegion",
+                                "AreaRep",
+                                "OpeningDate",
+                                "TerminationDate",
+                                "DMA",
+                                "Region",
+                                "Region_hq",
+                                "ZipPostalCode",
+                                "City",
+                                "StateProvince",
+                                "Country",
+                                "Latitude",
+                                "Longitude",
+                                "geo_pushpin",
+                                "BuildingSize",
+                                "TypeofPremises",
+                                "NumberofSeats_Inside",
+                                "NumberofSeats_Outside",
+                                "EncaporInlineorOther",
+                                "StreetAddress",
+                                "training38loc"
+                            ]
+                        }
+                    ]
+                }
+            }
+        }
+    }
+}
