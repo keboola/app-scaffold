@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Keboola\ScaffoldApp\FunctionalTests;
 
 use Keboola\ScaffoldApp\App;
+use Keboola\ScaffoldApp\EncryptionClient;
 use Keboola\StorageApi\Client;
 use Keboola\StorageApi\Components;
 use Keboola\StorageApi\Options\Components\Configuration;
@@ -74,6 +75,11 @@ class AppTest extends TestCase
         ]);
     }
 
+    private function createEncryptionApiClient(): EncryptionClient
+    {
+        return EncryptionClient::createForStorageApi($this->createStorageApiClient());
+    }
+
     private function createApp(array $scaffoldStaticConfiguration, array $scaffoldParameters): App
     {
         return new App(
@@ -81,6 +87,7 @@ class AppTest extends TestCase
             $scaffoldParameters,
             $this->createStorageApiClient(),
             $this->createOrchestrationApiClient(),
+            $this->createEncryptionApiClient(),
             new NullLogger()
         );
     }

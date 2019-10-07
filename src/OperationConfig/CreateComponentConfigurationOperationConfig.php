@@ -24,27 +24,41 @@ class CreateComponentConfigurationOperationConfig implements OperationConfigInte
     /**
      * @return CreateComponentConfigurationOperationConfig
      */
-    public static function create(array $actionConfig, array $parameters): OperationConfigInterface
-    {
+    public static function create(
+        array $actionConfig,
+        array $parameters
+    ): OperationConfigInterface {
         $config = new self();
 
         if (empty($actionConfig['id'])) {
-            throw new Exception(sprintf('Operation ID is missing in create.configuration operation "%s".', json_encode($actionConfig)));
+            throw new Exception(sprintf(
+                'Operation ID is missing in create.configuration operation "%s".',
+                json_encode($actionConfig)
+            ));
         }
         $config->id = $actionConfig['id'];
 
         if (empty($actionConfig['KBCComponentId'])) {
-            throw new Exception(sprintf('Component Id is missing in operation create.configuration with id "%s".', $config->getId()));
+            throw new Exception(sprintf(
+                'Component Id is missing in operation create.configuration with id "%s".',
+                $config->getId()
+            ));
         }
         $config->KBCComponentId = $actionConfig['KBCComponentId'];
 
         if (empty($actionConfig['payload'])) {
-            throw new Exception(sprintf('Configuration payload is missing in operation create.configuration with id "%s".', $config->getId()));
+            throw new Exception(sprintf(
+                'Configuration payload is missing in operation create.configuration with id "%s".',
+                $config->getId()
+            ));
         }
         $config->payload = $actionConfig['payload'];
 
         if (empty($config->payload['name'])) {
-            throw new Exception(sprintf('Configuration name is missing in operation create.configuration payload with id "%s".', $config->getId()));
+            throw new Exception(sprintf(
+                'Configuration name is missing in operation create.configuration payload with id "%s".',
+                $config->getId()
+            ));
         }
         $config->configrationName = $config->payload['name'];
 

@@ -67,7 +67,7 @@ class ConfigDefinition extends BaseConfigDefinition
             return $parametersNode;
         }
 
-        /** @var ConfigurationInterface $scaffoldDefinition */
+        /** @var BaseConfigDefinition $scaffoldDefinition */
         $scaffoldDefinition = new $scaffoldDefinitionClass;
         /** @var ArrayNodeDefinition $definitionNode */
         $definitionNode = $scaffoldDefinition->getParametersDefinition();

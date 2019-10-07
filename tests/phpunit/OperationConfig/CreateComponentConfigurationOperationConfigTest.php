@@ -26,38 +26,6 @@ class CreateComponentConfigurationOperationConfigTest extends TestCase
         $this->assertInstanceOf(OperationConfigInterface::class, $instance);
     }
 
-    public function testValidation(): void
-    {
-        // misisng component internal id
-        $this->expectException(Throwable::class);
-        $this->expectExceptionMessage('Operation create.configuration missing id or is empty');
-        CreateComponentConfigurationOperationConfig::create([], []);
-
-        // misisng SAPI component id
-        $this->expectException(Throwable::class);
-        $this->expectExceptionMessage('Operation create.configuration missing KBCComponentId or is empty');
-        CreateComponentConfigurationOperationConfig::create(['id' => 'id', 'action' => 'action'], []);
-
-        // missing payload
-        $this->expectException(Throwable::class);
-        $this->expectExceptionMessage('Operation create.configuration missing payload');
-        CreateComponentConfigurationOperationConfig::create([
-            'id' => 'id',
-            'action' => 'action',
-            'KBCComponentId' => 'ex01',
-        ], null);
-
-        // missing name
-        $this->expectException(Throwable::class);
-        $this->expectExceptionMessage('Operation create.configuration payload missing component name');
-        CreateComponentConfigurationOperationConfig::create([
-            'id' => 'id',
-            'action' => 'action',
-            'KBCComponentId' => 'ex01',
-            'payload' => [],
-        ], []);
-    }
-
     public function testMergeParameters(): void
     {
         $instance = CreateComponentConfigurationOperationConfig::create(
@@ -68,5 +36,53 @@ class CreateComponentConfigurationOperationConfigTest extends TestCase
         $configuration = $instance->getRequestConfiguration();
 
         $this->assertSame(['parameters' => ['params1' => ['param1Value']]], $configuration->getConfiguration());
+    }
+
+    public function testValidationMissingComponentId(): void
+    {
+        // misisng SAPI component id
+        $this->expectException(Throwable::class);
+        $this->expectExceptionMessage('Component Id is missing in operation create.configuration with id "id1".');
+        CreateComponentConfigurationOperationConfig::create([
+            'id' => 'id1',
+            'action' => 'action',
+        ], []);
+    }
+
+    public function testValidationMissingComponentName(): void
+    {
+        // missing name
+        $this->expectException(Throwable::class);
+        $this->expectExceptionMessage(
+            'Configuration payload is missing in operation create.configuration with id "id1".'
+        );
+        CreateComponentConfigurationOperationConfig::create([
+            'id' => 'id1',
+            'action' => 'action',
+            'KBCComponentId' => 'ex01',
+            'payload' => [],
+        ], []);
+    }
+
+    public function testValidationMissingId(): void
+    {
+        // misisng component internal id
+        $this->expectException(Throwable::class);
+        $this->expectExceptionMessage('Operation ID is missing in create.configuration operation "[]".');
+        CreateComponentConfigurationOperationConfig::create([], []);
+    }
+
+    public function testValidationMissingPayload(): void
+    {
+        // missing payload
+        $this->expectException(Throwable::class);
+        $this->expectExceptionMessage(
+            'Configuration payload is missing in operation create.configuration with id "id".'
+        );
+        CreateComponentConfigurationOperationConfig::create([
+            'id' => 'id',
+            'action' => 'action',
+            'KBCComponentId' => 'ex01',
+        ], []);
     }
 }

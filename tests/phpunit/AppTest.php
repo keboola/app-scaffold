@@ -6,43 +6,14 @@ namespace Keboola\ScaffoldApp\Tests;
 
 use Keboola\Orchestrator\Client as OrchestratorClient;
 use Keboola\ScaffoldApp\App;
+use Keboola\ScaffoldApp\EncryptionClient;
 use Keboola\StorageApi\Client;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 use Psr\Log\NullLogger;
-use Throwable;
 
 class AppTest extends TestCase
 {
-    private function createApp(
-        array $scaffoldStaticConfiguration,
-        array $scaffoldParameters,
-        callable $configurationCallback,
-        callable $orchestrationCallback
-    ): App {
-        /** @var Client|MockObject $sapiClientMock */
-        $sapiClientMock = $this->getMockBuilder(Client::class)
-            ->disableOriginalConstructor()
-            ->getMock();
-
-        $sapiClientMock->method('apiPost')
-            ->willReturnCallback($configurationCallback);
-
-        /** @var OrchestratorClient|MockObject $orchestratorApiMock */
-        $orchestratorApiMock = self::createMock(OrchestratorClient::class);
-
-        $orchestratorApiMock->method('createOrchestration')
-            ->willReturnCallback($orchestrationCallback);
-
-        return new App(
-            $scaffoldStaticConfiguration,
-            $scaffoldParameters,
-            $sapiClientMock,
-            $orchestratorApiMock,
-            new NullLogger()
-        );
-    }
-
     public function testRunSuccess(): void
     {
         $posts = [];
@@ -94,7 +65,8 @@ class AppTest extends TestCase
 
                 return ['id' => 1]; // return config id
             },
-            function ($orchestrationName, $options) use (&$orchestrations): array {
+            function ($orchestrationName, $options) use (&$orchestrations
+            ): array {
                 $orchestrations[$orchestrationName] = $options;
 
                 return ['id' => 1]; // return orchstration id
@@ -106,5 +78,41 @@ class AppTest extends TestCase
         $this->assertArrayHasKey('storage/components/ex01/configs', $posts);
         $this->assertArrayHasKey('storage/components/ex01/configs/1/rows', $posts);
         $this->assertArrayHasKey('orch01', $orchestrations);
+    }
+
+    private function createApp(
+        array $scaffoldStaticConfiguration,
+        array $scaffoldParameters,
+        callable $configurationCallback,
+        callable $orchestrationCallback
+    ): App {
+        /** @var Client|MockObject $sapiClientMock */
+        $sapiClientMock = $this->getMockBuilder(Client::class)
+            ->disableOriginalConstructor()
+            ->getMock();
+
+        $sapiClientMock->method('verifyToken')
+            ->willReturn(['owner' => ['id' => '1']]);
+
+        $sapiClientMock->method('apiPost')
+            ->willReturnCallback($configurationCallback);
+
+        /** @var OrchestratorClient|MockObject $orchestratorApiMock */
+        $orchestratorApiMock = self::createMock(OrchestratorClient::class);
+
+        $orchestratorApiMock->method('createOrchestration')
+            ->willReturnCallback($orchestrationCallback);
+
+        /** @var EncryptionClient|MockObject $encyptionApiMock */
+        $encyptionApiMock = self::createMock(EncryptionClient::class);
+
+        return new App(
+            $scaffoldStaticConfiguration,
+            $scaffoldParameters,
+            $sapiClientMock,
+            $orchestratorApiMock,
+            $encyptionApiMock,
+            new NullLogger()
+        );
     }
 }

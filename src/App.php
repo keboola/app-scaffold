@@ -55,16 +55,16 @@ class App
      */
     private $componentsApiClient;
 
-    /** @var string */
-    private $encryptionApiUrl;
+    /** @var EncryptionClient */
+    private $encryptionApiClient;
 
     public function __construct(
         array $scaffoldStaticConfiguration,
         array $scaffoldParameters,
         StorageClient $storageApiClient,
         OrchestratorClient $orchestrationApiClient,
-        LoggerInterface $logger,
-        string $encryptionApiUrl
+        EncryptionClient $encriptionApiClient,
+        LoggerInterface $logger
     ) {
         $this->scaffoldStaticConfiguration = $scaffoldStaticConfiguration;
         $this->scaffoldParameters = $scaffoldParameters;
@@ -72,7 +72,7 @@ class App
         $this->storageApiClient = $storageApiClient;
         $this->orchestrationApiClient = $orchestrationApiClient;
         $this->componentsApiClient = new Components($this->storageApiClient);
-        $this->encryptionApiUrl = $encryptionApiUrl;
+        $this->encryptionApiClient = $encriptionApiClient;
     }
 
     private function createOrchestration(CreateOrchestrationOperationConfig $operationConfig): void
@@ -110,26 +110,6 @@ class App
         }
     }
 
-    private function encryptConfigurationData(array $data, string $componentId, string $projectId)
-    {
-        $client = new Client(['base_uri' => $this->encryptionApiUrl]);
-        $response = $client->request('POST', 'encrypt',
-            [
-                'headers' =>
-                    [
-                        'X-StorageApi-Token' => $this->storageApiClient->getTokenString(),
-                        'Content-Type' => 'application/json',
-                    ],
-                'query' => [
-                    'componentId' => $componentId,
-                    'projectId' => $projectId,
-                ],
-                'body' => json_encode($data),
-            ]
-        );
-        return json_decode($response->getBody()->getContents(), true);
-    }
-
     private function createComponentConfiguration(CreateComponentConfigurationOperationConfig $operationConfig): void
     {
         $configuration = $operationConfig->getRequestConfiguration();
@@ -143,7 +123,7 @@ class App
         );
 
         $tokenInfo = $this->storageApiClient->verifyToken();
-        $configuration->setConfiguration($this->encryptConfigurationData(
+        $configuration->setConfiguration($this->encryptionApiClient->encryptConfigurationData(
             $configuration->getConfiguration(),
             $configuration->getComponentId(),
             (string) $tokenInfo['owner']['id']
