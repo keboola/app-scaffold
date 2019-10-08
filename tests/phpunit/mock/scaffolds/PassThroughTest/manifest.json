@@ -1,0 +1,64 @@
+{
+    "author": "John Doe",
+    "description": "Sample Description",
+    "inputs": [
+        {
+            "id": "connectionWriter",
+            "componentId": "keboola.wr-storage",
+            "schema": {
+                "type": "object",
+                "required": [
+                    "#token"
+                ],
+                "properties": {
+                    "#token": {
+                        "type": "string"
+                    }
+                }
+            }
+        },
+        {
+            "id": "snowflakeExtractor",
+            "componentId": "keboola.ex-snowflake",
+            "schema": {
+                "type": "object",
+                "required": [
+                    "db"
+                ],
+                "properties": {
+                    "db": {
+                        "type": "object",
+                        "required": [
+                            "host",
+                            "user",
+                            "#password",
+                            "database",
+                            "schema",
+                            "warehouse"
+                        ],
+                        "properties": {
+                            "host": {
+                                "type": "string"
+                            },
+                            "user": {
+                                "type": "string"
+                            },
+                            "schema": {
+                                "type": "string"
+                            },
+                            "database": {
+                                "type": "string"
+                            },
+                            "#password": {
+                                "type": "string"
+                            },
+                            "warehouse": {
+                                "type": "string"
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    ]
+}

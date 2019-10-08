@@ -5,10 +5,14 @@ declare(strict_types=1);
 namespace Keboola\ScaffoldApp\OperationConfig;
 
 use Exception;
+use Keboola\ScaffoldApp\Operation\FinishedOperationsStore;
 use Keboola\StorageApi\Options\Components\Configuration;
 
 class CreateOrchestrationOperationConfig implements OperationConfigInterface
 {
+    /** @var string */
+    protected $id;
+
     /** @var array */
     private $payload = [];
 
@@ -21,14 +25,19 @@ class CreateOrchestrationOperationConfig implements OperationConfigInterface
     /**
      * @return CreateOrchestrationOperationConfig
      */
-    public static function create(array $actionConfig, array $parameters): OperationConfigInterface
-    {
+    public static function create(
+        string $operationId,
+        array $operationConfig,
+        array $parameters
+    ): OperationConfigInterface {
         $config = new self();
 
-        if (empty($actionConfig['payload'])) {
+        $config->id = $operationId;
+
+        if (empty($operationConfig['payload'])) {
             throw new Exception('Operation create.orchestration missing payload');
         }
-        $config->payload = $actionConfig['payload'];
+        $config->payload = $operationConfig['payload'];
 
         if (empty($config->payload['name'])) {
             throw new Exception('Operation create.orchestration missing name');
@@ -43,23 +52,9 @@ class CreateOrchestrationOperationConfig implements OperationConfigInterface
         return $config;
     }
 
-    /**
-     * @param array<Configuration> $createdConfigurations
-     */
-    public function populateOrchestrationTasksWithConfigurationIds(array $createdConfigurations): void
+    public function getId(): string
     {
-        foreach ($this->tasks as &$task) {
-            /** @var Configuration $componentConfiguration */
-            $componentConfiguration = $createdConfigurations[$task['refConfigId']];
-            $task = array_merge(
-                $task,
-                [
-                    'actionParameters' => [
-                        'config' => $componentConfiguration->getConfigurationId(),
-                    ],
-                ]
-            );
-        }
+        return $this->id;
     }
 
     public function getOrchestrationName(): string
@@ -72,5 +67,22 @@ class CreateOrchestrationOperationConfig implements OperationConfigInterface
         $payload = $this->payload;
         $payload['tasks'] = $this->tasks;
         return $payload;
+    }
+
+    public function populateOrchestrationTasksWithConfigurationIds(
+        FinishedOperationsStore $store
+    ): void {
+        foreach ($this->tasks as &$task) {
+            /** @var Configuration $componentConfiguration */
+            $componentConfiguration = $store->getOperationData($task['operationReferenceId']);
+            $task = array_merge(
+                $task,
+                [
+                    'actionParameters' => [
+                        'config' => $componentConfiguration->getConfigurationId(),
+                    ],
+                ]
+            );
+        }
     }
 }
