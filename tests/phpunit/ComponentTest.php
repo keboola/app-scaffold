@@ -16,7 +16,6 @@ class ComponentTest extends TestCase
         $reflection = new ReflectionClass(Component::class);
 
         $method = $reflection->getMethod('actionListScaffolds');
-        $method->setAccessible(true);
 
         $response = $method->invokeArgs($reflection->newInstanceWithoutConstructor(), []);
         self::assertArrayHasKey('PassThroughTest', $response);
