@@ -91,4 +91,14 @@ class Component extends BaseComponent
     {
         throw new UserException('Can be used only for sync actions {listScaffolds,useScaffold}.');
     }
+
+    public function getConfigDefinitionClass(): string
+    {
+        return ConfigDefinition::class;
+    }
+
+    public function getConfigClass(): string
+    {
+        return Config::class;
+    }
 }
