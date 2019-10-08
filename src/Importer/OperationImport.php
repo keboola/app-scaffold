@@ -25,20 +25,20 @@ class OperationImport
     /**
      * @var array
      */
-    private $configRows;
+    private $configurationRows;
 
     public function __construct(
         string $operationId,
         string $componentId,
         array $payload,
         OrchestrationTask $task,
-        array $configRows = []
+        array $configurationRows = []
     ) {
         $this->operationId = $operationId;
         $this->componentId = $componentId;
         $this->payload = $payload;
         $this->task = $task;
-        $this->configRows = $configRows;
+        $this->configurationRows = $configurationRows;
     }
 
     public function getComponentId(): string
@@ -46,15 +46,16 @@ class OperationImport
         return $this->componentId;
     }
 
-    public function getConfigRows(): array
+    public function getConfigurationRows(): array
     {
-        return $this->configRows;
+        return $this->configurationRows;
     }
 
-    public function getConfigRowsJsonArray(): array
+    public function getConfigurationRowsJsonArray(): array
     {
+        // will strip all stuff from response
         $output = [];
-        foreach ($this->configRows as $singleRow) {
+        foreach ($this->configurationRows as $singleRow) {
             $output[] = [
                 'configuration' => $singleRow['configuration'],
                 'description' => $singleRow['description'],

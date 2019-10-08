@@ -52,14 +52,15 @@ class OrchestrationImporter
     public function __construct(
         Client $storageApiClient,
         OrchestratorClient $orchestrationApiClient,
-        OutputInterface $output
+        OutputInterface $output,
+        string $scaffoldsDir = __DIR__ . '/../../scaffolds'
     ) {
         $this->storageApiClient = $storageApiClient;
         $this->orchestrationApiClient = $orchestrationApiClient;
         $this->output = $output;
 
         $this->componentsApiClient = new Components($this->storageApiClient);
-        $this->scaffoldsDir = __DIR__ . '/../../scaffolds';
+        $this->scaffoldsDir = $scaffoldsDir;
     }
 
     public function importOrchestration(
@@ -168,7 +169,7 @@ class OrchestrationImporter
         return $operationImport;
     }
 
-    private function convertToCamelCase(string $string)
+    private function convertToCamelCase(string $string): string
     {
         foreach (['-', '.'] as $delimiter) {
             $string = ucwords($string, $delimiter);
@@ -197,7 +198,7 @@ class OrchestrationImporter
             true
         );
 
-        if (0 === count($import->getConfigRows())) {
+        if (0 === count($import->getConfigurationRows())) {
             return;
         }
         // dump ConfigRows
@@ -209,7 +210,7 @@ class OrchestrationImporter
                 OperationsConfig::CREATE_CONFIGURATION_ROWS,
                 $import->getOperationId()
             ),
-            $import->getConfigRowsJsonArray(),
+            $import->getConfigurationRowsJsonArray(),
             true
         );
     }
