@@ -90,7 +90,7 @@ class ComponentTest extends TestCase
         self::assertInstanceOf(Configuration::class, $created);
         self::assertEquals('createdConfigurationId', $created->getConfigurationId());
         $json = JsonHelper::readFile(
-            __DIR__ . '/mock/scaffolds/PassThroughTest/CreateConfiguration/connectionWriter.json'
+            __DIR__ . '/mock/scaffolds/PassThroughTest/operations/CreateConfiguration/connectionWriter.json'
         );
         self::assertSame(
             $json['payload']['configuration'],
@@ -101,7 +101,7 @@ class ComponentTest extends TestCase
         self::assertInstanceOf(Configuration::class, $created);
         self::assertEquals('createdConfigurationId', $created->getConfigurationId());
         $json = JsonHelper::readFile(
-            __DIR__ . '/mock/scaffolds/PassThroughTest/CreateConfiguration/snowflakeExtractor.json'
+            __DIR__ . '/mock/scaffolds/PassThroughTest/operations/CreateConfiguration/snowflakeExtractor.json'
         );
         $expectedConfiguration =
             array_merge_recursive(

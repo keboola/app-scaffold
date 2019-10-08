@@ -33,9 +33,9 @@ class ValidateScaffoldsTest extends TestCase
     {
         $manifest = JsonHelper::readFile(sprintf('%s/manifest.json', $scaffoldDir));
         $this->validateManifest($manifest);
-        self::assertFileExists(sprintf('%s/%s', $scaffoldDir, OperationsConfig::CREATE_ORCHESTREATION));
-        self::assertFileExists(sprintf('%s/%s', $scaffoldDir, OperationsConfig::CREATE_CONFIGURATION));
-        self::assertFileExists(sprintf('%s/%s', $scaffoldDir, OperationsConfig::CREATE_CONFIGURATION_ROWS));
+        self::assertFileExists(sprintf('%s/operations/%s', $scaffoldDir, OperationsConfig::CREATE_ORCHESTREATION));
+        self::assertFileExists(sprintf('%s/operations/%s', $scaffoldDir, OperationsConfig::CREATE_CONFIGURATION));
+        self::assertFileExists(sprintf('%s/operations/%s', $scaffoldDir, OperationsConfig::CREATE_CONFIGURATION_ROWS));
     }
 
     private function validateManifest(array $manifest): void

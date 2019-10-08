@@ -157,7 +157,7 @@ class Component extends BaseComponent
         string $operationFolder
     ): Finder {
         $finder = new Finder();
-        return $finder->in($scaffoldConfigurationFolder . '/' . $operationFolder . '/')
+        return $finder->in($scaffoldConfigurationFolder . '/operations/' . $operationFolder . '/')
             ->files()->depth(0);
     }
 

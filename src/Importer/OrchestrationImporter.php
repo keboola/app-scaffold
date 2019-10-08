@@ -8,6 +8,7 @@ use Keboola\Component\JsonHelper;
 use Keboola\Component\UserException;
 use Keboola\Orchestrator\Client as OrchestratorClient;
 use Keboola\Orchestrator\OrchestrationTask;
+use Keboola\ScaffoldApp\Operation\OperationsConfig;
 use Keboola\StorageApi\Client;
 use Keboola\StorageApi\Components;
 use Symfony\Component\Console\Helper\ProgressBar;
@@ -16,7 +17,7 @@ use Symfony\Component\Filesystem\Filesystem;
 
 class OrchestrationImporter
 {
-    private const NUMBER_OF_ADDITIONAL_OPERATIONS = 3;
+    private const NUMBER_OF_ADDITIONAL_OPERATIONS = 4;
     private const SCAFFOLD_DIRS = [
         'CreateConfiguration',
         'CreateConfigRows',
@@ -115,6 +116,10 @@ class OrchestrationImporter
         $this->dumpScaffoldDefinitionTemplate($scaffoldName);
         $p->advance();
 
+        $p->setMessage('# Dumping Scaffold manifest file.');
+        $this->dumpScaffoldManifestTemplate($scaffoldName);
+        $p->advance();
+
         $p->finish();
     }
 
@@ -173,9 +178,10 @@ class OrchestrationImporter
     ): void {
         JsonHelper::writeFile(
             sprintf(
-                '%s/%s/operations/CreateConfiguration/%s.json',
+                '%s/%s/operations/%s/%s.json',
                 $this->scaffoldsDir,
                 $scaffoldName,
+                OperationsConfig::CREATE_CONFIGURATION,
                 $import->getOperationId()
             ),
             $import->getCreateConfigurationJsonArray(),
@@ -188,9 +194,10 @@ class OrchestrationImporter
         // dump ConfigRows
         JsonHelper::writeFile(
             sprintf(
-                '%s/%s/operations/CreateConfigRows/%s.json',
+                '%s/%s/operations/%s/%s.json',
                 $this->scaffoldsDir,
                 $scaffoldName,
+                OperationsConfig::CREATE_CONFIGURATION_ROWS,
                 $import->getOperationId()
             ),
             $import->getConfigRowsJsonArray(),
@@ -220,9 +227,10 @@ class OrchestrationImporter
 
         JsonHelper::writeFile(
             sprintf(
-                '%s/%s/operations/CreateOrchestration/orchestration.%s.json',
+                '%s/%s/operations/%s/orchestration.%s.json',
                 $this->scaffoldsDir,
                 $scaffoldName,
+                OperationsConfig::CREATE_ORCHESTREATION,
                 $this->generateRandomSufix()
             ),
             $orchestrationOperationConfig,
@@ -264,6 +272,25 @@ EOT;
                 'ScaffoldDefinition.php'
             ),
             $definition
+        );
+    }
+
+    private function dumpScaffoldManifestTemplate(string $scaffoldName): void
+    {
+        $manifestTemplate = [
+            'author' => 'Keboola',
+            'description' => 'Sample Description',
+            'inputs' => [],
+        ];
+
+        JsonHelper::writeFile(
+            sprintf(
+                '%s/%s/manifest.json',
+                $this->scaffoldsDir,
+                $scaffoldName
+            ),
+            $manifestTemplate,
+            true
         );
     }
 }
