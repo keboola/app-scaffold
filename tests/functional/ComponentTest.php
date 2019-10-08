@@ -25,7 +25,7 @@ class ComponentTest extends DatadirTestCase
         $data = [
             'action' => 'useScaffold',
             'parameters' => [
-                'id' => 'TransformationTest',
+                'id' => 'PassThroughTest',
                 'inputs' => [],
             ],
         ];
