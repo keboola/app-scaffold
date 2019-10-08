@@ -19,9 +19,9 @@ class OrchestrationImporter
 {
     private const NUMBER_OF_ADDITIONAL_OPERATIONS = 4;
     private const SCAFFOLD_DIRS = [
-        'CreateConfiguration',
-        'CreateConfigRows',
-        'CreateOrchestration',
+        OperationsConfig::CREATE_CONFIGURATION,
+        OperationsConfig::CREATE_CONFIGURATION_ROWS,
+        OperationsConfig::CREATE_ORCHESTREATION,
     ];
 
     /**
@@ -151,8 +151,9 @@ class OrchestrationImporter
     ): OperationImport {
         $configuration = $this->componentsApiClient->getConfiguration($task->getComponent(), $configurationId);
 
+        $operationId = $this->convertToCamelCase($task->getComponent() . '_' . $this->generateRandomSufix());
         $operationImport = new OperationImport(
-            'configuration_' . $this->generateRandomSufix(),
+            lcfirst($operationId),
             $task->getComponent(),
             [
                 'name' => $configuration['name'],
@@ -165,6 +166,14 @@ class OrchestrationImporter
         $this->dumpOperation($scaffoldName, $operationImport);
 
         return $operationImport;
+    }
+
+    private function convertToCamelCase(string $string)
+    {
+        foreach (['-', '.'] as $delimiter) {
+            $string = ucwords($string, $delimiter);
+        }
+        return str_replace(['-', '.'], '', $string);
     }
 
     private function generateRandomSufix(): string
@@ -227,7 +236,7 @@ class OrchestrationImporter
 
         JsonHelper::writeFile(
             sprintf(
-                '%s/%s/operations/%s/orchestration.%s.json',
+                '%s/%s/operations/%s/orchestration_%s.json',
                 $this->scaffoldsDir,
                 $scaffoldName,
                 OperationsConfig::CREATE_ORCHESTREATION,
