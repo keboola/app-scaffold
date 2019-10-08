@@ -85,7 +85,6 @@
                 "name": "Write processed tables",
                 "configuration": {
                     "parameters": {
-                        "url": "https://connection.keboola.com/"
                     }
                 }
             }
