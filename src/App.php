@@ -181,7 +181,7 @@ class App
     private function createOrchestration(
         CreateOrchestrationOperationConfig $operationConfig
     ): void {
-        $this->logger->info('Creating configuration for orchstration');
+        $this->logger->info('Creating configuration for orchestration');
 
         $operationConfig->populateOrchestrationTasksWithConfigurationIds($this->configurationIdStorage);
         $response = $this->orchestrationApiClient->createOrchestration(
