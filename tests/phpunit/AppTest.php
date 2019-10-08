@@ -55,9 +55,7 @@ class AppTest extends TestCase
             ],
             [ // parameters to merge
                 'ex01' => [
-                    'parameters' => [
-                        'param1' => 'param1val',
-                    ],
+                    'param1' => 'param1val',
                 ],
             ],
             function ($url, $payload) use (&$posts): array {
@@ -75,9 +73,25 @@ class AppTest extends TestCase
 
         $app->run();
 
-        $this->assertArrayHasKey('storage/components/ex01/configs', $posts);
-        $this->assertArrayHasKey('storage/components/ex01/configs/1/rows', $posts);
-        $this->assertArrayHasKey('orch01', $orchestrations);
+        self::assertArrayHasKey('storage/components/ex01/configs', $posts);
+        self::assertArrayHasKey('storage/components/ex01/configs/1/rows', $posts);
+        self::assertArrayHasKey('orch01', $orchestrations);
+        self::assertEquals('{"param1":"param1val"}', $posts['storage/components/ex01/configs']['configuration']);
+
+        $createdConfigurations = $app->getCreatedConfigurations();
+        self::assertSame(
+            [
+                [
+                    'id' => 'ex01',
+                    'configurationId' => 1,
+                ],
+                [
+                    'id' => 'orch01',
+                    'configurationId' => 1,
+                ],
+            ],
+            $createdConfigurations
+        );
     }
 
     private function createApp(
@@ -87,7 +101,7 @@ class AppTest extends TestCase
         callable $orchestrationCallback
     ): App {
         /** @var Client|MockObject $sapiClientMock */
-        $sapiClientMock = $this->getMockBuilder(Client::class)
+        $sapiClientMock = self::getMockBuilder(Client::class)
             ->disableOriginalConstructor()
             ->getMock();
 
@@ -105,6 +119,10 @@ class AppTest extends TestCase
 
         /** @var EncryptionClient|MockObject $encyptionApiMock */
         $encyptionApiMock = self::createMock(EncryptionClient::class);
+        $encyptionApiMock->method('encryptConfigurationData')
+            ->willReturnCallback(function ($data) {
+                return $data;
+            });
 
         return new App(
             $scaffoldStaticConfiguration,

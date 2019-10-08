@@ -8,5 +8,7 @@ use Symfony\Component\Config\Definition\Builder\ArrayNodeDefinition;
 
 interface ScaffoldInputDefinitionInterface
 {
-    public function addInputsDefinition(ArrayNodeDefinition $node): ArrayNodeDefinition;
+    public function addInputsDefinition(
+        ArrayNodeDefinition $node
+    ): ArrayNodeDefinition;
 }

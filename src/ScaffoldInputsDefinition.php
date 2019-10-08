@@ -24,14 +24,14 @@ class ScaffoldInputsDefinition implements ConfigurationInterface
         $builder = new TreeBuilder('inputs', 'array');
         /** @var ArrayNodeDefinition $root */
         $root = $builder->getRootNode();
-        $scaffoldDefinitionClass = $this->getScaffoldDefinitionClass($this->scaffoldId);
+        $root->isRequired();
 
+        $scaffoldDefinitionClass = $this->getScaffoldDefinitionClass($this->scaffoldId);
         if ($scaffoldDefinitionClass === null || !class_exists($scaffoldDefinitionClass)) {
             /** @var ArrayNodeDefinition $root */
             $root->ignoreExtraKeys(false);
             return $builder;
         }
-
         /** @var ScaffoldInputDefinitionInterface $scaffoldDefinition */
         $scaffoldDefinition = new $scaffoldDefinitionClass;
         /** @var ArrayNodeDefinition $definitionNode */
@@ -39,9 +39,13 @@ class ScaffoldInputsDefinition implements ConfigurationInterface
         return $builder;
     }
 
-    private function getScaffoldDefinitionClass(string $scaffoldId): ?string
+    protected function getScaffoldDefinitionClass(string $scaffoldId): ?string
     {
-        if ((new Filesystem())->exists(__DIR__ . '/../scaffolds/' . $scaffoldId)) {
+        if ((new Filesystem())->exists(sprintf(
+            '%s/%s/ScaffoldDefinition.php',
+            Component::SCAFFOLDS_DIR,
+            $scaffoldId
+        ))) {
             return 'Keboola\\Scaffolds\\' . $scaffoldId . '\\ScaffoldDefinition';
         }
         return null;

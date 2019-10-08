@@ -8,21 +8,39 @@ use Exception;
 use Keboola\Component\BaseComponent;
 use Keboola\Component\JsonHelper;
 use Keboola\Component\UserException;
-use Keboola\Orchestrator\Client as OrchestratorClient;
 use Keboola\StorageApi\Client;
-use Symfony\Component\Config\Definition\Exception\InvalidConfigurationException;
 use Symfony\Component\Filesystem\Filesystem;
+use Symfony\Component\Finder\Finder;
 
 class Component extends BaseComponent
 {
-    private const SYRUP_SERVICE_ID = 'syrup';
+    public const SCAFFOLDS_DIR = __DIR__ . '/../scaffolds';
 
-    protected function run(): void
+    public function actionListScaffolds(): array
+    {
+        $finder = new Finder();
+
+        // CreateConfiguration
+        $scaffolds = $finder->in(self::SCAFFOLDS_DIR)
+            ->directories()->depth(0);
+
+        $response = [];
+
+        foreach ($scaffolds->getIterator() as $directory) {
+            $response[$directory->getFilename()] = JsonHelper::readFile(sprintf(
+                '%s/manifest.json',
+                $directory->getPathname()
+            ));
+        }
+
+        return $response;
+    }
+
+    public function actionUseScaffold(): array
     {
         /** @var Config $config */
         $config = $this->getConfig();
-        //only one scaffold can be passed in parameters
-        $scaffoldParameters = $config->getScaffoldInputs();
+        $scaffoldInputs = $config->getScaffoldInputs();
         $scaffoldConfiguration = $this->getScaffoldConfiguration($config->getScaffoldName());
 
         $client = new Client(
@@ -32,22 +50,33 @@ class Component extends BaseComponent
                 'logger' => $this->getLogger(),
             ]
         );
-        $orchestrationApiClient = OrchestratorClient::factory([
-            'url' => $this->getSyrupApiUrl($client),
-            'token' => getenv('KBC_TOKEN'),
-        ]);
-
-        $encryptionClient = EncryptionClient::createForStorageApi($client);
 
         $app = new App(
             $scaffoldConfiguration,
-            $scaffoldParameters,
+            $scaffoldInputs,
             $client,
-            $orchestrationApiClient,
-            $encryptionClient,
+            OrchestratorClientFactory::createForStorageApi($client),
+            EncryptionClient::createForStorageApi($client),
             $this->getLogger()
         );
         $app->run();
+
+        return $app->getCreatedConfigurations();
+    }
+
+    // load scaffold scaffold.json file
+    private function getScaffoldConfiguration(string $scaffoldName): array
+    {
+        $scaffoldFolder = self::SCAFFOLDS_DIR . '/' . $scaffoldName;
+        $scaffoldConfigFile = $scaffoldFolder . '/scaffold.json';
+        $fs = new Filesystem();
+        if (!$fs->exists($scaffoldConfigFile)) {
+            throw new Exception(sprintf('Scaffold "%s" missing scaffold.json configuration file.', $scaffoldName));
+        }
+        if (!$fs->exists($scaffoldFolder . '/manifest.json')) {
+            throw new Exception(sprintf('Scaffold "%s" missing manifest.json file.', $scaffoldName));
+        }
+        return JsonHelper::readFile($scaffoldConfigFile);
     }
 
     public function getSyncActions(): array
@@ -58,110 +87,8 @@ class Component extends BaseComponent
         ];
     }
 
-    public function actionListScaffolds(): array
+    protected function run(): void
     {
-        return [
-            [
-                'id' => 'PassThroughTest',
-                'author' => 'John Doe',
-                'description' => 'Sample Description',
-                'inputs' => [
-                    [
-                        'id' => 'connectionWriter',
-                        'componentId' => 'keboola.wr-storage',
-                        'schema' => [
-                            'type' => 'object',
-                            'required' => ['#token'],
-                            'properties' => [
-                                '#token' => [
-                                    'type' => 'string',
-                                ],
-                            ],
-                        ],
-                    ],
-                    [
-                        'id' => 'snowflakeExtractor',
-                        'componentId' => 'keboola.ex-snowflake',
-                        'schema' => [
-                            'type' => 'object',
-                            'required' => ['db'],
-                            'properties' => [
-                                'db' => [
-                                    'type' => 'object',
-                                    'required' => ['host', 'user', '#password', 'database', 'schema', 'warehouse'],
-                                    'properties' => [
-                                        'host' => [
-                                            'type' => 'string',
-                                        ],
-                                        'user' => [
-                                            'type' => 'string',
-                                        ],
-                                        'schema' => [
-                                            'type' => 'string',
-                                        ],
-                                        'database' => [
-                                            'type' => 'string',
-                                        ],
-                                        '#password' => [
-                                            'type' => 'string',
-                                        ],
-                                        'warehouse' => [
-                                            'type' => 'string',
-                                        ],
-                                    ],
-                                ],
-                            ],
-                        ],
-                    ],
-                ],
-            ],
-        ];
-    }
-
-    public function actionUseScaffold(): array
-    {
-        return [
-            'id' => 'PassThroughTest',
-            'configurations' => [
-                [
-                    'id' => '12345',
-                    'componentId' => 'keboola.ex-db-snowflake',
-                    'actionRequired' => 'oauth',
-                ],
-                [
-                    'id' => '123456',
-                    'componentId' => 'keboola.wr-storage',
-                ],
-                [
-                    'id' => '12345678',
-                    'component' => 'orchestrator',
-                    'actionRequired' => 'setSchedule',
-                ],
-            ],
-        ];
-    }
-
-    private function getSyrupApiUrl(Client $sapiClient): string
-    {
-        $index = $sapiClient->indexAction();
-        foreach ($index['services'] as $service) {
-            if ($service['id'] === self::SYRUP_SERVICE_ID) {
-                return $service['url'] . '/orchestrator';
-            }
-        }
-        $tokenData = $sapiClient->verifyToken();
-        throw new UserException(sprintf('Syrup not found in %s region', $tokenData['owner']['region']));
-    }
-
-    // load scaffold config.json file
-    private function getScaffoldConfiguration(string $scaffoldName): array
-    {
-        $scaffoldFolder = __DIR__ . '/../scaffolds/' . $scaffoldName;
-        $scaffoldConfigFile = $scaffoldFolder . '/scaffold.json';
-        $fs = new Filesystem();
-        if (!$fs->exists($scaffoldConfigFile)) {
-            throw new Exception(sprintf('Scaffold name: %s missing scaffold.json configuration file.', $scaffoldName));
-        }
-        return JsonHelper::readFile($scaffoldConfigFile);
+        throw new UserException('Can be used only for sync actions {listScaffolds,useScaffold}.');
     }
 }

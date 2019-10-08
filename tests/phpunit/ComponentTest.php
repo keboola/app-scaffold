@@ -8,10 +8,20 @@ use ReflectionClass;
 use Throwable;
 use Keboola\ScaffoldApp\Component;
 use PHPUnit\Framework\TestCase;
-use Psr\Log\NullLogger;
 
 class ComponentTest extends TestCase
 {
+    public function testActionListScaffolds(): void
+    {
+        $reflection = new ReflectionClass(Component::class);
+
+        $method = $reflection->getMethod('actionListScaffolds');
+        $method->setAccessible(true);
+
+        $response = $method->invokeArgs($reflection->newInstanceWithoutConstructor(), []);
+        self::assertArrayHasKey('PassThroughTest', $response);
+    }
+
     public function testGetScaffoldConfigurationNotExisting(): void
     {
         $reflection = new ReflectionClass(Component::class);
@@ -20,7 +30,7 @@ class ComponentTest extends TestCase
         $method->setAccessible(true);
 
         $this->expectException(Throwable::class);
-        $this->expectExceptionMessage('Scaffold name: NonExistingScaffold missing scaffold.json configuration file.');
+        $this->expectExceptionMessage('Scaffold "NonExistingScaffold" missing scaffold.json configuration file.');
         $method->invokeArgs($reflection->newInstanceWithoutConstructor(), ['NonExistingScaffold']);
     }
 }
