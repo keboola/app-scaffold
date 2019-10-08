@@ -12,7 +12,7 @@ use Symfony\Component\Process\Process;
 
 class ComponentTest extends DatadirTestCase
 {
-    public function testUseScaffold()
+    public function testUseScaffold(): void
     {
         $specification = new DatadirTestSpecification(
             __DIR__,
@@ -23,10 +23,10 @@ class ComponentTest extends DatadirTestCase
         );
         $tempDatadir = $this->getTempDatadir($specification);
         $data = [
-            "action" => "useScaffold",
-            "parameters" => [
-                "id" => "TransformationTest",
-                "inputs" => [],
+            'action' => 'useScaffold',
+            'parameters' => [
+                'id' => 'TransformationTest',
+                'inputs' => [],
             ],
         ];
         file_put_contents($tempDatadir->getTmpFolder() . '/config.json', \GuzzleHttp\json_encode($data));
@@ -47,7 +47,7 @@ class ComponentTest extends DatadirTestCase
         }
 
         $runCommand = [
-            "php",
+            'php',
             $script,
         ];
         $runProcess = new Process($runCommand);
