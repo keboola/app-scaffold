@@ -75,43 +75,52 @@ class App
         $this->encryptionApiClient = $encryptionApiClient;
     }
 
-    private function createOrchestration(CreateOrchestrationOperationConfig $operationConfig): void
+    public function getCreatedConfigurations(): array
     {
-        $this->logger->info('Creating configuration for orchstration');
-
-        $operationConfig->populateOrchestrationTasksWithConfigurationIds($this->configurationIdStorage);
-        $response = $this->orchestrationApiClient->createOrchestration(
-            $operationConfig->getOrchestrationName(),
-            $operationConfig->getPayload()
-        );
-
-        // save id, this for tests
-        $this->configurationIdStorage[$operationConfig->getOrchestrationName()] = $response['id'];
-        $this->logger->info(sprintf('Orchestration %s created', $response['id']));
-    }
-
-    private function createConfigurationRows(CreateCofigRowOperationConfig $operationConfig): void
-    {
-        $this->logger->info(sprintf('Creating config rows for %s', $operationConfig->getRefConfigId()));
-
-        if (!$this->isConfigurationCreated($operationConfig->getRefConfigId())) {
-            throw new Exception(sprintf(
-                'Configuration for component refConfigId: %s wasn\'t created or saved.',
-                $operationConfig->getRefConfigId()
-            ));
+        $response = [];
+        foreach ($this->configurationIdStorage as $id => $createdItem) {
+            // createdItem is id for orchestration
+            $configurationId = $createdItem;
+            if ($createdItem instanceof Configuration) {
+                $configurationId = $createdItem->getConfigurationId();
+            }
+            $response[] = [
+                'id' => $id,
+                'configurationId' => $configurationId,
+            ];
         }
 
-        /** @var Configuration $componentConfiguration */
-        $componentConfiguration = $this->configurationIdStorage[$operationConfig->getRefConfigId()];
+        return $response;
+    }
 
-        foreach ($operationConfig->getIterator($componentConfiguration) as $row) {
-            $response = $this->componentsApiClient->addConfigurationRow($row);
-            $this->logger->info(sprintf('Row for %s created', $response['id']));
+    public function run(): void
+    {
+        foreach ($this->scaffoldStaticConfiguration['operations'] as $operationConfig) {
+            switch ($operationConfig['operation']) {
+                case 'create.configuration':
+                    $this->createComponentConfiguration(
+                        CreateComponentConfigurationOperationConfig::create($operationConfig, $this->scaffoldParameters)
+                    );
+                    break;
+                case 'create.configrows':
+                    $this->createConfigurationRows(
+                        CreateCofigRowOperationConfig::create($operationConfig, [])
+                    );
+                    break;
+                case 'create.orchestration':
+                    $this->createOrchestration(
+                        CreateOrchestrationOperationConfig::create($operationConfig, [])
+                    );
+                    break;
+                default:
+                    throw new Exception(sprintf('Unknown action %s', $operationConfig['action']));
+            }
         }
     }
 
-    private function createComponentConfiguration(CreateComponentConfigurationOperationConfig $operationConfig): void
-    {
+    private function createComponentConfiguration(
+        CreateComponentConfigurationOperationConfig $operationConfig
+    ): void {
         $configuration = $operationConfig->getRequestConfiguration();
 
         $this->logger->info(
@@ -143,33 +152,45 @@ class App
         $this->configurationIdStorage[$operationConfig->getId()] = $configuration;
     }
 
-    public function run(): void
-    {
-        foreach ($this->scaffoldStaticConfiguration['operations'] as $operationConfig) {
-            switch ($operationConfig['operation']) {
-                case 'create.configuration':
-                    $this->createComponentConfiguration(
-                        CreateComponentConfigurationOperationConfig::create($operationConfig, $this->scaffoldParameters)
-                    );
-                    break;
-                case 'create.configrows':
-                    $this->createConfigurationRows(
-                        CreateCofigRowOperationConfig::create($operationConfig, [])
-                    );
-                    break;
-                case 'create.orchestration':
-                    $this->createOrchestration(
-                        CreateOrchestrationOperationConfig::create($operationConfig, [])
-                    );
-                    break;
-                default:
-                    throw new Exception(sprintf('Unknown action %s', $operationConfig['action']));
-            }
+    private function createConfigurationRows(
+        CreateCofigRowOperationConfig $operationConfig
+    ): void {
+        $this->logger->info(sprintf('Creating config rows for %s', $operationConfig->getRefConfigId()));
+
+        if (!$this->isConfigurationCreated($operationConfig->getRefConfigId())) {
+            throw new Exception(sprintf(
+                'Configuration for component refConfigId: %s wasn\'t created or saved.',
+                $operationConfig->getRefConfigId()
+            ));
+        }
+
+        /** @var Configuration $componentConfiguration */
+        $componentConfiguration = $this->configurationIdStorage[$operationConfig->getRefConfigId()];
+
+        foreach ($operationConfig->getIterator($componentConfiguration) as $row) {
+            $response = $this->componentsApiClient->addConfigurationRow($row);
+            $this->logger->info(sprintf('Row for %s created', $response['id']));
         }
     }
 
     private function isConfigurationCreated(string $refConfigId): bool
     {
         return array_key_exists($refConfigId, $this->configurationIdStorage);
+    }
+
+    private function createOrchestration(
+        CreateOrchestrationOperationConfig $operationConfig
+    ): void {
+        $this->logger->info('Creating configuration for orchestration');
+
+        $operationConfig->populateOrchestrationTasksWithConfigurationIds($this->configurationIdStorage);
+        $response = $this->orchestrationApiClient->createOrchestration(
+            $operationConfig->getOrchestrationName(),
+            $operationConfig->getPayload()
+        );
+
+        // save id, this for tests
+        $this->configurationIdStorage[$operationConfig->getOrchestrationName()] = $response['id'];
+        $this->logger->info(sprintf('Orchestration %s created', $response['id']));
     }
 }

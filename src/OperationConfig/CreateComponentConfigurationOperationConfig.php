@@ -62,7 +62,7 @@ class CreateComponentConfigurationOperationConfig implements OperationConfigInte
         }
         $config->configrationName = $config->payload['name'];
 
-        if (is_array($parameters) && array_key_exists($config->getId(), $parameters)) {
+        if (is_array($parameters) && isset($parameters[$config->getId()])) {
             // actions has parameters merge it with payload configuration
             if (empty($config->payload['configuration'])) {
                 $config->payload['configuration'] = [];

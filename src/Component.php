@@ -8,21 +8,39 @@ use Exception;
 use Keboola\Component\BaseComponent;
 use Keboola\Component\JsonHelper;
 use Keboola\Component\UserException;
-use Keboola\Orchestrator\Client as OrchestratorClient;
 use Keboola\StorageApi\Client;
-use Symfony\Component\Config\Definition\Exception\InvalidConfigurationException;
 use Symfony\Component\Filesystem\Filesystem;
+use Symfony\Component\Finder\Finder;
 
 class Component extends BaseComponent
 {
-    private const SYRUP_SERVICE_ID = 'syrup';
+    public const SCAFFOLDS_DIR = __DIR__ . '/../scaffolds';
 
-    protected function run(): void
+    public function actionListScaffolds(): array
+    {
+        $finder = new Finder();
+
+        // CreateConfiguration
+        $scaffolds = $finder->in(self::SCAFFOLDS_DIR)
+            ->directories()->depth(0);
+
+        $response = [];
+
+        foreach ($scaffolds->getIterator() as $directory) {
+            $response[$directory->getFilename()] = JsonHelper::readFile(sprintf(
+                '%s/manifest.json',
+                $directory->getPathname()
+            ));
+        }
+
+        return $response;
+    }
+
+    public function actionUseScaffold(): array
     {
         /** @var Config $config */
         $config = $this->getConfig();
-        //only one scaffold can be passed in parameters
-        $scaffoldParameters = $config->getScaffoldParameters();
+        $scaffoldInputs = $config->getScaffoldInputs();
         $scaffoldConfiguration = $this->getScaffoldConfiguration($config->getScaffoldName());
 
         $client = new Client(
@@ -32,63 +50,45 @@ class Component extends BaseComponent
                 'logger' => $this->getLogger(),
             ]
         );
-        $orchestrationApiClient = OrchestratorClient::factory([
-            'url' => $this->getSyrupApiUrl($client),
-            'token' => getenv('KBC_TOKEN'),
-        ]);
-
-        $encryptionClient = EncryptionClient::createForStorageApi($client);
 
         $app = new App(
             $scaffoldConfiguration,
-            $scaffoldParameters,
+            $scaffoldInputs,
             $client,
-            $orchestrationApiClient,
-            $encryptionClient,
+            OrchestratorClientFactory::createForStorageApi($client),
+            EncryptionClient::createForStorageApi($client),
             $this->getLogger()
         );
         $app->run();
+
+        return $app->getCreatedConfigurations();
     }
 
-    private function getSyrupApiUrl(Client $sapiClient): string
-    {
-        $index = $sapiClient->indexAction();
-        foreach ($index['services'] as $service) {
-            if ($service['id'] === self::SYRUP_SERVICE_ID) {
-                return $service['url'] . '/orchestrator';
-            }
-        }
-        $tokenData = $sapiClient->verifyToken();
-        throw new UserException(sprintf('Syrup not found in %s region', $tokenData['owner']['region']));
-    }
-
-    // load scaffold config.json file
+    // load scaffold scaffold.json file
     private function getScaffoldConfiguration(string $scaffoldName): array
     {
-        $scaffoldFolder = __DIR__ . '/../scaffolds/' . $scaffoldName;
+        $scaffoldFolder = self::SCAFFOLDS_DIR . '/' . $scaffoldName;
         $scaffoldConfigFile = $scaffoldFolder . '/scaffold.json';
         $fs = new Filesystem();
         if (!$fs->exists($scaffoldConfigFile)) {
-            throw new Exception(sprintf('Scaffold name: %s missing scaffold.json configuration file.', $scaffoldName));
+            throw new Exception(sprintf('Scaffold "%s" missing scaffold.json configuration file.', $scaffoldName));
+        }
+        if (!$fs->exists($scaffoldFolder . '/manifest.json')) {
+            throw new Exception(sprintf('Scaffold "%s" missing manifest.json file.', $scaffoldName));
         }
         return JsonHelper::readFile($scaffoldConfigFile);
     }
 
-    protected function loadConfig(): void
+    public function getSyncActions(): array
     {
-        try {
-            // first validate configuration without scaffolds name
-            $generalConfig = new Config(
-                $this->getRawConfig(),
-                new ConfigDefinition(null)
-            );
-            // set config from configuration with scaffold name known
-            $this->setConfig(new Config(
-                $this->getRawConfig(),
-                new ConfigDefinition($generalConfig)
-            ));
-        } catch (InvalidConfigurationException $e) {
-            throw new UserException($e->getMessage(), 0, $e);
-        }
+        return [
+            'listScaffolds' => 'actionListScaffolds',
+            'useScaffold' => 'actionUseScaffold',
+        ];
+    }
+
+    protected function run(): void
+    {
+        throw new UserException('Can be used only for sync actions {listScaffolds,useScaffold}.');
     }
 }
