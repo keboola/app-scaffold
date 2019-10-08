@@ -1,0 +1,69 @@
+{
+    "author": "Jenny Doe",
+    "description": "This scaffold includes transformation and user input validation.",
+    "inputs": [
+        {
+            "id": "connectionWriter",
+            "componentId": "keboola.wr-storage",
+            "schema": {
+                "type": "object",
+                "required": [
+                    "#token", "url"
+                ],
+                "properties": {
+                    "#token": {
+                        "type": "string"
+                    },
+                    "url": {
+                        "type": "string",
+                        "defaultValue": "https://connection.keboola.com"
+                    }
+                }
+            }
+        },
+        {
+            "id": "snowflakeExtractor",
+            "componentId": "keboola.ex-snowflake",
+            "schema": {
+                "type": "object",
+                "required": [
+                    "db"
+                ],
+                "properties": {
+                    "db": {
+                        "type": "object",
+                        "required": [
+                            "host",
+                            "user",
+                            "#password",
+                            "database",
+                            "schema",
+                            "warehouse"
+                        ],
+                        "properties": {
+                            "host": {
+                                "type": "string"
+                            },
+                            "user": {
+                                "type": "string"
+                            },
+                            "schema": {
+                                "type": "string"
+                            },
+                            "database": {
+                                "type": "string"
+                            },
+                            "#password": {
+                                "type": "string"
+                            },
+                            "warehouse": {
+                                "type": "string",
+                                "defaultValue": "DEV"
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    ]
+}
