@@ -30,7 +30,7 @@ final class OrchestratorClientFactory
 
         return OrchestratorClient::factory([
             'url' => $url,
-            'token' => getenv('KBC_TOKEN'),
+            'token' => $storageApiClient->getTokenString(),
         ]);
     }
 }

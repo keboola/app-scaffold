@@ -7,13 +7,13 @@ namespace Keboola\ScaffoldApp\OperationConfig;
 use Exception;
 use Keboola\StorageApi\Options\Components\Configuration;
 
-class CreateComponentConfigurationOperationConfig implements OperationConfigInterface
+class CreateConfigurationOperationConfig implements OperationConfigInterface
 {
     /** @var string */
     protected $id;
 
     /** @var string */
-    private $KBCComponentId;
+    private $componentId;
 
     /** @var array */
     private $payload = [];
@@ -22,37 +22,32 @@ class CreateComponentConfigurationOperationConfig implements OperationConfigInte
     private $configrationName;
 
     /**
-     * @return CreateComponentConfigurationOperationConfig
+     * @return CreateConfigurationOperationConfig
      */
     public static function create(
-        array $actionConfig,
+        string $operationId,
+        array $operationConfig,
         array $parameters
     ): OperationConfigInterface {
         $config = new self();
 
-        if (empty($actionConfig['id'])) {
-            throw new Exception(sprintf(
-                'Operation ID is missing in create.configuration operation "%s".',
-                json_encode($actionConfig)
-            ));
-        }
-        $config->id = $actionConfig['id'];
+        $config->id = $operationId;
 
-        if (empty($actionConfig['KBCComponentId'])) {
+        if (empty($operationConfig['componentId'])) {
             throw new Exception(sprintf(
                 'Component Id is missing in operation create.configuration with id "%s".',
                 $config->getId()
             ));
         }
-        $config->KBCComponentId = $actionConfig['KBCComponentId'];
+        $config->componentId = $operationConfig['componentId'];
 
-        if (empty($actionConfig['payload'])) {
+        if (empty($operationConfig['payload'])) {
             throw new Exception(sprintf(
                 'Configuration payload is missing in operation create.configuration with id "%s".',
                 $config->getId()
             ));
         }
-        $config->payload = $actionConfig['payload'];
+        $config->payload = $operationConfig['payload'];
 
         if (empty($config->payload['name'])) {
             throw new Exception(sprintf(
@@ -84,11 +79,13 @@ class CreateComponentConfigurationOperationConfig implements OperationConfigInte
     public function getRequestConfiguration(): Configuration
     {
         $configuration = new Configuration;
-        $configuration->setComponentId($this->KBCComponentId);
+        $configuration->setComponentId($this->componentId);
         $configuration->setName($this->configrationName);
 
         if (!empty($this->payload['configuration'])) {
             $configuration->setConfiguration($this->payload['configuration']);
+        } else {
+            $configuration->setConfiguration([]);
         }
 
         return $configuration;

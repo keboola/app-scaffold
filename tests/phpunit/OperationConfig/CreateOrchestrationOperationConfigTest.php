@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Keboola\ScaffoldApp\Tests\OperationConfig;
 
+use Keboola\ScaffoldApp\Operation\CreateOrchestrationOperation;
+use Keboola\ScaffoldApp\Operation\FinishedOperationsStore;
 use Throwable;
 use Keboola\ScaffoldApp\OperationConfig\OperationConfigInterface;
 use Keboola\ScaffoldApp\OperationConfig\CreateOrchestrationOperationConfig;
@@ -13,12 +15,11 @@ use PHPUnit\Framework\TestCase;
 class CreateOrchestrationOperationConfigTest extends TestCase
 {
     private const WORKING_CONFIGURATION = [
-        'operation' => 'create.orchestration',
         'payload' => [
             'name' => 'orch01',
             'tasks' => [
                 [
-                    'refConfigId' => 'ex01',
+                    'operationReferenceId' => 'ex01',
                 ],
             ],
         ],
@@ -26,56 +27,23 @@ class CreateOrchestrationOperationConfigTest extends TestCase
 
     public function testImplements(): void
     {
-        $instance = CreateOrchestrationOperationConfig::create(self::WORKING_CONFIGURATION, []);
+        $instance = CreateOrchestrationOperationConfig::create('operation_id', self::WORKING_CONFIGURATION, []);
         $this->assertInstanceOf(OperationConfigInterface::class, $instance);
-    }
-
-    public function testvalidation(): void
-    {
-        // missing payload
-        $this->expectException(Throwable::class);
-        $this->expectExceptionMessage('Operation create.orchestration missing payload');
-        CreateOrchestrationOperationConfig::create(['action' => 'action'], []);
-
-        // missing name
-        $this->expectException(Throwable::class);
-        $this->expectExceptionMessage('Operation create.orchestration missing name');
-        CreateOrchestrationOperationConfig::create([
-            'action' => 'action',
-            'payload' => [],
-        ], []);
-
-        // missing tasks
-        $this->expectException(Throwable::class);
-        $this->expectExceptionMessage('Operation create.orchestration tasks are empty');
-        CreateOrchestrationOperationConfig::create([
-            'action' => 'action',
-            'payload' => ['name' => 'orch01'],
-        ], []);
-
-        // empty tasks
-        $this->expectException(Throwable::class);
-        $this->expectExceptionMessage('Operation create.orchestration tasks are empty');
-        CreateOrchestrationOperationConfig::create([
-            'action' => 'action',
-            'payload' => ['name' => 'orch01', 'tasks' => []],
-        ], []);
     }
 
     public function testPopulateOrchestrationTasksWithConfigurationIds(): void
     {
-        $instance = CreateOrchestrationOperationConfig::create(self::WORKING_CONFIGURATION, []);
+        $instance = CreateOrchestrationOperationConfig::create('operation_id', self::WORKING_CONFIGURATION, []);
 
-        $instance->populateOrchestrationTasksWithConfigurationIds(
-            [
-                'ex01' => (new Configuration())->setConfigurationId('id'),
-            ]
-        );
+        $store = new FinishedOperationsStore();
+        $store->add('ex01', CreateOrchestrationOperation::class, (new Configuration())->setConfigurationId('id'));
+
+        $instance->populateOrchestrationTasksWithConfigurationIds($store);
 
         $this->assertSame(
             [
                 [
-                    'refConfigId' => 'ex01',
+                    'operationReferenceId' => 'ex01',
                     'actionParameters' => [
                         'config' => 'id',
                     ],
@@ -83,5 +51,41 @@ class CreateOrchestrationOperationConfigTest extends TestCase
             ],
             $instance->getPayload()['tasks']
         );
+    }
+
+    public function testValidationEmptyTasks(): void
+    {
+        $this->expectException(Throwable::class);
+        $this->expectExceptionMessage('Operation create.orchestration tasks are empty');
+        CreateOrchestrationOperationConfig::create('operation_id', [
+            'payload' => ['name' => 'orch01', 'tasks' => []],
+        ], []);
+    }
+
+    public function testValidationMissingName(): void
+    {
+        $this->expectException(Throwable::class);
+        $this->expectExceptionMessage('Operation create.orchestration missing name');
+        CreateOrchestrationOperationConfig::create('operation_id', [
+            'payload' => [
+                'tasks' => [],
+            ],
+        ], []);
+    }
+
+    public function testValidationMissingPayload(): void
+    {
+        $this->expectException(Throwable::class);
+        $this->expectExceptionMessage('Operation create.orchestration missing payload');
+        CreateOrchestrationOperationConfig::create('operation_id', [], []);
+    }
+
+    public function testValidationMissingTasks(): void
+    {
+        $this->expectException(Throwable::class);
+        $this->expectExceptionMessage('Operation create.orchestration tasks are empty');
+        CreateOrchestrationOperationConfig::create('operation_id', [
+            'payload' => ['name' => 'orch01'],
+        ], []);
     }
 }

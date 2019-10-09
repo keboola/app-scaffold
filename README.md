@@ -6,81 +6,64 @@
 
 # Usage
 
-Scaffolds are saved in `scaffolds` directory, each scaffold has own directory named after scaffold and must contain `scaffold.json` file.
+Scaffolds are saved in `scaffolds` directory, each scaffold has own directory. Directory name is also scaffold name.
+
+## Scaffold structure
+
+- Scaffold must contain `manifest.json` file and operations folders.
+- Optionally parameters from runner can be validated with `ScaffoldDefinition.php`.
+- Each scaffold operation name must be camelCase optionally with sufix after underscore.
+- CreateConfigurationRows operations must match name with parent CreateConfiguration operation.
+
+Example scaffold structure:
+```
+├── manifest.json
+├── operations
+│   ├── CreateConfiguration
+│   │   ├── geneeaNlpAnalysisV2_0f1a.json
+│   │   ├── kdsTeamExReviewtrackers_2a98.json
+│   │   ├── keboolaWrDbSnowflake_e2e7.json
+│   │   ├── transformation_4554.json
+│   │   └── transformation_95f7.json
+│   ├── CreateConfigurationRows
+│   │   ├── transformation_4554.json
+│   │   └── transformation_95f7.json
+│   └── CreateOrchestration
+│       └── orchestration_a53f.json
+└── ScaffoldDefinition.php
+```
+
+## Scaffold creation
+
+There are two ways how to create scaffold, manually and using import command (don't do it manually).
+
+Import command will import orchestration and tasks configurations. Template of `manifest.json` and `ScaffoldDefinition.php` will be also created.
+```
+docker-compose run --rm dev composer console scaffold:import:orchestration <KBC_URL> <SAPI_TOKEN> <ORCHESTRATION_ID> <SCAFFOLD_NAME>
+```
+
+## Parameters
+
 Optionally parameters from runner can be validated with `ScaffoldDefinition.php`
 
-There are 3 operations available `create.configuration` , `create.configrows`, `create.orchestration`
-
-Operation path `payload.configuration.parameters` can be overide with parameters injected by runner.
+CreateConfiguration operation path `payload.configuration.parameters` can be overide with parameters injected by runner.
 
 ```
 {
-    "parameters": {
-        "scaffolds": [ // only one scaffold allowed
-            {
-                "name": "ReviewsReviewTrackers", // match scaffold directory name
-                "writer01": { // refer to component config id
-                    "parameters": {...} // this parameter will overide payload.configuration.parameters
-                }
-            }
-        ]
-    }
-}
-```
-
-example `scaffold.json`:
-```
-{
-    "operations": [
-            {
-                "operation": "create.configuration", // required
-                "id": "customId", // required
-                "KBCComponentId": "component name in storage",  // required
-                "payload": {
-                    "name": "Component name",
-                    "configuration": {
-                        ...
+    "configData": {
+        "parameters": {
+            "id": "<scaffold name>",
+            "inputs": [
+                {
+                    "id": "<operation id>",
+                    "values": {
+                    	"parameters": {
+	                        <parameters object>
+                    	}
                     }
-                }
-            },
-            {
-                "operation": "create.configrows",
-                "refConfigId": "customId", // refer to component config id
-                "rows": [...]
-            },
-            {
-                "operation": "create.orchestration",
-                "payload": {
-                    "name": "Reviews",
-                    "tasks": [
-                        {
-                            "refConfigId": "customId", // refer to component config id
-                        },
-                        ...
-                    ]
-            }
-    ]
-}
-```
-
-example `ScaffoldDefinition.php`
-```
-<?php
-
-declare(strict_types=1);
-
-namespace Keboola\Scaffolds\ReviewsReviewTrackers;
-
-use Symfony\Component\Config\Definition\Builder\TreeBuilder;
-use Symfony\Component\Config\Definition\ConfigurationInterface;
-
-class ScaffoldDefinition extends BaseConfigDefinition
-{
-    protected function getParametersDefinition(): ArrayNodeDefinition
-    {
-        $parametersNode = parent::getParametersDefinition();
-        // TODO: definition
-        return $parametersNode;
+                },
+            ]
+        }
     }
 }
 ```

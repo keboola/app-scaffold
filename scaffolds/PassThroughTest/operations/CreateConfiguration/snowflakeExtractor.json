@@ -1,0 +1,75 @@
+{
+    "componentId": "keboola.ex-db-snowflake",
+    "payload": {
+        "name": "Extract sample data",
+        "configuration": {
+            "parameters": {
+                "db": {
+                    "port": 443,
+                    "ssh": {
+                        "sshPort": 22
+                    }
+                },
+                "tables": [
+                    {
+                        "enabled": true,
+                        "name": "ACCOUNT",
+                        "incremental": false,
+                        "outputTable": "in.c-keboola-ex-db-snowflake-sample.account",
+                        "table": {
+                            "schema": "HELP_TUTORIAL",
+                            "tableName": "ACCOUNT"
+                        },
+                        "columns": [],
+                        "primaryKey": [],
+                        "id": 1509
+                    },
+                    {
+                        "enabled": true,
+                        "name": "USER",
+                        "incremental": false,
+                        "outputTable": "in.c-keboola-ex-db-snowflake-sample.user",
+                        "table": {
+                            "schema": "HELP_TUTORIAL",
+                            "tableName": "USER"
+                        },
+                        "columns": [],
+                        "primaryKey": [],
+                        "id": 85768
+                    }
+                ]
+            },
+            "processors": {
+                "after": [
+                    {
+                        "definition": {
+                            "component": "keboola.processor-add-metadata"
+                        },
+                        "parameters": {
+                            "tables": [
+                                {
+                                    "table": "in_c-keboola-ex-db-snowflake-sample_user.csv.gz",
+                                    "metadata": [
+                                        {
+                                            "key": "bdm.scaffold.entity.type",
+                                            "value": "user"
+                                        }
+                                    ]
+                                },
+                                {
+                                    "table": "in_c-keboola-ex-db-snowflake-sample_account.csv.gz",
+                                    "metadata": [
+                                        {
+                                            "key": "bdm.scaffold.entity.type",
+                                            "value": "account"
+                                        }
+                                    ]
+                                }
+                            ]
+                        }
+                    }
+                ]
+            }
+        }
+    }
+}
