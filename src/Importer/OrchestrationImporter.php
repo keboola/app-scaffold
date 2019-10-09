@@ -257,18 +257,22 @@ declare(strict_types=1);
 
 namespace Keboola\Scaffolds\\$scaffoldName;
 
+use Keboola\ScaffoldApp\ScaffoldInputDefinitionInterface;
 use Symfony\Component\Config\Definition\Builder\ArrayNodeDefinition;
-use Keboola\Component\Config\BaseConfigDefinition;
 use Symfony\Component\Config\Definition\ConfigurationInterface;
 use Symfony\Component\Config\Definition\Builder\TreeBuilder;
 
-class ScaffoldDefinition extends BaseConfigDefinition
+class ScaffoldDefinition implements ScaffoldInputDefinitionInterface
 {
-    protected function getParametersDefinition(): ArrayNodeDefinition
-    {
-        \$parametersNode = parent::getParametersDefinition();
-        // TODO: definition
-        return \$parametersNode;
+    public function addInputsDefinition(
+        ArrayNodeDefinition \$node
+    ): ArrayNodeDefinition {
+        // @formatter:off
+        /** @noinspection NullPointerExceptionInspection */
+        \$node->ignoreExtraKeys(false)
+            ->end();
+        // @formatter:on
+        return \$node;
     }
 }
 
