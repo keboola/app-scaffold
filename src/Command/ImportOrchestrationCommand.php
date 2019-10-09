@@ -68,5 +68,4 @@ EOT
             $input->getArgument('SCAFFOLD_NAME')
         );
     }
-
 }
