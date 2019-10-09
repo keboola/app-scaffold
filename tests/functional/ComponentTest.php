@@ -34,6 +34,24 @@ class ComponentTest extends DatadirTestCase
         $this->assertMatchesSpecification($specification, $process, $tempDatadir->getTmpFolder());
     }
 
+    public function testListScaffolds(): void
+    {
+        $specification = new DatadirTestSpecification(
+            __DIR__,
+            0,
+            null,
+            null,
+            null
+        );
+        $tempDatadir = $this->getTempDatadir($specification);
+        $data = [
+            'action' => 'listScaffolds',
+        ];
+        file_put_contents($tempDatadir->getTmpFolder() . '/config.json', \GuzzleHttp\json_encode($data));
+        $process = $this->runScript($tempDatadir->getTmpFolder());
+        $this->assertMatchesSpecification($specification, $process, $tempDatadir->getTmpFolder());
+    }
+
     protected function runScript(string $datadirPath): Process
     {
         $fs = new Filesystem();

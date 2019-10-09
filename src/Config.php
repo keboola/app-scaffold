@@ -5,10 +5,23 @@ declare(strict_types=1);
 namespace Keboola\ScaffoldApp;
 
 use Keboola\Component\Config\BaseConfig;
+use Keboola\Component\Config\BaseConfigDefinition;
+use Symfony\Component\Config\Definition\ConfigurationInterface;
 use Symfony\Component\Config\Definition\Processor;
 
 class Config extends BaseConfig
 {
+    public function __construct(
+        array $config,
+        ?ConfigurationInterface $configDefinition = null
+    ) {
+        if ($config['action'] === Component::SYNC_ACTION_LIST_SCAFFOLDS) {
+            parent::__construct($config, new BaseConfigDefinition);
+        } else {
+            parent::__construct($config, $configDefinition);
+        }
+    }
+
     public function getScaffoldInputs(): array
     {
         $scaffoldInputsDefinition = new ScaffoldInputsDefinition($this->getScaffoldName());
