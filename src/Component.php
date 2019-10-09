@@ -40,10 +40,12 @@ class Component extends BaseComponent
         $response = [];
 
         foreach ($scaffolds->getIterator() as $directory) {
-            $response[$directory->getFilename()] = JsonHelper::readFile(sprintf(
+            $manifest = JsonHelper::readFile(sprintf(
                 '%s/manifest.json',
                 $directory->getPathname()
             ));
+            $manifest['id'] = $directory->getFilename();
+            $response[] = $manifest;
         }
 
         return $response;

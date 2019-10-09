@@ -27,7 +27,9 @@ class ComponentTest extends TestCase
         $method = $reflection->getMethod('actionListScaffolds');
 
         $response = $method->invokeArgs($reflection->newInstanceWithoutConstructor(), []);
-        self::assertArrayHasKey('PassThroughTest', $response);
+        foreach ($response as $scaffold) {
+            self::assertArrayHasKey('id', $scaffold);
+        }
     }
 
     public function testExecuteOperations(): void
