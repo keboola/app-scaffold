@@ -80,13 +80,13 @@ class Component extends BaseComponent
     }
 
     private function getScaffoldConfigurationFolder(
-        string $scaffoldName
+        string $scaffoldId
     ): string {
-        $scaffoldFolder = self::SCAFFOLDS_DIR . '/' . $scaffoldName;
+        $scaffoldFolder = self::SCAFFOLDS_DIR . '/' . $scaffoldId;
 
         $fs = new Filesystem();
         if (!$fs->exists($scaffoldFolder)) {
-            throw new Exception(sprintf('Scaffold "%s" not exists.', $scaffoldName));
+            throw new Exception(sprintf('Scaffold "%s" not exists.', $scaffoldId));
         }
 
         return $scaffoldFolder;

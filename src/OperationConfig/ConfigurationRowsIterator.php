@@ -8,7 +8,7 @@ use Iterator;
 use Keboola\StorageApi\Options\Components\Configuration;
 use Keboola\StorageApi\Options\Components\ConfigurationRow;
 
-class ConfigRowIterator implements Iterator
+class ConfigurationRowsIterator implements Iterator
 {
     /** @var int */
     private $position = 0;

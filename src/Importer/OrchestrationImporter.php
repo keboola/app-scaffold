@@ -65,7 +65,7 @@ class OrchestrationImporter
 
     public function importOrchestration(
         int $orchestrationId,
-        string $scaffoldName
+        string $scaffoldId
     ): void {
         $this->output->writeln(sprintf('# Looking for orchestration id %s', $orchestrationId));
         $orchestration = $this->orchestrationApiClient->getOrchestration($orchestrationId);
@@ -80,7 +80,7 @@ class OrchestrationImporter
         $this->output->writeln(sprintf('# Importing orchestration %s', $orchestration['name']));
 
         $p->setMessage('# Creating scaffold directory structure.');
-        $this->prepareScaffoldFolderStructure($scaffoldName);
+        $this->prepareScaffoldFolderStructure($scaffoldId);
         $p->advance();
 
         $importedOperations = [];
@@ -104,33 +104,33 @@ class OrchestrationImporter
                 $configurationId
             ));
 
-            $importedOperations[] = $this->importTask($scaffoldName, $task, $configurationId);
+            $importedOperations[] = $this->importTask($scaffoldId, $task, $configurationId);
 
             $p->advance();
         }
 
         $p->setMessage('# Dumping CreateOrchestration operation file.');
-        $this->dumpOrchestration($orchestration, $scaffoldName, $importedOperations);
+        $this->dumpOrchestration($orchestration, $scaffoldId, $importedOperations);
         $p->advance();
 
         $p->setMessage('# Dumping ScaffoldDefinition template.');
-        $this->dumpScaffoldDefinitionTemplate($scaffoldName);
+        $this->dumpScaffoldDefinitionTemplate($scaffoldId);
         $p->advance();
 
         $p->setMessage('# Dumping Scaffold manifest file.');
-        $this->dumpScaffoldManifestTemplate($scaffoldName);
+        $this->dumpScaffoldManifestTemplate($scaffoldId);
         $p->advance();
 
         $p->finish();
     }
 
-    private function prepareScaffoldFolderStructure(string $scaffoldName): void
+    private function prepareScaffoldFolderStructure(string $scaffoldId): void
     {
         $fs = new Filesystem();
-        if ($fs->exists($this->scaffoldsDir . '/' . $scaffoldName)) {
+        if ($fs->exists($this->scaffoldsDir . '/' . $scaffoldId)) {
             throw new UserException(sprintf(
                 'Scaffold %s already exists.',
-                $scaffoldName
+                $scaffoldId
             ));
         }
 
@@ -139,14 +139,14 @@ class OrchestrationImporter
             $fs->mkdir(sprintf(
                 '%s/%s/operations/%s',
                 $this->scaffoldsDir,
-                $scaffoldName,
+                $scaffoldId,
                 $folder
             ));
         }
     }
 
     private function importTask(
-        string $scaffoldName,
+        string $scaffoldId,
         OrchestrationTask $task,
         string $configurationId
     ): OperationImport {
@@ -164,7 +164,7 @@ class OrchestrationImporter
             $configuration['rows']
         );
 
-        $this->dumpOperation($scaffoldName, $operationImport);
+        $this->dumpOperation($scaffoldId, $operationImport);
 
         return $operationImport;
     }
@@ -183,14 +183,14 @@ class OrchestrationImporter
     }
 
     private function dumpOperation(
-        string $scaffoldName,
+        string $scaffoldId,
         OperationImport $import
     ): void {
         JsonHelper::writeFile(
             sprintf(
                 '%s/%s/operations/%s/%s.json',
                 $this->scaffoldsDir,
-                $scaffoldName,
+                $scaffoldId,
                 OperationsConfig::CREATE_CONFIGURATION,
                 $import->getOperationId()
             ),
@@ -206,7 +206,7 @@ class OrchestrationImporter
             sprintf(
                 '%s/%s/operations/%s/%s.json',
                 $this->scaffoldsDir,
-                $scaffoldName,
+                $scaffoldId,
                 OperationsConfig::CREATE_CONFIGURATION_ROWS,
                 $import->getOperationId()
             ),
@@ -217,12 +217,12 @@ class OrchestrationImporter
 
     /**
      * @param array $orchestration
-     * @param string $scaffoldName
+     * @param string $scaffoldId
      * @param OperationImport[] $importedOperations
      */
     private function dumpOrchestration(
         array $orchestration,
-        string $scaffoldName,
+        string $scaffoldId,
         array $importedOperations
     ): void {
         $orchestrationOperationConfig = [
@@ -239,7 +239,7 @@ class OrchestrationImporter
             sprintf(
                 '%s/%s/operations/%s/orchestration_%s.json',
                 $this->scaffoldsDir,
-                $scaffoldName,
+                $scaffoldId,
                 OperationsConfig::CREATE_ORCHESTREATION,
                 $this->generateRandomSufix()
             ),
@@ -248,14 +248,14 @@ class OrchestrationImporter
         );
     }
 
-    private function dumpScaffoldDefinitionTemplate(string $scaffoldName): void
+    private function dumpScaffoldDefinitionTemplate(string $scaffoldId): void
     {
         $definition = <<<EOT
 <?php
 
 declare(strict_types=1);
 
-namespace Keboola\Scaffolds\\$scaffoldName;
+namespace Keboola\Scaffolds\\$scaffoldId;
 
 use Keboola\ScaffoldApp\ScaffoldInputDefinitionInterface;
 use Symfony\Component\Config\Definition\Builder\ArrayNodeDefinition;
@@ -282,14 +282,14 @@ EOT;
             sprintf(
                 '%s/%s/%s',
                 $this->scaffoldsDir,
-                $scaffoldName,
+                $scaffoldId,
                 'ScaffoldDefinition.php'
             ),
             $definition
         );
     }
 
-    private function dumpScaffoldManifestTemplate(string $scaffoldName): void
+    private function dumpScaffoldManifestTemplate(string $scaffoldId): void
     {
         $manifestTemplate = [
             'author' => 'Keboola',
@@ -301,7 +301,7 @@ EOT;
             sprintf(
                 '%s/%s/manifest.json',
                 $this->scaffoldsDir,
-                $scaffoldName
+                $scaffoldId
             ),
             $manifestTemplate,
             true

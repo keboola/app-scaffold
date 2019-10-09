@@ -30,7 +30,7 @@ class ImportOrchestrationCommand extends Command
             ->addArgument('KBC_URL', InputArgument::REQUIRED, 'Keboola connection storage api url')
             ->addArgument('SAPI_TOKEN', InputArgument::REQUIRED, 'Storage API token')
             ->addArgument('ORCHESTRATION_ID', InputArgument::REQUIRED, 'ID of orchestration configuration to import')
-            ->addArgument('SCAFFOLD_NAME', InputArgument::REQUIRED, 'Name of new scaffold');
+            ->addArgument('SCAFFOLD_ID', InputArgument::REQUIRED, 'Name of new scaffold');
     }
 
     /**
@@ -65,7 +65,7 @@ EOT
         $importer = new OrchestrationImporter($client, $orchestrationApiClient, $output);
         $importer->importOrchestration(
             (int) $input->getArgument('ORCHESTRATION_ID'),
-            $input->getArgument('SCAFFOLD_NAME')
+            $input->getArgument('SCAFFOLD_ID')
         );
     }
 }

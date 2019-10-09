@@ -9,7 +9,9 @@ use Keboola\StorageApi\Options\Components\Configuration;
 
 class FinishedOperationsStore
 {
-    /** @var array */
+    /**
+     * @var array
+     */
     private $operations = [];
 
     /**

@@ -37,8 +37,8 @@ class CreateCofigurationRowsOperationConfig implements OperationConfigInterface
 
     public function getIterator(
         Configuration $componentConfiguration
-    ): ConfigRowIterator {
-        return new ConfigRowIterator($this->rows, $componentConfiguration);
+    ): ConfigurationRowsIterator {
+        return new ConfigurationRowsIterator($this->rows, $componentConfiguration);
     }
 
     public function getOperationReferenceId(): string
