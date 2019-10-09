@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Keboola\ScaffoldApp\FunctionalTests;
 
+use Exception;
 use Keboola\Orchestrator\Client as OrchestratorClient;
 use Keboola\ScaffoldApp\Component;
 use Keboola\ScaffoldApp\EncryptionClient;
@@ -95,5 +96,15 @@ class FunctionalBaseTestCase extends TestCase
     protected function createComponentsApiClient(): ComponentsApiClient
     {
         return new ComponentsApiClient($this->createStorageApiClient());
+    }
+
+    protected function setUp(): void
+    {
+        if (false === getenv('KBC_TOKEN')) {
+            throw new Exception('Env variable "KBC_TOKEN" must be set.');
+        }
+        if (false === getenv('KBC_URL')) {
+            throw new Exception('Env variable "KBC_URL" must be set.');
+        }
     }
 }
