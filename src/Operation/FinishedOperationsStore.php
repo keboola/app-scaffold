@@ -5,19 +5,14 @@ declare(strict_types=1);
 namespace Keboola\ScaffoldApp\Operation;
 
 use Exception;
-use Iterator;
 use Keboola\StorageApi\Options\Components\Configuration;
 
-class FinishedOperationsStore implements Iterator
+class FinishedOperationsStore
 {
-    /** @var int */
-    private $position = 0;
-
     /** @var array */
     private $operations = [];
 
     /**
-     * @param string $operationId
      * @param mixed $data
      */
     public function add(
@@ -30,11 +25,6 @@ class FinishedOperationsStore implements Iterator
             'operationClass' => $operationClass,
             'data' => $data,
         ];
-    }
-
-    public function current(): array
-    {
-        return $this->operations[$this->position];
     }
 
     /**
@@ -52,6 +42,11 @@ class FinishedOperationsStore implements Iterator
             'Operation "%s" was not finished or it\'s wrongly configured.',
             $operationId
         ));
+    }
+
+    public function getOperations(): array
+    {
+        return $this->operations;
     }
 
     public function getOperationsResponse(): array
@@ -79,25 +74,5 @@ class FinishedOperationsStore implements Iterator
         }
 
         return $response;
-    }
-
-    public function key(): int
-    {
-        return $this->position;
-    }
-
-    public function next(): void
-    {
-        ++$this->position;
-    }
-
-    public function rewind(): void
-    {
-        $this->position = 0;
-    }
-
-    public function valid(): bool
-    {
-        return isset($this->operations[$this->position]);
     }
 }
