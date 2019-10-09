@@ -5,9 +5,8 @@ declare(strict_types=1);
 namespace Keboola\ScaffoldApp\Command;
 
 use Keboola\Component\Logger;
-use Keboola\Component\UserException;
-use Keboola\Orchestrator\Client as OrchestratorClient;
 use Keboola\ScaffoldApp\Importer\OrchestrationImporter;
+use Keboola\ScaffoldApp\OrchestratorClientFactory;
 use Keboola\StorageApi\Client;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
@@ -55,10 +54,7 @@ class ImportOrchestrationCommand extends Command
                 'logger' => $logger,
             ]
         );
-        $orchestrationApiClient = OrchestratorClient::factory([
-            'url' => $this->getSyrupApiUrl($client),
-            'token' => $input->getArgument('SAPI_TOKEN'),
-        ]);
+        $orchestrationApiClient = OrchestratorClientFactory::createForStorageApi($client);
 
         $importer = new OrchestrationImporter($client, $orchestrationApiClient, $output);
         $importer->importOrchestration(
@@ -67,15 +63,4 @@ class ImportOrchestrationCommand extends Command
         );
     }
 
-    private function getSyrupApiUrl(Client $sapiClient): string
-    {
-        $index = $sapiClient->indexAction();
-        foreach ($index['services'] as $service) {
-            if ($service['id'] === 'syrup') {
-                return $service['url'] . '/orchestrator';
-            }
-        }
-        $tokenData = $sapiClient->verifyToken();
-        throw new UserException(sprintf('Syrup not found in %s region', $tokenData['owner']['region']));
-    }
 }
