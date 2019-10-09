@@ -27,8 +27,8 @@ class ImportOrchestrationCommand extends Command
             ->setDescription('Import scaffold from orchestration.');
 
         $this
+            ->addArgument('KBC_URL', InputArgument::REQUIRED, 'Keboola connection storage api url')
             ->addArgument('SAPI_TOKEN', InputArgument::REQUIRED, 'Storage API token')
-            ->addArgument('KBC_URL', InputArgument::REQUIRED, 'ID of orchestration configuration to import')
             ->addArgument('ORCHESTRATION_ID', InputArgument::REQUIRED, 'ID of orchestration configuration to import')
             ->addArgument('SCAFFOLD_NAME', InputArgument::REQUIRED, 'Name of new scaffold');
     }
