@@ -26,6 +26,8 @@ use Symfony\Component\Finder\Finder;
 class Component extends BaseComponent
 {
     public const SCAFFOLDS_DIR = __DIR__ . '/../scaffolds';
+    public const SYNC_ACTION_LIST_SCAFFOLDS = 'listScaffolds';
+    public const SYNC_ACTION_USE_SCAFFOLD = 'useScaffold';
 
     public function actionListScaffolds(): array
     {
@@ -161,17 +163,9 @@ class Component extends BaseComponent
             ->files()->depth(0);
     }
 
-    public function getSyncActions(): array
+    public function getConfigClass(): string
     {
-        return [
-            'listScaffolds' => 'actionListScaffolds',
-            'useScaffold' => 'actionUseScaffold',
-        ];
-    }
-
-    protected function run(): void
-    {
-        throw new UserException('Can be used only for sync actions {listScaffolds,useScaffold}.');
+        return Config::class;
     }
 
     public function getConfigDefinitionClass(): string
@@ -179,8 +173,16 @@ class Component extends BaseComponent
         return ConfigDefinition::class;
     }
 
-    public function getConfigClass(): string
+    public function getSyncActions(): array
     {
-        return Config::class;
+        return [
+            self::SYNC_ACTION_LIST_SCAFFOLDS => 'actionListScaffolds',
+            self::SYNC_ACTION_USE_SCAFFOLD => 'actionUseScaffold',
+        ];
+    }
+
+    protected function run(): void
+    {
+        throw new UserException('Can be used only for sync actions {listScaffolds,useScaffold}.');
     }
 }
