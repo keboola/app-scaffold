@@ -8,6 +8,7 @@ use Keboola\Component\Logger;
 use Keboola\ScaffoldApp\Importer\OrchestrationImporter;
 use Keboola\ScaffoldApp\OrchestratorClientFactory;
 use Keboola\StorageApi\Client;
+use Psr\Log\NullLogger;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
@@ -37,15 +38,20 @@ class ImportOrchestrationCommand extends Command
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        $output->writeln([
-            '',
-            '#####################',
-            '# Scaffold importer #',
-            '#####################',
-            '',
-        ]);
+        $output->writeln(<<<EOT
+____ ____ ____ ____ ____ ____ ____ ____
+||S |||c |||a |||f |||f |||o |||l |||d ||
+||__|||__|||__|||__|||__|||__|||__|||__||
+|/__\|/__\|/__\|/__\|/__\|/__\|/__\|/__\|
+ ____ ____ ____ ____ ____ ____ ____ ____
+||i |||m |||p |||o |||r |||t |||e |||r ||
+||__|||__|||__|||__|||__|||__|||__|||__||
+|/__\|/__\|/__\|/__\|/__\|/__\|/__\|/__\|
 
-        $logger = new Logger();
+EOT
+        );
+
+        $logger = $output->isVerbose() ? new Logger() : new NullLogger();
 
         $client = new Client(
             [
