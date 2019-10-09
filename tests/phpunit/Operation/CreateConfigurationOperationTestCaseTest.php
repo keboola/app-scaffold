@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Keboola\ScaffoldApp\Tests\Operation;
 
+use Keboola\ScaffoldApp\EncryptionClient;
 use Keboola\ScaffoldApp\Operation\CreateConfigurationOperation;
 use Keboola\ScaffoldApp\Operation\FinishedOperationsStore;
 use Keboola\ScaffoldApp\OperationConfig\CreateConfigurationOperationConfig;
@@ -36,9 +37,16 @@ class CreateConfigurationOperationTestCaseTest extends BaseOperationTestCase
 
     public function testExecute(): void
     {
+        /** @var EncryptionClient|MockObject $encryptionApiClient */
+        $encryptionApiClient = self::createMock(EncryptionClient::class);
+        $encryptionApiClient->expects(self::once())->method('encryptConfigurationData')
+            ->willReturnCallback(function (array $data) {
+                return $data;
+            });
+
         $operation = new CreateConfigurationOperation(
             $this->sapiClient,
-            $this->getMockEncryptionApiClient(),
+            $encryptionApiClient,
             $this->componentsApiClient,
             new NullLogger()
         );
@@ -75,9 +83,13 @@ class CreateConfigurationOperationTestCaseTest extends BaseOperationTestCase
 
     public function testExecuteEmptyConfiguration(): void
     {
+        /** @var EncryptionClient|MockObject $encryptionApiClient */
+        $encryptionApiClient = self::createMock(EncryptionClient::class);
+        $encryptionApiClient->expects(self::never())->method('encryptConfigurationData');
+
         $operation = new CreateConfigurationOperation(
             $this->sapiClient,
-            $this->getMockEncryptionApiClient(),
+            $encryptionApiClient,
             $this->componentsApiClient,
             new NullLogger()
         );
