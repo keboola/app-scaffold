@@ -7,6 +7,8 @@ namespace Keboola\ScaffoldApp;
 use Keboola\Component\Config\BaseConfig;
 use Keboola\Component\Config\BaseConfigDefinition;
 use Symfony\Component\Config\Definition\ConfigurationInterface;
+use Keboola\Component\UserException;
+use Symfony\Component\Config\Definition\Exception\InvalidConfigurationException;
 use Symfony\Component\Config\Definition\Processor;
 
 class Config extends BaseConfig
@@ -24,14 +26,26 @@ class Config extends BaseConfig
 
     public function getScaffoldInputs(): array
     {
+        $scaffoldInputsDefinition = $this->getScaffoldInputDefinition();
+        $processor = new Processor();
+
+        try {
+            $processedConfig = $processor->processConfiguration(
+                $scaffoldInputsDefinition,
+                [$this->getParsedInputs()]
+            );
+        } catch (InvalidConfigurationException $e) {
+            throw new UserException($e->getMessage(), 0, $e);
+        }
+
+        return $processedConfig;
+    }
+
+    protected function getScaffoldInputDefinition(): ScaffoldInputsDefinition
+    {
         $scaffoldInputsDefinition = new ScaffoldInputsDefinition($this->getScaffoldName());
         $scaffoldInputsDefinition->getConfigTreeBuilder();
-        $processor = new Processor();
-        $processedConfig = $processor->processConfiguration(
-            $scaffoldInputsDefinition,
-            [$this->getParsedInputs()]
-        );
-        return $processedConfig;
+        return $scaffoldInputsDefinition;
     }
 
     public function getScaffoldName(): string
