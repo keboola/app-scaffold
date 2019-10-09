@@ -9,7 +9,7 @@ use Keboola\ScaffoldApp\Operation\OperationsConfig;
 use Keboola\Temp\Temp;
 use Symfony\Component\Console\Output\NullOutput;
 
-class OrchestrationImporterTest extends FunctionalBase
+class OrchestrationImporterTest extends FunctionalBaseTestCase
 {
     public function testImport(): void
     {

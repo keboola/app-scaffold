@@ -10,7 +10,7 @@ use Keboola\ScaffoldApp\OperationConfig\CreateConfigurationOperationConfig;
 use Keboola\StorageApi\Options\Components\Configuration;
 use Psr\Log\NullLogger;
 
-class CreateConfigurationOperationTest extends BaseOperation
+class CreateConfigurationOperationTestCaseTest extends BaseOperationTestCase
 {
     public function testExecute(): void
     {

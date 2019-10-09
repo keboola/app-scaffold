@@ -11,7 +11,7 @@ use Keboola\StorageApi\Components;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 
-class BaseOperation extends TestCase
+class BaseOperationTestCase extends TestCase
 {
     /**
      * @return Components|MockObject

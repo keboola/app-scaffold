@@ -11,7 +11,7 @@ use Keboola\ScaffoldApp\OperationConfig\CreateOrchestrationOperationConfig;
 use Keboola\StorageApi\Options\Components\Configuration;
 use Psr\Log\NullLogger;
 
-class CreateOrchestrationOperationTest extends BaseOperation
+class CreateOrchestrationOperationTestCaseTest extends BaseOperationTestCase
 {
     public function testExecute(): void
     {
