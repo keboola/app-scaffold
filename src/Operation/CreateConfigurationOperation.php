@@ -62,12 +62,16 @@ class CreateConfigurationOperation implements OperationInterface
             )
         );
 
-        $tokenInfo = $this->storageApiClient->verifyToken();
-        $configuration->setConfiguration($this->encryptionApiClient->encryptConfigurationData(
-            $configuration->getConfiguration(),
-            $configuration->getComponentId(),
-            (string) $tokenInfo['owner']['id']
-        ));
+        if (!empty($configuration->getConfiguration())) {
+            // encrypt configuration if any
+            $tokenInfo = $this->storageApiClient->verifyToken();
+            $configuration->setConfiguration($this->encryptionApiClient->encryptConfigurationData(
+                $configuration->getConfiguration(),
+                $configuration->getComponentId(),
+                (string) $tokenInfo['owner']['id']
+            ));
+        }
+
         $response = $this->componentsApiClient->addConfiguration($configuration);
         $configuration->setConfigurationId($response['id']);
 
