@@ -8,6 +8,7 @@ use Keboola\Orchestrator\Client as OrchestratorClient;
 use Keboola\ScaffoldApp\Component;
 use Keboola\ScaffoldApp\EncryptionClient;
 use Keboola\ScaffoldApp\Operation\FinishedOperationsStore;
+use Keboola\ScaffoldApp\OrchestratorClientFactory;
 use Keboola\StorageApi\Client;
 use Keboola\StorageApi\Components;
 use Keboola\StorageApi\Components as ComponentsApiClient;
@@ -47,9 +48,7 @@ class FunctionalBaseTestCase extends TestCase
 
     protected function createOrchestrationApiClient(): OrchestratorClient
     {
-        return OrchestratorClient::factory([
-            'token' => getenv('KBC_TOKEN'),
-        ]);
+        return OrchestratorClientFactory::createForStorageApi($this->createStorageApiClient());
     }
 
     protected function createStorageApiClient(): Client
