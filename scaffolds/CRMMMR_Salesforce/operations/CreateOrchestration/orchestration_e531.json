@@ -1,0 +1,34 @@
+{
+    "payload": {
+        "name": "MRR",
+        "tasks": [
+            {
+                "component": "htns.ex-salesforce",
+                "operationReferenceId": "htnsExSalesforce_7666",
+                "action": "run",
+                "timeoutMinutes": null,
+                "active": true,
+                "continueOnFailure": false,
+                "phase": null
+            },
+            {
+                "component": "transformation",
+                "operationReferenceId": "transformation_66f3",
+                "action": "run",
+                "timeoutMinutes": null,
+                "active": true,
+                "continueOnFailure": false,
+                "phase": null
+            },
+            {
+                "component": "keboola.wr-db-snowflake",
+                "operationReferenceId": "keboolaWrDbSnowflake_2c7b",
+                "action": "run",
+                "timeoutMinutes": null,
+                "active": true,
+                "continueOnFailure": false,
+                "phase": null
+            }
+        ]
+    }
+}

@@ -1,0 +1,137 @@
+[
+    {
+        "configuration": {
+            "parameters": {
+                "sinceLast": false,
+                "objects": [
+                    {
+                        "name": "account",
+                        "soql": ""
+                    }
+                ]
+            }
+        },
+        "description": "",
+        "name": "Account"
+    },
+    {
+        "configuration": {
+            "parameters": {
+                "sinceLast": false,
+                "objects": [
+                    {
+                        "name": "opportunity",
+                        "soql": ""
+                    }
+                ]
+            }
+        },
+        "description": "",
+        "name": "Opportunity"
+    },
+    {
+        "configuration": {
+            "parameters": {
+                "sinceLast": false,
+                "objects": [
+                    {
+                        "name": "order",
+                        "soql": ""
+                    }
+                ]
+            }
+        },
+        "description": "",
+        "name": "Order"
+    },
+    {
+        "configuration": {
+            "parameters": {
+                "sinceLast": false,
+                "objects": [
+                    {
+                        "name": "orderitem",
+                        "soql": ""
+                    }
+                ]
+            }
+        },
+        "description": "",
+        "name": "Order Item"
+    },
+    {
+        "configuration": {
+            "parameters": {
+                "sinceLast": false,
+                "objects": [
+                    {
+                        "name": "product2",
+                        "soql": ""
+                    }
+                ]
+            }
+        },
+        "description": "",
+        "name": "Product"
+    },
+    {
+        "configuration": {
+            "parameters": {
+                "sinceLast": false,
+                "objects": [
+                    {
+                        "name": "user",
+                        "soql": ""
+                    }
+                ]
+            }
+        },
+        "description": "",
+        "name": "User"
+    },
+    {
+        "configuration": {
+            "parameters": {
+                "sinceLast": false,
+                "objects": [
+                    {
+                        "name": "lead",
+                        "soql": ""
+                    }
+                ]
+            }
+        },
+        "description": "",
+        "name": "Lead"
+    },
+    {
+        "configuration": {
+            "parameters": {
+                "sinceLast": false,
+                "objects": [
+                    {
+                        "name": "contact",
+                        "soql": ""
+                    }
+                ]
+            }
+        },
+        "description": "",
+        "name": "Contact"
+    },
+    {
+        "configuration": {
+            "parameters": {
+                "sinceLast": false,
+                "objects": [
+                    {
+                        "name": "opportunitycontactrole",
+                        "soql": ""
+                    }
+                ]
+            }
+        },
+        "description": "",
+        "name": "Opportunity Contact Role"
+    }
+]
