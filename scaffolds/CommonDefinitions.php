@@ -13,6 +13,7 @@ class CommonDefinitions
     {
         // @formatter:off
         $node = $treeBuilder->getRootNode();
+        $node->isRequired();
         $node
             ->children()
                 ->arrayNode('parameters')

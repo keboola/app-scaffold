@@ -11,7 +11,13 @@
                     "deleteWhereColumn": "",
                     "deleteWhereOperator": "eq",
                     "deleteWhereValues": [],
-                    "source": "out_company"
+                    "source": "out_company",
+                    "metadata": [
+                        {
+                            "key": "bdm.scaffold.transformation.table.tag",
+                            "value": "bdm.scaffold.transformation_66f3.out.c-crm.company"
+                        }
+                    ]
                 }
             ],
             "queries": [
@@ -51,6 +57,12 @@
                     "source": "out_product",
                     "primaryKey": [
                         "product_id"
+                    ],
+                    "metadata": [
+                        {
+                            "key": "bdm.scaffold.transformation.table.tag",
+                            "value": "bdm.scaffold.transformation_66f3.out.c-crm.product"
+                        }
                     ]
                 }
             ],
@@ -90,6 +102,12 @@
                     "source": "out_opportunity",
                     "primaryKey": [
                         "opportunity_id"
+                    ],
+                    "metadata": [
+                        {
+                            "key": "bdm.scaffold.transformation.table.tag",
+                            "value": "bdm.scaffold.transformation_66f3.out.c-crm.opportunity"
+                        }
                     ]
                 },
                 {
@@ -97,6 +115,12 @@
                     "source": "out_contract",
                     "primaryKey": [
                         "contract_id"
+                    ],
+                    "metadata": [
+                        {
+                            "key": "bdm.scaffold.transformation.table.tag",
+                            "value": "bdm.scaffold.transformation_66f3.out.c-crm.contract"
+                        }
                     ]
                 },
                 {
@@ -104,6 +128,12 @@
                     "source": "out_contract_line",
                     "primaryKey": [
                         "contract_line_id"
+                    ],
+                    "metadata": [
+                        {
+                            "key": "bdm.scaffold.transformation.table.tag",
+                            "value": "bdm.scaffold.transformation_66f3.out.c-crm.contract_line"
+                        }
                     ]
                 },
                 {
@@ -116,7 +146,13 @@
                     "incremental": true,
                     "deleteWhereColumn": "",
                     "deleteWhereOperator": "eq",
-                    "deleteWhereValues": []
+                    "deleteWhereValues": [],
+                    "metadata": [
+                        {
+                            "key": "bdm.scaffold.transformation.table.tag",
+                            "value": "bdm.scaffold.transformation_66f3.out.c-crm-auxiliary-tables.opportunity_snapshot"
+                        }
+                    ]
                 }
             ],
             "queries": [
@@ -215,7 +251,13 @@
                     "deleteWhereColumn": "",
                     "deleteWhereOperator": "eq",
                     "deleteWhereValues": [],
-                    "source": "out_opportunity_snapshot"
+                    "source": "out_opportunity_snapshot",
+                    "metadata": [
+                        {
+                            "key": "bdm.scaffold.transformation.table.tag",
+                            "value": "bdm.scaffold.transformation_66f3.out.c-crm.opportunity_snapshot"
+                        }
+                    ]
                 }
             ],
             "queries": [
@@ -255,6 +297,12 @@
                     "source": "out_employee",
                     "primaryKey": [
                         "employee_id"
+                    ],
+                    "metadata": [
+                        {
+                            "key": "bdm.scaffold.transformation.table.tag",
+                            "value": "bdm.scaffold.transformation_66f3.out.c-crm.employee"
+                        }
                     ]
                 }
             ],
@@ -295,6 +343,12 @@
                     "source": "out_mrr_aggregated",
                     "primaryKey": [
                         "mrr_aggregated_id"
+                    ],
+                    "metadata": [
+                        {
+                            "key": "bdm.scaffold.transformation.table.tag",
+                            "value": "bdm.scaffold.transformation_66f3.out.c-mrr.mrr_aggregated"
+                        }
                     ]
                 }
             ],
@@ -355,6 +409,12 @@
                     "source": "out_contact",
                     "primaryKey": [
                         "contact_id"
+                    ],
+                    "metadata": [
+                        {
+                            "key": "bdm.scaffold.transformation.table.tag",
+                            "value": "bdm.scaffold.transformation_66f3.out.c-crm.contact"
+                        }
                     ]
                 }
             ],
@@ -425,6 +485,12 @@
                     "source": "out_opportunity_contact",
                     "primaryKey": [
                         "opportunity_contact_id"
+                    ],
+                    "metadata": [
+                        {
+                            "key": "bdm.scaffold.transformation.table.tag",
+                            "value": "bdm.scaffold.transformation_66f3.out.c-crm.opportunity_contact"
+                        }
                     ]
                 }
             ],
@@ -484,63 +550,117 @@
                     "primaryKey": [
                         "Id"
                     ],
-                    "source": "out_account"
+                    "source": "out_account",
+                    "metadata": [
+                        {
+                            "key": "bdm.scaffold.transformation.table.tag",
+                            "value": "bdm.scaffold.transformation_66f3.in.c-salesforce.account"
+                        }
+                    ]
                 },
                 {
                     "destination": "in.c-salesforce.contact",
                     "primaryKey": [
                         "Id"
                     ],
-                    "source": "out_contact"
+                    "source": "out_contact",
+                    "metadata": [
+                        {
+                            "key": "bdm.scaffold.transformation.table.tag",
+                            "value": "bdm.scaffold.transformation_66f3.in.c-salesforce.contact"
+                        }
+                    ]
                 },
                 {
                     "destination": "in.c-salesforce.lead",
                     "primaryKey": [
                         "Id"
                     ],
-                    "source": "out_lead"
+                    "source": "out_lead",
+                    "metadata": [
+                        {
+                            "key": "bdm.scaffold.transformation.table.tag",
+                            "value": "bdm.scaffold.transformation_66f3.in.c-salesforce.lead"
+                        }
+                    ]
                 },
                 {
                     "destination": "in.c-salesforce.user",
                     "primaryKey": [
                         "Id"
                     ],
-                    "source": "out_user"
+                    "source": "out_user",
+                    "metadata": [
+                        {
+                            "key": "bdm.scaffold.transformation.table.tag",
+                            "value": "bdm.scaffold.transformation_66f3.in.c-salesforce.user"
+                        }
+                    ]
                 },
                 {
                     "destination": "in.c-salesforce.opportunity",
                     "primaryKey": [
                         "Id"
                     ],
-                    "source": "out_opportunity"
+                    "source": "out_opportunity",
+                    "metadata": [
+                        {
+                            "key": "bdm.scaffold.transformation.table.tag",
+                            "value": "bdm.scaffold.transformation_66f3.in.c-salesforce.opportunity"
+                        }
+                    ]
                 },
                 {
                     "destination": "in.c-salesforce.opportunitycontactrole",
                     "primaryKey": [
                         "Id"
                     ],
-                    "source": "out_opportunitycontactrole"
+                    "source": "out_opportunitycontactrole",
+                    "metadata": [
+                        {
+                            "key": "bdm.scaffold.transformation.table.tag",
+                            "value": "bdm.scaffold.transformation_66f3.in.c-salesforce.opportunitycontactrole"
+                        }
+                    ]
                 },
                 {
                     "destination": "in.c-salesforce.order",
                     "primaryKey": [
                         "Id"
                     ],
-                    "source": "out_order"
+                    "source": "out_order",
+                    "metadata": [
+                        {
+                            "key": "bdm.scaffold.transformation.table.tag",
+                            "value": "bdm.scaffold.transformation_66f3.in.c-salesforce.order"
+                        }
+                    ]
                 },
                 {
                     "destination": "in.c-salesforce.orderitem",
                     "primaryKey": [
                         "Id"
                     ],
-                    "source": "out_orderitem"
+                    "source": "out_orderitem",
+                    "metadata": [
+                        {
+                            "key": "bdm.scaffold.transformation.table.tag",
+                            "value": "bdm.scaffold.transformation_66f3.in.c-salesforce.orderitem"
+                        }
+                    ]
                 },
                 {
                     "destination": "in.c-salesforce.product2",
                     "primaryKey": [
                         "Id"
                     ],
-                    "source": "out_product2"
+                    "source": "out_product2",
+                    "metadata": [
+                        {
+                            "key": "bdm.scaffold.transformation.table.tag",
+                            "value": "bdm.scaffold.transformation_66f3.in.c-salesforce.product2"
+                        }
+                    ]
                 }
             ],
             "queries": [
@@ -565,7 +685,10 @@
             ],
             "input": [
                 {
-                    "source": "in.c-htns-ex-salesforce-491845103.account",
+                    "source_search": {
+                        "key": "bdm.scaffold.table.tag",
+                        "value": "bdm.htns.ex-salesforce.account"
+                    },
                     "destination": "account",
                     "datatypes": [],
                     "whereColumn": "",
@@ -575,7 +698,10 @@
                     "loadType": "clone"
                 },
                 {
-                    "source": "in.c-htns-ex-salesforce-491845103.contact",
+                    "source_search": {
+                        "key": "bdm.scaffold.table.tag",
+                        "value": "bdm.htns.ex-salesforce.contact"
+                    },
                     "destination": "contact",
                     "datatypes": [],
                     "whereColumn": "",
@@ -585,7 +711,10 @@
                     "loadType": "clone"
                 },
                 {
-                    "source": "in.c-htns-ex-salesforce-491845103.lead",
+                    "source_search": {
+                        "key": "bdm.scaffold.table.tag",
+                        "value": "bdm.htns.ex-salesforce.lead"
+                    },
                     "destination": "lead",
                     "datatypes": [],
                     "whereColumn": "",
@@ -595,7 +724,10 @@
                     "loadType": "clone"
                 },
                 {
-                    "source": "in.c-htns-ex-salesforce-491845103.opportunity",
+                    "source_search": {
+                        "key": "bdm.scaffold.table.tag",
+                        "value": "bdm.htns.ex-salesforce.opportunity"
+                    },
                     "destination": "opportunity",
                     "datatypes": [],
                     "whereColumn": "",
@@ -605,7 +737,10 @@
                     "loadType": "clone"
                 },
                 {
-                    "source": "in.c-htns-ex-salesforce-491845103.opportunitycontactrole",
+                    "source_search": {
+                        "key": "bdm.scaffold.table.tag",
+                        "value": "bdm.htns.ex-salesforce.opportunitycontactrole"
+                    },
                     "destination": "opportunitycontactrole",
                     "datatypes": [],
                     "whereColumn": "",
@@ -615,7 +750,10 @@
                     "loadType": "clone"
                 },
                 {
-                    "source": "in.c-htns-ex-salesforce-491845103.order",
+                    "source_search": {
+                        "key": "bdm.scaffold.table.tag",
+                        "value": "bdm.htns.ex-salesforce.order"
+                    },
                     "destination": "order",
                     "datatypes": [],
                     "whereColumn": "",
@@ -625,7 +763,10 @@
                     "loadType": "clone"
                 },
                 {
-                    "source": "in.c-htns-ex-salesforce-491845103.orderitem",
+                    "source_search": {
+                        "key": "bdm.scaffold.table.tag",
+                        "value": "bdm.htns.ex-salesforce.orderitem"
+                    },
                     "destination": "orderitem",
                     "datatypes": [],
                     "whereColumn": "",
@@ -635,7 +776,10 @@
                     "loadType": "clone"
                 },
                 {
-                    "source": "in.c-htns-ex-salesforce-491845103.product2",
+                    "source_search": {
+                        "key": "bdm.scaffold.table.tag",
+                        "value": "bdm.htns.ex-salesforce.product2"
+                    },
                     "destination": "product2",
                     "datatypes": [],
                     "whereColumn": "",
@@ -645,7 +789,10 @@
                     "loadType": "clone"
                 },
                 {
-                    "source": "in.c-htns-ex-salesforce-491845103.user",
+                    "source_search": {
+                        "key": "bdm.scaffold.table.tag",
+                        "value": "bdm.htns.ex-salesforce.user"
+                    },
                     "destination": "user",
                     "datatypes": [],
                     "whereColumn": "",
@@ -676,7 +823,13 @@
                     "primaryKey": [
                         "mrr_id"
                     ],
-                    "source": "out_mrr"
+                    "source": "out_mrr",
+                    "metadata": [
+                        {
+                            "key": "bdm.scaffold.transformation.table.tag",
+                            "value": "bdm.scaffold.transformation_66f3.out.c-mrr.mrr"
+                        }
+                    ]
                 }
             ],
             "queries": [

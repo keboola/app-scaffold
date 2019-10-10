@@ -1,5 +1,76 @@
 {
     "author": "Keboola",
-    "description": "Sample Description",
-    "inputs": []
+    "description": "CRM & MRR-Salesforce (+SF Writer)",
+    "inputs": [
+        {
+            "id": "htnsExSalesforce_7666",
+            "componentId": "htns.ex-salesforce",
+            "schema": {
+                "type": "object",
+                "required": [
+                    "loginname",
+                    "#password",
+                    "#securitytoken"
+                ],
+                "properties": {
+                    "loginname": {
+                        "type": "string"
+                    },
+                    "#password": {
+                        "type": "string"
+                    },
+                    "#securitytoken": {
+                        "type": "string"
+                    },
+                    "sandbox": {
+                        "type": "boolean",
+                        "default" : false
+                    }
+                }
+            }
+        },
+        {
+            "id": "keboolaWrDbSnowflake_2c7b",
+            "componentId": "keboola.wr-db-snowflake",
+            "schema": {
+                "type": "object",
+                "required": [
+                    "db"
+                ],
+                "properties": {
+                    "db": {
+                        "type": "object",
+                        "required": [
+                            "host",
+                            "user",
+                            "#password",
+                            "database",
+                            "schema",
+                            "warehouse"
+                        ],
+                        "properties": {
+                            "host": {
+                                "type": "string"
+                            },
+                            "user": {
+                                "type": "string"
+                            },
+                            "schema": {
+                                "type": "string"
+                            },
+                            "database": {
+                                "type": "string"
+                            },
+                            "#password": {
+                                "type": "string"
+                            },
+                            "warehouse": {
+                                "type": "string"
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    ]
 }
