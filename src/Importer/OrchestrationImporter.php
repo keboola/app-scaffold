@@ -23,6 +23,8 @@ class OrchestrationImporter
         OperationsConfig::CREATE_CONFIGURATION_ROWS,
         OperationsConfig::CREATE_ORCHESTREATION,
     ];
+    public const SCAFFOLD_TABLE_TAG = 'bdm.scaffold.table.tag';
+    public const SCAFFOLD_VALUE_PREFIX = 'bdm.scaffold';
 
     /**
      * @var Client
@@ -104,7 +106,11 @@ class OrchestrationImporter
                 $configurationId
             ));
 
-            $importedOperations[] = $this->importTask($scaffoldId, $task, $configurationId);
+            $configuration = $this->componentsApiClient->getConfiguration($task->getComponent(), $configurationId);
+
+            $operationImport = OperationImportFactory::createOperationImport($configuration, $task);
+            $this->dumpOperation($scaffoldId, $operationImport);
+            $importedOperations[] = $operationImport;
 
             $p->advance();
         }
@@ -145,43 +151,6 @@ class OrchestrationImporter
         }
     }
 
-    private function importTask(
-        string $scaffoldId,
-        OrchestrationTask $task,
-        string $configurationId
-    ): OperationImport {
-        $configuration = $this->componentsApiClient->getConfiguration($task->getComponent(), $configurationId);
-
-        $operationId = $this->convertToCamelCase($task->getComponent() . '_' . $this->generateRandomSufix());
-        $operationImport = new OperationImport(
-            lcfirst($operationId),
-            $task->getComponent(),
-            [
-                'name' => $configuration['name'],
-                'configuration' => $configuration['configuration'],
-            ],
-            $task,
-            $configuration['rows']
-        );
-
-        $this->dumpOperation($scaffoldId, $operationImport);
-
-        return $operationImport;
-    }
-
-    private function convertToCamelCase(string $string): string
-    {
-        foreach (['-', '.'] as $delimiter) {
-            $string = ucwords($string, $delimiter);
-        }
-        return str_replace(['-', '.'], '', $string);
-    }
-
-    private function generateRandomSufix(): string
-    {
-        return bin2hex(random_bytes(2));
-    }
-
     private function dumpOperation(
         string $scaffoldId,
         OperationImport $import
@@ -216,8 +185,6 @@ class OrchestrationImporter
     }
 
     /**
-     * @param array $orchestration
-     * @param string $scaffoldId
      * @param OperationImport[] $importedOperations
      */
     private function dumpOrchestration(
@@ -241,7 +208,7 @@ class OrchestrationImporter
                 $this->scaffoldsDir,
                 $scaffoldId,
                 OperationsConfig::CREATE_ORCHESTREATION,
-                $this->generateRandomSufix()
+                Helper::generateRandomSufix()
             ),
             $orchestrationOperationConfig,
             true

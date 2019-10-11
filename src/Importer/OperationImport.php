@@ -62,11 +62,15 @@ class OperationImport
         // will strip all stuff from response
         $output = [];
         foreach ($this->configurationRows as $singleRow) {
-            $output[] = [
+            $tmpOutput = [
                 'configuration' => $singleRow['configuration'],
                 'description' => $singleRow['description'],
                 'name' => $singleRow['name'],
             ];
+            if (!empty($singleRow['processors'])) {
+                $tmpOutput['processors'] = $singleRow['processors'];
+            }
+            $output[] = $tmpOutput;
         }
 
         return $output;
@@ -96,5 +100,15 @@ class OperationImport
             'continueOnFailure' => $this->task->getContinueOnFailure(),
             'phase' => $this->task->getPhase(),
         ];
+    }
+
+    public function getPayload(): array
+    {
+        return $this->payload;
+    }
+
+    public function getTask(): OrchestrationTask
+    {
+        return $this->task;
     }
 }

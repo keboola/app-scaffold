@@ -42,6 +42,14 @@ Import command will import orchestration and tasks configurations. Template of `
 docker-compose run --rm dev composer console scaffold:import:orchestration <KBC_URL> <SAPI_TOKEN> <ORCHESTRATION_ID> <SCAFFOLD_ID>
 ```
 
+Configuration rows are decorated with `processors` for components and with `source_search` and `metadata` OM for transformations automatically.
+These changes are prefixed with `__SCAFFOLD_CHECK__` string in it's keys.
+After import this should be validated by user appropriete changes has to be made to make scaffold work.
+This consists mostly with chenges metadata values.
+Note that `CreateConfiguration` operation are not decorated automatically so processors or IM/OM has to be created/edited manually.
+
+`__SCAFFOLD_CHECK__` prefix is checked by `ValidateScaffoldsTest` in CI.
+
 ## Parameters
 
 Optionally parameters from runner can be validated with `ScaffoldDefinition.php`
