@@ -4,9 +4,8 @@ declare(strict_types=1);
 
 namespace Keboola\ScaffoldApp\Tests\OperationConfig;
 
-use Exception;
 use Keboola\ScaffoldApp\OperationConfig\OperationConfigInterface;
-use Keboola\ScaffoldApp\OperationConfig\ConfigRowIterator;
+use Keboola\ScaffoldApp\OperationConfig\ConfigurationRowsIterator;
 use Keboola\ScaffoldApp\OperationConfig\CreateCofigurationRowsOperationConfig;
 use Keboola\StorageApi\Options\Components\Configuration;
 use PHPUnit\Framework\TestCase;
@@ -25,7 +24,7 @@ class CreateConfigurationRowsOperationConfigTest extends TestCase
         $instance = CreateCofigurationRowsOperationConfig::create('id', self::WORKING_CONFIGURATION, []);
 
         $iterator = $instance->getIterator((new Configuration())->setConfigurationId('id'));
-        $this->assertInstanceOf(ConfigRowIterator::class, $iterator);
+        $this->assertInstanceOf(ConfigurationRowsIterator::class, $iterator);
         $this->assertEquals('id', $instance->getOperationReferenceId());
     }
 

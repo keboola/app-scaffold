@@ -8,13 +8,19 @@ use Keboola\Orchestrator\OrchestrationTask;
 
 class OperationImport
 {
-    /** @var string */
+    /**
+     * @var string
+     */
     private $operationId;
 
-    /** @var string */
+    /**
+     * @var string
+     */
     private $componentId;
 
-    /** @var array */
+    /**
+     * @var array
+     */
     private $payload;
 
     /**

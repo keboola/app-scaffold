@@ -6,14 +6,14 @@
 
 # Usage
 
-Scaffolds are saved in `scaffolds` directory, each scaffold has own directory. Directory name is also scaffold name.
+Scaffolds are saved in `scaffolds` directory, each scaffold has own directory. Directory name is also scaffold id.
 
 ## Scaffold structure
 
 - Scaffold must contain `manifest.json` file and operations folders.
 - Optionally parameters from runner can be validated with `ScaffoldDefinition.php`.
-- Each scaffold operation name must be camelCase optionally with sufix after underscore.
-- CreateConfigurationRows operations must match name with parent CreateConfiguration operation.
+- Each scaffold operation id must be camelCase optionally with sufix after underscore.
+- CreateConfigurationRows operations must match id with parent CreateConfiguration operation.
 
 Example scaffold structure:
 ```
@@ -39,7 +39,7 @@ There are two ways how to create scaffold, manually and using import command (do
 
 Import command will import orchestration and tasks configurations. Template of `manifest.json` and `ScaffoldDefinition.php` will be also created.
 ```
-docker-compose run --rm dev composer console scaffold:import:orchestration <KBC_URL> <SAPI_TOKEN> <ORCHESTRATION_ID> <SCAFFOLD_NAME>
+docker-compose run --rm dev composer console scaffold:import:orchestration <KBC_URL> <SAPI_TOKEN> <ORCHESTRATION_ID> <SCAFFOLD_ID>
 ```
 
 ## Parameters
@@ -52,7 +52,7 @@ CreateConfiguration operation path `payload.configuration.parameters` can be ove
 {
     "configData": {
         "parameters": {
-            "id": "<scaffold name>",
+            "id": "<scaffold id>",
             "inputs": [
                 {
                     "id": "<operation id>",

@@ -44,7 +44,6 @@ class Config extends BaseConfig
     protected function getScaffoldInputDefinition(): ScaffoldInputsDefinition
     {
         $scaffoldInputsDefinition = new ScaffoldInputsDefinition($this->getScaffoldName());
-        $scaffoldInputsDefinition->getConfigTreeBuilder();
         return $scaffoldInputsDefinition;
     }
 

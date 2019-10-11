@@ -64,7 +64,7 @@ class FunctionalBaseTestCase extends TestCase
     }
 
     protected function exportTestScaffold(
-        string $scaffoldName,
+        string $scaffoldId,
         array $inputParameters
     ): FinishedOperationsStore {
         $componentRef = new ReflectionClass(Component::class);
@@ -75,7 +75,7 @@ class FunctionalBaseTestCase extends TestCase
         $store = $executeOperationsRef->invokeArgs(
             $componentRef->newInstanceWithoutConstructor(),
             [
-                __DIR__ . '/../phpunit/mock/scaffolds/' . $scaffoldName,
+                __DIR__ . '/../phpunit/mock/scaffolds/' . $scaffoldId,
                 $inputParameters,
                 $this->createStorageApiClient(),
                 $this->createOrchestrationApiClient(),
