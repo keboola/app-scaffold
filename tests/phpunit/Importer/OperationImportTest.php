@@ -29,6 +29,7 @@ class OperationImportTest extends ImporterBaseTestCase
         ];
 
         $operationImport = new OperationImport(
+            'scaffoldId',
             'operationId',
             'keboola.component',
             $payload,
@@ -36,6 +37,7 @@ class OperationImportTest extends ImporterBaseTestCase
             $configurationRows
         );
 
+        self::assertEquals('scaffoldId', $operationImport->getScaffoldId());
         self::assertEquals('keboola.component', $operationImport->getComponentId());
         self::assertEquals($configurationRows, $operationImport->getConfigurationRows());
         self::assertEquals([

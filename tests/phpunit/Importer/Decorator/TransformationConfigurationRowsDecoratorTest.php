@@ -57,7 +57,8 @@ class TransformationConfigurationRowsDecoratorTest extends ImporterBaseTestCase
 
         $operationImport = OperationImportFactory::createOperationImport(
             $configuration,
-            $task
+            $task,
+            'scaffoldId'
         );
 
         self::assertInstanceOf(OperationImport::class, $operationImport);
@@ -83,7 +84,7 @@ class TransformationConfigurationRowsDecoratorTest extends ImporterBaseTestCase
                             'source_search' => [
                                 'key' => 'bdm.scaffold.table.tag',
                                 '__SCAFFOLD_CHECK__.value' =>
-                                    'bdm.scaffold.__change_operation_id__.in.c-salesforce.account',
+                                    'scaffoldId.internal.in_c-salesforce_account',
                             ],
                             '__SCAFFOLD_CHECK__.source' => 'in.c-salesforce.account',
                         ],
@@ -100,7 +101,7 @@ class TransformationConfigurationRowsDecoratorTest extends ImporterBaseTestCase
                             'metadata' => [
                                 [
                                     'key' => 'bdm.scaffold.table.tag',
-                                    'value' => 'bdm.scaffold.' . $operationImport->getOperationId() . '.account',
+                                    'value' => 'scaffoldId.internal.account',
                                 ],
                             ],
                         ],
@@ -122,7 +123,8 @@ class TransformationConfigurationRowsDecoratorTest extends ImporterBaseTestCase
                 'configuration' => '',
                 'rows' => [],
             ],
-            $task
+            $task,
+            'scaffoldId'
         );
 
         $decorator = new TransformationConfigurationRowsDecorator();
@@ -147,7 +149,8 @@ class TransformationConfigurationRowsDecoratorTest extends ImporterBaseTestCase
                     ],
                 ],
             ],
-            $task
+            $task,
+            'scaffoldId'
         );
 
         $decorator = new TransformationConfigurationRowsDecorator();
@@ -175,7 +178,8 @@ class TransformationConfigurationRowsDecoratorTest extends ImporterBaseTestCase
 
         $operationImport = OperationImportFactory::createOperationImport(
             $configuration,
-            $task
+            $task,
+            'scaffoldId'
         );
 
         $decorator = new TransformationConfigurationRowsDecorator();

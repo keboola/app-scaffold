@@ -6,6 +6,17 @@ namespace Keboola\ScaffoldApp\Importer;
 
 final class Helper
 {
+    public static function convertTableNameForMetadata(
+        OperationImport $operationImport,
+        string $tableName
+    ): string {
+        return sprintf(
+            '%s.internal.%s',
+            $operationImport->getScaffoldId(),
+            str_replace('.', '_', $tableName)
+        );
+    }
+
     public static function convertToCamelCase(string $string): string
     {
         foreach (['-', '.'] as $delimiter) {

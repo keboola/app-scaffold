@@ -16,6 +16,7 @@ class ParametersClearDecorator implements DecoratorInterface
         $payload = $this->clearCryptedParametersRecursive($operationImport->getPayload());
 
         return new OperationImport(
+            $operationImport->getScaffoldId(),
             $operationImport->getOperationId(),
             $operationImport->getComponentId(),
             $payload,

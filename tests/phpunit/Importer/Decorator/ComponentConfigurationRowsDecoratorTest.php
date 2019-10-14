@@ -42,7 +42,8 @@ class ComponentConfigurationRowsDecoratorTest extends ImporterBaseTestCase
 
         $operationImport = OperationImportFactory::createOperationImport(
             $configuration,
-            $task
+            $task,
+            'scaffoldId'
         );
 
         self::assertStringStartsWith('keboolaComponent_', $operationImport->getOperationId());
@@ -97,9 +98,7 @@ class ComponentConfigurationRowsDecoratorTest extends ImporterBaseTestCase
                                                     'metadata' => [
                                                         [
                                                             'key' => 'bdm.scaffold.table.tag',
-                                                            'value' => 'bdm.scaffold.'
-                                                                . $operationImport->getOperationId()
-                                                                . '.sampleTableName',
+                                                            'value' => 'scaffoldId.internal.sampleTableName',
                                                         ],
                                                     ],
                                                 ],
@@ -125,7 +124,8 @@ class ComponentConfigurationRowsDecoratorTest extends ImporterBaseTestCase
                 'configuration' => '',
                 'rows' => [],
             ],
-            $task
+            $task,
+            'scaffoldId'
         );
 
         $decorator = new ComponentConfigurationRowsDecorator();
@@ -168,7 +168,8 @@ class ComponentConfigurationRowsDecoratorTest extends ImporterBaseTestCase
         ];
         $operationImport = OperationImportFactory::createOperationImport(
             $configuration,
-            $task
+            $task,
+            'scaffoldId'
         );
 
         $decorator = new ComponentConfigurationRowsDecorator();
@@ -200,7 +201,8 @@ class ComponentConfigurationRowsDecoratorTest extends ImporterBaseTestCase
 
         $operationImport = OperationImportFactory::createOperationImport(
             $configuration,
-            $task
+            $task,
+            'scaffoldId'
         );
 
         $decorator = new ComponentConfigurationRowsDecorator();
