@@ -7,7 +7,6 @@ namespace Keboola\ScaffoldApp\FunctionalTests;
 use Keboola\Component\JsonHelper;
 use Keboola\ScaffoldApp\Component;
 use Keboola\ScaffoldApp\Importer\Decorator\DecoratorInterface;
-use Keboola\ScaffoldApp\Importer\OperationImportDecorator;
 use Keboola\ScaffoldApp\Operation\OperationsConfig;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\Filesystem\Filesystem;

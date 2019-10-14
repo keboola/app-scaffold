@@ -37,7 +37,7 @@ class ParametersClearDecorator implements DecoratorInterface
             } else {
                 if ($this->isValueCrypted($key)) {
                     // clear value
-                    $value = '';
+                    $value = self::USER_ACTION_KEY_PREFIX;
                 }
             }
         }

@@ -59,15 +59,15 @@ class ParametersClearDecoratorTest extends ImporterBaseTestCase
             'name' => 'configurationName',
             'configuration' => [
                 'parameters' => [
-                    '#secret' => '',
+                    '#secret' => '__SCAFFOLD_CHECK__',
                     'notSecret' => 'preservedvalue',
                     'array' => ['x', 'x2'],
                     'recursive' => [
-                        '#secret' => '',
+                        '#secret' => '__SCAFFOLD_CHECK__',
                         'notSecret' => 'preservedvalue',
                         'array' => ['x', 'x2'],
                         'recursive' => [
-                            '#secret' => '',
+                            '#secret' => '__SCAFFOLD_CHECK__',
                             'notSecret' => 'preservedvalue',
                             'array' => ['x', 'x2'],
                         ],
