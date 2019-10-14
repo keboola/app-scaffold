@@ -64,7 +64,7 @@ class TransformationConfigurationRowsDecorator implements DecoratorInterface
         foreach ($row['configuration']['input'] as &$input) {
             if (!empty($input['source'])) {
                 $input['source_search'] = [
-                    // key is annotated with "!@" to notify user that this needs to be checked
+                    // value is annotated with "USER_ACTION_KEY_PREFIX" to notify user that this needs to be checked
                     'key' => OrchestrationImporter::SCAFFOLD_TABLE_TAG,
                     self::USER_ACTION_KEY_PREFIX . '.value' =>
                         Helper::convertTableNameForMetadata($operationImport, $input['source']),
