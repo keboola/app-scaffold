@@ -101,16 +101,16 @@ class ComponentConfigurationRowsDecorator implements DecoratorInterface
             ];
         }
 
-        if (empty($row['processors'])) {
-            $row['processors'] = [];
+        if (empty($row['configuration']['processors'])) {
+            $row['configuration']['processors'] = [];
         }
-        if (empty($row['processors']['after'])) {
-            $row['processors']['after'] = [];
+        if (empty($row['configuration']['processors']['after'])) {
+            $row['configuration']['processors']['after'] = [];
         }
 
-        $afterProcessors = array_merge_recursive($row['processors']['after'], $processors);
-        $row['processors'][self::USER_ACTION_KEY_PREFIX . '.after'] = $afterProcessors;
-        unset($row['processors']['after']);
+        $afterProcessors = array_merge_recursive($row['configuration']['processors']['after'], $processors);
+        $row['configuration']['processors'][self::USER_ACTION_KEY_PREFIX . '.after'] = $afterProcessors;
+        unset($row['configuration']['processors']['after']);
 
         return $row;
     }
