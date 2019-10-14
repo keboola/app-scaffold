@@ -44,11 +44,17 @@ docker-compose run --rm dev composer console scaffold:import:orchestration <KBC_
 
 Configuration rows are decorated with `processors` for components and with `source_search` and `metadata` OM for transformations automatically.
 These changes are prefixed with `__SCAFFOLD_CHECK__` string in it's keys.
-After import this should be validated by user appropriete changes has to be made to make scaffold work.
-This consists mostly with chenges metadata values.
+After import this should be validated by user and appropriete changes has to be made to make scaffold work.
+This consists mostly with changes metadata values. Original values like `source` are kept in file also with `__SCAFFOLD_CHECK__` for additional check.
+Since transformation are not ordering automatically by `source_search` and `metadata` it's important to keep original `source` when it's from other configuration row in same transformation.
+This will be fixed in https://github.com/keboola/transformation-router/issues/76.
+
 Note that `CreateConfiguration` operation are not decorated automatically so processors or IM/OM has to be created/edited manually.
 
+Don't forget to remove `parameters` like usernames, crypted parameters which are prefixed with `#` are replaced by empty strings automatically.
+
 `__SCAFFOLD_CHECK__` prefix is checked by `ValidateScaffoldsTest` in CI.
+
 
 ## Parameters
 
