@@ -74,15 +74,11 @@ class OperationImport
         // will strip all stuff from response
         $output = [];
         foreach ($this->configurationRows as $singleRow) {
-            $tmpOutput = [
+            $output[] = [
                 'configuration' => $singleRow['configuration'],
                 'description' => $singleRow['description'],
                 'name' => $singleRow['name'],
             ];
-            if (!empty($singleRow['processors'])) {
-                $tmpOutput['processors'] = $singleRow['processors'];
-            }
-            $output[] = $tmpOutput;
         }
 
         return $output;
