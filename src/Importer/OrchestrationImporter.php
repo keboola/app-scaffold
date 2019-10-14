@@ -107,7 +107,7 @@ class OrchestrationImporter
 
             $configuration = $this->componentsApiClient->getConfiguration($task->getComponent(), $configurationId);
 
-            $operationImport = OperationImportFactory::createOperationImport($configuration, $task);
+            $operationImport = OperationImportFactory::createOperationImport($configuration, $task, $scaffoldId);
             $this->dumpOperation($scaffoldId, $operationImport);
             $importedOperations[] = $operationImport;
 

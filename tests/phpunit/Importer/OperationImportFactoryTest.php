@@ -21,7 +21,8 @@ class OperationImportFactoryTest extends ImporterBaseTestCase
                 ],
                 'rows' => [],
             ],
-            $task
+            $task,
+            'scaffoldId'
         );
 
         self::assertInstanceOf(OperationImport::class, $operationImport);

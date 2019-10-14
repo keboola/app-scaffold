@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Keboola\ScaffoldApp\Importer\Decorator;
 
+use Keboola\ScaffoldApp\Importer\Helper;
 use Keboola\ScaffoldApp\Importer\OperationImport;
 use Keboola\ScaffoldApp\Importer\OrchestrationImporter;
 
@@ -50,6 +51,7 @@ class ComponentConfigurationRowsDecorator implements DecoratorInterface
         }
 
         return new OperationImport(
+            $operationImport->getScaffoldId(),
             $operationImport->getOperationId(),
             $operationImport->getComponentId(),
             $operationImport->getPayload(),
@@ -90,12 +92,7 @@ class ComponentConfigurationRowsDecorator implements DecoratorInterface
                     [
                         [
                             'key' => OrchestrationImporter::SCAFFOLD_TABLE_TAG,
-                            'value' => sprintf(
-                                '%s.%s.%s',
-                                OrchestrationImporter::SCAFFOLD_VALUE_PREFIX,
-                                $operationImport->getOperationId(),
-                                $tableName
-                            ),
+                            'value' => Helper::convertTableNameForMetadata($operationImport, $tableName),
                         ],
                     ],
             ];
@@ -115,6 +112,12 @@ class ComponentConfigurationRowsDecorator implements DecoratorInterface
         return $row;
     }
 
+    private function hasConfigurationRowParametersObject(array $row): bool
+    {
+        return empty($row['configuration']['parameters'])
+            || empty($row['configuration']['parameters']['objects']);
+    }
+
     public function supports(OperationImport $operationImport): bool
     {
         if (0 === count($operationImport->getConfigurationRows())) {
@@ -132,12 +135,6 @@ class ComponentConfigurationRowsDecorator implements DecoratorInterface
         }
 
         return false;
-    }
-
-    private function hasConfigurationRowParametersObject(array $row): bool
-    {
-        return empty($row['configuration']['parameters'])
-            || empty($row['configuration']['parameters']['objects']);
     }
 
     private function hasAnyParamaterObjectName(array $row): bool

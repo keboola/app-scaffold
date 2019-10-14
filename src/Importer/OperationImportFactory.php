@@ -20,7 +20,8 @@ class OperationImportFactory
 
     public static function createOperationImport(
         array $configuration,
-        OrchestrationTask $task
+        OrchestrationTask $task,
+        string $scaffoldId
     ): OperationImport {
         $payload = [
             'name' => $configuration['name'],
@@ -29,6 +30,7 @@ class OperationImportFactory
 
         $operationId = lcfirst(Helper::convertToCamelCase($task->getComponent() . '_' . Helper::generateRandomSufix()));
         $operationImport = new OperationImport(
+            $scaffoldId,
             $operationId,
             $task->getComponent(),
             $payload,

@@ -43,7 +43,8 @@ class ParametersClearDecoratorTest extends ImporterBaseTestCase
 
         $operationImport = OperationImportFactory::createOperationImport(
             $configuration,
-            $task
+            $task,
+            'scaffoldId'
         );
 
         self::assertInstanceOf(OperationImport::class, $operationImport);
@@ -94,7 +95,8 @@ class ParametersClearDecoratorTest extends ImporterBaseTestCase
                 ],
                 'rows' => [],
             ],
-            $task
+            $task,
+            'scaffoldId'
         );
 
         $decorator = new ParametersClearDecorator();
@@ -112,7 +114,8 @@ class ParametersClearDecoratorTest extends ImporterBaseTestCase
                 'configuration' => [],
                 'rows' => [],
             ],
-            $task
+            $task,
+            'scaffoldId'
         );
 
         $decorator = new ParametersClearDecorator();

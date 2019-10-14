@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Keboola\ScaffoldApp\Importer\Decorator;
 
+use Keboola\ScaffoldApp\Importer\Helper;
 use Keboola\ScaffoldApp\Importer\OperationImport;
 use Keboola\ScaffoldApp\Importer\OrchestrationImporter;
 
@@ -18,6 +19,7 @@ class TransformationConfigurationRowsDecorator implements DecoratorInterface
         }
 
         return new OperationImport(
+            $operationImport->getScaffoldId(),
             $operationImport->getOperationId(),
             $operationImport->getComponentId(),
             $operationImport->getPayload(),
@@ -31,7 +33,7 @@ class TransformationConfigurationRowsDecorator implements DecoratorInterface
         OperationImport $operationImport
     ): array {
         $row = $this->addOutputMetadata($row, $operationImport);
-        $row = $this->addInputSourceSearch($row);
+        $row = $this->addInputSourceSearch($row, $operationImport);
 
         return $row;
     }
@@ -47,12 +49,7 @@ class TransformationConfigurationRowsDecorator implements DecoratorInterface
                 }
                 $output['metadata'][] = [
                     'key' => OrchestrationImporter::SCAFFOLD_TABLE_TAG,
-                    'value' => sprintf(
-                        '%s.%s.%s',
-                        OrchestrationImporter::SCAFFOLD_VALUE_PREFIX,
-                        $operationImport->getOperationId(),
-                        $output['destination']
-                    ),
+                    'value' => Helper::convertTableNameForMetadata($operationImport, $output['destination']),
                 ];
             }
         }
@@ -60,19 +57,17 @@ class TransformationConfigurationRowsDecorator implements DecoratorInterface
         return $row;
     }
 
-    private function addInputSourceSearch(array $row): array
-    {
+    private function addInputSourceSearch(
+        array $row,
+        OperationImport $operationImport
+    ): array {
         foreach ($row['configuration']['input'] as &$input) {
             if (!empty($input['source'])) {
                 $input['source_search'] = [
                     // key is annotated with "!@" to notify user that this needs to be checked
-                    // as we don't know where is origin of source
                     'key' => OrchestrationImporter::SCAFFOLD_TABLE_TAG,
-                    self::USER_ACTION_KEY_PREFIX . '.value' => sprintf(
-                        '%s.__change_operation_id__.%s',
-                        OrchestrationImporter::SCAFFOLD_VALUE_PREFIX,
-                        $input['source']
-                    ),
+                    self::USER_ACTION_KEY_PREFIX . '.value' =>
+                        Helper::convertTableNameForMetadata($operationImport, $input['source']),
                 ];
 
                 // remove source, leave original source with prefix to user for check
