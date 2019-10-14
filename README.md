@@ -42,19 +42,33 @@ Import command will import orchestration and tasks configurations. Template of `
 docker-compose run --rm dev composer console scaffold:import:orchestration <KBC_URL> <SAPI_TOKEN> <ORCHESTRATION_ID> <SCAFFOLD_ID>
 ```
 
-Configuration rows are decorated with `processors` for components and with `source_search` and `metadata` OM for transformations automatically.
-These changes are prefixed with `__SCAFFOLD_CHECK__` string in it's keys.
-After import this should be validated by user and appropriete changes has to be made to make scaffold work.
-This consists mostly with changes metadata values. Original values like `source` are kept in file also with `__SCAFFOLD_CHECK__` for additional check.
+### Decorators
+
+Each task from orchestration is processed by decorators.
+
+#### TransformationConfigurationRowsDecorator
+
+Each configuration row IM is decorated with `source_search` and OM with `metadata` array.
+Changes are prefixed with `__SCAFFOLD_CHECK__`, if any check remain can be tested with `ValidateScaffoldsTest`.
+Original values are preserved with `__SCAFFOLD_CHECK__` prefix.
+
 Since transformation are not ordering automatically by `source_search` and `metadata` it's important to keep original `source` when it's from other configuration row in same transformation.
 This will be fixed in https://github.com/keboola/transformation-router/issues/76.
 
-Note that `CreateConfiguration` operation are not decorated automatically so processors or IM/OM has to be created/edited manually.
+#### ComponentConfigurationRowsDecorator
 
-Don't forget to remove `parameters` like usernames, crypted parameters which are prefixed with `#` are replaced by empty strings automatically.
+Add s after processors for components with `configuration.parameters.objects[].name` structure.
 
-`__SCAFFOLD_CHECK__` prefix is checked by `ValidateScaffoldsTest` in CI.
+#### ParametersClearDecorator
 
+Clears all encrypted values in parameters. Please read https://github.com/keboola/app-scaffold/issues/22 all parameters used as inputs must be removed.
+
+### Post import steps
+
+- All valus with `__SCAFFOLD_CHECK__` must be configured by user and appropriete changes has to be made to make scaffold work.
+- `CreateConfiguration` operation are not decorated automatically so processors or IM/OM has to be created/edited manually.
+- If any parameters are going to be passed from runner `manifest.json` file `inputs` must be configured and can be validated by ScaffoldDefinition.php
+- Don't forget to test scaffold in sample project if all mappings works, this is not possible to validate.
 
 ## Parameters
 
