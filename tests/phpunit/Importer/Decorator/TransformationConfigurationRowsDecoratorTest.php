@@ -20,9 +20,9 @@ class TransformationConfigurationRowsDecoratorTest extends ImporterBaseTestCase
             'name' => 'configurationName',
             'configuration' => [
                 'parameters' => [],
-            ],
-            'processors' => [
-                'after' => [],
+                'processors' => [
+                    'after' => [],
+                ],
             ],
             'rows' => [
                 [
@@ -129,7 +129,6 @@ class TransformationConfigurationRowsDecoratorTest extends ImporterBaseTestCase
 
         self::assertFalse($decorator->supports($operationImport));
     }
-
 
     public function testSupportsNotTransformation(): void
     {

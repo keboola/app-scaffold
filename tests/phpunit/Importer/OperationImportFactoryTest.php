@@ -16,12 +16,18 @@ class OperationImportFactoryTest extends ImporterBaseTestCase
         $operationImport = OperationImportFactory::createOperationImport(
             [
                 'name' => '',
-                'configuration' => '',
+                'configuration' => [
+
+                ],
                 'rows' => [],
             ],
             $task
         );
 
         self::assertInstanceOf(OperationImport::class, $operationImport);
+        self::assertSame([
+            'name' => '',
+            'configuration' => [],
+        ], $operationImport->getPayload());
     }
 }

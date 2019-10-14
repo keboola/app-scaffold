@@ -7,6 +7,7 @@ namespace Keboola\ScaffoldApp\Importer;
 use Keboola\Orchestrator\OrchestrationTask;
 use Keboola\ScaffoldApp\Importer\Decorator\ComponentConfigurationRowsDecorator;
 use Keboola\ScaffoldApp\Importer\Decorator\DecoratorInterface;
+use Keboola\ScaffoldApp\Importer\Decorator\ParametersClearDecorator;
 use Keboola\ScaffoldApp\Importer\Decorator\TransformationConfigurationRowsDecorator;
 
 class OperationImportFactory
@@ -14,6 +15,7 @@ class OperationImportFactory
     private const DECORATORS = [
         TransformationConfigurationRowsDecorator::class,
         ComponentConfigurationRowsDecorator::class,
+        ParametersClearDecorator::class,
     ];
 
     public static function createOperationImport(
@@ -24,10 +26,6 @@ class OperationImportFactory
             'name' => $configuration['name'],
             'configuration' => $configuration['configuration'],
         ];
-        if (!empty($configuration['processors'])) {
-            // copy processors if exists
-            $payload['processors'] = $configuration['processors'];
-        }
 
         $operationId = lcfirst(Helper::convertToCamelCase($task->getComponent() . '_' . Helper::generateRandomSufix()));
         $operationImport = new OperationImport(
