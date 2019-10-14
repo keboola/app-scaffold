@@ -28,6 +28,6 @@ class HelperTest extends TestCase
 
     public function testConvertToCamelCase(): void
     {
-        self::assertEquals('KeboolaExSnowflake', Helper::convertToCamelCase('keboola.ex-snowflake'));
+        self::assertEquals('KeboolaExSnowflakeSufix', Helper::convertToCamelCase('keboola.ex-snowflake sufix'));
     }
 }

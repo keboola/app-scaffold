@@ -62,10 +62,10 @@ class TransformationConfigurationRowsDecoratorTest extends ImporterBaseTestCase
         );
 
         self::assertInstanceOf(OperationImport::class, $operationImport);
-        self::assertStringStartsWith('transformation_', $operationImport->getOperationId());
+        self::assertEquals('transformationConfigurationName', $operationImport->getOperationId());
         self::assertEquals('transformation', $operationImport->getComponentId());
-        self::assertStringStartsWith(
-            'transformation_',
+        self::assertEquals(
+            'transformationConfigurationName',
             $operationImport->getOrchestrationTaskJsonArray()['operationReferenceId']
         );
 

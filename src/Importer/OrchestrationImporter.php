@@ -84,7 +84,7 @@ class OrchestrationImporter
         $this->prepareScaffoldFolderStructure($scaffoldId);
         $p->advance();
 
-        $importedOperations = [];
+        $importedOperations = new OperationImportCollection();
         foreach ($orchestration['tasks'] as $rawTask) {
             $task = OrchestrationTaskFactory::createTaskFromResponse($rawTask);
 
@@ -109,7 +109,7 @@ class OrchestrationImporter
 
             $operationImport = OperationImportFactory::createOperationImport($configuration, $task, $scaffoldId);
             $this->dumpOperation($scaffoldId, $operationImport);
-            $importedOperations[] = $operationImport;
+            $importedOperations->addImportedOperation($operationImport);
 
             $p->advance();
         }
@@ -154,14 +154,16 @@ class OrchestrationImporter
         string $scaffoldId,
         OperationImport $import
     ): void {
+        $operationFileName = sprintf(
+            '%s/%s/operations/%s/%s.json',
+            $this->scaffoldsDir,
+            $scaffoldId,
+            OperationsConfig::CREATE_CONFIGURATION,
+            $import->getOperationId()
+        );
+
         JsonHelper::writeFile(
-            sprintf(
-                '%s/%s/operations/%s/%s.json',
-                $this->scaffoldsDir,
-                $scaffoldId,
-                OperationsConfig::CREATE_CONFIGURATION,
-                $import->getOperationId()
-            ),
+            $operationFileName,
             $import->getCreateConfigurationJsonArray(),
             true
         );
@@ -183,13 +185,10 @@ class OrchestrationImporter
         );
     }
 
-    /**
-     * @param OperationImport[] $importedOperations
-     */
     private function dumpOrchestration(
         array $orchestration,
         string $scaffoldId,
-        array $importedOperations
+        OperationImportCollection $importedOperations
     ): void {
         $orchestrationOperationConfig = [
             'payload' => [
@@ -197,17 +196,17 @@ class OrchestrationImporter
                 'tasks' => [],
             ],
         ];
-        foreach ($importedOperations as $operation) {
+        foreach ($importedOperations->getImportedOperations() as $operation) {
             $orchestrationOperationConfig['payload']['tasks'][] = $operation->getOrchestrationTaskJsonArray();
         }
 
         JsonHelper::writeFile(
             sprintf(
-                '%s/%s/operations/%s/orchestration_%s.json',
+                '%s/%s/operations/%s/%s.json',
                 $this->scaffoldsDir,
                 $scaffoldId,
                 OperationsConfig::CREATE_ORCHESTREATION,
-                Helper::generateRandomSufix()
+                Helper::convertToCamelCase('orchestration-' . $orchestration['name'])
             ),
             $orchestrationOperationConfig,
             true
