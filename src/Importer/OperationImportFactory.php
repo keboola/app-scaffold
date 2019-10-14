@@ -28,7 +28,7 @@ class OperationImportFactory
             'configuration' => $configuration['configuration'],
         ];
 
-        $operationId = lcfirst(Helper::convertToCamelCase($task->getComponent() . '_' . Helper::generateRandomSufix()));
+        $operationId = lcfirst(Helper::convertToCamelCase($task->getComponent() . '-' . $configuration['name']));
         $operationImport = new OperationImport(
             $scaffoldId,
             $operationId,

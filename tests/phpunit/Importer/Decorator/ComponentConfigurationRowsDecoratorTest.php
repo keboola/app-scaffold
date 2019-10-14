@@ -46,10 +46,10 @@ class ComponentConfigurationRowsDecoratorTest extends ImporterBaseTestCase
             'scaffoldId'
         );
 
-        self::assertStringStartsWith('keboolaComponent_', $operationImport->getOperationId());
+        self::assertEquals('keboolaComponentConfigurationName', $operationImport->getOperationId());
         self::assertEquals('keboola.component', $operationImport->getComponentId());
-        self::assertStringStartsWith(
-            'keboolaComponent_',
+        self::assertEquals(
+            'keboolaComponentConfigurationName',
             $operationImport->getOrchestrationTaskJsonArray()['operationReferenceId']
         );
 
