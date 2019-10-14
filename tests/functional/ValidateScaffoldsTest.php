@@ -6,6 +6,7 @@ namespace Keboola\ScaffoldApp\FunctionalTests;
 
 use Keboola\Component\JsonHelper;
 use Keboola\ScaffoldApp\Component;
+use Keboola\ScaffoldApp\Importer\Decorator\DecoratorInterface;
 use Keboola\ScaffoldApp\Importer\OperationImportDecorator;
 use Keboola\ScaffoldApp\Operation\OperationsConfig;
 use PHPUnit\Framework\TestCase;
@@ -67,7 +68,7 @@ class ValidateScaffoldsTest extends TestCase
     private function validateOperationsFile(SplFileInfo $operationFile): void
     {
         preg_match_all(
-            '/' . OperationImportDecorator::USER_ACTION_KEY_PREFIX . '/',
+            '/' . DecoratorInterface::USER_ACTION_KEY_PREFIX . '/',
             $operationFile->getContents(),
             $matches,
             PREG_OFFSET_CAPTURE

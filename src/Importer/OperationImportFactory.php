@@ -5,9 +5,17 @@ declare(strict_types=1);
 namespace Keboola\ScaffoldApp\Importer;
 
 use Keboola\Orchestrator\OrchestrationTask;
+use Keboola\ScaffoldApp\Importer\Decorator\ComponentConfigurationRowsDecorator;
+use Keboola\ScaffoldApp\Importer\Decorator\DecoratorInterface;
+use Keboola\ScaffoldApp\Importer\Decorator\TransformationConfigurationRowsDecorator;
 
 class OperationImportFactory
 {
+    private const DECORATORS = [
+        TransformationConfigurationRowsDecorator::class,
+        ComponentConfigurationRowsDecorator::class,
+    ];
+
     public static function createOperationImport(
         array $configuration,
         OrchestrationTask $task
@@ -30,6 +38,14 @@ class OperationImportFactory
             $configuration['rows']
         );
 
-        return (new OperationImportDecorator($operationImport))->getDecoratedOperationImport();
+        foreach (self::DECORATORS as $decorator) {
+            /** @var DecoratorInterface $decorator */
+            $decorator = new $decorator();
+            if ($decorator->supports($operationImport)) {
+                $operationImport = $decorator->getDecoratedProjectImport($operationImport);
+            }
+        }
+
+        return $operationImport;
     }
 }

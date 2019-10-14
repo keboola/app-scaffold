@@ -7,7 +7,6 @@ namespace Keboola\ScaffoldApp\Importer;
 use Keboola\Component\JsonHelper;
 use Keboola\Component\UserException;
 use Keboola\Orchestrator\Client as OrchestratorClient;
-use Keboola\Orchestrator\OrchestrationTask;
 use Keboola\ScaffoldApp\Operation\OperationsConfig;
 use Keboola\StorageApi\Client;
 use Keboola\StorageApi\Components;
