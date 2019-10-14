@@ -65,47 +65,47 @@ class ComponentConfigurationRowsDecoratorTest extends ImporterBaseTestCase
                             ],
                         ],
                     ],
-                ],
-                'processors' => [
-                    '__SCAFFOLD_CHECK__.after' => [
-                        [
-                            'definition' =>
-                                [
-                                    'component' => 'keboola.processor-create-manifest',
-                                ],
-                            'parameters' =>
-                                [
-                                    'delimiter' => ',',
-                                    'enclosure' => '"',
-                                    'incremental' => false,
-                                    'primary_key' =>
-                                        [
-                                        ],
-                                    'columns_from' => 'header',
-                                ],
-                        ],
-                        [
-                            'definition' =>
-                                [
-                                    'component' => 'keboola.processor-add-metadata',
-                                ],
-                            'parameters' =>
-                                [
-                                    'tables' =>
-                                        [
+                    'processors' => [
+                        '__SCAFFOLD_CHECK__.after' => [
+                            [
+                                'definition' =>
+                                    [
+                                        'component' => 'keboola.processor-create-manifest',
+                                    ],
+                                'parameters' =>
+                                    [
+                                        'delimiter' => ',',
+                                        'enclosure' => '"',
+                                        'incremental' => false,
+                                        'primary_key' =>
                                             [
-                                                'table' => 'sampleTableName',
-                                                'metadata' => [
-                                                    [
-                                                        'key' => 'bdm.scaffold.table.tag',
-                                                        'value' => 'bdm.scaffold.'
-                                                            . $operationImport->getOperationId()
-                                                            . '.sampleTableName',
+                                            ],
+                                        'columns_from' => 'header',
+                                    ],
+                            ],
+                            [
+                                'definition' =>
+                                    [
+                                        'component' => 'keboola.processor-add-metadata',
+                                    ],
+                                'parameters' =>
+                                    [
+                                        'tables' =>
+                                            [
+                                                [
+                                                    'table' => 'sampleTableName',
+                                                    'metadata' => [
+                                                        [
+                                                            'key' => 'bdm.scaffold.table.tag',
+                                                            'value' => 'bdm.scaffold.'
+                                                                . $operationImport->getOperationId()
+                                                                . '.sampleTableName',
+                                                        ],
                                                     ],
                                                 ],
                                             ],
-                                        ],
-                                ],
+                                    ],
+                            ],
                         ],
                     ],
                 ],
