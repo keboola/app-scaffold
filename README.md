@@ -65,6 +65,7 @@ Naming must contain Component name, if decorator supports more than one componen
 **Component specific decorators:**
 
 - **ExSalesforceConfigurationRowsDecorator**: appends after [processors](https://developers.keboola.com/extend/component/processors/). Configuration rows has `configuration.parameters.objects[].name` path.
+- **WrDbSnowflakeDecoratorTest**: component path `configuration.storage.input.tables[]` is decorated with `source_search` and original source is kept for check with key name `__SCAFFOLD_CHECK__.original_source`.
 
 ### Post import steps
 
