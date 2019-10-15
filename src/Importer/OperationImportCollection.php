@@ -18,7 +18,7 @@ class OperationImportCollection
         foreach ($this->importedOperations as $operation) {
             if ($operation->getOperationId() === $operationImport->getOperationId()) {
                 throw new UserException(sprintf(
-                    'Duplicite operation name. Operation "%s" already exists.',
+                    'Duplicate operation name. Operation "%s" already exists.',
                     $operation->getOperationId()
                 ));
             }
