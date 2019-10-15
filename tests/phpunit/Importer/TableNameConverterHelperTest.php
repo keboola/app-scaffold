@@ -13,20 +13,42 @@ class TableNameConverterHelperTest extends TestCase
 {
     public function testConvertStagedTableName(): void
     {
+        $tableName = 'stage.c-bucketName.tableName';
+
+        // don't remove Bucket default parameters
         $import = $this->getOperationImport();
-        $converted = TableNameConverterHelper::convertStagedTableName($import, 'out.c-bucketName.tableName');
+        $converted = TableNameConverterHelper::convertStagedTableName($import, $tableName);
         self::assertEquals(
-            'out.scaffoldId.tableName',
+            'stage.scaffoldId.tableName',
             $converted
         );
+
+        // don't remove Bucket default parameters listed
+        $import = $this->getOperationImport();
+        $converted = TableNameConverterHelper::convertStagedTableName($import, $tableName, false, true);
+        self::assertEquals(
+            'stage.scaffoldId.tableName',
+            $converted
+        );
+
+        // remove Bucket
+        $import = $this->getOperationImport();
+        $converted = TableNameConverterHelper::convertStagedTableName($import, $tableName, true, true);
+        self::assertEquals(
+            'stage.tableName',
+            $converted
+        );
+
+        // remove Bucket
+        $import = $this->getOperationImport();
+        $converted = TableNameConverterHelper::convertStagedTableName($import, $tableName, true, false);
+        self::assertEquals(
+            'stage.tableName',
+            $converted
+        );
+
         // don't remove prefix
-        $converted = TableNameConverterHelper::convertStagedTableName($import, 'out.c-bucketName.tableName', false);
-        self::assertEquals(
-            'out.c-scaffoldId.tableName',
-            $converted
-        );
-        // different stage
-        $converted = TableNameConverterHelper::convertStagedTableName($import, 'stage.c-bucketName.tableName', false);
+        $converted = TableNameConverterHelper::convertStagedTableName($import, $tableName, false, false);
         self::assertEquals(
             'stage.c-scaffoldId.tableName',
             $converted
@@ -50,7 +72,14 @@ class TableNameConverterHelperTest extends TestCase
         $import = $this->getOperationImport();
         $converted = TableNameConverterHelper::convertTableNameForMetadata($import, 'out.c-crm.company');
         self::assertEquals(
-            'scaffoldId.internal.outScaffoldIdCompany',
+            'scaffoldId.internal.outCompany',
+            $converted
+        );
+
+        $import = $this->getOperationImport();
+        $converted = TableNameConverterHelper::convertTableNameForMetadata($import, 'out.c-crm.company', 'exSnowflake');
+        self::assertEquals(
+            'scaffoldId.exSnowflake.outCompany',
             $converted
         );
     }

@@ -106,7 +106,11 @@ class ExSalesforceConfigurationRowsDecorator implements DecoratorInterface
         $processors = self::AFTER_PROCESSORS_TEMPLATE;
         foreach ($tableNames as $tableName) {
             $realTableName = sprintf('in.c-BUCKET.%s', $tableName);
-            $metadataValue = TableNameConverterHelper::convertTableNameForMetadata($operationImport, $realTableName);
+            $metadataValue = TableNameConverterHelper::convertTableNameForMetadata(
+                $operationImport,
+                $realTableName,
+                TableNameConverterHelper::convertToCamelCase($operationImport->getComponentId())
+            );
             $processors[1]['parameters']['tables'][] = [
                 'table' => sprintf('%s.csv', $tableName),
                 'metadata' =>

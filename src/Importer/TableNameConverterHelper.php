@@ -8,13 +8,15 @@ final class TableNameConverterHelper
 {
     public static function convertTableNameForMetadata(
         OperationImport $operationImport,
-        string $tableName
+        string $tableName,
+        string $component = 'internal'
     ): string {
-        $tableName = TableNameConverterHelper::convertStagedTableName($operationImport, $tableName);
+        $tableName = TableNameConverterHelper::convertStagedTableName($operationImport, $tableName, true);
         $tableName = TableNameConverterHelper::convertToCamelCase($tableName, true);
         return sprintf(
-            '%s.internal.%s',
+            '%s.%s.%s',
             $operationImport->getScaffoldId(),
+            $component,
             $tableName
         );
     }
@@ -22,7 +24,8 @@ final class TableNameConverterHelper
     public static function convertStagedTableName(
         OperationImport $operationImport,
         string $destinationTableName,
-        bool $removeCPrefix = true
+        bool $removeBucket = false,
+        bool $removeBucketPrefix = true
     ): string {
         $pattern = '/'
             . '([^\.]+)' // stage $1
@@ -38,10 +41,14 @@ final class TableNameConverterHelper
 
         $stage = $matches[1];
 
-        if (true === $removeCPrefix) {
+        if (true === $removeBucketPrefix) {
             $replacement = sprintf('%s.%s.$3', $stage, $operationImport->getScaffoldId());
         } else {
             $replacement = sprintf('%s.c-%s.$3', $stage, $operationImport->getScaffoldId());
+        }
+
+        if (true === $removeBucket) {
+            $replacement = sprintf('%s.$3', $stage);
         }
 
         return preg_replace($pattern, $replacement, $destinationTableName);

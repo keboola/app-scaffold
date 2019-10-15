@@ -54,6 +54,7 @@ class TransformationConfigurationRowsDecorator implements DecoratorInterface
                 $output['destination'] = TableNameConverterHelper::convertStagedTableName(
                     $operationImport,
                     $originalDestination,
+                    false,
                     false
                 );
                 $output[self::USER_ACTION_KEY_PREFIX . 'original_destination'] = $originalDestination;

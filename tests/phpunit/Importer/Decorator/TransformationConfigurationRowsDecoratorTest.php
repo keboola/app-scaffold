@@ -233,7 +233,7 @@ class TransformationConfigurationRowsDecoratorTest extends ImporterBaseTestCase
                             'metadata' => [
                                 [
                                     'key' => 'bdm.scaffold.table.tag',
-                                    'value' => 'scaffoldId.internal.outScaffoldIdAccount2',
+                                    'value' => 'scaffoldId.internal.outAccount2',
                                 ],
                             ],
                             'destination' => 'out.c-scaffoldId.account2',
