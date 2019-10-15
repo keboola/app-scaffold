@@ -57,6 +57,11 @@ Each configuration row output mapping is decorated with `metadata` array, destin
 
 Clears all encrypted values in parameters. Please read https://github.com/keboola/app-scaffold/issues/22 all parameters used as inputs must be removed.
 
+#### StorageInputTablesDecorator
+
+Decorates component path `configuration.storage.input.tables[]` with `source_search` and original source is kept for check with key name `__SCAFFOLD_CHECK__.original_source`.
+If source match patern `out.c-project.tableName` it's rewriten to `out.c-SCAFFOLD_ID.tableName`.
+
 #### Component specific
 
 Decorators can be specific for one or more components.
@@ -65,7 +70,6 @@ Naming must contain Component name, if decorator supports more than one componen
 **Component specific decorators:**
 
 - **ExSalesforceConfigurationRowsDecorator**: appends after [processors](https://developers.keboola.com/extend/component/processors/). Configuration rows has `configuration.parameters.objects[].name` path.
-- **WrDbSnowflakeDecoratorTest**: component path `configuration.storage.input.tables[]` is decorated with `source_search` and original source is kept for check with key name `__SCAFFOLD_CHECK__.original_source`.
 
 ### Post import steps
 

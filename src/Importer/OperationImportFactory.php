@@ -6,9 +6,9 @@ namespace Keboola\ScaffoldApp\Importer;
 
 use Keboola\Orchestrator\OrchestrationTask;
 use Keboola\ScaffoldApp\Importer\Decorator\ComponentSpecific\ExSalesforceConfigurationRowsDecorator;
-use Keboola\ScaffoldApp\Importer\Decorator\ComponentSpecific\WrDbSnowflakeDecorator;
 use Keboola\ScaffoldApp\Importer\Decorator\DecoratorInterface;
 use Keboola\ScaffoldApp\Importer\Decorator\ClearEncryptedParametersDecorator;
+use Keboola\ScaffoldApp\Importer\Decorator\StorageInputTablesDecorator;
 use Keboola\ScaffoldApp\Importer\Decorator\TransformationConfigurationRowsDecorator;
 
 class OperationImportFactory
@@ -17,7 +17,7 @@ class OperationImportFactory
         TransformationConfigurationRowsDecorator::class,
         ExSalesforceConfigurationRowsDecorator::class,
         ClearEncryptedParametersDecorator::class,
-        WrDbSnowflakeDecorator::class,
+        StorageInputTablesDecorator::class,
     ];
 
     public static function createOperationImport(

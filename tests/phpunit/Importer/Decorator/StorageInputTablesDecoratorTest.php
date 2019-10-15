@@ -2,18 +2,17 @@
 
 declare(strict_types=1);
 
-namespace Keboola\ScaffoldApp\Tests\Importer\Decorator\ComponentSpecific;
+namespace Keboola\ScaffoldApp\Tests\Importer\Decorator;
 
-use Keboola\ScaffoldApp\Importer\Decorator\ComponentSpecific\WrDbSnowflakeDecorator;
+use Keboola\ScaffoldApp\Importer\Decorator\StorageInputTablesDecorator;
 use Keboola\ScaffoldApp\Importer\OperationImportFactory;
 use Keboola\ScaffoldApp\Tests\Importer\ImporterBaseTestCase;
 
-class WrDbSnowflakeDecoratorTest extends ImporterBaseTestCase
+class StorageInputTablesDecoratorTest extends ImporterBaseTestCase
 {
     public function testGetDecoratedProjectImport(): void
     {
         $task = $this->getExampleOrchstrationTask();
-        $task->setComponent('keboola.wr-db-snowflake');
 
         $configuration = [
             'name' => '',
@@ -43,10 +42,10 @@ class WrDbSnowflakeDecoratorTest extends ImporterBaseTestCase
             'scaffoldId'
         );
 
-        self::assertEquals('keboolaWrDbSnowflake', $operationImport->getOperationId());
-        self::assertEquals('keboola.wr-db-snowflake', $operationImport->getComponentId());
+        self::assertEquals('keboolaComponent', $operationImport->getOperationId());
+        self::assertEquals('keboola.component', $operationImport->getComponentId());
         self::assertEquals(
-            'keboolaWrDbSnowflake',
+            'keboolaComponent',
             $operationImport->getOrchestrationTaskJsonArray()['operationReferenceId']
         );
 
@@ -84,7 +83,6 @@ class WrDbSnowflakeDecoratorTest extends ImporterBaseTestCase
     public function testSupportsInvlidInput(): void
     {
         $task = $this->getExampleOrchstrationTask();
-        $task->setComponent('keboola.wr-db-snowflake');
 
         $configuration = [
             'name' => '',
@@ -107,7 +105,7 @@ class WrDbSnowflakeDecoratorTest extends ImporterBaseTestCase
             'scaffoldId'
         );
 
-        $decorator = new WrDbSnowflakeDecorator();
+        $decorator = new StorageInputTablesDecorator();
         self::assertFalse($decorator->supports($operationImport));
 
         $configuration = [
@@ -168,43 +166,9 @@ class WrDbSnowflakeDecoratorTest extends ImporterBaseTestCase
         self::assertFalse($decorator->supports($operationImport));
     }
 
-    public function testSupportsOtherComponent(): void
-    {
-        $task = $this->getExampleOrchstrationTask();
-
-        $configuration = [
-            'name' => '',
-            'configuration' => [
-                'storage' => [
-                    'input' => [
-                        'tables' => [
-                            [
-                                'otherKey' => 'keyValue',
-                                'source' => 'exampleSource',
-                            ],
-                        ],
-                    ],
-                ],
-            ],
-            'rows' => [
-            ],
-        ];
-
-        $operationImport = OperationImportFactory::createOperationImport(
-            $configuration,
-            $task,
-            'scaffoldId'
-        );
-
-        $decorator = new WrDbSnowflakeDecorator();
-
-        self::assertFalse($decorator->supports($operationImport));
-    }
-
     public function testSupportsValid(): void
     {
         $task = $this->getExampleOrchstrationTask();
-        $task->setComponent('keboola.wr-db-snowflake');
 
         $configuration = [
             'name' => '',
@@ -230,7 +194,7 @@ class WrDbSnowflakeDecoratorTest extends ImporterBaseTestCase
             'scaffoldId'
         );
 
-        $decorator = new WrDbSnowflakeDecorator();
+        $decorator = new StorageInputTablesDecorator();
 
         self::assertTrue($decorator->supports($operationImport));
     }

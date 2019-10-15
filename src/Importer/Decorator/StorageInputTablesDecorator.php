@@ -2,9 +2,8 @@
 
 declare(strict_types=1);
 
-namespace Keboola\ScaffoldApp\Importer\Decorator\ComponentSpecific;
+namespace Keboola\ScaffoldApp\Importer\Decorator;
 
-use Keboola\ScaffoldApp\Importer\Decorator\DecoratorInterface;
 use Keboola\ScaffoldApp\Importer\TableNameConverterHelper;
 use Keboola\ScaffoldApp\Importer\OperationImport;
 use Keboola\ScaffoldApp\Importer\OrchestrationImporter;
@@ -24,10 +23,8 @@ use Keboola\ScaffoldApp\Importer\OrchestrationImporter;
  * and original source is kept under `__SCAFFOLD_CHECK__.original_source`
  *
  */
-class WrDbSnowflakeDecorator implements DecoratorInterface
+class StorageInputTablesDecorator implements DecoratorInterface
 {
-    private const SUPPORTED_COMPONENTS = ['keboola.wr-db-snowflake'];
-
     public function getDecoratedProjectImport(
         OperationImport $operationImport
     ): OperationImport {
@@ -65,10 +62,6 @@ class WrDbSnowflakeDecorator implements DecoratorInterface
 
     public function supports(OperationImport $operationImport): bool
     {
-        if (!in_array($operationImport->getComponentId(), self::SUPPORTED_COMPONENTS)) {
-            return false;
-        }
-
         $payload = $operationImport->getPayload();
         if (empty($payload['configuration']['storage'])
             || empty($payload['configuration']['storage']['input'])
