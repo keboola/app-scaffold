@@ -48,12 +48,10 @@ Each task from orchestration is processed by decorators.
 
 #### TransformationConfigurationRowsDecorator
 
-Each configuration row imput mapping is decorated with `source_search` and output mapping with `metadata` array.
-Changes are prefixed with `__SCAFFOLD_CHECK__`, if any check remain can be tested with `ValidateScaffoldsTest`.
-Original values are preserved with `__SCAFFOLD_CHECK__` prefix.
+Each configuration row imput mapping is decorated with `source_search` and original source is kept for check with key name `__SCAFFOLD_CHECK__.original_source`.
+Note that transformation are not ordering automatically by `source_search` and `metadata` it's important to keep original `source` when it's from other configuration row in same transformation [transformation-router#76](https://github.com/keboola/transformation-router/issues/76).
 
-Since transformation are not ordering automatically by `source_search` and `metadata` it's important to keep original `source` when it's from other configuration row in same transformation.
-This will be fixed in https://github.com/keboola/transformation-router/issues/76.
+Each configuration row output mapping is decorated with `metadata` array, destination table has rewriten name with pattern `out.c-SCAFFOLD_ID.tableName`. Original destination is kept under `__SCAFFOLD_CHECK__.original_destination` key name.
 
 #### ClearEncryptedParametersDecorator
 

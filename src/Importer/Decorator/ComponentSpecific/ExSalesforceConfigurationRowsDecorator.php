@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Keboola\ScaffoldApp\Importer\Decorator\ComponentSpecific;
 
 use Keboola\ScaffoldApp\Importer\Decorator\DecoratorInterface;
-use Keboola\ScaffoldApp\Importer\Helper;
+use Keboola\ScaffoldApp\Importer\TableNameConverterHelper;
 use Keboola\ScaffoldApp\Importer\OperationImport;
 use Keboola\ScaffoldApp\Importer\OrchestrationImporter;
 
@@ -59,7 +59,6 @@ class ExSalesforceConfigurationRowsDecorator implements DecoratorInterface
                     ],
             ],
         ];
-
     private const SUPPORTED_COMPONENTS = ['htns.ex-salesforce'];
 
     public function getDecoratedProjectImport(
@@ -106,13 +105,14 @@ class ExSalesforceConfigurationRowsDecorator implements DecoratorInterface
         // add tables to metadata processor
         $processors = self::AFTER_PROCESSORS_TEMPLATE;
         foreach ($possibleTablesNames as $tableName) {
+            $metadataValue = TableNameConverterHelper::convertTableNameForMetadata($operationImport, $tableName);
             $processors[1]['parameters']['tables'][] = [
                 'table' => $tableName,
                 'metadata' =>
                     [
                         [
                             'key' => OrchestrationImporter::SCAFFOLD_TABLE_TAG,
-                            'value' => Helper::convertTableNameForMetadata($operationImport, $tableName),
+                            'value' => $metadataValue,
                         ],
                     ],
             ];

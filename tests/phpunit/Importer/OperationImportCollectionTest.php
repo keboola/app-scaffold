@@ -22,7 +22,7 @@ class OperationImportCollectionTest extends TestCase
         self::assertCount(1, $collection->getImportedOperations());
 
         self::expectException(UserException::class);
-        self::expectExceptionMessage('Duplicite operation name. Operation "operationId" already exists.');
+        self::expectExceptionMessage('Duplicate operation name. Operation "operationId" already exists.');
         $collection->addImportedOperation(
             new OperationImport('scaffoldId', 'operationId', 'componentId', [], new OrchestrationTask())
         );

@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Keboola\ScaffoldApp\Importer\Decorator;
 
-use Keboola\ScaffoldApp\Importer\Helper;
+use Keboola\ScaffoldApp\Importer\TableNameConverterHelper;
 use Keboola\ScaffoldApp\Importer\OperationImport;
 use Keboola\ScaffoldApp\Importer\OrchestrationImporter;
 
@@ -32,13 +32,13 @@ class TransformationConfigurationRowsDecorator implements DecoratorInterface
         array $row,
         OperationImport $operationImport
     ): array {
-        $row = $this->addOutputMetadata($row, $operationImport);
+        $row = $this->decorateOutputMapping($row, $operationImport);
         $row = $this->addInputSourceSearch($row, $operationImport);
 
         return $row;
     }
 
-    private function addOutputMetadata(
+    private function decorateOutputMapping(
         array $row,
         OperationImport $operationImport
     ): array {
@@ -47,9 +47,22 @@ class TransformationConfigurationRowsDecorator implements DecoratorInterface
                 if (!isset($output['metadata'])) {
                     $output['metadata'] = [];
                 }
+
+                $originalDestination = $output['destination'];
+                // this will reorder destination to bottom
+                unset($output['destination']);
+                $convertedDestination = TableNameConverterHelper::convertDestinationTableName(
+                    $operationImport,
+                    $originalDestination
+                );
+                $output['destination'] = $convertedDestination;
+                $output[self::USER_ACTION_KEY_PREFIX . 'original_destination'] = $originalDestination;
                 $output['metadata'][] = [
                     'key' => OrchestrationImporter::SCAFFOLD_TABLE_TAG,
-                    'value' => Helper::convertTableNameForMetadata($operationImport, $output['destination']),
+                    'value' => TableNameConverterHelper::convertTableNameForMetadata(
+                        $operationImport,
+                        $convertedDestination
+                    ),
                 ];
             }
         }
@@ -67,11 +80,11 @@ class TransformationConfigurationRowsDecorator implements DecoratorInterface
                     // value is annotated with "USER_ACTION_KEY_PREFIX" to notify user that this needs to be checked
                     'key' => OrchestrationImporter::SCAFFOLD_TABLE_TAG,
                     self::USER_ACTION_KEY_PREFIX . '.value' =>
-                        Helper::convertTableNameForMetadata($operationImport, $input['source']),
+                        TableNameConverterHelper::convertTableNameForMetadata($operationImport, $input['source']),
                 ];
 
                 // remove source, leave original source with prefix to user for check
-                $input[self::USER_ACTION_KEY_PREFIX . '.source'] = $input['source'];
+                $input[self::USER_ACTION_KEY_PREFIX . '.original_source'] = $input['source'];
                 unset($input['source']);
             }
         }
