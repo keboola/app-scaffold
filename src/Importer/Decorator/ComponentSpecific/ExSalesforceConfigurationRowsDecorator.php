@@ -2,13 +2,31 @@
 
 declare(strict_types=1);
 
-namespace Keboola\ScaffoldApp\Importer\Decorator;
+namespace Keboola\ScaffoldApp\Importer\Decorator\ComponentSpecific;
 
+use Keboola\ScaffoldApp\Importer\Decorator\DecoratorInterface;
 use Keboola\ScaffoldApp\Importer\Helper;
 use Keboola\ScaffoldApp\Importer\OperationImport;
 use Keboola\ScaffoldApp\Importer\OrchestrationImporter;
 
-class ComponentConfigurationRowsDecorator implements DecoratorInterface
+/**
+ * # Use case:
+ *
+ * ## Configuration rows specification:
+ *
+ * Configuration rows has path "configuration.parameters.objects[]"
+ *
+ * Each object has name properties "name" and "soql"
+ * where name is table name which is exported.
+ *
+ * ## Decorator function:
+ *
+ * For each configuration row with object are added two processors:
+ * "keboola.processor-create-manifest" "keboola.processor-add-metadata"
+ * after processors are prefixed for control.
+ *
+ */
+class ExSalesforceConfigurationRowsDecorator implements DecoratorInterface
 {
     private const AFTER_PROCESSORS_TEMPLATE =
         [
@@ -41,6 +59,8 @@ class ComponentConfigurationRowsDecorator implements DecoratorInterface
                     ],
             ],
         ];
+
+    private const SUPPORTED_COMPONENTS = ['htns.ex-salesforce'];
 
     public function getDecoratedProjectImport(
         OperationImport $operationImport
@@ -123,29 +143,6 @@ class ComponentConfigurationRowsDecorator implements DecoratorInterface
         if (0 === count($operationImport->getConfigurationRows())) {
             return false;
         }
-
-        foreach ($operationImport->getConfigurationRows() as $row) {
-            // check parameters object support
-            if ($this->hasConfigurationRowParametersObject($row)) {
-                continue;
-            }
-            if ($this->hasAnyParamaterObjectName($row)) {
-                return true;
-            }
-        }
-
-        return false;
-    }
-
-    private function hasAnyParamaterObjectName(array $row): bool
-    {
-        foreach ($row['configuration']['parameters']['objects'] as &$object) {
-            if (empty($object['name'])) {
-                continue;
-            }
-            return true;
-        }
-
-        return false;
+        return in_array($operationImport->getComponentId(), self::SUPPORTED_COMPONENTS);
     }
 }

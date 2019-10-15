@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Keboola\ScaffoldApp\Importer;
 
 use Keboola\Orchestrator\OrchestrationTask;
-use Keboola\ScaffoldApp\Importer\Decorator\ComponentConfigurationRowsDecorator;
+use Keboola\ScaffoldApp\Importer\Decorator\ComponentSpecific\ExSalesforceConfigurationRowsDecorator;
 use Keboola\ScaffoldApp\Importer\Decorator\DecoratorInterface;
 use Keboola\ScaffoldApp\Importer\Decorator\ParametersClearDecorator;
 use Keboola\ScaffoldApp\Importer\Decorator\TransformationConfigurationRowsDecorator;
@@ -14,7 +14,7 @@ class OperationImportFactory
 {
     private const DECORATORS = [
         TransformationConfigurationRowsDecorator::class,
-        ComponentConfigurationRowsDecorator::class,
+        ExSalesforceConfigurationRowsDecorator::class,
         ParametersClearDecorator::class,
     ];
 

@@ -55,13 +55,17 @@ Original values are preserved with `__SCAFFOLD_CHECK__` prefix.
 Since transformation are not ordering automatically by `source_search` and `metadata` it's important to keep original `source` when it's from other configuration row in same transformation.
 This will be fixed in https://github.com/keboola/transformation-router/issues/76.
 
-#### ComponentConfigurationRowsDecorator
-
-Add s after processors for components with `configuration.parameters.objects[].name` structure.
-
 #### ParametersClearDecorator
 
 Clears all encrypted values in parameters. Please read https://github.com/keboola/app-scaffold/issues/22 all parameters used as inputs must be removed.
+
+#### Component specific
+
+Decorators can be specific for one or more components.
+Naming must contain Component name, if decorator supports more than one component name should describe function.
+
+**Component specific decorators:**
+- ExSalesforceConfigurationRowsDecorator: appends after processors. Configuration rows has `configuration.parameters.objects[].name` path.
 
 ### Post import steps
 

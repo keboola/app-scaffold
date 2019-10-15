@@ -4,15 +4,16 @@ declare(strict_types=1);
 
 namespace Keboola\ScaffoldApp\Tests\Importer\Decorator;
 
-use Keboola\ScaffoldApp\Importer\Decorator\ComponentConfigurationRowsDecorator;
+use Keboola\ScaffoldApp\Importer\Decorator\ComponentSpecific\ExSalesforceConfigurationRowsDecorator;
 use Keboola\ScaffoldApp\Importer\OperationImportFactory;
 use Keboola\ScaffoldApp\Tests\Importer\ImporterBaseTestCase;
 
-class ComponentConfigurationRowsDecoratorTest extends ImporterBaseTestCase
+class ExSalesforceConfigurationRowsDecoratorTest extends ImporterBaseTestCase
 {
     public function testGetDecoratorProjectImport(): void
     {
         $task = $this->getExampleOrchstrationTask();
+        $task->setComponent('htns.ex-salesforce');
 
         $configuration = [
             'name' => 'configurationName',
@@ -46,10 +47,10 @@ class ComponentConfigurationRowsDecoratorTest extends ImporterBaseTestCase
             'scaffoldId'
         );
 
-        self::assertEquals('keboolaComponentConfigurationName', $operationImport->getOperationId());
-        self::assertEquals('keboola.component', $operationImport->getComponentId());
+        self::assertEquals('htnsExSalesforceConfigurationName', $operationImport->getOperationId());
+        self::assertEquals('htns.ex-salesforce', $operationImport->getComponentId());
         self::assertEquals(
-            'keboolaComponentConfigurationName',
+            'htnsExSalesforceConfigurationName',
             $operationImport->getOrchestrationTaskJsonArray()['operationReferenceId']
         );
 
@@ -128,12 +129,12 @@ class ComponentConfigurationRowsDecoratorTest extends ImporterBaseTestCase
             'scaffoldId'
         );
 
-        $decorator = new ComponentConfigurationRowsDecorator();
+        $decorator = new ExSalesforceConfigurationRowsDecorator();
 
         self::assertFalse($decorator->supports($operationImport));
     }
 
-    public function testSupportsNoParametersObjects(): void
+    public function testSupportsOtherComponent(): void
     {
         $task = $this->getExampleOrchstrationTask();
 
@@ -172,7 +173,7 @@ class ComponentConfigurationRowsDecoratorTest extends ImporterBaseTestCase
             'scaffoldId'
         );
 
-        $decorator = new ComponentConfigurationRowsDecorator();
+        $decorator = new ExSalesforceConfigurationRowsDecorator();
 
         self::assertFalse($decorator->supports($operationImport));
     }
@@ -180,6 +181,7 @@ class ComponentConfigurationRowsDecoratorTest extends ImporterBaseTestCase
     public function testSupportsValid(): void
     {
         $task = $this->getExampleOrchstrationTask();
+        $task->setComponent('htns.ex-salesforce');
 
         $configuration = [
             'name' => '',
@@ -205,7 +207,7 @@ class ComponentConfigurationRowsDecoratorTest extends ImporterBaseTestCase
             'scaffoldId'
         );
 
-        $decorator = new ComponentConfigurationRowsDecorator();
+        $decorator = new ExSalesforceConfigurationRowsDecorator();
 
         self::assertTrue($decorator->supports($operationImport));
     }
