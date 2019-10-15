@@ -53,6 +53,8 @@ Note that transformation are not ordering automatically by `source_search` and `
 
 Each configuration row output mapping is decorated with `metadata` array, destination table has rewriten name with pattern `out.c-SCAFFOLD_ID.tableName`. Original destination is kept under `__SCAFFOLD_CHECK__.original_destination` key name.
 
+Be carefull with sources from other components since `source_search` value will be in transformation marked as `internal` but in real could be different.
+
 #### ClearEncryptedParametersDecorator
 
 Clears all encrypted values in parameters. Please read https://github.com/keboola/app-scaffold/issues/22 all parameters used as inputs must be removed.
