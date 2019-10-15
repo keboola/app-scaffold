@@ -4,12 +4,12 @@ declare(strict_types=1);
 
 namespace Keboola\ScaffoldApp\Tests\Importer\Decorator;
 
-use Keboola\ScaffoldApp\Importer\Decorator\ParametersClearDecorator;
+use Keboola\ScaffoldApp\Importer\Decorator\ClearEncryptedParametersDecorator;
 use Keboola\ScaffoldApp\Importer\OperationImport;
 use Keboola\ScaffoldApp\Importer\OperationImportFactory;
 use Keboola\ScaffoldApp\Tests\Importer\ImporterBaseTestCase;
 
-class ParametersClearDecoratorTest extends ImporterBaseTestCase
+class ClearEncryptedParametersDecoratorTest extends ImporterBaseTestCase
 {
     public function testGetDecoratedProjectImport(): void
     {
@@ -99,7 +99,7 @@ class ParametersClearDecoratorTest extends ImporterBaseTestCase
             'scaffoldId'
         );
 
-        $decorator = new ParametersClearDecorator();
+        $decorator = new ClearEncryptedParametersDecorator();
 
         self::assertTrue($decorator->supports($operationImport));
     }
@@ -118,7 +118,7 @@ class ParametersClearDecoratorTest extends ImporterBaseTestCase
             'scaffoldId'
         );
 
-        $decorator = new ParametersClearDecorator();
+        $decorator = new ClearEncryptedParametersDecorator();
 
         self::assertFalse($decorator->supports($operationImport));
     }

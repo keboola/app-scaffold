@@ -55,7 +55,7 @@ Original values are preserved with `__SCAFFOLD_CHECK__` prefix.
 Since transformation are not ordering automatically by `source_search` and `metadata` it's important to keep original `source` when it's from other configuration row in same transformation.
 This will be fixed in https://github.com/keboola/transformation-router/issues/76.
 
-#### ParametersClearDecorator
+#### ClearEncryptedParametersDecorator
 
 Clears all encrypted values in parameters. Please read https://github.com/keboola/app-scaffold/issues/22 all parameters used as inputs must be removed.
 
