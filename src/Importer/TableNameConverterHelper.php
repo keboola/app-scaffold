@@ -6,7 +6,7 @@ namespace Keboola\ScaffoldApp\Importer;
 
 final class TableNameConverterHelper
 {
-    public static function convertDestinationTableName(
+    public static function convertOutputTableName(
         OperationImport $operationImport,
         string $destinationTableName
     ): string {

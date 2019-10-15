@@ -56,6 +56,33 @@ class TransformationConfigurationRowsDecoratorTest extends ImporterBaseTestCase
                     'configuration' => [
                         'input' => [
                             [
+                                'destination' => 'account',
+                                'datatypes' => [],
+                                'whereColumn' => '',
+                                'whereValues' => [],
+                                'whereOperator' => 'eq',
+                                'columns' => [],
+                                'loadType' => 'clone',
+                                'source' => 'out.c-transformation.account',
+                            ],
+                        ],
+                        'output' => [
+                            [
+                                'destination' => 'account',
+                                'datatypes' => [],
+                                'whereColumn' => '',
+                                'whereValues' => [],
+                                'whereOperator' => 'eq',
+                                'columns' => [],
+                                'loadType' => 'clone',
+                            ],
+                        ],
+                    ],
+                ],
+                [
+                    'configuration' => [
+                        'input' => [
+                            [
                                 'destination' => 'account2',
                                 'datatypes' => [],
                                 'whereColumn' => '',
@@ -117,6 +144,45 @@ class TransformationConfigurationRowsDecoratorTest extends ImporterBaseTestCase
                                     'scaffoldId.internal.in_c-salesforce_account',
                             ],
                             '__SCAFFOLD_CHECK__.original_source' => 'in.c-salesforce.account',
+                        ],
+                    ],
+                    'output' => [
+                        [
+                            'datatypes' => [],
+                            'whereColumn' => '',
+                            'whereValues' => [],
+                            'whereOperator' => 'eq',
+                            'columns' => [],
+                            'loadType' => 'clone',
+                            'metadata' => [
+                                [
+                                    'key' => 'bdm.scaffold.table.tag',
+                                    'value' => 'scaffoldId.internal.account',
+                                ],
+                            ],
+                            'destination' => 'account',
+                            '__SCAFFOLD_CHECK__original_destination' => 'account',
+                        ],
+                    ],
+                ],
+            ],
+            [
+                'configuration' => [
+                    'input' => [
+                        [
+                            'destination' => 'account',
+                            'datatypes' => [],
+                            'whereColumn' => '',
+                            'whereValues' => [],
+                            'whereOperator' => 'eq',
+                            'columns' => [],
+                            'loadType' => 'clone',
+                            'source_search' => [
+                                'key' => 'bdm.scaffold.table.tag',
+                                '__SCAFFOLD_CHECK__.value' =>
+                                    'scaffoldId.internal.out_c-scaffoldId_account',
+                            ],
+                            '__SCAFFOLD_CHECK__.original_source' => 'out.c-transformation.account',
                         ],
                     ],
                     'output' => [

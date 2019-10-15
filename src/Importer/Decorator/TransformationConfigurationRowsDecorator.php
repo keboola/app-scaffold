@@ -51,7 +51,7 @@ class TransformationConfigurationRowsDecorator implements DecoratorInterface
                 $originalDestination = $output['destination'];
                 // this will reorder destination to bottom
                 unset($output['destination']);
-                $convertedDestination = TableNameConverterHelper::convertDestinationTableName(
+                $convertedDestination = TableNameConverterHelper::convertOutputTableName(
                     $operationImport,
                     $originalDestination
                 );
@@ -76,11 +76,14 @@ class TransformationConfigurationRowsDecorator implements DecoratorInterface
     ): array {
         foreach ($row['configuration']['input'] as &$input) {
             if (!empty($input['source']) && empty($input['source_search'])) {
+                // if input table is out.c-project.table it's also converted
+                $convertedSource = TableNameConverterHelper::convertOutputTableName($operationImport, $input['source']);
+
                 $input['source_search'] = [
                     // value is annotated with "USER_ACTION_KEY_PREFIX" to notify user that this needs to be checked
                     'key' => OrchestrationImporter::SCAFFOLD_TABLE_TAG,
                     self::USER_ACTION_KEY_PREFIX . '.value' =>
-                        TableNameConverterHelper::convertTableNameForMetadata($operationImport, $input['source']),
+                        TableNameConverterHelper::convertTableNameForMetadata($operationImport, $convertedSource),
                 ];
 
                 // remove source, leave original source with prefix to user for check

@@ -11,15 +11,15 @@ use PHPUnit\Framework\TestCase;
 
 class TableNameConverterHelperTest extends TestCase
 {
-    public function testConvertDestinationTableName(): void
+    public function testConvertOutputTableName(): void
     {
         $import = $this->getOperationImport();
-        $converted = TableNameConverterHelper::convertDestinationTableName($import, 'out.c-customName.tableName');
+        $converted = TableNameConverterHelper::convertOutputTableName($import, 'out.c-customName.tableName');
         self::assertEquals(
             'out.c-scaffoldId.tableName',
             $converted
         );
-        $converted = TableNameConverterHelper::convertDestinationTableName($import, 'out.c-customName.tableName.csv');
+        $converted = TableNameConverterHelper::convertOutputTableName($import, 'out.c-customName.tableName.csv');
         self::assertEquals(
             'out.c-scaffoldId.tableName.csv',
             $converted
@@ -38,10 +38,10 @@ class TableNameConverterHelperTest extends TestCase
         return $import;
     }
 
-    public function testConvertDestinationTableNameNotDestinationTableName(): void
+    public function testConvertOutputTableNameNotOutputTableName(): void
     {
         $import = $this->getOperationImport();
-        $converted = TableNameConverterHelper::convertDestinationTableName($import, 'notOut.c-scaffoldId.tableName');
+        $converted = TableNameConverterHelper::convertOutputTableName($import, 'notOut.c-scaffoldId.tableName');
         self::assertEquals(
             'notOut.c-scaffoldId.tableName',
             $converted
