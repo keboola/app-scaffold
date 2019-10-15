@@ -62,7 +62,7 @@ class TransformationConfigurationRowsDecorator implements DecoratorInterface
         OperationImport $operationImport
     ): array {
         foreach ($row['configuration']['input'] as &$input) {
-            if (!empty($input['source'])) {
+            if (!empty($input['source']) && empty($input['source_search'])) {
                 $input['source_search'] = [
                     // value is annotated with "USER_ACTION_KEY_PREFIX" to notify user that this needs to be checked
                     'key' => OrchestrationImporter::SCAFFOLD_TABLE_TAG,

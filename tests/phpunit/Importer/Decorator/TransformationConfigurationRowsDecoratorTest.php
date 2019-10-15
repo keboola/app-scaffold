@@ -52,6 +52,36 @@ class TransformationConfigurationRowsDecoratorTest extends ImporterBaseTestCase
                         ],
                     ],
                 ],
+                [
+                    'configuration' => [
+                        'input' => [
+                            [
+                                'destination' => 'account2',
+                                'datatypes' => [],
+                                'whereColumn' => '',
+                                'whereValues' => [],
+                                'whereOperator' => 'eq',
+                                'columns' => [],
+                                'loadType' => 'clone',
+                                'source_search' => [
+                                    'key' => 'key1',
+                                    'value' => 'val1',
+                                ],
+                            ],
+                        ],
+                        'output' => [
+                            [
+                                'destination' => 'account2',
+                                'datatypes' => [],
+                                'whereColumn' => '',
+                                'whereValues' => [],
+                                'whereOperator' => 'eq',
+                                'columns' => [],
+                                'loadType' => 'clone',
+                            ],
+                        ],
+                    ],
+                ],
             ],
         ];
 
@@ -102,6 +132,42 @@ class TransformationConfigurationRowsDecoratorTest extends ImporterBaseTestCase
                                 [
                                     'key' => 'bdm.scaffold.table.tag',
                                     'value' => 'scaffoldId.internal.account',
+                                ],
+                            ],
+                        ],
+                    ],
+                ],
+            ],
+            [
+                'configuration' => [
+                    'input' => [
+                        [
+                            'destination' => 'account2',
+                            'datatypes' => [],
+                            'whereColumn' => '',
+                            'whereValues' => [],
+                            'whereOperator' => 'eq',
+                            'columns' => [],
+                            'loadType' => 'clone',
+                            'source_search' => [
+                                'key' => 'key1',
+                                'value' => 'val1',
+                            ],
+                        ],
+                    ],
+                    'output' => [
+                        [
+                            'destination' => 'account2',
+                            'datatypes' => [],
+                            'whereColumn' => '',
+                            'whereValues' => [],
+                            'whereOperator' => 'eq',
+                            'columns' => [],
+                            'loadType' => 'clone',
+                            'metadata' => [
+                                [
+                                    'key' => 'bdm.scaffold.table.tag',
+                                    'value' => 'scaffoldId.internal.account2',
                                 ],
                             ],
                         ],
