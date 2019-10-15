@@ -44,7 +44,7 @@ class ExSalesforceConfigurationRowsDecoratorTest extends ImporterBaseTestCase
         $operationImport = OperationImportFactory::createOperationImport(
             $configuration,
             $task,
-            'scaffoldId'
+            'Scaffold_Id'
         );
 
         self::assertEquals('htnsExSalesforceConfigurationName', $operationImport->getOperationId());
@@ -54,6 +54,7 @@ class ExSalesforceConfigurationRowsDecoratorTest extends ImporterBaseTestCase
             $operationImport->getOrchestrationTaskJsonArray()['operationReferenceId']
         );
 
+        // phpcs:disable
         $expectedRows = [
             [
                 'configuration' => [
@@ -99,8 +100,8 @@ class ExSalesforceConfigurationRowsDecoratorTest extends ImporterBaseTestCase
                                                     'metadata' => [
                                                         [
                                                             'key' => 'bdm.scaffold.table.tag',
-                                                            'value' =>
-                                                                'scaffoldId.htnsExSalesforce.inSampleTableName',
+                                                            '__SCAFFOLD_CHECK__value' =>
+                                                                'Scaffold_Id.internal.inHtnsExSalesforce######SampleTableName',
                                                         ],
                                                     ],
                                                 ],
@@ -112,7 +113,7 @@ class ExSalesforceConfigurationRowsDecoratorTest extends ImporterBaseTestCase
                 ],
             ],
         ];
-
+        // phpcs:enable
         self::assertSame($expectedRows, $operationImport->getConfigurationRows());
     }
 

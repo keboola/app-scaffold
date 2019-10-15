@@ -5,9 +5,9 @@ declare(strict_types=1);
 namespace Keboola\ScaffoldApp\Importer\Decorator\ComponentSpecific;
 
 use Keboola\ScaffoldApp\Importer\Decorator\DecoratorInterface;
-use Keboola\ScaffoldApp\Importer\TableNameConverterHelper;
 use Keboola\ScaffoldApp\Importer\OperationImport;
 use Keboola\ScaffoldApp\Importer\OrchestrationImporter;
+use Keboola\ScaffoldApp\Importer\TableNameConverter;
 
 /**
  * # Use case:
@@ -61,6 +61,19 @@ class ExSalesforceConfigurationRowsDecorator implements DecoratorInterface
         ];
     private const SUPPORTED_COMPONENTS = ['htns.ex-salesforce'];
 
+    /**
+     * @var TableNameConverter
+     */
+    private $tableNameConverter;
+
+    /**
+     * ExSalesforceConfigurationRowsDecorator constructor.
+     */
+    public function __construct()
+    {
+        $this->tableNameConverter = new TableNameConverter;
+    }
+
     public function getDecoratedProjectImport(
         OperationImport $operationImport
     ): OperationImport {
@@ -105,11 +118,11 @@ class ExSalesforceConfigurationRowsDecorator implements DecoratorInterface
         // add tables to metadata processor
         $processors = self::AFTER_PROCESSORS_TEMPLATE;
         foreach ($tableNames as $tableName) {
-            $realTableName = sprintf('in.c-BUCKET.%s', $tableName);
-            $metadataValue = TableNameConverterHelper::convertTableNameForMetadata(
+            // simulate configuration id
+            $realTableName = sprintf('in.c-htns-ex-salesforce-######.%s', $tableName);
+            $metadataValue = $this->tableNameConverter->convertTableNameToMetadataValue(
                 $operationImport,
-                $realTableName,
-                TableNameConverterHelper::convertToCamelCase($operationImport->getComponentId())
+                $realTableName
             );
             $processors[1]['parameters']['tables'][] = [
                 'table' => sprintf('%s.csv', $tableName),
@@ -117,7 +130,7 @@ class ExSalesforceConfigurationRowsDecorator implements DecoratorInterface
                     [
                         [
                             'key' => OrchestrationImporter::SCAFFOLD_TABLE_TAG,
-                            'value' => $metadataValue,
+                            self::USER_ACTION_KEY_PREFIX . 'value' => $metadataValue,
                         ],
                     ],
             ];

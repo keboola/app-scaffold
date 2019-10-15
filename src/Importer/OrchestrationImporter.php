@@ -206,7 +206,10 @@ class OrchestrationImporter
                 $this->scaffoldsDir,
                 $scaffoldId,
                 OperationsConfig::CREATE_ORCHESTREATION,
-                TableNameConverterHelper::convertToCamelCase('orchestration-' . $orchestration['name'])
+                CamelCaseConverterHelper::convertToCamelCase(
+                    'orchestration-' . $orchestration['name'],
+                    CamelCaseConverterHelper::STOP_WORDS_NO_UNDERSCORE
+                )
             ),
             $orchestrationOperationConfig,
             true

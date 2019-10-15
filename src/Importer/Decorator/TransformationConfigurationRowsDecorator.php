@@ -4,12 +4,25 @@ declare(strict_types=1);
 
 namespace Keboola\ScaffoldApp\Importer\Decorator;
 
-use Keboola\ScaffoldApp\Importer\TableNameConverterHelper;
 use Keboola\ScaffoldApp\Importer\OperationImport;
 use Keboola\ScaffoldApp\Importer\OrchestrationImporter;
+use Keboola\ScaffoldApp\Importer\TableNameConverter;
 
 class TransformationConfigurationRowsDecorator implements DecoratorInterface
 {
+    /**
+     * @var TableNameConverter
+     */
+    private $tableNameConverter;
+
+    /**
+     * ExSalesforceConfigurationRowsDecorator constructor.
+     */
+    public function __construct()
+    {
+        $this->tableNameConverter = new TableNameConverter;
+    }
+
     public function getDecoratedProjectImport(
         OperationImport $operationImport
     ): OperationImport {
@@ -51,20 +64,14 @@ class TransformationConfigurationRowsDecorator implements DecoratorInterface
                 $originalDestination = $output['destination'];
                 // this will reorder destination to bottom
                 unset($output['destination']);
-                $output['destination'] = TableNameConverterHelper::convertStagedTableName(
+                $output['destination'] = $this->tableNameConverter->convertTableName(
                     $operationImport,
-                    $originalDestination,
-                    false,
-                    false
+                    $originalDestination
                 );
                 $output[self::USER_ACTION_KEY_PREFIX . 'original_destination'] = $originalDestination;
-                $metadataValue = TableNameConverterHelper::convertTableNameForMetadata(
+                $metadataValue = $this->tableNameConverter->convertTableNameToMetadataValue(
                     $operationImport,
-                    TableNameConverterHelper::convertStagedTableName(
-                        $operationImport,
-                        $originalDestination,
-                        true
-                    )
+                    $originalDestination
                 );
                 $output['metadata'][] = [
                     'key' => OrchestrationImporter::SCAFFOLD_TABLE_TAG,
@@ -82,16 +89,19 @@ class TransformationConfigurationRowsDecorator implements DecoratorInterface
     ): array {
         foreach ($row['configuration']['input'] as &$input) {
             if (!empty($input['source']) && empty($input['source_search'])) {
-                // if input table is out.c-project.table it's also converted
-                $convertedSource = TableNameConverterHelper::convertStagedTableName($operationImport, $input['source']);
-
                 $input['source_search'] = [
                     // value is annotated with "USER_ACTION_KEY_PREFIX" to notify user that this needs to be checked
                     'key' => OrchestrationImporter::SCAFFOLD_TABLE_TAG,
                     self::USER_ACTION_KEY_PREFIX . '.value' =>
-                        TableNameConverterHelper::convertTableNameForMetadata($operationImport, $convertedSource),
+                        $this->tableNameConverter->convertTableNameToMetadataValue($operationImport, $input['source']),
                 ];
 
+                // add decorated_source as source can be configuration row of same transformation
+                // and source_search can't be used in this case
+                $input[self::USER_ACTION_KEY_PREFIX . '.source'] = $this->tableNameConverter->convertTableName(
+                    $operationImport,
+                    $input['source']
+                );
                 // remove source, leave original source with prefix to user for check
                 $input[self::USER_ACTION_KEY_PREFIX . '.original_source'] = $input['source'];
                 unset($input['source']);

@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace Keboola\ScaffoldApp\Importer\Decorator;
 
-use Keboola\ScaffoldApp\Importer\TableNameConverterHelper;
 use Keboola\ScaffoldApp\Importer\OperationImport;
 use Keboola\ScaffoldApp\Importer\OrchestrationImporter;
+use Keboola\ScaffoldApp\Importer\TableNameConverter;
 
 /**
  * # Use case:
@@ -25,6 +25,19 @@ use Keboola\ScaffoldApp\Importer\OrchestrationImporter;
  */
 class StorageInputTablesDecorator implements DecoratorInterface
 {
+    /**
+     * @var TableNameConverter
+     */
+    private $tableNameConverter;
+
+    /**
+     * ExSalesforceConfigurationRowsDecorator constructor.
+     */
+    public function __construct()
+    {
+        $this->tableNameConverter = new TableNameConverter;
+    }
+
     public function getDecoratedProjectImport(
         OperationImport $operationImport
     ): OperationImport {
@@ -44,20 +57,16 @@ class StorageInputTablesDecorator implements DecoratorInterface
         $payload = $operationImport->getPayload();
         foreach ($payload['configuration']['storage']['input']['tables'] as &$table) {
             if (!empty($table['source']) && empty($table['source_search'])) {
-                $convertedDestination = TableNameConverterHelper::convertStagedTableName(
-                    $operationImport,
-                    $table['source']
-                );
-                $convertedDestination =
-                    TableNameConverterHelper::convertTableNameForMetadata(
+                $convertedMetadataValue =
+                    $this->tableNameConverter->convertTableNameToMetadataValue(
                         $operationImport,
-                        $convertedDestination
+                        $table['source']
                     );
 
                 $table['source_search'] = [
                     // value is annotated with "USER_ACTION_KEY_PREFIX" to notify user that this needs to be checked
                     'key' => OrchestrationImporter::SCAFFOLD_TABLE_TAG,
-                    self::USER_ACTION_KEY_PREFIX . '.value' => $convertedDestination,
+                    self::USER_ACTION_KEY_PREFIX . '.value' => $convertedMetadataValue,
                 ];
 
                 // remove source, leave original source with prefix to user for check

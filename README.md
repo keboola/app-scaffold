@@ -48,12 +48,12 @@ Each task from orchestration is processed by decorators.
 
 #### TransformationConfigurationRowsDecorator
 
-Each configuration row imput mapping is decorated with `source_search` and original source is kept for check with key name `__SCAFFOLD_CHECK__.original_source`.
-Note that transformation are not ordering automatically by `source_search` and `metadata` it's important to keep original `source` when it's from other configuration row in same transformation [transformation-router#76](https://github.com/keboola/transformation-router/issues/76).
+ - Each configuration row imput mapping is decorated with `source_search`
+ - original source is kept for check with key name `__SCAFFOLD_CHECK__.original_source`.
+ - source with rewriten table name in pattern `out.c-SCAFFOLD_ID.bucketNameTableName` is kept under key `__SCAFFOLD_CHECK__.source`. If input mapping point's to different configuration row in same transformation `source_search` can't be used [transformation-router#76](https://github.com/keboola/transformation-router/issues/76).
+ - Each configuration row output mapping is decorated with `metadata` array, `destination` table has rewriten name with pattern `out.c-SCAFFOLD_ID.bucketNameTableName`. Original destination is kept under `__SCAFFOLD_CHECK__.original_destination` key name.
 
-Each configuration row output mapping is decorated with `metadata` array, destination table has rewriten name with pattern `out.c-SCAFFOLD_ID.tableName`. Original destination is kept under `__SCAFFOLD_CHECK__.original_destination` key name.
-
-Be carefull with sources from other components since `source_search` value will be in transformation marked as `internal` but in real could be different.
+Be carefull with sources from other components using default bucket since their bucket name has also configurationId and can't be matched automatically.
 
 #### ClearEncryptedParametersDecorator
 
@@ -71,7 +71,11 @@ Naming must contain Component name, if decorator supports more than one componen
 
 **Component specific decorators:**
 
-- **ExSalesforceConfigurationRowsDecorator**: appends after [processors](https://developers.keboola.com/extend/component/processors/). Configuration rows has `configuration.parameters.objects[].name` path.
+- **ExSalesforceConfigurationRowsDecorator**: appends after [processors](https://developers.keboola.com/extend/component/processors/). Configuration rows has `configuration.parameters.objects[].name` path. Metadata tag looks like this: `CRMMMR_Salesforce.internal.inHtnsExSalesforce######Order` Component uses default bucket and `######` must be replaced with configurationId or changed to something specific.
+
+#### Disabling decorators
+
+Any decorator can be disabled in `Keboola\ScaffoldApp\Importer\OperationImportFactory::DECORATORS` constant by removing or commenting out specific decorator class.
 
 ### Post import steps
 
