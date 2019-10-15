@@ -30,9 +30,9 @@ class OperationImportFactory
             'configuration' => $configuration['configuration'],
         ];
 
-        $operationId = lcfirst(TableNameConverterHelper::convertToCamelCase(
+        $operationId = TableNameConverterHelper::convertToCamelCase(
             $task->getComponent() . '-' . $configuration['name']
-        ));
+        );
         $operationImport = new OperationImport(
             $scaffoldId,
             $operationId,

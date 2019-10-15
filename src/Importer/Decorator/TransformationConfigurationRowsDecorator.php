@@ -51,18 +51,23 @@ class TransformationConfigurationRowsDecorator implements DecoratorInterface
                 $originalDestination = $output['destination'];
                 // this will reorder destination to bottom
                 unset($output['destination']);
-                $convertedDestination = TableNameConverterHelper::convertOutputTableName(
+                $output['destination'] = TableNameConverterHelper::convertStagedTableName(
                     $operationImport,
-                    $originalDestination
+                    $originalDestination,
+                    false
                 );
-                $output['destination'] = $convertedDestination;
                 $output[self::USER_ACTION_KEY_PREFIX . 'original_destination'] = $originalDestination;
+                $metadataValue = TableNameConverterHelper::convertTableNameForMetadata(
+                    $operationImport,
+                    TableNameConverterHelper::convertStagedTableName(
+                        $operationImport,
+                        $originalDestination,
+                        true
+                    )
+                );
                 $output['metadata'][] = [
                     'key' => OrchestrationImporter::SCAFFOLD_TABLE_TAG,
-                    'value' => TableNameConverterHelper::convertTableNameForMetadata(
-                        $operationImport,
-                        $convertedDestination
-                    ),
+                    'value' => $metadataValue,
                 ];
             }
         }
@@ -77,7 +82,7 @@ class TransformationConfigurationRowsDecorator implements DecoratorInterface
         foreach ($row['configuration']['input'] as &$input) {
             if (!empty($input['source']) && empty($input['source_search'])) {
                 // if input table is out.c-project.table it's also converted
-                $convertedSource = TableNameConverterHelper::convertOutputTableName($operationImport, $input['source']);
+                $convertedSource = TableNameConverterHelper::convertStagedTableName($operationImport, $input['source']);
 
                 $input['source_search'] = [
                     // value is annotated with "USER_ACTION_KEY_PREFIX" to notify user that this needs to be checked

@@ -67,7 +67,7 @@ class StorageInputTablesDecoratorTest extends ImporterBaseTestCase
                                 'otherKey' => 'keyValue',
                                 'source_search' => [
                                     'key' => 'bdm.scaffold.table.tag',
-                                    '__SCAFFOLD_CHECK__.value' => 'scaffoldId.internal.out_c-ProjectName_tableName',
+                                    '__SCAFFOLD_CHECK__.value' => 'scaffoldId.internal.outScaffoldIdTableName',
                                 ],
                                 '__SCAFFOLD_CHECK__.original_source' => 'out.c-ProjectName.tableName',
                             ],

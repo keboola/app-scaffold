@@ -141,7 +141,7 @@ class TransformationConfigurationRowsDecoratorTest extends ImporterBaseTestCase
                             'source_search' => [
                                 'key' => 'bdm.scaffold.table.tag',
                                 '__SCAFFOLD_CHECK__.value' =>
-                                    'scaffoldId.internal.in_c-salesforce_account',
+                                    'scaffoldId.internal.inScaffoldIdAccount',
                             ],
                             '__SCAFFOLD_CHECK__.original_source' => 'in.c-salesforce.account',
                         ],
@@ -180,7 +180,7 @@ class TransformationConfigurationRowsDecoratorTest extends ImporterBaseTestCase
                             'source_search' => [
                                 'key' => 'bdm.scaffold.table.tag',
                                 '__SCAFFOLD_CHECK__.value' =>
-                                    'scaffoldId.internal.out_c-scaffoldId_account',
+                                    'scaffoldId.internal.outScaffoldIdAccount',
                             ],
                             '__SCAFFOLD_CHECK__.original_source' => 'out.c-transformation.account',
                         ],
@@ -233,7 +233,7 @@ class TransformationConfigurationRowsDecoratorTest extends ImporterBaseTestCase
                             'metadata' => [
                                 [
                                     'key' => 'bdm.scaffold.table.tag',
-                                    'value' => 'scaffoldId.internal.out_c-scaffoldId_account2',
+                                    'value' => 'scaffoldId.internal.outScaffoldIdAccount2',
                                 ],
                             ],
                             'destination' => 'out.c-scaffoldId.account2',

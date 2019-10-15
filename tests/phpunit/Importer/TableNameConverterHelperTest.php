@@ -11,17 +11,24 @@ use PHPUnit\Framework\TestCase;
 
 class TableNameConverterHelperTest extends TestCase
 {
-    public function testConvertOutputTableName(): void
+    public function testConvertStagedTableName(): void
     {
         $import = $this->getOperationImport();
-        $converted = TableNameConverterHelper::convertOutputTableName($import, 'out.c-customName.tableName');
+        $converted = TableNameConverterHelper::convertStagedTableName($import, 'out.c-bucketName.tableName');
+        self::assertEquals(
+            'out.scaffoldId.tableName',
+            $converted
+        );
+        // don't remove prefix
+        $converted = TableNameConverterHelper::convertStagedTableName($import, 'out.c-bucketName.tableName', false);
         self::assertEquals(
             'out.c-scaffoldId.tableName',
             $converted
         );
-        $converted = TableNameConverterHelper::convertOutputTableName($import, 'out.c-customName.tableName.csv');
+        // different stage
+        $converted = TableNameConverterHelper::convertStagedTableName($import, 'stage.c-bucketName.tableName', false);
         self::assertEquals(
-            'out.c-scaffoldId.tableName.csv',
+            'stage.c-scaffoldId.tableName',
             $converted
         );
     }
@@ -38,22 +45,12 @@ class TableNameConverterHelperTest extends TestCase
         return $import;
     }
 
-    public function testConvertOutputTableNameNotOutputTableName(): void
-    {
-        $import = $this->getOperationImport();
-        $converted = TableNameConverterHelper::convertOutputTableName($import, 'notOut.c-scaffoldId.tableName');
-        self::assertEquals(
-            'notOut.c-scaffoldId.tableName',
-            $converted
-        );
-    }
-
     public function testConvertTableNameForMetadata(): void
     {
         $import = $this->getOperationImport();
         $converted = TableNameConverterHelper::convertTableNameForMetadata($import, 'out.c-crm.company');
         self::assertEquals(
-            'scaffoldId.internal.out_c-crm_company',
+            'scaffoldId.internal.outScaffoldIdCompany',
             $converted
         );
     }
@@ -61,6 +58,12 @@ class TableNameConverterHelperTest extends TestCase
     public function testConvertToCamelCase(): void
     {
         $converted = TableNameConverterHelper::convertToCamelCase('keboola.ex-snowflake sufix');
-        self::assertEquals('KeboolaExSnowflakeSufix', $converted);
+        self::assertEquals('keboolaExSnowflakeSufix', $converted);
+
+        // include underscore
+        $converted = TableNameConverterHelper::convertToCamelCase('keboola.ex-snowflake_sufix', false);
+        self::assertEquals('keboolaExSnowflake_sufix', $converted);
+        $converted = TableNameConverterHelper::convertToCamelCase('keboola.ex-snowflake_sufix', true);
+        self::assertEquals('keboolaExSnowflakeSufix', $converted);
     }
 }

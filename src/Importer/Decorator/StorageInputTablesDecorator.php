@@ -44,11 +44,20 @@ class StorageInputTablesDecorator implements DecoratorInterface
         $payload = $operationImport->getPayload();
         foreach ($payload['configuration']['storage']['input']['tables'] as &$table) {
             if (!empty($table['source']) && empty($table['source_search'])) {
+                $convertedDestination = TableNameConverterHelper::convertStagedTableName(
+                    $operationImport,
+                    $table['source']
+                );
+                $convertedDestination =
+                    TableNameConverterHelper::convertTableNameForMetadata(
+                        $operationImport,
+                        $convertedDestination
+                    );
+
                 $table['source_search'] = [
                     // value is annotated with "USER_ACTION_KEY_PREFIX" to notify user that this needs to be checked
                     'key' => OrchestrationImporter::SCAFFOLD_TABLE_TAG,
-                    self::USER_ACTION_KEY_PREFIX . '.value' =>
-                        TableNameConverterHelper::convertTableNameForMetadata($operationImport, $table['source']),
+                    self::USER_ACTION_KEY_PREFIX . '.value' => $convertedDestination,
                 ];
 
                 // remove source, leave original source with prefix to user for check

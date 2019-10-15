@@ -99,7 +99,8 @@ class ExSalesforceConfigurationRowsDecoratorTest extends ImporterBaseTestCase
                                                     'metadata' => [
                                                         [
                                                             'key' => 'bdm.scaffold.table.tag',
-                                                            'value' => 'scaffoldId.internal.sampleTableName',
+                                                            'value' =>
+                                                                'scaffoldId.internal.inScaffoldIdSampleTableName',
                                                         ],
                                                     ],
                                                 ],

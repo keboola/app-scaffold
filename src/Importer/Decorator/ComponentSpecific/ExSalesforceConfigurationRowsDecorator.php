@@ -88,26 +88,27 @@ class ExSalesforceConfigurationRowsDecorator implements DecoratorInterface
             return $row;
         }
 
-        $possibleTablesNames = [];
+        $tableNames = [];
         // extract table names
-        foreach ($row['configuration']['parameters']['objects'] as &$object) {
+        foreach ($row['configuration']['parameters']['objects'] as $object) {
             if (empty($object['name'])) {
                 continue;
             }
-            $possibleTablesNames[] = $object['name'];
+            $tableNames[] = $object['name'];
         }
 
-        if (0 === count($possibleTablesNames)) {
+        if (0 === count($tableNames)) {
             // no tables
             return $row;
         }
 
         // add tables to metadata processor
         $processors = self::AFTER_PROCESSORS_TEMPLATE;
-        foreach ($possibleTablesNames as $tableName) {
-            $metadataValue = TableNameConverterHelper::convertTableNameForMetadata($operationImport, $tableName);
+        foreach ($tableNames as $tableName) {
+            $realTableName = sprintf('in.c-BUCKET.%s', $tableName);
+            $metadataValue = TableNameConverterHelper::convertTableNameForMetadata($operationImport, $realTableName);
             $processors[1]['parameters']['tables'][] = [
-                'table' => $tableName,
+                'table' => sprintf('%s.csv', $tableName),
                 'metadata' =>
                     [
                         [
