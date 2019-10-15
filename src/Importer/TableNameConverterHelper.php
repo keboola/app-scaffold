@@ -14,7 +14,7 @@ final class TableNameConverterHelper
             return $destinationTableName;
         }
 
-        $pattern = '/out\.c-(.*)\.(.*)/';
+        $pattern = '/out\.c-([^\.]+)\.(.*)/';
         $replacement = sprintf('out.c-%s.$2', $operationImport->getScaffoldId());
 
         return preg_replace($pattern, $replacement, $destinationTableName);

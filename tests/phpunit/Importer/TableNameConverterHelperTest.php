@@ -19,6 +19,11 @@ class TableNameConverterHelperTest extends TestCase
             'out.c-scaffoldId.tableName',
             $converted
         );
+        $converted = TableNameConverterHelper::convertDestinationTableName($import, 'out.c-customName.tableName.csv');
+        self::assertEquals(
+            'out.c-scaffoldId.tableName.csv',
+            $converted
+        );
     }
 
     private function getOperationImport(): OperationImport
