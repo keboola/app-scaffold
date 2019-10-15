@@ -95,7 +95,7 @@ class ExSalesforceConfigurationRowsDecoratorTest extends ImporterBaseTestCase
                                         'tables' =>
                                             [
                                                 [
-                                                    'table' => 'sampleTableName',
+                                                    'table' => 'sampleTableName.csv',
                                                     'metadata' => [
                                                         [
                                                             'key' => 'bdm.scaffold.table.tag',
