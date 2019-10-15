@@ -48,7 +48,7 @@ Each task from orchestration is processed by decorators.
 
 #### TransformationConfigurationRowsDecorator
 
-Each configuration row IM is decorated with `source_search` and OM with `metadata` array.
+Each configuration row imput mapping is decorated with `source_search` and output mapping with `metadata` array.
 Changes are prefixed with `__SCAFFOLD_CHECK__`, if any check remain can be tested with `ValidateScaffoldsTest`.
 Original values are preserved with `__SCAFFOLD_CHECK__` prefix.
 
@@ -65,12 +65,13 @@ Decorators can be specific for one or more components.
 Naming must contain Component name, if decorator supports more than one component name should describe function.
 
 **Component specific decorators:**
-- ExSalesforceConfigurationRowsDecorator: appends after processors. Configuration rows has `configuration.parameters.objects[].name` path.
+
+- **ExSalesforceConfigurationRowsDecorator**: appends after [processors](https://developers.keboola.com/extend/component/processors/). Configuration rows has `configuration.parameters.objects[].name` path.
 
 ### Post import steps
 
-- All valus with `__SCAFFOLD_CHECK__` must be configured by user and appropriete changes has to be made to make scaffold work.
-- `CreateConfiguration` operation are not decorated automatically so processors or IM/OM has to be created/edited manually.
+- All valus with `__SCAFFOLD_CHECK__` must be configured by scaffold author and appropriete changes has to be made to make scaffold work.
+- `CreateConfiguration` operation are not decorated automatically so processors or input/output mapping has to be created/edited manually.
 - If any parameters are going to be passed from runner `manifest.json` file `inputs` must be configured and can be validated by ScaffoldDefinition.php
 - Don't forget to test scaffold in sample project if all mappings works, this is not possible to validate.
 
