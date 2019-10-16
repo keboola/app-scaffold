@@ -5,14 +5,6 @@
         "configuration": {
             "parameters": {
                 "db": {
-                    "host": "keboola.snowflakecomputing.com",
-                    "database": "SAPI_6458",
-                    "password": "",
-                    "user": "SAPI_WORKSPACE_522558454",
-                    "schema": "WORKSPACE_522558454",
-                    "warehouse": "KEBOOLA_PROD",
-                    "port": "443",
-                    "driver": "snowflake"
                 },
                 "tables": [
                     {
@@ -773,9 +765,8 @@
                             ],
                             "source_search": {
                                 "key": "bdm.scaffold.table.tag",
-                                "__SCAFFOLD_CHECK__.value": "CRMMMR_Salesforce.internal.outCrmCompany"
-                            },
-                            "__SCAFFOLD_CHECK__.original_source": "out.c-crm.company"
+                                "value": "CRMMMR_Salesforce.internal.outCrmCompany"
+                            }
                         },
                         {
                             "destination": "out.c-crm.contract.csv",
@@ -791,9 +782,8 @@
                             ],
                             "source_search": {
                                 "key": "bdm.scaffold.table.tag",
-                                "__SCAFFOLD_CHECK__.value": "CRMMMR_Salesforce.internal.outCrmContract"
-                            },
-                            "__SCAFFOLD_CHECK__.original_source": "out.c-crm.contract"
+                                "value": "CRMMMR_Salesforce.internal.outCrmContract"
+                            }
                         },
                         {
                             "destination": "out.c-crm.contract_line.csv",
@@ -810,9 +800,8 @@
                             ],
                             "source_search": {
                                 "key": "bdm.scaffold.table.tag",
-                                "__SCAFFOLD_CHECK__.value": "CRMMMR_Salesforce.internal.outCrmContractLine"
-                            },
-                            "__SCAFFOLD_CHECK__.original_source": "out.c-crm.contract_line"
+                                "value": "CRMMMR_Salesforce.internal.outCrmContractLine"
+                            }
                         },
                         {
                             "destination": "out.c-crm.employee.csv",
@@ -824,9 +813,8 @@
                             ],
                             "source_search": {
                                 "key": "bdm.scaffold.table.tag",
-                                "__SCAFFOLD_CHECK__.value": "CRMMMR_Salesforce.internal.outCrmEmployee"
-                            },
-                            "__SCAFFOLD_CHECK__.original_source": "out.c-crm.employee"
+                                "value": "CRMMMR_Salesforce.internal.outCrmEmployee"
+                            }
                         },
                         {
                             "destination": "out.c-crm.opportunity.csv",
@@ -845,9 +833,8 @@
                             ],
                             "source_search": {
                                 "key": "bdm.scaffold.table.tag",
-                                "__SCAFFOLD_CHECK__.value": "CRMMMR_Salesforce.internal.outCrmOpportunity"
-                            },
-                            "__SCAFFOLD_CHECK__.original_source": "out.c-crm.opportunity"
+                                "value": "CRMMMR_Salesforce.internal.outCrmOpportunity"
+                            }
                         },
                         {
                             "destination": "out.c-crm.opportunity_snapshot.csv",
@@ -863,9 +850,8 @@
                             ],
                             "source_search": {
                                 "key": "bdm.scaffold.table.tag",
-                                "__SCAFFOLD_CHECK__.value": "CRMMMR_Salesforce.internal.outCrmOpportunitySnapshot"
-                            },
-                            "__SCAFFOLD_CHECK__.original_source": "out.c-crm.opportunity_snapshot"
+                                "value": "CRMMMR_Salesforce.internal.outCrmOpportunitySnapshot"
+                            }
                         },
                         {
                             "destination": "out.c-crm.product.csv",
@@ -876,9 +862,8 @@
                             ],
                             "source_search": {
                                 "key": "bdm.scaffold.table.tag",
-                                "__SCAFFOLD_CHECK__.value": "CRMMMR_Salesforce.internal.outCrmProduct"
-                            },
-                            "__SCAFFOLD_CHECK__.original_source": "out.c-crm.product"
+                                "value": "CRMMMR_Salesforce.internal.outCrmProduct"
+                            }
                         },
                         {
                             "destination": "out.c-mrr.mrr.csv",
@@ -895,9 +880,8 @@
                             ],
                             "source_search": {
                                 "key": "bdm.scaffold.table.tag",
-                                "__SCAFFOLD_CHECK__.value": "CRMMMR_Salesforce.internal.outMrrMrr"
-                            },
-                            "__SCAFFOLD_CHECK__.original_source": "out.c-mrr.mrr"
+                                "value": "CRMMMR_Salesforce.internal.outMrrMrr"
+                            }
                         },
                         {
                             "destination": "out.c-mrr.mrr_aggregated.csv",
@@ -914,9 +898,8 @@
                             ],
                             "source_search": {
                                 "key": "bdm.scaffold.table.tag",
-                                "__SCAFFOLD_CHECK__.value": "CRMMMR_Salesforce.internal.outMrrMrrAggregated"
-                            },
-                            "__SCAFFOLD_CHECK__.original_source": "out.c-mrr.mrr_aggregated"
+                                "value": "CRMMMR_Salesforce.internal.outMrrMrrAggregated"
+                            }
                         },
                         {
                             "destination": "out.c-crm.contact.csv",
@@ -933,9 +916,8 @@
                             ],
                             "source_search": {
                                 "key": "bdm.scaffold.table.tag",
-                                "__SCAFFOLD_CHECK__.value": "CRMMMR_Salesforce.internal.outCrmContact"
-                            },
-                            "__SCAFFOLD_CHECK__.original_source": "out.c-crm.contact"
+                                "value": "CRMMMR_Salesforce.internal.outCrmContact"
+                            }
                         },
                         {
                             "destination": "out.c-crm.opportunity_contact.csv",
@@ -948,9 +930,8 @@
                             ],
                             "source_search": {
                                 "key": "bdm.scaffold.table.tag",
-                                "__SCAFFOLD_CHECK__.value": "CRMMMR_Salesforce.internal.outCrmOpportunityContact"
-                            },
-                            "__SCAFFOLD_CHECK__.original_source": "out.c-crm.opportunity_contact"
+                                "value": "CRMMMR_Salesforce.internal.outCrmOpportunityContact"
+                            }
                         }
                     ]
                 }

@@ -11,7 +11,7 @@
                 ]
             },
             "processors": {
-                "__SCAFFOLD_CHECK__.after": [
+                "after": [
                     {
                         "definition": {
                             "component": "keboola.processor-create-manifest"
@@ -35,7 +35,7 @@
                                     "metadata": [
                                         {
                                             "key": "bdm.scaffold.table.tag",
-                                            "__SCAFFOLD_CHECK__value": "CRMMMR_Salesforce.internal.inHtnsExSalesforce######Account"
+                                            "value": "CRMMMR_Salesforce.internal.inHtnsExSalesforce01Account"
                                         }
                                     ]
                                 }
@@ -60,7 +60,7 @@
                 ]
             },
             "processors": {
-                "__SCAFFOLD_CHECK__.after": [
+                "after": [
                     {
                         "definition": {
                             "component": "keboola.processor-create-manifest"
@@ -84,7 +84,7 @@
                                     "metadata": [
                                         {
                                             "key": "bdm.scaffold.table.tag",
-                                            "__SCAFFOLD_CHECK__value": "CRMMMR_Salesforce.internal.inHtnsExSalesforce######Opportunity"
+                                            "value": "CRMMMR_Salesforce.internal.inHtnsExSalesforce01Opportunity"
                                         }
                                     ]
                                 }
@@ -109,7 +109,7 @@
                 ]
             },
             "processors": {
-                "__SCAFFOLD_CHECK__.after": [
+                "after": [
                     {
                         "definition": {
                             "component": "keboola.processor-create-manifest"
@@ -133,7 +133,7 @@
                                     "metadata": [
                                         {
                                             "key": "bdm.scaffold.table.tag",
-                                            "__SCAFFOLD_CHECK__value": "CRMMMR_Salesforce.internal.inHtnsExSalesforce######Order"
+                                            "value": "CRMMMR_Salesforce.internal.inHtnsExSalesforce01Order"
                                         }
                                     ]
                                 }
@@ -158,7 +158,7 @@
                 ]
             },
             "processors": {
-                "__SCAFFOLD_CHECK__.after": [
+                "after": [
                     {
                         "definition": {
                             "component": "keboola.processor-create-manifest"
@@ -182,7 +182,7 @@
                                     "metadata": [
                                         {
                                             "key": "bdm.scaffold.table.tag",
-                                            "__SCAFFOLD_CHECK__value": "CRMMMR_Salesforce.internal.inHtnsExSalesforce######Orderitem"
+                                            "value": "CRMMMR_Salesforce.internal.inHtnsExSalesforce01Orderitem"
                                         }
                                     ]
                                 }
@@ -207,7 +207,7 @@
                 ]
             },
             "processors": {
-                "__SCAFFOLD_CHECK__.after": [
+                "after": [
                     {
                         "definition": {
                             "component": "keboola.processor-create-manifest"
@@ -231,7 +231,7 @@
                                     "metadata": [
                                         {
                                             "key": "bdm.scaffold.table.tag",
-                                            "__SCAFFOLD_CHECK__value": "CRMMMR_Salesforce.internal.inHtnsExSalesforce######Product2"
+                                            "value": "CRMMMR_Salesforce.internal.inHtnsExSalesforce01Product2"
                                         }
                                     ]
                                 }
@@ -256,7 +256,7 @@
                 ]
             },
             "processors": {
-                "__SCAFFOLD_CHECK__.after": [
+                "after": [
                     {
                         "definition": {
                             "component": "keboola.processor-create-manifest"
@@ -280,7 +280,7 @@
                                     "metadata": [
                                         {
                                             "key": "bdm.scaffold.table.tag",
-                                            "__SCAFFOLD_CHECK__value": "CRMMMR_Salesforce.internal.inHtnsExSalesforce######User"
+                                            "value": "CRMMMR_Salesforce.internal.inHtnsExSalesforce01User"
                                         }
                                     ]
                                 }
@@ -305,7 +305,7 @@
                 ]
             },
             "processors": {
-                "__SCAFFOLD_CHECK__.after": [
+                "after": [
                     {
                         "definition": {
                             "component": "keboola.processor-create-manifest"
@@ -329,7 +329,7 @@
                                     "metadata": [
                                         {
                                             "key": "bdm.scaffold.table.tag",
-                                            "__SCAFFOLD_CHECK__value": "CRMMMR_Salesforce.internal.inHtnsExSalesforce######Lead"
+                                            "value": "CRMMMR_Salesforce.internal.inHtnsExSalesforce01Lead"
                                         }
                                     ]
                                 }
@@ -354,7 +354,7 @@
                 ]
             },
             "processors": {
-                "__SCAFFOLD_CHECK__.after": [
+                "after": [
                     {
                         "definition": {
                             "component": "keboola.processor-create-manifest"
@@ -378,7 +378,7 @@
                                     "metadata": [
                                         {
                                             "key": "bdm.scaffold.table.tag",
-                                            "__SCAFFOLD_CHECK__value": "CRMMMR_Salesforce.internal.inHtnsExSalesforce######Contact"
+                                            "value": "CRMMMR_Salesforce.internal.inHtnsExSalesforce01Contact"
                                         }
                                     ]
                                 }
@@ -403,7 +403,7 @@
                 ]
             },
             "processors": {
-                "__SCAFFOLD_CHECK__.after": [
+                "after": [
                     {
                         "definition": {
                             "component": "keboola.processor-create-manifest"
@@ -427,7 +427,7 @@
                                     "metadata": [
                                         {
                                             "key": "bdm.scaffold.table.tag",
-                                            "__SCAFFOLD_CHECK__value": "CRMMMR_Salesforce.internal.inHtnsExSalesforce######Opportunitycontactrole"
+                                            "value": "CRMMMR_Salesforce.internal.inHtnsExSalesforce01Opportunitycontactrole"
                                         }
                                     ]
                                 }

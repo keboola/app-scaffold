@@ -17,8 +17,7 @@
                             "value": "CRMMMR_Salesforce.internal.outCrmCompany"
                         }
                     ],
-                    "destination": "out.c-cRMMMRSalesforce.crmCompany",
-                    "__SCAFFOLD_CHECK__original_destination": "out.c-crm.company"
+                    "destination": "out.c-cRMMMRSalesforce.crmCompany"
                 }
             ],
             "queries": [
@@ -34,12 +33,7 @@
                     "whereOperator": "eq",
                     "columns": [],
                     "loadType": "clone",
-                    "source_search": {
-                        "key": "bdm.scaffold.table.tag",
-                        "__SCAFFOLD_CHECK__.value": "CRMMMR_Salesforce.internal.inSalesforceAccount"
-                    },
-                    "__SCAFFOLD_CHECK__.source": "in.c-cRMMMRSalesforce.salesforceAccount",
-                    "__SCAFFOLD_CHECK__.original_source": "in.c-salesforce.account"
+                    "source": "in.c-cRMMMRSalesforce.salesforceAccount"
                 }
             ],
             "name": "Company",
@@ -69,8 +63,7 @@
                             "value": "CRMMMR_Salesforce.internal.outCrmProduct"
                         }
                     ],
-                    "destination": "out.c-cRMMMRSalesforce.crmProduct",
-                    "__SCAFFOLD_CHECK__original_destination": "out.c-crm.product"
+                    "destination": "out.c-cRMMMRSalesforce.crmProduct"
                 }
             ],
             "queries": [
@@ -85,12 +78,7 @@
                     "whereOperator": "eq",
                     "columns": [],
                     "loadType": "clone",
-                    "source_search": {
-                        "key": "bdm.scaffold.table.tag",
-                        "__SCAFFOLD_CHECK__.value": "CRMMMR_Salesforce.internal.inSalesforceProduct2"
-                    },
-                    "__SCAFFOLD_CHECK__.source": "in.c-cRMMMRSalesforce.salesforceProduct2",
-                    "__SCAFFOLD_CHECK__.original_source": "in.c-salesforce.product2"
+                    "source": "in.c-cRMMMRSalesforce.salesforceProduct2"
                 }
             ],
             "name": "Product",
@@ -120,8 +108,7 @@
                             "value": "CRMMMR_Salesforce.internal.outCrmOpportunity"
                         }
                     ],
-                    "destination": "out.c-cRMMMRSalesforce.crmOpportunity",
-                    "__SCAFFOLD_CHECK__original_destination": "out.c-crm.opportunity"
+                    "destination": "out.c-cRMMMRSalesforce.crmOpportunity"
                 },
                 {
                     "source": "out_contract",
@@ -134,8 +121,7 @@
                             "value": "CRMMMR_Salesforce.internal.outCrmContract"
                         }
                     ],
-                    "destination": "out.c-cRMMMRSalesforce.crmContract",
-                    "__SCAFFOLD_CHECK__original_destination": "out.c-crm.contract"
+                    "destination": "out.c-cRMMMRSalesforce.crmContract"
                 },
                 {
                     "source": "out_contract_line",
@@ -148,8 +134,7 @@
                             "value": "CRMMMR_Salesforce.internal.outCrmContractLine"
                         }
                     ],
-                    "destination": "out.c-cRMMMRSalesforce.crmContractLine",
-                    "__SCAFFOLD_CHECK__original_destination": "out.c-crm.contract_line"
+                    "destination": "out.c-cRMMMRSalesforce.crmContractLine"
                 },
                 {
                     "source": "out_opportunity_snapshot",
@@ -167,8 +152,7 @@
                             "value": "CRMMMR_Salesforce.internal.outCrmAuxiliaryTablesOpportunitySnapshot"
                         }
                     ],
-                    "destination": "out.c-cRMMMRSalesforce.crmAuxiliaryTablesOpportunitySnapshot",
-                    "__SCAFFOLD_CHECK__original_destination": "out.c-crm-auxiliary-tables.opportunity_snapshot"
+                    "destination": "out.c-cRMMMRSalesforce.crmAuxiliaryTablesOpportunitySnapshot"
                 }
             ],
             "queries": [
@@ -188,12 +172,7 @@
                     "whereOperator": "eq",
                     "columns": [],
                     "loadType": "clone",
-                    "source_search": {
-                        "key": "bdm.scaffold.table.tag",
-                        "__SCAFFOLD_CHECK__.value": "CRMMMR_Salesforce.internal.inSalesforceOrder"
-                    },
-                    "__SCAFFOLD_CHECK__.source": "in.c-cRMMMRSalesforce.salesforceOrder",
-                    "__SCAFFOLD_CHECK__.original_source": "in.c-salesforce.order"
+                    "source": "in.c-cRMMMRSalesforce.salesforceOrder"
                 },
                 {
                     "destination": "order_item",
@@ -203,12 +182,7 @@
                     "whereOperator": "eq",
                     "columns": [],
                     "loadType": "clone",
-                    "source_search": {
-                        "key": "bdm.scaffold.table.tag",
-                        "__SCAFFOLD_CHECK__.value": "CRMMMR_Salesforce.internal.inSalesforceOrderitem"
-                    },
-                    "__SCAFFOLD_CHECK__.source": "in.c-cRMMMRSalesforce.salesforceOrderitem",
-                    "__SCAFFOLD_CHECK__.original_source": "in.c-salesforce.orderitem"
+                    "source": "in.c-cRMMMRSalesforce.salesforceOrderitem"
                 },
                 {
                     "destination": "product",
@@ -218,12 +192,7 @@
                     "whereOperator": "eq",
                     "columns": [],
                     "loadType": "clone",
-                    "source_search": {
-                        "key": "bdm.scaffold.table.tag",
-                        "__SCAFFOLD_CHECK__.value": "CRMMMR_Salesforce.internal.outCrmProduct"
-                    },
-                    "__SCAFFOLD_CHECK__.source": "out.c-cRMMMRSalesforce.crmProduct",
-                    "__SCAFFOLD_CHECK__.original_source": "out.c-crm.product"
+                    "source": "out.c-cRMMMRSalesforce.crmProduct"
                 },
                 {
                     "destination": "opportunity",
@@ -233,12 +202,7 @@
                     "whereOperator": "eq",
                     "columns": [],
                     "loadType": "clone",
-                    "source_search": {
-                        "key": "bdm.scaffold.table.tag",
-                        "__SCAFFOLD_CHECK__.value": "CRMMMR_Salesforce.internal.inSalesforceOpportunity"
-                    },
-                    "__SCAFFOLD_CHECK__.source": "in.c-cRMMMRSalesforce.salesforceOpportunity",
-                    "__SCAFFOLD_CHECK__.original_source": "in.c-salesforce.opportunity"
+                    "source": "in.c-cRMMMRSalesforce.salesforceOpportunity"
                 },
                 {
                     "destination": "company",
@@ -248,12 +212,7 @@
                     "whereOperator": "eq",
                     "columns": [],
                     "loadType": "clone",
-                    "source_search": {
-                        "key": "bdm.scaffold.table.tag",
-                        "__SCAFFOLD_CHECK__.value": "CRMMMR_Salesforce.internal.outCrmCompany"
-                    },
-                    "__SCAFFOLD_CHECK__.source": "out.c-cRMMMRSalesforce.crmCompany",
-                    "__SCAFFOLD_CHECK__.original_source": "out.c-crm.company"
+                    "source": "out.c-cRMMMRSalesforce.crmCompany"
                 },
                 {
                     "destination": "employee",
@@ -263,12 +222,7 @@
                     "whereOperator": "eq",
                     "columns": [],
                     "loadType": "clone",
-                    "source_search": {
-                        "key": "bdm.scaffold.table.tag",
-                        "__SCAFFOLD_CHECK__.value": "CRMMMR_Salesforce.internal.outCrmEmployee"
-                    },
-                    "__SCAFFOLD_CHECK__.source": "out.c-cRMMMRSalesforce.crmEmployee",
-                    "__SCAFFOLD_CHECK__.original_source": "out.c-crm.employee"
+                    "source": "out.c-cRMMMRSalesforce.crmEmployee"
                 }
             ],
             "name": "Contracts, Opportunities & Auxiliary Snapshot",
@@ -303,8 +257,7 @@
                             "value": "CRMMMR_Salesforce.internal.outCrmOpportunitySnapshot"
                         }
                     ],
-                    "destination": "out.c-cRMMMRSalesforce.crmOpportunitySnapshot",
-                    "__SCAFFOLD_CHECK__original_destination": "out.c-crm.opportunity_snapshot"
+                    "destination": "out.c-cRMMMRSalesforce.crmOpportunitySnapshot"
                 }
             ],
             "queries": [
@@ -320,12 +273,7 @@
                     "whereOperator": "eq",
                     "columns": [],
                     "loadType": "clone",
-                    "source_search": {
-                        "key": "bdm.scaffold.table.tag",
-                        "__SCAFFOLD_CHECK__.value": "CRMMMR_Salesforce.internal.outCrmAuxiliaryTablesOpportunitySnapshot"
-                    },
-                    "__SCAFFOLD_CHECK__.source": "out.c-cRMMMRSalesforce.crmAuxiliaryTablesOpportunitySnapshot",
-                    "__SCAFFOLD_CHECK__.original_source": "out.c-crm-auxiliary-tables.opportunity_snapshot"
+                    "source": "out.c-cRMMMRSalesforce.crmAuxiliaryTablesOpportunitySnapshot"
                 }
             ],
             "name": "Opportunity Snapshot",
@@ -355,8 +303,7 @@
                             "value": "CRMMMR_Salesforce.internal.outCrmEmployee"
                         }
                     ],
-                    "destination": "out.c-cRMMMRSalesforce.crmEmployee",
-                    "__SCAFFOLD_CHECK__original_destination": "out.c-crm.employee"
+                    "destination": "out.c-cRMMMRSalesforce.crmEmployee"
                 }
             ],
             "queries": [
@@ -372,12 +319,7 @@
                     "whereOperator": "eq",
                     "columns": [],
                     "loadType": "clone",
-                    "source_search": {
-                        "key": "bdm.scaffold.table.tag",
-                        "__SCAFFOLD_CHECK__.value": "CRMMMR_Salesforce.internal.inSalesforceUser"
-                    },
-                    "__SCAFFOLD_CHECK__.source": "in.c-cRMMMRSalesforce.salesforceUser",
-                    "__SCAFFOLD_CHECK__.original_source": "in.c-salesforce.user"
+                    "source": "in.c-cRMMMRSalesforce.salesforceUser"
                 }
             ],
             "name": "Employee",
@@ -407,8 +349,7 @@
                             "value": "CRMMMR_Salesforce.internal.outMrrMrrAggregated"
                         }
                     ],
-                    "destination": "out.c-cRMMMRSalesforce.mrrMrrAggregated",
-                    "__SCAFFOLD_CHECK__original_destination": "out.c-mrr.mrr_aggregated"
+                    "destination": "out.c-cRMMMRSalesforce.mrrMrrAggregated"
                 }
             ],
             "queries": [
@@ -424,12 +365,7 @@
                     "whereOperator": "eq",
                     "columns": [],
                     "loadType": "clone",
-                    "source_search": {
-                        "key": "bdm.scaffold.table.tag",
-                        "__SCAFFOLD_CHECK__.value": "CRMMMR_Salesforce.internal.outMrrMrr"
-                    },
-                    "__SCAFFOLD_CHECK__.source": "out.c-cRMMMRSalesforce.mrrMrr",
-                    "__SCAFFOLD_CHECK__.original_source": "out.c-mrr.mrr"
+                    "source": "out.c-cRMMMRSalesforce.mrrMrr"
                 },
                 {
                     "destination": "contract_line",
@@ -439,12 +375,7 @@
                     "whereOperator": "eq",
                     "columns": [],
                     "loadType": "clone",
-                    "source_search": {
-                        "key": "bdm.scaffold.table.tag",
-                        "__SCAFFOLD_CHECK__.value": "CRMMMR_Salesforce.internal.outCrmContractLine"
-                    },
-                    "__SCAFFOLD_CHECK__.source": "out.c-cRMMMRSalesforce.crmContractLine",
-                    "__SCAFFOLD_CHECK__.original_source": "out.c-crm.contract_line"
+                    "source": "out.c-cRMMMRSalesforce.crmContractLine"
                 },
                 {
                     "destination": "contract",
@@ -454,12 +385,7 @@
                     "whereOperator": "eq",
                     "columns": [],
                     "loadType": "clone",
-                    "source_search": {
-                        "key": "bdm.scaffold.table.tag",
-                        "__SCAFFOLD_CHECK__.value": "CRMMMR_Salesforce.internal.outCrmContract"
-                    },
-                    "__SCAFFOLD_CHECK__.source": "out.c-cRMMMRSalesforce.crmContract",
-                    "__SCAFFOLD_CHECK__.original_source": "out.c-crm.contract"
+                    "source": "out.c-cRMMMRSalesforce.crmContract"
                 }
             ],
             "name": "MRR - Aggregation",
@@ -489,8 +415,7 @@
                             "value": "CRMMMR_Salesforce.internal.outCrmContact"
                         }
                     ],
-                    "destination": "out.c-cRMMMRSalesforce.crmContact",
-                    "__SCAFFOLD_CHECK__original_destination": "out.c-crm.contact"
+                    "destination": "out.c-cRMMMRSalesforce.crmContact"
                 }
             ],
             "queries": [
@@ -506,12 +431,7 @@
                     "whereOperator": "eq",
                     "columns": [],
                     "loadType": "clone",
-                    "source_search": {
-                        "key": "bdm.scaffold.table.tag",
-                        "__SCAFFOLD_CHECK__.value": "CRMMMR_Salesforce.internal.inSalesforceContact"
-                    },
-                    "__SCAFFOLD_CHECK__.source": "in.c-cRMMMRSalesforce.salesforceContact",
-                    "__SCAFFOLD_CHECK__.original_source": "in.c-salesforce.contact"
+                    "source": "in.c-cRMMMRSalesforce.salesforceContact"
                 },
                 {
                     "destination": "lead",
@@ -521,12 +441,7 @@
                     "whereOperator": "eq",
                     "columns": [],
                     "loadType": "clone",
-                    "source_search": {
-                        "key": "bdm.scaffold.table.tag",
-                        "__SCAFFOLD_CHECK__.value": "CRMMMR_Salesforce.internal.inSalesforceLead"
-                    },
-                    "__SCAFFOLD_CHECK__.source": "in.c-cRMMMRSalesforce.salesforceLead",
-                    "__SCAFFOLD_CHECK__.original_source": "in.c-salesforce.lead"
+                    "source": "in.c-cRMMMRSalesforce.salesforceLead"
                 },
                 {
                     "destination": "company",
@@ -536,12 +451,7 @@
                     "whereOperator": "eq",
                     "columns": [],
                     "loadType": "clone",
-                    "source_search": {
-                        "key": "bdm.scaffold.table.tag",
-                        "__SCAFFOLD_CHECK__.value": "CRMMMR_Salesforce.internal.outCrmCompany"
-                    },
-                    "__SCAFFOLD_CHECK__.source": "out.c-cRMMMRSalesforce.crmCompany",
-                    "__SCAFFOLD_CHECK__.original_source": "out.c-crm.company"
+                    "source": "out.c-cRMMMRSalesforce.crmCompany"
                 },
                 {
                     "destination": "employee",
@@ -551,12 +461,7 @@
                     "whereOperator": "eq",
                     "columns": [],
                     "loadType": "clone",
-                    "source_search": {
-                        "key": "bdm.scaffold.table.tag",
-                        "__SCAFFOLD_CHECK__.value": "CRMMMR_Salesforce.internal.outCrmEmployee"
-                    },
-                    "__SCAFFOLD_CHECK__.source": "out.c-cRMMMRSalesforce.crmEmployee",
-                    "__SCAFFOLD_CHECK__.original_source": "out.c-crm.employee"
+                    "source": "out.c-cRMMMRSalesforce.crmEmployee"
                 }
             ],
             "name": "Contact",
@@ -586,8 +491,7 @@
                             "value": "CRMMMR_Salesforce.internal.outCrmOpportunityContact"
                         }
                     ],
-                    "destination": "out.c-cRMMMRSalesforce.crmOpportunityContact",
-                    "__SCAFFOLD_CHECK__original_destination": "out.c-crm.opportunity_contact"
+                    "destination": "out.c-cRMMMRSalesforce.crmOpportunityContact"
                 }
             ],
             "queries": [
@@ -602,12 +506,7 @@
                     "whereOperator": "eq",
                     "columns": [],
                     "loadType": "clone",
-                    "source_search": {
-                        "key": "bdm.scaffold.table.tag",
-                        "__SCAFFOLD_CHECK__.value": "CRMMMR_Salesforce.internal.inSalesforceOpportunitycontactrole"
-                    },
-                    "__SCAFFOLD_CHECK__.source": "in.c-cRMMMRSalesforce.salesforceOpportunitycontactrole",
-                    "__SCAFFOLD_CHECK__.original_source": "in.c-salesforce.opportunitycontactrole"
+                    "source": "in.c-cRMMMRSalesforce.salesforceOpportunitycontactrole"
                 },
                 {
                     "destination": "contact",
@@ -617,12 +516,7 @@
                     "whereOperator": "eq",
                     "columns": [],
                     "loadType": "clone",
-                    "source_search": {
-                        "key": "bdm.scaffold.table.tag",
-                        "__SCAFFOLD_CHECK__.value": "CRMMMR_Salesforce.internal.outCrmContact"
-                    },
-                    "__SCAFFOLD_CHECK__.source": "out.c-cRMMMRSalesforce.crmContact",
-                    "__SCAFFOLD_CHECK__.original_source": "out.c-crm.contact"
+                    "source": "out.c-cRMMMRSalesforce.crmContact"
                 },
                 {
                     "destination": "opportunity",
@@ -632,12 +526,7 @@
                     "whereOperator": "eq",
                     "columns": [],
                     "loadType": "clone",
-                    "source_search": {
-                        "key": "bdm.scaffold.table.tag",
-                        "__SCAFFOLD_CHECK__.value": "CRMMMR_Salesforce.internal.outCrmOpportunity"
-                    },
-                    "__SCAFFOLD_CHECK__.source": "out.c-cRMMMRSalesforce.crmOpportunity",
-                    "__SCAFFOLD_CHECK__.original_source": "out.c-crm.opportunity"
+                    "source": "out.c-cRMMMRSalesforce.crmOpportunity"
                 }
             ],
             "name": "Opportunity Contact",
@@ -667,8 +556,7 @@
                             "value": "CRMMMR_Salesforce.internal.inSalesforceAccount"
                         }
                     ],
-                    "destination": "in.c-cRMMMRSalesforce.salesforceAccount",
-                    "__SCAFFOLD_CHECK__original_destination": "in.c-salesforce.account"
+                    "destination": "in.c-cRMMMRSalesforce.salesforceAccount"
                 },
                 {
                     "primaryKey": [
@@ -681,8 +569,7 @@
                             "value": "CRMMMR_Salesforce.internal.inSalesforceContact"
                         }
                     ],
-                    "destination": "in.c-cRMMMRSalesforce.salesforceContact",
-                    "__SCAFFOLD_CHECK__original_destination": "in.c-salesforce.contact"
+                    "destination": "in.c-cRMMMRSalesforce.salesforceContact"
                 },
                 {
                     "primaryKey": [
@@ -695,8 +582,7 @@
                             "value": "CRMMMR_Salesforce.internal.inSalesforceLead"
                         }
                     ],
-                    "destination": "in.c-cRMMMRSalesforce.salesforceLead",
-                    "__SCAFFOLD_CHECK__original_destination": "in.c-salesforce.lead"
+                    "destination": "in.c-cRMMMRSalesforce.salesforceLead"
                 },
                 {
                     "primaryKey": [
@@ -709,8 +595,7 @@
                             "value": "CRMMMR_Salesforce.internal.inSalesforceUser"
                         }
                     ],
-                    "destination": "in.c-cRMMMRSalesforce.salesforceUser",
-                    "__SCAFFOLD_CHECK__original_destination": "in.c-salesforce.user"
+                    "destination": "in.c-cRMMMRSalesforce.salesforceUser"
                 },
                 {
                     "primaryKey": [
@@ -723,8 +608,7 @@
                             "value": "CRMMMR_Salesforce.internal.inSalesforceOpportunity"
                         }
                     ],
-                    "destination": "in.c-cRMMMRSalesforce.salesforceOpportunity",
-                    "__SCAFFOLD_CHECK__original_destination": "in.c-salesforce.opportunity"
+                    "destination": "in.c-cRMMMRSalesforce.salesforceOpportunity"
                 },
                 {
                     "primaryKey": [
@@ -737,8 +621,7 @@
                             "value": "CRMMMR_Salesforce.internal.inSalesforceOpportunitycontactrole"
                         }
                     ],
-                    "destination": "in.c-cRMMMRSalesforce.salesforceOpportunitycontactrole",
-                    "__SCAFFOLD_CHECK__original_destination": "in.c-salesforce.opportunitycontactrole"
+                    "destination": "in.c-cRMMMRSalesforce.salesforceOpportunitycontactrole"
                 },
                 {
                     "primaryKey": [
@@ -751,8 +634,7 @@
                             "value": "CRMMMR_Salesforce.internal.inSalesforceOrder"
                         }
                     ],
-                    "destination": "in.c-cRMMMRSalesforce.salesforceOrder",
-                    "__SCAFFOLD_CHECK__original_destination": "in.c-salesforce.order"
+                    "destination": "in.c-cRMMMRSalesforce.salesforceOrder"
                 },
                 {
                     "primaryKey": [
@@ -765,8 +647,7 @@
                             "value": "CRMMMR_Salesforce.internal.inSalesforceOrderitem"
                         }
                     ],
-                    "destination": "in.c-cRMMMRSalesforce.salesforceOrderitem",
-                    "__SCAFFOLD_CHECK__original_destination": "in.c-salesforce.orderitem"
+                    "destination": "in.c-cRMMMRSalesforce.salesforceOrderitem"
                 },
                 {
                     "primaryKey": [
@@ -779,8 +660,7 @@
                             "value": "CRMMMR_Salesforce.internal.inSalesforceProduct2"
                         }
                     ],
-                    "destination": "in.c-cRMMMRSalesforce.salesforceProduct2",
-                    "__SCAFFOLD_CHECK__original_destination": "in.c-salesforce.product2"
+                    "destination": "in.c-cRMMMRSalesforce.salesforceProduct2"
                 }
             ],
             "queries": [
@@ -814,10 +694,8 @@
                     "loadType": "clone",
                     "source_search": {
                         "key": "bdm.scaffold.table.tag",
-                        "__SCAFFOLD_CHECK__.value": "CRMMMR_Salesforce.internal.inHtnsExSalesforce491845103Account"
-                    },
-                    "__SCAFFOLD_CHECK__.source": "in.c-cRMMMRSalesforce.htnsExSalesforce491845103Account",
-                    "__SCAFFOLD_CHECK__.original_source": "in.c-htns-ex-salesforce-491845103.account"
+                        "value": "CRMMMR_Salesforce.internal.inHtnsExSalesforce01Account"
+                    }
                 },
                 {
                     "destination": "contact",
@@ -829,10 +707,8 @@
                     "loadType": "clone",
                     "source_search": {
                         "key": "bdm.scaffold.table.tag",
-                        "__SCAFFOLD_CHECK__.value": "CRMMMR_Salesforce.internal.inHtnsExSalesforce491845103Contact"
-                    },
-                    "__SCAFFOLD_CHECK__.source": "in.c-cRMMMRSalesforce.htnsExSalesforce491845103Contact",
-                    "__SCAFFOLD_CHECK__.original_source": "in.c-htns-ex-salesforce-491845103.contact"
+                        "value": "CRMMMR_Salesforce.internal.inHtnsExSalesforce01Contact"
+                    }
                 },
                 {
                     "destination": "lead",
@@ -844,10 +720,8 @@
                     "loadType": "clone",
                     "source_search": {
                         "key": "bdm.scaffold.table.tag",
-                        "__SCAFFOLD_CHECK__.value": "CRMMMR_Salesforce.internal.inHtnsExSalesforce491845103Lead"
-                    },
-                    "__SCAFFOLD_CHECK__.source": "in.c-cRMMMRSalesforce.htnsExSalesforce491845103Lead",
-                    "__SCAFFOLD_CHECK__.original_source": "in.c-htns-ex-salesforce-491845103.lead"
+                        "value": "CRMMMR_Salesforce.internal.inHtnsExSalesforce01Lead"
+                    }
                 },
                 {
                     "destination": "opportunity",
@@ -859,10 +733,8 @@
                     "loadType": "clone",
                     "source_search": {
                         "key": "bdm.scaffold.table.tag",
-                        "__SCAFFOLD_CHECK__.value": "CRMMMR_Salesforce.internal.inHtnsExSalesforce491845103Opportunity"
-                    },
-                    "__SCAFFOLD_CHECK__.source": "in.c-cRMMMRSalesforce.htnsExSalesforce491845103Opportunity",
-                    "__SCAFFOLD_CHECK__.original_source": "in.c-htns-ex-salesforce-491845103.opportunity"
+                        "value": "CRMMMR_Salesforce.internal.inHtnsExSalesforce01Opportunity"
+                    }
                 },
                 {
                     "destination": "opportunitycontactrole",
@@ -874,10 +746,8 @@
                     "loadType": "clone",
                     "source_search": {
                         "key": "bdm.scaffold.table.tag",
-                        "__SCAFFOLD_CHECK__.value": "CRMMMR_Salesforce.internal.inHtnsExSalesforce491845103Opportunitycontactrole"
-                    },
-                    "__SCAFFOLD_CHECK__.source": "in.c-cRMMMRSalesforce.htnsExSalesforce491845103Opportunitycontactrole",
-                    "__SCAFFOLD_CHECK__.original_source": "in.c-htns-ex-salesforce-491845103.opportunitycontactrole"
+                        "value": "CRMMMR_Salesforce.internal.inHtnsExSalesforce01Opportunitycontactrole"
+                    }
                 },
                 {
                     "destination": "order",
@@ -889,10 +759,8 @@
                     "loadType": "clone",
                     "source_search": {
                         "key": "bdm.scaffold.table.tag",
-                        "__SCAFFOLD_CHECK__.value": "CRMMMR_Salesforce.internal.inHtnsExSalesforce491845103Order"
-                    },
-                    "__SCAFFOLD_CHECK__.source": "in.c-cRMMMRSalesforce.htnsExSalesforce491845103Order",
-                    "__SCAFFOLD_CHECK__.original_source": "in.c-htns-ex-salesforce-491845103.order"
+                        "value": "CRMMMR_Salesforce.internal.inHtnsExSalesforce01Order"
+                    }
                 },
                 {
                     "destination": "orderitem",
@@ -904,10 +772,8 @@
                     "loadType": "clone",
                     "source_search": {
                         "key": "bdm.scaffold.table.tag",
-                        "__SCAFFOLD_CHECK__.value": "CRMMMR_Salesforce.internal.inHtnsExSalesforce491845103Orderitem"
-                    },
-                    "__SCAFFOLD_CHECK__.source": "in.c-cRMMMRSalesforce.htnsExSalesforce491845103Orderitem",
-                    "__SCAFFOLD_CHECK__.original_source": "in.c-htns-ex-salesforce-491845103.orderitem"
+                        "value": "CRMMMR_Salesforce.internal.inHtnsExSalesforce01Orderitem"
+                    }
                 },
                 {
                     "destination": "product2",
@@ -919,10 +785,8 @@
                     "loadType": "clone",
                     "source_search": {
                         "key": "bdm.scaffold.table.tag",
-                        "__SCAFFOLD_CHECK__.value": "CRMMMR_Salesforce.internal.inHtnsExSalesforce491845103Product2"
-                    },
-                    "__SCAFFOLD_CHECK__.source": "in.c-cRMMMRSalesforce.htnsExSalesforce491845103Product2",
-                    "__SCAFFOLD_CHECK__.original_source": "in.c-htns-ex-salesforce-491845103.product2"
+                        "value": "CRMMMR_Salesforce.internal.inHtnsExSalesforce01Product2"
+                    }
                 },
                 {
                     "destination": "user",
@@ -934,10 +798,8 @@
                     "loadType": "clone",
                     "source_search": {
                         "key": "bdm.scaffold.table.tag",
-                        "__SCAFFOLD_CHECK__.value": "CRMMMR_Salesforce.internal.inHtnsExSalesforce491845103User"
-                    },
-                    "__SCAFFOLD_CHECK__.source": "in.c-cRMMMRSalesforce.htnsExSalesforce491845103User",
-                    "__SCAFFOLD_CHECK__.original_source": "in.c-htns-ex-salesforce-491845103.user"
+                        "value": "CRMMMR_Salesforce.internal.inHtnsExSalesforce01User"
+                    }
                 }
             ],
             "name": "Input Tables Creation",
@@ -967,8 +829,7 @@
                             "value": "CRMMMR_Salesforce.internal.outMrrMrr"
                         }
                     ],
-                    "destination": "out.c-cRMMMRSalesforce.mrrMrr",
-                    "__SCAFFOLD_CHECK__original_destination": "out.c-mrr.mrr"
+                    "destination": "out.c-cRMMMRSalesforce.mrrMrr"
                 }
             ],
             "queries": [
@@ -989,12 +850,7 @@
                     "whereOperator": "eq",
                     "columns": [],
                     "loadType": "clone",
-                    "source_search": {
-                        "key": "bdm.scaffold.table.tag",
-                        "__SCAFFOLD_CHECK__.value": "CRMMMR_Salesforce.internal.outCrmContract"
-                    },
-                    "__SCAFFOLD_CHECK__.source": "out.c-cRMMMRSalesforce.crmContract",
-                    "__SCAFFOLD_CHECK__.original_source": "out.c-crm.contract"
+                    "source": "out.c-cRMMMRSalesforce.crmContract"
                 },
                 {
                     "destination": "contract_line",
@@ -1004,12 +860,7 @@
                     "whereOperator": "eq",
                     "columns": [],
                     "loadType": "clone",
-                    "source_search": {
-                        "key": "bdm.scaffold.table.tag",
-                        "__SCAFFOLD_CHECK__.value": "CRMMMR_Salesforce.internal.outCrmContractLine"
-                    },
-                    "__SCAFFOLD_CHECK__.source": "out.c-cRMMMRSalesforce.crmContractLine",
-                    "__SCAFFOLD_CHECK__.original_source": "out.c-crm.contract_line"
+                    "source": "out.c-cRMMMRSalesforce.crmContractLine"
                 }
             ],
             "name": "MRR - Contract Line",
