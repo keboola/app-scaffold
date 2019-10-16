@@ -19,7 +19,7 @@
         },
         {
             "id": "snowflakeExtractor",
-            "componentId": "keboola.ex-snowflake",
+            "componentId": "keboola.ex-db-snowflake",
             "schema": {
                 "type": "object",
                 "required": [
