@@ -25,9 +25,8 @@ final class TableNameConverter
         }
         [, $stage, $bucketName, $tableName] = $tableParts;
 
-        return CamelCaseConverterHelper::convertToCamelCase(sprintf(
-            '%s.%s.%s-%s',
-            $stage,
+        return $stage.'.c-'.CamelCaseConverterHelper::convertToCamelCase(sprintf(
+            '%s.%s-%s',
             $operationImport->getScaffoldId(),
             $bucketName,
             $tableName
