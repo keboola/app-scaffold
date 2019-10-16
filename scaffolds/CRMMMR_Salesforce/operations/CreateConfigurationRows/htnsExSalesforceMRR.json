@@ -1,0 +1,443 @@
+[
+    {
+        "configuration": {
+            "parameters": {
+                "sinceLast": false,
+                "objects": [
+                    {
+                        "name": "account",
+                        "soql": ""
+                    }
+                ]
+            },
+            "processors": {
+                "after": [
+                    {
+                        "definition": {
+                            "component": "keboola.processor-create-manifest"
+                        },
+                        "parameters": {
+                            "delimiter": ",",
+                            "enclosure": "\"",
+                            "incremental": false,
+                            "primary_key": [],
+                            "columns_from": "header"
+                        }
+                    },
+                    {
+                        "definition": {
+                            "component": "keboola.processor-add-metadata"
+                        },
+                        "parameters": {
+                            "tables": [
+                                {
+                                    "table": "account.csv",
+                                    "metadata": [
+                                        {
+                                            "key": "bdm.scaffold.table.tag",
+                                            "value": "CRMMMR_Salesforce.internal.inHtnsExSalesforce01Account"
+                                        }
+                                    ]
+                                }
+                            ]
+                        }
+                    }
+                ]
+            }
+        },
+        "description": "",
+        "name": "Account"
+    },
+    {
+        "configuration": {
+            "parameters": {
+                "sinceLast": false,
+                "objects": [
+                    {
+                        "name": "opportunity",
+                        "soql": ""
+                    }
+                ]
+            },
+            "processors": {
+                "after": [
+                    {
+                        "definition": {
+                            "component": "keboola.processor-create-manifest"
+                        },
+                        "parameters": {
+                            "delimiter": ",",
+                            "enclosure": "\"",
+                            "incremental": false,
+                            "primary_key": [],
+                            "columns_from": "header"
+                        }
+                    },
+                    {
+                        "definition": {
+                            "component": "keboola.processor-add-metadata"
+                        },
+                        "parameters": {
+                            "tables": [
+                                {
+                                    "table": "opportunity.csv",
+                                    "metadata": [
+                                        {
+                                            "key": "bdm.scaffold.table.tag",
+                                            "value": "CRMMMR_Salesforce.internal.inHtnsExSalesforce01Opportunity"
+                                        }
+                                    ]
+                                }
+                            ]
+                        }
+                    }
+                ]
+            }
+        },
+        "description": "",
+        "name": "Opportunity"
+    },
+    {
+        "configuration": {
+            "parameters": {
+                "sinceLast": false,
+                "objects": [
+                    {
+                        "name": "order",
+                        "soql": ""
+                    }
+                ]
+            },
+            "processors": {
+                "after": [
+                    {
+                        "definition": {
+                            "component": "keboola.processor-create-manifest"
+                        },
+                        "parameters": {
+                            "delimiter": ",",
+                            "enclosure": "\"",
+                            "incremental": false,
+                            "primary_key": [],
+                            "columns_from": "header"
+                        }
+                    },
+                    {
+                        "definition": {
+                            "component": "keboola.processor-add-metadata"
+                        },
+                        "parameters": {
+                            "tables": [
+                                {
+                                    "table": "order.csv",
+                                    "metadata": [
+                                        {
+                                            "key": "bdm.scaffold.table.tag",
+                                            "value": "CRMMMR_Salesforce.internal.inHtnsExSalesforce01Order"
+                                        }
+                                    ]
+                                }
+                            ]
+                        }
+                    }
+                ]
+            }
+        },
+        "description": "",
+        "name": "Order"
+    },
+    {
+        "configuration": {
+            "parameters": {
+                "sinceLast": false,
+                "objects": [
+                    {
+                        "name": "orderitem",
+                        "soql": ""
+                    }
+                ]
+            },
+            "processors": {
+                "after": [
+                    {
+                        "definition": {
+                            "component": "keboola.processor-create-manifest"
+                        },
+                        "parameters": {
+                            "delimiter": ",",
+                            "enclosure": "\"",
+                            "incremental": false,
+                            "primary_key": [],
+                            "columns_from": "header"
+                        }
+                    },
+                    {
+                        "definition": {
+                            "component": "keboola.processor-add-metadata"
+                        },
+                        "parameters": {
+                            "tables": [
+                                {
+                                    "table": "orderitem.csv",
+                                    "metadata": [
+                                        {
+                                            "key": "bdm.scaffold.table.tag",
+                                            "value": "CRMMMR_Salesforce.internal.inHtnsExSalesforce01Orderitem"
+                                        }
+                                    ]
+                                }
+                            ]
+                        }
+                    }
+                ]
+            }
+        },
+        "description": "",
+        "name": "Order Item"
+    },
+    {
+        "configuration": {
+            "parameters": {
+                "sinceLast": false,
+                "objects": [
+                    {
+                        "name": "product2",
+                        "soql": ""
+                    }
+                ]
+            },
+            "processors": {
+                "after": [
+                    {
+                        "definition": {
+                            "component": "keboola.processor-create-manifest"
+                        },
+                        "parameters": {
+                            "delimiter": ",",
+                            "enclosure": "\"",
+                            "incremental": false,
+                            "primary_key": [],
+                            "columns_from": "header"
+                        }
+                    },
+                    {
+                        "definition": {
+                            "component": "keboola.processor-add-metadata"
+                        },
+                        "parameters": {
+                            "tables": [
+                                {
+                                    "table": "product2.csv",
+                                    "metadata": [
+                                        {
+                                            "key": "bdm.scaffold.table.tag",
+                                            "value": "CRMMMR_Salesforce.internal.inHtnsExSalesforce01Product2"
+                                        }
+                                    ]
+                                }
+                            ]
+                        }
+                    }
+                ]
+            }
+        },
+        "description": "",
+        "name": "Product"
+    },
+    {
+        "configuration": {
+            "parameters": {
+                "sinceLast": false,
+                "objects": [
+                    {
+                        "name": "user",
+                        "soql": ""
+                    }
+                ]
+            },
+            "processors": {
+                "after": [
+                    {
+                        "definition": {
+                            "component": "keboola.processor-create-manifest"
+                        },
+                        "parameters": {
+                            "delimiter": ",",
+                            "enclosure": "\"",
+                            "incremental": false,
+                            "primary_key": [],
+                            "columns_from": "header"
+                        }
+                    },
+                    {
+                        "definition": {
+                            "component": "keboola.processor-add-metadata"
+                        },
+                        "parameters": {
+                            "tables": [
+                                {
+                                    "table": "user.csv",
+                                    "metadata": [
+                                        {
+                                            "key": "bdm.scaffold.table.tag",
+                                            "value": "CRMMMR_Salesforce.internal.inHtnsExSalesforce01User"
+                                        }
+                                    ]
+                                }
+                            ]
+                        }
+                    }
+                ]
+            }
+        },
+        "description": "",
+        "name": "User"
+    },
+    {
+        "configuration": {
+            "parameters": {
+                "sinceLast": false,
+                "objects": [
+                    {
+                        "name": "lead",
+                        "soql": ""
+                    }
+                ]
+            },
+            "processors": {
+                "after": [
+                    {
+                        "definition": {
+                            "component": "keboola.processor-create-manifest"
+                        },
+                        "parameters": {
+                            "delimiter": ",",
+                            "enclosure": "\"",
+                            "incremental": false,
+                            "primary_key": [],
+                            "columns_from": "header"
+                        }
+                    },
+                    {
+                        "definition": {
+                            "component": "keboola.processor-add-metadata"
+                        },
+                        "parameters": {
+                            "tables": [
+                                {
+                                    "table": "lead.csv",
+                                    "metadata": [
+                                        {
+                                            "key": "bdm.scaffold.table.tag",
+                                            "value": "CRMMMR_Salesforce.internal.inHtnsExSalesforce01Lead"
+                                        }
+                                    ]
+                                }
+                            ]
+                        }
+                    }
+                ]
+            }
+        },
+        "description": "",
+        "name": "Lead"
+    },
+    {
+        "configuration": {
+            "parameters": {
+                "sinceLast": false,
+                "objects": [
+                    {
+                        "name": "contact",
+                        "soql": ""
+                    }
+                ]
+            },
+            "processors": {
+                "after": [
+                    {
+                        "definition": {
+                            "component": "keboola.processor-create-manifest"
+                        },
+                        "parameters": {
+                            "delimiter": ",",
+                            "enclosure": "\"",
+                            "incremental": false,
+                            "primary_key": [],
+                            "columns_from": "header"
+                        }
+                    },
+                    {
+                        "definition": {
+                            "component": "keboola.processor-add-metadata"
+                        },
+                        "parameters": {
+                            "tables": [
+                                {
+                                    "table": "contact.csv",
+                                    "metadata": [
+                                        {
+                                            "key": "bdm.scaffold.table.tag",
+                                            "value": "CRMMMR_Salesforce.internal.inHtnsExSalesforce01Contact"
+                                        }
+                                    ]
+                                }
+                            ]
+                        }
+                    }
+                ]
+            }
+        },
+        "description": "",
+        "name": "Contact"
+    },
+    {
+        "configuration": {
+            "parameters": {
+                "sinceLast": false,
+                "objects": [
+                    {
+                        "name": "opportunitycontactrole",
+                        "soql": ""
+                    }
+                ]
+            },
+            "processors": {
+                "after": [
+                    {
+                        "definition": {
+                            "component": "keboola.processor-create-manifest"
+                        },
+                        "parameters": {
+                            "delimiter": ",",
+                            "enclosure": "\"",
+                            "incremental": false,
+                            "primary_key": [],
+                            "columns_from": "header"
+                        }
+                    },
+                    {
+                        "definition": {
+                            "component": "keboola.processor-add-metadata"
+                        },
+                        "parameters": {
+                            "tables": [
+                                {
+                                    "table": "opportunitycontactrole.csv",
+                                    "metadata": [
+                                        {
+                                            "key": "bdm.scaffold.table.tag",
+                                            "value": "CRMMMR_Salesforce.internal.inHtnsExSalesforce01Opportunitycontactrole"
+                                        }
+                                    ]
+                                }
+                            ]
+                        }
+                    }
+                ]
+            }
+        },
+        "description": "",
+        "name": "Opportunity Contact Role"
+    }
+]

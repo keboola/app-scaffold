@@ -1,0 +1,10 @@
+{
+    "componentId": "htns.ex-salesforce",
+    "payload": {
+        "name": "MRR",
+        "configuration": {
+            "parameters": {
+            }
+        }
+    }
+}
