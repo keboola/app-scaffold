@@ -1,0 +1,14 @@
+{
+    "componentId": "htns.ex-salesforce",
+    "payload": {
+        "name": "MRR",
+        "configuration": {
+            "parameters": {
+                "loginname": "",
+                "#password": "__SCAFFOLD_CHECK__",
+                "#securitytoken": "__SCAFFOLD_CHECK__",
+                "sandbox": false
+            }
+        }
+    }
+}

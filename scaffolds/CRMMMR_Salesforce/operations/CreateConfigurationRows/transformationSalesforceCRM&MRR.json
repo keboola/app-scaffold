@@ -1,0 +1,1028 @@
+[
+    {
+        "configuration": {
+            "output": [
+                {
+                    "primaryKey": [
+                        "company_id"
+                    ],
+                    "incremental": true,
+                    "deleteWhereColumn": "",
+                    "deleteWhereOperator": "eq",
+                    "deleteWhereValues": [],
+                    "source": "out_company",
+                    "metadata": [
+                        {
+                            "key": "bdm.scaffold.table.tag",
+                            "value": "CRMMMR_Salesforce.internal.outCrmCompany"
+                        }
+                    ],
+                    "destination": "out.c-cRMMMRSalesforce.crmCompany",
+                    "__SCAFFOLD_CHECK__original_destination": "out.c-crm.company"
+                }
+            ],
+            "queries": [
+                "--create output table with companies\n--cast timestamp to date\nCREATE TABLE \"out_company\"\nAS\n  SELECT DISTINCT\n    \"Id\"                                  AS \"company_id\",\n    \"Name\"                                AS \"company\",\n    \"Website\"                             AS \"website\",\n    to_date(\"CreatedDate\") :: VARCHAR(10) AS \"date_created\"\n  FROM \"account\"\n  WHERE \"IsDeleted\" = 'false';",
+                "--fake row to keep referential integrity if child tables are missing existing company ids\nINSERT INTO \"out_company\"\n  (\"company_id\", \"company\", \"website\", \"date_created\")\nVALUES\n  ('0', 'Unknown', '', '');"
+            ],
+            "input": [
+                {
+                    "destination": "account",
+                    "datatypes": [],
+                    "whereColumn": "",
+                    "whereValues": [],
+                    "whereOperator": "eq",
+                    "columns": [],
+                    "loadType": "clone",
+                    "source_search": {
+                        "key": "bdm.scaffold.table.tag",
+                        "__SCAFFOLD_CHECK__.value": "CRMMMR_Salesforce.internal.inSalesforceAccount"
+                    },
+                    "__SCAFFOLD_CHECK__.source": "in.c-cRMMMRSalesforce.salesforceAccount",
+                    "__SCAFFOLD_CHECK__.original_source": "in.c-salesforce.account"
+                }
+            ],
+            "name": "Company",
+            "packages": [],
+            "requires": [],
+            "backend": "snowflake",
+            "type": "simple",
+            "id": "491848383",
+            "phase": "2",
+            "disabled": false,
+            "description": ""
+        },
+        "description": "",
+        "name": "Company"
+    },
+    {
+        "configuration": {
+            "output": [
+                {
+                    "source": "out_product",
+                    "primaryKey": [
+                        "product_id"
+                    ],
+                    "metadata": [
+                        {
+                            "key": "bdm.scaffold.table.tag",
+                            "value": "CRMMMR_Salesforce.internal.outCrmProduct"
+                        }
+                    ],
+                    "destination": "out.c-cRMMMRSalesforce.crmProduct",
+                    "__SCAFFOLD_CHECK__original_destination": "out.c-crm.product"
+                }
+            ],
+            "queries": [
+                "--create output table with products\nCREATE TABLE \"out_product\"\nAS\n  SELECT\n    \"Id\"     AS \"product_id\",\n    \"Name\"   AS \"product\",\n    \"Family\" AS \"product_family\"\n  FROM \"product\";"
+            ],
+            "input": [
+                {
+                    "destination": "product",
+                    "datatypes": [],
+                    "whereColumn": "",
+                    "whereValues": [],
+                    "whereOperator": "eq",
+                    "columns": [],
+                    "loadType": "clone",
+                    "source_search": {
+                        "key": "bdm.scaffold.table.tag",
+                        "__SCAFFOLD_CHECK__.value": "CRMMMR_Salesforce.internal.inSalesforceProduct2"
+                    },
+                    "__SCAFFOLD_CHECK__.source": "in.c-cRMMMRSalesforce.salesforceProduct2",
+                    "__SCAFFOLD_CHECK__.original_source": "in.c-salesforce.product2"
+                }
+            ],
+            "name": "Product",
+            "packages": [],
+            "requires": [],
+            "backend": "snowflake",
+            "type": "simple",
+            "id": "491848770",
+            "phase": "2",
+            "disabled": false,
+            "description": ""
+        },
+        "description": "",
+        "name": "Product"
+    },
+    {
+        "configuration": {
+            "output": [
+                {
+                    "source": "out_opportunity",
+                    "primaryKey": [
+                        "opportunity_id"
+                    ],
+                    "metadata": [
+                        {
+                            "key": "bdm.scaffold.table.tag",
+                            "value": "CRMMMR_Salesforce.internal.outCrmOpportunity"
+                        }
+                    ],
+                    "destination": "out.c-cRMMMRSalesforce.crmOpportunity",
+                    "__SCAFFOLD_CHECK__original_destination": "out.c-crm.opportunity"
+                },
+                {
+                    "source": "out_contract",
+                    "primaryKey": [
+                        "contract_id"
+                    ],
+                    "metadata": [
+                        {
+                            "key": "bdm.scaffold.table.tag",
+                            "value": "CRMMMR_Salesforce.internal.outCrmContract"
+                        }
+                    ],
+                    "destination": "out.c-cRMMMRSalesforce.crmContract",
+                    "__SCAFFOLD_CHECK__original_destination": "out.c-crm.contract"
+                },
+                {
+                    "source": "out_contract_line",
+                    "primaryKey": [
+                        "contract_line_id"
+                    ],
+                    "metadata": [
+                        {
+                            "key": "bdm.scaffold.table.tag",
+                            "value": "CRMMMR_Salesforce.internal.outCrmContractLine"
+                        }
+                    ],
+                    "destination": "out.c-cRMMMRSalesforce.crmContractLine",
+                    "__SCAFFOLD_CHECK__original_destination": "out.c-crm.contract_line"
+                },
+                {
+                    "source": "out_opportunity_snapshot",
+                    "primaryKey": [
+                        "opportunity_id",
+                        "snapshot_date"
+                    ],
+                    "incremental": true,
+                    "deleteWhereColumn": "",
+                    "deleteWhereOperator": "eq",
+                    "deleteWhereValues": [],
+                    "metadata": [
+                        {
+                            "key": "bdm.scaffold.table.tag",
+                            "value": "CRMMMR_Salesforce.internal.outCrmAuxiliaryTablesOpportunitySnapshot"
+                        }
+                    ],
+                    "destination": "out.c-cRMMMRSalesforce.crmAuxiliaryTablesOpportunitySnapshot",
+                    "__SCAFFOLD_CHECK__original_destination": "out.c-crm-auxiliary-tables.opportunity_snapshot"
+                }
+            ],
+            "queries": [
+                "--output opportunity table\n--change false\/true to No\/Yes as boolean value\nCREATE TABLE \"out_opportunity\"\nAS\n    SELECT\n        \"o\".\"Id\"                                    AS \"opportunity_id\",\n        \"c\".\"company_id\",\n        ifnull(\"e\".\"employee_id\", '0')\t\t  \t  \tAS \"employee_id\",\n        \"o\".\"Name\"                                  AS \"opportunity\",\n        left(\"o\".\"CreatedDate\", 10)                 AS \"created_date\",\n        \"o\".\"CloseDate\"                             AS \"close_date\",\n        \"o\".\"StageName\"                             AS \"stage\",\n        iff(\"o\".\"IsClosed\" = 'false', 'No', 'Yes')  AS \"is_closed\",\n        iff(\"o\".\"IsWon\" = 'false', 'No', 'Yes')     AS \"is_won\",\n        \"o\".\"LeadSource\"\t\t\t\t\t\t\tAS \"lead_source\",\n        iff(\"o\".\"Amount\" = '', '0.0', \"o\".\"Amount\") AS \"opportunity_value\"\n    FROM \"opportunity\" \"o\"\n             LEFT JOIN \"company\" \"c\"\n                       ON \"o\".\"AccountId\" = \"c\".\"company_id\"\n             LEFT JOIN \"employee\" \"e\"\n                       ON \"o\".\"OwnerId\" = \"e\".\"employee_id\"\n    WHERE \"o\".\"IsDeleted\" = 'false';",
+                "--create opportunity for contracts without opportunity\nINSERT INTO \"out_opportunity\"\n    (\"opportunity_id\", \"company_id\", \"employee_id\", \"opportunity\", \"created_date\", \"close_date\", \"stage\", \"is_closed\",\n     \"is_won\", \"lead_source\", \"opportunity_value\")\nSELECT\n    \"o\".\"AccountId\" || '-' || \"o\".\"Id\" || '_opp' AS \"opportunity_id\",\n    \"o\".\"AccountId\"                              AS \"company_id\",\n    ifnull(\"e\".\"employee_id\", '0')\t\t  \t  \t AS \"employee_id\",\n    \"o\".\"Name\"                                   AS \"opportunity\",\n    \"o\".\"EffectiveDate\"                          AS \"created_date\",\n    \"o\".\"EffectiveDate\"                          AS \"close_date\",\n    'Closed Won'                                 AS \"stage\",\n    'Yes'                                        AS \"is_closed\",\n    'Yes'                                        AS \"is_won\",\n    ''                                        \t AS \"lead_source\",\n    '0.0'                                        AS \"opportunity_value\"\nFROM \"order\" \"o\"\n         LEFT JOIN \"out_opportunity\" \"p\"\n                   ON \"o\".\"OpportunityId\" = \"p\".\"opportunity_id\"\n             LEFT JOIN \"employee\" \"e\"\n                       ON \"o\".\"OwnerId\" = \"e\".\"employee_id\"\nWHERE \"p\".\"opportunity_id\" IS NULL\n  AND \"o\".\"IsDeleted\" = 'false';",
+                "--contract table\nCREATE TABLE \"out_contract\"\nAS\n    SELECT\n        \"o\".\"Id\"            \t\t\tAS \"contract_id\",\n        \"o\".\"AccountId\"     \t\t\tAS \"company_id\",\n        ifnull(\"e\".\"employee_id\", '0')\tAS \"employee_id\",\n        \"o\".\"Name\"          \t\t\tAS \"contract\",\n        \"o\".\"OrderNumber\"   \t\t\tAS \"contract_number\",\n        \"o\".\"EffectiveDate\" \t\t\tAS \"contract_start_date\",\n        \"o\".\"EndDate\"       \t\t\tAS \"contract_end_date\",\n        \"p\".\"lead_source\"\t\t\t\tAS \"lead_source\",\n        \"o\".\"Status\"\t\t\t\t\tAS \"status\"\n    FROM \"order\" \"o\"\n             LEFT JOIN \"out_opportunity\" \"p\"\n                       ON iff(\"o\".\"OpportunityId\" = '', \"o\".\"AccountId\" || '-' || \"o\".\"Id\" || '_opp',\n                              \"o\".\"OpportunityId\") = \"p\".\"opportunity_id\"\n             LEFT JOIN \"employee\" \"e\"\n                       ON \"o\".\"OwnerId\" = \"e\".\"employee_id\"\n    WHERE \"o\".\"IsDeleted\" = 'false';",
+                "--contract lines table\nCREATE TABLE \"out_contract_line\"\nAS\n    SELECT\n        \"i\".\"Id\"                                                             AS \"contract_line_id\",\n        \"p\".\"opportunity_id\",\n        \"o\".\"Id\"                                                             AS \"contract_id\",\n        \"i\".\"Product2Id\"                                                     AS \"product_id\",\n        IFF(\"i\".\"ServiceDate\" <> '', \"i\".\"ServiceDate\", \"o\".\"EffectiveDate\") AS \"contract_line_start_date\",\n        IFF(\"i\".\"EndDate\" <> '', \"i\".\"EndDate\", \"o\".\"EndDate\")               AS \"contract_line_end_date\",\n        \"i\".\"Quantity\"                                                       AS \"contract_line_quantity\",\n        \"i\".\"UnitPrice\"                                                 \t AS \"contract_line_unit_price\",\n        \"i\".\"CurrencyIsoCode\"                                                AS \"contract_line_currency\"\n    FROM \"order\" \"o\"\n             LEFT JOIN \"out_opportunity\" \"p\"\n                       ON iff(\"o\".\"OpportunityId\" = '', \"o\".\"AccountId\" || '-' || \"o\".\"Id\" || '_opp',\n                              \"o\".\"OpportunityId\") = \"p\".\"opportunity_id\"\n             JOIN \"order_item\" \"i\"\n                  ON \"o\".\"Id\" = \"i\".\"OrderId\"\n    WHERE \"o\".\"IsDeleted\" = 'false';",
+                "--snapshots\n--set timezone to UTC (ALTER according to your TIMEZONE)\nALTER SESSION\n    SET TIMEZONE = 'UTC';",
+                "--create snapshot of the output table to track chanes throughout time\n--snapshot will be used in another transformation where it will be adjusted for a better final analysis\nCREATE TABLE \"out_opportunity_snapshot\"\nAS\n    SELECT\n        current_date AS \"snapshot_date\",\n        \"o\".*\n    FROM \"out_opportunity\" \"o\";"
+            ],
+            "input": [
+                {
+                    "destination": "order",
+                    "datatypes": [],
+                    "whereColumn": "",
+                    "whereValues": [],
+                    "whereOperator": "eq",
+                    "columns": [],
+                    "loadType": "clone",
+                    "source_search": {
+                        "key": "bdm.scaffold.table.tag",
+                        "__SCAFFOLD_CHECK__.value": "CRMMMR_Salesforce.internal.inSalesforceOrder"
+                    },
+                    "__SCAFFOLD_CHECK__.source": "in.c-cRMMMRSalesforce.salesforceOrder",
+                    "__SCAFFOLD_CHECK__.original_source": "in.c-salesforce.order"
+                },
+                {
+                    "destination": "order_item",
+                    "datatypes": [],
+                    "whereColumn": "",
+                    "whereValues": [],
+                    "whereOperator": "eq",
+                    "columns": [],
+                    "loadType": "clone",
+                    "source_search": {
+                        "key": "bdm.scaffold.table.tag",
+                        "__SCAFFOLD_CHECK__.value": "CRMMMR_Salesforce.internal.inSalesforceOrderitem"
+                    },
+                    "__SCAFFOLD_CHECK__.source": "in.c-cRMMMRSalesforce.salesforceOrderitem",
+                    "__SCAFFOLD_CHECK__.original_source": "in.c-salesforce.orderitem"
+                },
+                {
+                    "destination": "product",
+                    "datatypes": [],
+                    "whereColumn": "",
+                    "whereValues": [],
+                    "whereOperator": "eq",
+                    "columns": [],
+                    "loadType": "clone",
+                    "source_search": {
+                        "key": "bdm.scaffold.table.tag",
+                        "__SCAFFOLD_CHECK__.value": "CRMMMR_Salesforce.internal.outCrmProduct"
+                    },
+                    "__SCAFFOLD_CHECK__.source": "out.c-cRMMMRSalesforce.crmProduct",
+                    "__SCAFFOLD_CHECK__.original_source": "out.c-crm.product"
+                },
+                {
+                    "destination": "opportunity",
+                    "datatypes": [],
+                    "whereColumn": "",
+                    "whereValues": [],
+                    "whereOperator": "eq",
+                    "columns": [],
+                    "loadType": "clone",
+                    "source_search": {
+                        "key": "bdm.scaffold.table.tag",
+                        "__SCAFFOLD_CHECK__.value": "CRMMMR_Salesforce.internal.inSalesforceOpportunity"
+                    },
+                    "__SCAFFOLD_CHECK__.source": "in.c-cRMMMRSalesforce.salesforceOpportunity",
+                    "__SCAFFOLD_CHECK__.original_source": "in.c-salesforce.opportunity"
+                },
+                {
+                    "destination": "company",
+                    "datatypes": [],
+                    "whereColumn": "",
+                    "whereValues": [],
+                    "whereOperator": "eq",
+                    "columns": [],
+                    "loadType": "clone",
+                    "source_search": {
+                        "key": "bdm.scaffold.table.tag",
+                        "__SCAFFOLD_CHECK__.value": "CRMMMR_Salesforce.internal.outCrmCompany"
+                    },
+                    "__SCAFFOLD_CHECK__.source": "out.c-cRMMMRSalesforce.crmCompany",
+                    "__SCAFFOLD_CHECK__.original_source": "out.c-crm.company"
+                },
+                {
+                    "destination": "employee",
+                    "datatypes": [],
+                    "whereColumn": "",
+                    "whereValues": [],
+                    "whereOperator": "eq",
+                    "columns": [],
+                    "loadType": "clone",
+                    "source_search": {
+                        "key": "bdm.scaffold.table.tag",
+                        "__SCAFFOLD_CHECK__.value": "CRMMMR_Salesforce.internal.outCrmEmployee"
+                    },
+                    "__SCAFFOLD_CHECK__.source": "out.c-cRMMMRSalesforce.crmEmployee",
+                    "__SCAFFOLD_CHECK__.original_source": "out.c-crm.employee"
+                }
+            ],
+            "name": "Contracts, Opportunities & Auxiliary Snapshot",
+            "packages": [],
+            "requires": [],
+            "backend": "snowflake",
+            "type": "simple",
+            "id": "491849201",
+            "phase": "3",
+            "disabled": false,
+            "description": ""
+        },
+        "description": "",
+        "name": "Contracts, Opportunities & Auxiliary Snapshot"
+    },
+    {
+        "configuration": {
+            "output": [
+                {
+                    "primaryKey": [
+                        "opportunity_id",
+                        "snapshot_date"
+                    ],
+                    "incremental": true,
+                    "deleteWhereColumn": "",
+                    "deleteWhereOperator": "eq",
+                    "deleteWhereValues": [],
+                    "source": "out_opportunity_snapshot",
+                    "metadata": [
+                        {
+                            "key": "bdm.scaffold.table.tag",
+                            "value": "CRMMMR_Salesforce.internal.outCrmOpportunitySnapshot"
+                        }
+                    ],
+                    "destination": "out.c-cRMMMRSalesforce.crmOpportunitySnapshot",
+                    "__SCAFFOLD_CHECK__original_destination": "out.c-crm.opportunity_snapshot"
+                }
+            ],
+            "queries": [
+                "--create temporary table for additional calculations\n--add previous values of pipeline, stage and value, so we can define if there has been any change\nCREATE TABLE \"opportunity_snapshot_tmp\"\nAS\n  SELECT\n    \"opportunity_id\",\n    \"snapshot_date\",\n    \"employee_id\",\n    \"company_id\",\n    \"stage\",\n    ifnull(lag(\"stage\") OVER (PARTITION BY \"opportunity_id\" ORDER BY \"snapshot_date\"),\n           \"stage\")                            AS \"previous_stage\",\n    \"opportunity_value\",\n    ifnull(lag(\"opportunity_value\") OVER (PARTITION BY \"opportunity_id\" ORDER BY \"snapshot_date\"),\n           \"opportunity_value\")                AS \"previous_opportunity_value\"\n  FROM\n    \"opportunity_snapshot\";",
+                "--create opportunity snapshot table\n--define if there has been change of pipeline, stage or value\nCREATE TABLE \"out_opportunity_snapshot\"\nAS\n  SELECT\n    \"opportunity_id\",\n    \"snapshot_date\",\n    \"employee_id\",\n    \"stage\",\n    iff(\"stage\" <> \"previous_stage\", 'Yes', 'No')                         AS \"stage_change\",\n    \"opportunity_value\",\n    \"previous_opportunity_value\",\n    iff(\"opportunity_value\" <> \"previous_opportunity_value\", 'Yes', 'No') AS \"opportunity_value_change\"\n  FROM\n    \"opportunity_snapshot_tmp\";"
+            ],
+            "input": [
+                {
+                    "destination": "opportunity_snapshot",
+                    "datatypes": [],
+                    "whereColumn": "",
+                    "whereValues": [],
+                    "whereOperator": "eq",
+                    "columns": [],
+                    "loadType": "clone",
+                    "source_search": {
+                        "key": "bdm.scaffold.table.tag",
+                        "__SCAFFOLD_CHECK__.value": "CRMMMR_Salesforce.internal.outCrmAuxiliaryTablesOpportunitySnapshot"
+                    },
+                    "__SCAFFOLD_CHECK__.source": "out.c-cRMMMRSalesforce.crmAuxiliaryTablesOpportunitySnapshot",
+                    "__SCAFFOLD_CHECK__.original_source": "out.c-crm-auxiliary-tables.opportunity_snapshot"
+                }
+            ],
+            "name": "Opportunity Snapshot",
+            "packages": [],
+            "requires": [],
+            "backend": "snowflake",
+            "type": "simple",
+            "id": "492055415",
+            "phase": "4",
+            "disabled": false,
+            "description": ""
+        },
+        "description": "",
+        "name": "Opportunity Snapshot"
+    },
+    {
+        "configuration": {
+            "output": [
+                {
+                    "source": "out_employee",
+                    "primaryKey": [
+                        "employee_id"
+                    ],
+                    "metadata": [
+                        {
+                            "key": "bdm.scaffold.table.tag",
+                            "value": "CRMMMR_Salesforce.internal.outCrmEmployee"
+                        }
+                    ],
+                    "destination": "out.c-cRMMMRSalesforce.crmEmployee",
+                    "__SCAFFOLD_CHECK__original_destination": "out.c-crm.employee"
+                }
+            ],
+            "queries": [
+                "--create output table with employees\nCREATE TABLE \"out_employee\"\nAS\n  SELECT\n    \"Id\"    AS \"employee_id\",\n    \"Name\"  AS \"employee\",\n    \"Email\" AS \"email\",\n    \"Title\" AS \"position\"\n  FROM \"user\";",
+                "--fake row to keep referential integrity if child tables are missing existing employee ids\nINSERT INTO \"out_employee\"\n  (\"employee_id\", \"employee\", \"email\", \"position\")\nVALUES\n  ('0', 'Unknown', '', '');"
+            ],
+            "input": [
+                {
+                    "destination": "user",
+                    "datatypes": [],
+                    "whereColumn": "",
+                    "whereValues": [],
+                    "whereOperator": "eq",
+                    "columns": [],
+                    "loadType": "clone",
+                    "source_search": {
+                        "key": "bdm.scaffold.table.tag",
+                        "__SCAFFOLD_CHECK__.value": "CRMMMR_Salesforce.internal.inSalesforceUser"
+                    },
+                    "__SCAFFOLD_CHECK__.source": "in.c-cRMMMRSalesforce.salesforceUser",
+                    "__SCAFFOLD_CHECK__.original_source": "in.c-salesforce.user"
+                }
+            ],
+            "name": "Employee",
+            "packages": [],
+            "requires": [],
+            "backend": "snowflake",
+            "type": "simple",
+            "id": "492063220",
+            "phase": "2",
+            "disabled": false,
+            "description": ""
+        },
+        "description": "",
+        "name": "Employee"
+    },
+    {
+        "configuration": {
+            "output": [
+                {
+                    "source": "out_mrr_aggregated",
+                    "primaryKey": [
+                        "mrr_aggregated_id"
+                    ],
+                    "metadata": [
+                        {
+                            "key": "bdm.scaffold.table.tag",
+                            "value": "CRMMMR_Salesforce.internal.outMrrMrrAggregated"
+                        }
+                    ],
+                    "destination": "out.c-cRMMMRSalesforce.mrrMrrAggregated",
+                    "__SCAFFOLD_CHECK__original_destination": "out.c-mrr.mrr_aggregated"
+                }
+            ],
+            "queries": [
+                "-- Aggregation\nCREATE TABLE \"tmp_mrr_aggregated\"\nAS\n    SELECT\n        \"c\".\"company_id\",\n        \"m\".\"date\",\n        \"m\".\"contract_line_currency\",\n        SUM(\"m\".\"contract_line_quantity\" * \"m\".\"contract_line_unit_price\")                   AS \"gross_mrr\",\n        SUM(\"m\".\"previous_contract_line_quantity\" * \"m\".\"previous_contract_line_unit_price\") AS \"previous_gross_mrr\"\n    FROM \"mrr\" \"m\"\n             LEFT JOIN \"contract_line\" \"l\"\n                       ON \"m\".\"contract_line_id\" = \"l\".\"contract_line_id\"\n             LEFT JOIN \"contract\" \"c\"\n                       ON \"l\".\"contract_id\" = \"c\".\"contract_id\"\n    GROUP BY 1, 2, 3;",
+                "-- Add changes and flags\nCREATE TABLE \"out_mrr_aggregated\"\nAS\n    SELECT\n        \"company_id\" || '_' || \"date\"      AS \"mrr_aggregated_id\",\n        *,\n        \"gross_mrr\" - \"previous_gross_mrr\" AS \"gross_mrr_change\",\n        (CASE\n             WHEN \"gross_mrr\" = 0 AND \"previous_gross_mrr\" > 0\n                 THEN 'Churn'\n             WHEN \"gross_mrr\" > 0 AND \"previous_gross_mrr\" = 0\n                 THEN 'Net New'\n             WHEN \"gross_mrr\" > \"previous_gross_mrr\"\n                 THEN 'Upgrade'\n             WHEN \"gross_mrr\" < \"previous_gross_mrr\"\n                 THEN 'Downgrade'\n             ELSE 'No Change'\n         END)                              AS \"gross_action\",\n        (CASE\n             WHEN \"gross_mrr\" = 0 AND \"previous_gross_mrr\" > 0\n                 THEN -1\n             WHEN \"gross_mrr\" > 0 AND \"previous_gross_mrr\" = 0\n                 THEN 1\n             ELSE 0\n         END)                              AS \"count_change\"\n    FROM \"tmp_mrr_aggregated\";"
+            ],
+            "input": [
+                {
+                    "destination": "mrr",
+                    "datatypes": [],
+                    "whereColumn": "",
+                    "whereValues": [],
+                    "whereOperator": "eq",
+                    "columns": [],
+                    "loadType": "clone",
+                    "source_search": {
+                        "key": "bdm.scaffold.table.tag",
+                        "__SCAFFOLD_CHECK__.value": "CRMMMR_Salesforce.internal.outMrrMrr"
+                    },
+                    "__SCAFFOLD_CHECK__.source": "out.c-cRMMMRSalesforce.mrrMrr",
+                    "__SCAFFOLD_CHECK__.original_source": "out.c-mrr.mrr"
+                },
+                {
+                    "destination": "contract_line",
+                    "datatypes": [],
+                    "whereColumn": "",
+                    "whereValues": [],
+                    "whereOperator": "eq",
+                    "columns": [],
+                    "loadType": "clone",
+                    "source_search": {
+                        "key": "bdm.scaffold.table.tag",
+                        "__SCAFFOLD_CHECK__.value": "CRMMMR_Salesforce.internal.outCrmContractLine"
+                    },
+                    "__SCAFFOLD_CHECK__.source": "out.c-cRMMMRSalesforce.crmContractLine",
+                    "__SCAFFOLD_CHECK__.original_source": "out.c-crm.contract_line"
+                },
+                {
+                    "destination": "contract",
+                    "datatypes": [],
+                    "whereColumn": "",
+                    "whereValues": [],
+                    "whereOperator": "eq",
+                    "columns": [],
+                    "loadType": "clone",
+                    "source_search": {
+                        "key": "bdm.scaffold.table.tag",
+                        "__SCAFFOLD_CHECK__.value": "CRMMMR_Salesforce.internal.outCrmContract"
+                    },
+                    "__SCAFFOLD_CHECK__.source": "out.c-cRMMMRSalesforce.crmContract",
+                    "__SCAFFOLD_CHECK__.original_source": "out.c-crm.contract"
+                }
+            ],
+            "name": "MRR - Aggregation",
+            "packages": [],
+            "requires": [],
+            "backend": "snowflake",
+            "type": "simple",
+            "id": "506913584",
+            "phase": "5",
+            "disabled": false,
+            "description": ""
+        },
+        "description": "",
+        "name": "MRR - Aggregation"
+    },
+    {
+        "configuration": {
+            "output": [
+                {
+                    "source": "out_contact",
+                    "primaryKey": [
+                        "contact_id"
+                    ],
+                    "metadata": [
+                        {
+                            "key": "bdm.scaffold.table.tag",
+                            "value": "CRMMMR_Salesforce.internal.outCrmContact"
+                        }
+                    ],
+                    "destination": "out.c-cRMMMRSalesforce.crmContact",
+                    "__SCAFFOLD_CHECK__original_destination": "out.c-crm.contact"
+                }
+            ],
+            "queries": [
+                "--create output table with contacts\nCREATE TABLE \"out_contact\"\nAS\n  SELECT\n    \"c\".\"Id\"                                  AS \"contact_id\",\n    ifnull(\"y\".\"company_id\", '0')\t\t  \t  AS \"company_id\",\n    ifnull(\"e\".\"employee_id\", '0')\t\t  \t  AS \"employee_id\",\n    \"c\".\"Name\"                                AS \"contact\",\n    \"c\".\"Email\"                               AS \"email\",\n    'Contact'                             \t  AS \"contact_type\",\n    to_date(\"c\".\"CreatedDate\") :: VARCHAR(10) AS \"date_created\",\n    \"c\".\"LeadSource\"                          AS \"lead_source\",\n    'Is Contact'                          \t  AS \"lead_converted\"\n  FROM \"contact\" \"c\"\n             LEFT JOIN \"company\" \"y\"\n                       ON \"c\".\"AccountId\" = \"y\".\"company_id\"\n             LEFT JOIN \"employee\" \"e\"\n                       ON \"c\".\"OwnerId\" = \"e\".\"employee_id\"\n  WHERE lower(\"IsDeleted\") = 'false'\n  UNION ALL\n  --insert leads and mark if they are already converted\n  SELECT\n    \"l\".\"Id\"                                      AS \"contact_id\",\n    '0'\t\t\t\t\t\t\t\t\t\t  \t  AS \"company_id\",\n    ifnull(\"e\".\"employee_id\", '0')\t\t  \t  \t  AS \"employee_id\",\n    \"l\".\"Name\"                                    AS \"contact\",\n    \"l\".\"Email\"                                   AS \"email\",\n    'Lead'                                    \t  AS \"contact_type\",\n    to_date(\"l\".\"CreatedDate\") :: VARCHAR(10)     AS \"date_created\",\n    \"l\".\"LeadSource\"                              AS \"lead_source\",\n    iff(\"l\".\"IsConverted\" = 'false', 'No', 'Yes') AS \"lead_converted\"\n  FROM \"lead\" \"l\"\n             LEFT JOIN \"employee\" \"e\"\n                       ON \"l\".\"OwnerId\" = \"e\".\"employee_id\"\n  WHERE lower(\"IsDeleted\") = 'false';",
+                "--fake row to keep referential integrity if child tables are missing existing contact ids\nINSERT INTO \"out_contact\"\n  (\"contact_id\", \"company_id\", \"employee_id\", \"contact\", \"email\", \"contact_type\", \"date_created\", \"lead_source\", \"lead_converted\")\nVALUES\n  ('0', '0', '0', 'Unknown', '', 'Lead', '', '', 'No');"
+            ],
+            "input": [
+                {
+                    "destination": "contact",
+                    "datatypes": [],
+                    "whereColumn": "",
+                    "whereValues": [],
+                    "whereOperator": "eq",
+                    "columns": [],
+                    "loadType": "clone",
+                    "source_search": {
+                        "key": "bdm.scaffold.table.tag",
+                        "__SCAFFOLD_CHECK__.value": "CRMMMR_Salesforce.internal.inSalesforceContact"
+                    },
+                    "__SCAFFOLD_CHECK__.source": "in.c-cRMMMRSalesforce.salesforceContact",
+                    "__SCAFFOLD_CHECK__.original_source": "in.c-salesforce.contact"
+                },
+                {
+                    "destination": "lead",
+                    "datatypes": [],
+                    "whereColumn": "",
+                    "whereValues": [],
+                    "whereOperator": "eq",
+                    "columns": [],
+                    "loadType": "clone",
+                    "source_search": {
+                        "key": "bdm.scaffold.table.tag",
+                        "__SCAFFOLD_CHECK__.value": "CRMMMR_Salesforce.internal.inSalesforceLead"
+                    },
+                    "__SCAFFOLD_CHECK__.source": "in.c-cRMMMRSalesforce.salesforceLead",
+                    "__SCAFFOLD_CHECK__.original_source": "in.c-salesforce.lead"
+                },
+                {
+                    "destination": "company",
+                    "datatypes": [],
+                    "whereColumn": "",
+                    "whereValues": [],
+                    "whereOperator": "eq",
+                    "columns": [],
+                    "loadType": "clone",
+                    "source_search": {
+                        "key": "bdm.scaffold.table.tag",
+                        "__SCAFFOLD_CHECK__.value": "CRMMMR_Salesforce.internal.outCrmCompany"
+                    },
+                    "__SCAFFOLD_CHECK__.source": "out.c-cRMMMRSalesforce.crmCompany",
+                    "__SCAFFOLD_CHECK__.original_source": "out.c-crm.company"
+                },
+                {
+                    "destination": "employee",
+                    "datatypes": [],
+                    "whereColumn": "",
+                    "whereValues": [],
+                    "whereOperator": "eq",
+                    "columns": [],
+                    "loadType": "clone",
+                    "source_search": {
+                        "key": "bdm.scaffold.table.tag",
+                        "__SCAFFOLD_CHECK__.value": "CRMMMR_Salesforce.internal.outCrmEmployee"
+                    },
+                    "__SCAFFOLD_CHECK__.source": "out.c-cRMMMRSalesforce.crmEmployee",
+                    "__SCAFFOLD_CHECK__.original_source": "out.c-crm.employee"
+                }
+            ],
+            "name": "Contact",
+            "packages": [],
+            "requires": [],
+            "backend": "snowflake",
+            "type": "simple",
+            "id": "513956303",
+            "phase": "3",
+            "disabled": false,
+            "description": ""
+        },
+        "description": "",
+        "name": "Contact"
+    },
+    {
+        "configuration": {
+            "output": [
+                {
+                    "source": "out_opportunity_contact",
+                    "primaryKey": [
+                        "opportunity_contact_id"
+                    ],
+                    "metadata": [
+                        {
+                            "key": "bdm.scaffold.table.tag",
+                            "value": "CRMMMR_Salesforce.internal.outCrmOpportunityContact"
+                        }
+                    ],
+                    "destination": "out.c-cRMMMRSalesforce.crmOpportunityContact",
+                    "__SCAFFOLD_CHECK__original_destination": "out.c-crm.opportunity_contact"
+                }
+            ],
+            "queries": [
+                "--create output paring table for opportunities and contacts\n--merge both tables ids as paring table id\n--use inner joins and ids from referring tables to make sure referential integrity is intact\n--change boolean values to commonly used format in KBC scaffolds\nCREATE TABLE \"out_opportunity_contact\"\nAS\n  SELECT\n    \"o\".\"opportunity_id\" || '-' || \"c\".\"contact_id\" AS \"opportunity_contact_id\",\n    \"o\".\"opportunity_id\",\n    \"c\".\"contact_id\",\n    iff(\"r\".\"IsPrimary\" = 'false', 'No', 'Yes')     AS \"is_primary_contact\",\n    \"r\".\"Role\"                                      AS \"role\"\n  FROM \"opportunity_contact_role\" \"r\"\n         INNER JOIN \"opportunity\" \"o\"\n                    ON \"r\".\"OpportunityId\" = \"o\".\"opportunity_id\"\n         INNER JOIN \"contact\" \"c\"\n                    ON \"r\".\"ContactId\" = \"c\".\"contact_id\"\n  WHERE lower(\"r\".\"IsDeleted\") = 'false';"
+            ],
+            "input": [
+                {
+                    "destination": "opportunity_contact_role",
+                    "datatypes": [],
+                    "whereColumn": "",
+                    "whereValues": [],
+                    "whereOperator": "eq",
+                    "columns": [],
+                    "loadType": "clone",
+                    "source_search": {
+                        "key": "bdm.scaffold.table.tag",
+                        "__SCAFFOLD_CHECK__.value": "CRMMMR_Salesforce.internal.inSalesforceOpportunitycontactrole"
+                    },
+                    "__SCAFFOLD_CHECK__.source": "in.c-cRMMMRSalesforce.salesforceOpportunitycontactrole",
+                    "__SCAFFOLD_CHECK__.original_source": "in.c-salesforce.opportunitycontactrole"
+                },
+                {
+                    "destination": "contact",
+                    "datatypes": [],
+                    "whereColumn": "",
+                    "whereValues": [],
+                    "whereOperator": "eq",
+                    "columns": [],
+                    "loadType": "clone",
+                    "source_search": {
+                        "key": "bdm.scaffold.table.tag",
+                        "__SCAFFOLD_CHECK__.value": "CRMMMR_Salesforce.internal.outCrmContact"
+                    },
+                    "__SCAFFOLD_CHECK__.source": "out.c-cRMMMRSalesforce.crmContact",
+                    "__SCAFFOLD_CHECK__.original_source": "out.c-crm.contact"
+                },
+                {
+                    "destination": "opportunity",
+                    "datatypes": [],
+                    "whereColumn": "",
+                    "whereValues": [],
+                    "whereOperator": "eq",
+                    "columns": [],
+                    "loadType": "clone",
+                    "source_search": {
+                        "key": "bdm.scaffold.table.tag",
+                        "__SCAFFOLD_CHECK__.value": "CRMMMR_Salesforce.internal.outCrmOpportunity"
+                    },
+                    "__SCAFFOLD_CHECK__.source": "out.c-cRMMMRSalesforce.crmOpportunity",
+                    "__SCAFFOLD_CHECK__.original_source": "out.c-crm.opportunity"
+                }
+            ],
+            "name": "Opportunity Contact",
+            "packages": [],
+            "requires": [],
+            "backend": "snowflake",
+            "type": "simple",
+            "id": "513956566",
+            "phase": "4",
+            "disabled": false,
+            "description": ""
+        },
+        "description": "",
+        "name": "Opportunity Contact"
+    },
+    {
+        "configuration": {
+            "output": [
+                {
+                    "primaryKey": [
+                        "Id"
+                    ],
+                    "source": "out_account",
+                    "metadata": [
+                        {
+                            "key": "bdm.scaffold.table.tag",
+                            "value": "CRMMMR_Salesforce.internal.inSalesforceAccount"
+                        }
+                    ],
+                    "destination": "in.c-cRMMMRSalesforce.salesforceAccount",
+                    "__SCAFFOLD_CHECK__original_destination": "in.c-salesforce.account"
+                },
+                {
+                    "primaryKey": [
+                        "Id"
+                    ],
+                    "source": "out_contact",
+                    "metadata": [
+                        {
+                            "key": "bdm.scaffold.table.tag",
+                            "value": "CRMMMR_Salesforce.internal.inSalesforceContact"
+                        }
+                    ],
+                    "destination": "in.c-cRMMMRSalesforce.salesforceContact",
+                    "__SCAFFOLD_CHECK__original_destination": "in.c-salesforce.contact"
+                },
+                {
+                    "primaryKey": [
+                        "Id"
+                    ],
+                    "source": "out_lead",
+                    "metadata": [
+                        {
+                            "key": "bdm.scaffold.table.tag",
+                            "value": "CRMMMR_Salesforce.internal.inSalesforceLead"
+                        }
+                    ],
+                    "destination": "in.c-cRMMMRSalesforce.salesforceLead",
+                    "__SCAFFOLD_CHECK__original_destination": "in.c-salesforce.lead"
+                },
+                {
+                    "primaryKey": [
+                        "Id"
+                    ],
+                    "source": "out_user",
+                    "metadata": [
+                        {
+                            "key": "bdm.scaffold.table.tag",
+                            "value": "CRMMMR_Salesforce.internal.inSalesforceUser"
+                        }
+                    ],
+                    "destination": "in.c-cRMMMRSalesforce.salesforceUser",
+                    "__SCAFFOLD_CHECK__original_destination": "in.c-salesforce.user"
+                },
+                {
+                    "primaryKey": [
+                        "Id"
+                    ],
+                    "source": "out_opportunity",
+                    "metadata": [
+                        {
+                            "key": "bdm.scaffold.table.tag",
+                            "value": "CRMMMR_Salesforce.internal.inSalesforceOpportunity"
+                        }
+                    ],
+                    "destination": "in.c-cRMMMRSalesforce.salesforceOpportunity",
+                    "__SCAFFOLD_CHECK__original_destination": "in.c-salesforce.opportunity"
+                },
+                {
+                    "primaryKey": [
+                        "Id"
+                    ],
+                    "source": "out_opportunitycontactrole",
+                    "metadata": [
+                        {
+                            "key": "bdm.scaffold.table.tag",
+                            "value": "CRMMMR_Salesforce.internal.inSalesforceOpportunitycontactrole"
+                        }
+                    ],
+                    "destination": "in.c-cRMMMRSalesforce.salesforceOpportunitycontactrole",
+                    "__SCAFFOLD_CHECK__original_destination": "in.c-salesforce.opportunitycontactrole"
+                },
+                {
+                    "primaryKey": [
+                        "Id"
+                    ],
+                    "source": "out_order",
+                    "metadata": [
+                        {
+                            "key": "bdm.scaffold.table.tag",
+                            "value": "CRMMMR_Salesforce.internal.inSalesforceOrder"
+                        }
+                    ],
+                    "destination": "in.c-cRMMMRSalesforce.salesforceOrder",
+                    "__SCAFFOLD_CHECK__original_destination": "in.c-salesforce.order"
+                },
+                {
+                    "primaryKey": [
+                        "Id"
+                    ],
+                    "source": "out_orderitem",
+                    "metadata": [
+                        {
+                            "key": "bdm.scaffold.table.tag",
+                            "value": "CRMMMR_Salesforce.internal.inSalesforceOrderitem"
+                        }
+                    ],
+                    "destination": "in.c-cRMMMRSalesforce.salesforceOrderitem",
+                    "__SCAFFOLD_CHECK__original_destination": "in.c-salesforce.orderitem"
+                },
+                {
+                    "primaryKey": [
+                        "Id"
+                    ],
+                    "source": "out_product2",
+                    "metadata": [
+                        {
+                            "key": "bdm.scaffold.table.tag",
+                            "value": "CRMMMR_Salesforce.internal.inSalesforceProduct2"
+                        }
+                    ],
+                    "destination": "in.c-cRMMMRSalesforce.salesforceProduct2",
+                    "__SCAFFOLD_CHECK__original_destination": "in.c-salesforce.product2"
+                }
+            ],
+            "queries": [
+                "--account table\nCREATE TABLE \"account_tmp\"\nAS\n    SELECT\n        OBJECT_CONSTRUCT(*) AS \"obj\"\n    FROM \"account\";",
+                "CREATE TABLE \"out_account\"\nAS\n    SELECT\n        trim(\"obj\":\"Id\", '\"')          AS \"Id\",\n        trim(\"obj\":\"IsDeleted\", '\"')   AS \"IsDeleted\",\n        trim(\"obj\":\"Name\", '\"')        AS \"Name\",\n        trim(\"obj\":\"Website\", '\"')     AS \"Website\",\n        trim(\"obj\":\"CreatedDate\", '\"') AS \"CreatedDate\"\n    FROM \"account_tmp\";",
+                "--contact table\nCREATE TABLE \"contact_tmp\"\nAS\n    SELECT\n        OBJECT_CONSTRUCT(*) AS \"obj\"\n    FROM \"contact\";",
+                "CREATE TABLE \"out_contact\"\nAS\n    SELECT\n        trim(\"obj\":\"Id\", '\"')          AS \"Id\",\n        trim(\"obj\":\"IsDeleted\", '\"')   AS \"IsDeleted\",\n        trim(\"obj\":\"OwnerId\", '\"')     AS \"OwnerId\",\n        trim(\"obj\":\"AccountId\", '\"')   AS \"AccountId\",\n        trim(\"obj\":\"Name\", '\"')        AS \"Name\",\n        trim(\"obj\":\"Email\", '\"')       AS \"Email\",\n        trim(\"obj\":\"CreatedDate\", '\"') AS \"CreatedDate\",\n        trim(\"obj\":\"LeadSource\", '\"')  AS \"LeadSource\"\n    FROM \"contact_tmp\";",
+                "--lead table\nCREATE TABLE \"lead_tmp\"\nAS\n    SELECT\n        OBJECT_CONSTRUCT(*) AS \"obj\"\n    FROM \"lead\";",
+                "CREATE TABLE \"out_lead\"\nAS\n    SELECT\n        trim(\"obj\":\"Id\", '\"')          AS \"Id\",\n        trim(\"obj\":\"IsDeleted\", '\"')   AS \"IsDeleted\",\n        trim(\"obj\":\"OwnerId\", '\"')     AS \"OwnerId\",\n        trim(\"obj\":\"Name\", '\"')        AS \"Name\",\n        trim(\"obj\":\"Email\", '\"')       AS \"Email\",\n        trim(\"obj\":\"CreatedDate\", '\"') AS \"CreatedDate\",\n        trim(\"obj\":\"LeadSource\", '\"')  AS \"LeadSource\",\n        trim(\"obj\":\"IsConverted\", '\"') AS \"IsConverted\"\n    FROM \"lead_tmp\";",
+                "--user table\nCREATE TABLE \"user_tmp\"\nAS\n    SELECT\n        OBJECT_CONSTRUCT(*) AS \"obj\"\n    FROM \"user\";",
+                "CREATE TABLE \"out_user\"\nAS\n    SELECT\n        trim(\"obj\":\"Id\", '\"')    AS \"Id\",\n        trim(\"obj\":\"Name\", '\"')  AS \"Name\",\n        trim(\"obj\":\"Email\", '\"') AS \"Email\",\n        trim(\"obj\":\"Title\", '\"') AS \"Title\"\n    FROM \"user_tmp\";",
+                "--opportunity table\nCREATE TABLE \"opportunity_tmp\"\nAS\n    SELECT\n        OBJECT_CONSTRUCT(*) AS \"obj\"\n    FROM \"opportunity\";",
+                "CREATE TABLE \"out_opportunity\"\nAS\n    SELECT\n        trim(\"obj\":\"Id\", '\"')              AS \"Id\",\n        trim(\"obj\":\"IsDeleted\", '\"')       AS \"IsDeleted\",\n        trim(\"obj\":\"AccountId\", '\"')       AS \"AccountId\",\n        trim(\"obj\":\"OwnerId\", '\"')         AS \"OwnerId\",\n        trim(\"obj\":\"Name\", '\"')            AS \"Name\",\n        trim(\"obj\":\"CreatedDate\", '\"')     AS \"CreatedDate\",\n        trim(\"obj\":\"CloseDate\", '\"')       AS \"CloseDate\",\n        trim(\"obj\":\"IsClosed\", '\"')        AS \"IsClosed\",\n        trim(\"obj\":\"IsWon\", '\"')           AS \"IsWon\",\n        trim(\"obj\":\"StageName\", '\"')       AS \"StageName\",\n        trim(\"obj\":\"Type\", '\"')            AS \"Type\",\n        trim(\"obj\":\"Amount\", '\"')          AS \"Amount\",\n        trim(\"obj\":\"CurrencyIsoCode\", '\"') AS \"CurrencyIsoCode\",\n        trim(\"obj\":\"LeadSource\", '\"')      AS \"LeadSource\"\n    FROM \"opportunity_tmp\";",
+                "--opportunity contact role table\nCREATE TABLE \"opportunitycontactrole_tmp\"\nAS\n    SELECT\n        OBJECT_CONSTRUCT(*) AS \"obj\"\n    FROM \"opportunitycontactrole\";",
+                "CREATE TABLE \"out_opportunitycontactrole\"\nAS\n    SELECT\n        trim(\"obj\":\"Id\", '\"')            AS \"Id\",\n        trim(\"obj\":\"IsDeleted\", '\"')     AS \"IsDeleted\",\n        trim(\"obj\":\"OpportunityId\", '\"') AS \"OpportunityId\",\n        trim(\"obj\":\"ContactId\", '\"')     AS \"ContactId\",\n        trim(\"obj\":\"IsPrimary\", '\"')     AS \"IsPrimary\",\n        trim(\"obj\":\"Role\", '\"')          AS \"Role\"\n    FROM \"opportunitycontactrole_tmp\";",
+                "--order table\nCREATE TABLE \"order_tmp\"\nAS\n    SELECT\n        OBJECT_CONSTRUCT(*) AS \"obj\"\n    FROM \"order\";",
+                "CREATE TABLE \"out_order\"\nAS\n    SELECT\n        trim(\"obj\":\"Id\", '\"')            AS \"Id\",\n        trim(\"obj\":\"IsDeleted\", '\"')     AS \"IsDeleted\",\n        trim(\"obj\":\"AccountId\", '\"')     AS \"AccountId\",\n        trim(\"obj\":\"OwnerId\", '\"')       AS \"OwnerId\",\n        trim(\"obj\":\"OpportunityId\", '\"') AS \"OpportunityId\",\n        trim(\"obj\":\"Name\", '\"')          AS \"Name\",\n        trim(\"obj\":\"OrderNumber\", '\"')   AS \"OrderNumber\",\n        trim(\"obj\":\"EffectiveDate\", '\"') AS \"EffectiveDate\",\n        trim(\"obj\":\"EndDate\", '\"')       AS \"EndDate\",\n        trim(\"obj\":\"Status\", '\"')        AS \"Status\"\n    FROM \"order_tmp\";",
+                "--order table\nCREATE TABLE \"orderitem_tmp\"\nAS\n    SELECT\n        OBJECT_CONSTRUCT(*) AS \"obj\"\n    FROM \"orderitem\";",
+                "CREATE TABLE \"out_orderitem\"\nAS\n    SELECT\n        trim(\"obj\":\"Id\", '\"')              AS \"Id\",\n        trim(\"obj\":\"IsDeleted\", '\"')       AS \"IsDeleted\",\n        trim(\"obj\":\"Product2Id\", '\"')      AS \"Product2Id\",\n        trim(\"obj\":\"OrderId\", '\"')         AS \"OrderId\",\n        trim(\"obj\":\"ServiceDate\", '\"')     AS \"ServiceDate\",\n        trim(\"obj\":\"EndDate\", '\"')         AS \"EndDate\",\n        trim(\"obj\":\"Quantity\", '\"')        AS \"Quantity\",\n        trim(\"obj\":\"UnitPrice\", '\"')       AS \"UnitPrice\",\n        trim(\"obj\":\"CurrencyIsoCode\", '\"') AS \"CurrencyIsoCode\"\n    FROM \"orderitem_tmp\";",
+                "--order table\nCREATE TABLE \"product2_tmp\"\nAS\n    SELECT\n        OBJECT_CONSTRUCT(*) AS \"obj\"\n    FROM \"product2\";",
+                "CREATE TABLE \"out_product2\"\nAS\n    SELECT\n        trim(\"obj\":\"Id\", '\"')     AS \"Id\",\n        trim(\"obj\":\"Name\", '\"')   AS \"Name\",\n        trim(\"obj\":\"Family\", '\"') AS \"Family\"\n    FROM \"product2_tmp\";"
+            ],
+            "input": [
+                {
+                    "destination": "account",
+                    "datatypes": [],
+                    "whereColumn": "",
+                    "whereValues": [],
+                    "whereOperator": "eq",
+                    "columns": [],
+                    "loadType": "clone",
+                    "source_search": {
+                        "key": "bdm.scaffold.table.tag",
+                        "__SCAFFOLD_CHECK__.value": "CRMMMR_Salesforce.internal.inHtnsExSalesforce491845103Account"
+                    },
+                    "__SCAFFOLD_CHECK__.source": "in.c-cRMMMRSalesforce.htnsExSalesforce491845103Account",
+                    "__SCAFFOLD_CHECK__.original_source": "in.c-htns-ex-salesforce-491845103.account"
+                },
+                {
+                    "destination": "contact",
+                    "datatypes": [],
+                    "whereColumn": "",
+                    "whereValues": [],
+                    "whereOperator": "eq",
+                    "columns": [],
+                    "loadType": "clone",
+                    "source_search": {
+                        "key": "bdm.scaffold.table.tag",
+                        "__SCAFFOLD_CHECK__.value": "CRMMMR_Salesforce.internal.inHtnsExSalesforce491845103Contact"
+                    },
+                    "__SCAFFOLD_CHECK__.source": "in.c-cRMMMRSalesforce.htnsExSalesforce491845103Contact",
+                    "__SCAFFOLD_CHECK__.original_source": "in.c-htns-ex-salesforce-491845103.contact"
+                },
+                {
+                    "destination": "lead",
+                    "datatypes": [],
+                    "whereColumn": "",
+                    "whereValues": [],
+                    "whereOperator": "eq",
+                    "columns": [],
+                    "loadType": "clone",
+                    "source_search": {
+                        "key": "bdm.scaffold.table.tag",
+                        "__SCAFFOLD_CHECK__.value": "CRMMMR_Salesforce.internal.inHtnsExSalesforce491845103Lead"
+                    },
+                    "__SCAFFOLD_CHECK__.source": "in.c-cRMMMRSalesforce.htnsExSalesforce491845103Lead",
+                    "__SCAFFOLD_CHECK__.original_source": "in.c-htns-ex-salesforce-491845103.lead"
+                },
+                {
+                    "destination": "opportunity",
+                    "datatypes": [],
+                    "whereColumn": "",
+                    "whereValues": [],
+                    "whereOperator": "eq",
+                    "columns": [],
+                    "loadType": "clone",
+                    "source_search": {
+                        "key": "bdm.scaffold.table.tag",
+                        "__SCAFFOLD_CHECK__.value": "CRMMMR_Salesforce.internal.inHtnsExSalesforce491845103Opportunity"
+                    },
+                    "__SCAFFOLD_CHECK__.source": "in.c-cRMMMRSalesforce.htnsExSalesforce491845103Opportunity",
+                    "__SCAFFOLD_CHECK__.original_source": "in.c-htns-ex-salesforce-491845103.opportunity"
+                },
+                {
+                    "destination": "opportunitycontactrole",
+                    "datatypes": [],
+                    "whereColumn": "",
+                    "whereValues": [],
+                    "whereOperator": "eq",
+                    "columns": [],
+                    "loadType": "clone",
+                    "source_search": {
+                        "key": "bdm.scaffold.table.tag",
+                        "__SCAFFOLD_CHECK__.value": "CRMMMR_Salesforce.internal.inHtnsExSalesforce491845103Opportunitycontactrole"
+                    },
+                    "__SCAFFOLD_CHECK__.source": "in.c-cRMMMRSalesforce.htnsExSalesforce491845103Opportunitycontactrole",
+                    "__SCAFFOLD_CHECK__.original_source": "in.c-htns-ex-salesforce-491845103.opportunitycontactrole"
+                },
+                {
+                    "destination": "order",
+                    "datatypes": [],
+                    "whereColumn": "",
+                    "whereValues": [],
+                    "whereOperator": "eq",
+                    "columns": [],
+                    "loadType": "clone",
+                    "source_search": {
+                        "key": "bdm.scaffold.table.tag",
+                        "__SCAFFOLD_CHECK__.value": "CRMMMR_Salesforce.internal.inHtnsExSalesforce491845103Order"
+                    },
+                    "__SCAFFOLD_CHECK__.source": "in.c-cRMMMRSalesforce.htnsExSalesforce491845103Order",
+                    "__SCAFFOLD_CHECK__.original_source": "in.c-htns-ex-salesforce-491845103.order"
+                },
+                {
+                    "destination": "orderitem",
+                    "datatypes": [],
+                    "whereColumn": "",
+                    "whereValues": [],
+                    "whereOperator": "eq",
+                    "columns": [],
+                    "loadType": "clone",
+                    "source_search": {
+                        "key": "bdm.scaffold.table.tag",
+                        "__SCAFFOLD_CHECK__.value": "CRMMMR_Salesforce.internal.inHtnsExSalesforce491845103Orderitem"
+                    },
+                    "__SCAFFOLD_CHECK__.source": "in.c-cRMMMRSalesforce.htnsExSalesforce491845103Orderitem",
+                    "__SCAFFOLD_CHECK__.original_source": "in.c-htns-ex-salesforce-491845103.orderitem"
+                },
+                {
+                    "destination": "product2",
+                    "datatypes": [],
+                    "whereColumn": "",
+                    "whereValues": [],
+                    "whereOperator": "eq",
+                    "columns": [],
+                    "loadType": "clone",
+                    "source_search": {
+                        "key": "bdm.scaffold.table.tag",
+                        "__SCAFFOLD_CHECK__.value": "CRMMMR_Salesforce.internal.inHtnsExSalesforce491845103Product2"
+                    },
+                    "__SCAFFOLD_CHECK__.source": "in.c-cRMMMRSalesforce.htnsExSalesforce491845103Product2",
+                    "__SCAFFOLD_CHECK__.original_source": "in.c-htns-ex-salesforce-491845103.product2"
+                },
+                {
+                    "destination": "user",
+                    "datatypes": [],
+                    "whereColumn": "",
+                    "whereValues": [],
+                    "whereOperator": "eq",
+                    "columns": [],
+                    "loadType": "clone",
+                    "source_search": {
+                        "key": "bdm.scaffold.table.tag",
+                        "__SCAFFOLD_CHECK__.value": "CRMMMR_Salesforce.internal.inHtnsExSalesforce491845103User"
+                    },
+                    "__SCAFFOLD_CHECK__.source": "in.c-cRMMMRSalesforce.htnsExSalesforce491845103User",
+                    "__SCAFFOLD_CHECK__.original_source": "in.c-htns-ex-salesforce-491845103.user"
+                }
+            ],
+            "name": "Input Tables Creation",
+            "packages": [],
+            "requires": [],
+            "backend": "snowflake",
+            "type": "simple",
+            "id": "522566345",
+            "phase": 1,
+            "disabled": false,
+            "description": ""
+        },
+        "description": "",
+        "name": "Input Tables Creation"
+    },
+    {
+        "configuration": {
+            "output": [
+                {
+                    "primaryKey": [
+                        "mrr_id"
+                    ],
+                    "source": "out_mrr",
+                    "metadata": [
+                        {
+                            "key": "bdm.scaffold.table.tag",
+                            "value": "CRMMMR_Salesforce.internal.outMrrMrr"
+                        }
+                    ],
+                    "destination": "out.c-cRMMMRSalesforce.mrrMrr",
+                    "__SCAFFOLD_CHECK__original_destination": "out.c-mrr.mrr"
+                }
+            ],
+            "queries": [
+                "--Generate list of 10000 consecutive dates (to the FUTURE), beginning by fixed date (2010-01-01)\n--It's used for generating MRR rows\nCREATE TABLE \"dates\"\nAS\n    SELECT\n        DATEADD(\n                DAY, \/* simple DATE math *\/\n                \"seq\".\"seq\", \/* adding generated numbers from fixed date *\/\n                \"oldday\"\n            ) :: DATE AS \"date\"\n    FROM (\n             SELECT\n                 '2010-01-01' AS \"oldday\" \/* FIXED DATE *\/\n         ) \"t1\"\n             LEFT JOIN (\n        SELECT\n            seq2() AS \"seq\" \/* SUBQUERY #1 *\/\n        FROM TABLE (generator(ROWCOUNT => 10000)) \/* - produce 10000 rows table with {0:9999} numbers *\/\n    ) \"seq\"\n    ORDER BY 1;",
+                "\/*\n--This can be used to remove rows of products which you don't want to include in MRR. You need to define such field in previous Transformations though.\n--remove non-MRR rows\nDELETE\nFROM \"contract_line\"\nWHERE \"product_type\" <> 'MRR';\n*\/\n\n--fill missing end date values\nUPDATE \"contract_line\"\nSET \"contract_line_end_date\"=year(current_date) || '-12-31'\nWHERE \"contract_line_end_date\" = '';",
+                "UPDATE \"contract\"\nSET \"contract_end_date\"=year(current_date) || '-12-31'\nWHERE \"contract_end_date\" = '';",
+                "\/*\n--If you have costs in your data as well, you can include them in this transformation\nUPDATE \"contract_line\"\nSET \"contract_line_cost\"='0'\nWHERE \"contract_line_cost\" = '';\n*\/\n\n--prepare tmp table with marked max end date of single product in contract_line table, so we know for which row to create prediction if there is single product more than once\n--that might happen when you're upselling\/downgrading in the middle of the month.\nCREATE TABLE \"contract_line_tmp\"\nAS\n    SELECT\n        \"l\".*,\n        \"max_end\".\"max_end_date\"\n    FROM \"contract_line\" \"l\"\n             LEFT JOIN (SELECT\n                            \"contract_id\",\n                            \"product_id\",\n                            max(\"contract_line_end_date\") AS \"max_end_date\"\n                        FROM \"contract_line\"\n                        GROUP BY 1, 2) AS \"max_end\"\n                       ON \"l\".\"contract_id\" = \"max_end\".\"contract_id\"\n                           AND \"l\".\"product_id\" = \"max_end\".\"product_id\"\n                           AND \"l\".\"contract_line_end_date\" = \"max_end\".\"max_end_date\";",
+                "--creating PK\n--add extra month per contract line and fill with zeroes, so we're abel to detect churn\n--don't do that for products switching during single month - just end the ending one in that particular month\n--use only (finished and) activated contracts for MRR calculation\n--add fake months till end of the next year of future revenue for activated contracts\n--if line is ending in december, alter join to end it in december next year\n--if line of activated contract ended up in the past, don't predict it\nCREATE TABLE \"mrr_tmp\"\nAS\n    SELECT DISTINCT\n        \"l\".\"contract_line_id\" || '|' || left(\"d\".\"date\", 7) || '-01' AS \"mrr_id\",\n        \"l\".\"contract_line_id\",\n        \"l\".\"opportunity_id\",\n        \"l\".\"contract_id\",\n        \"l\".\"product_id\",\n        \"l\".\"contract_line_currency\",\n        \"l\".\"contract_line_start_date\",\n        \"l\".\"contract_line_end_date\",\n        left(\"d\".\"date\", 7) || '-01'                                  AS \"date\",\n        (CASE\n            \/*WHEN \"date\" > \"l\".\"contract_line_end_date\"\n                AND (\"c\".\"status\" = 'Finished' OR \"l\".\"max_end_date\" IS NULL)\n                THEN 0*\/ --related to adding another status to the MRR, like status marking finished orders to calculate MRR in the past and cut the prediction when there is churn\n             WHEN \"date\" > \"l\".\"contract_line_end_date\"\n                 AND \"c\".\"status\" = 'Activated'\n                 AND \"l\".\"contract_line_end_date\" < current_date\n                 THEN 0\n             WHEN last_day(\"date\"::DATE) = iff(\"l\".\"contract_line_end_date\" LIKE '%-12-31',\n                                               dateadd(YEAR, 1, \"l\".\"contract_line_end_date\"),\n                                               YEAR(\"l\".\"contract_line_end_date\"::DATE) + 1 || '-12-31')\n                 AND \"status\" = 'Activated'\n                 AND \"l\".\"max_end_date\" IS NOT NULL\n                 THEN 0\n             ELSE \"l\".\"contract_line_quantity\"\n         END)                                                         AS \"contract_line_quantity\",\n        (CASE\n            \/*WHEN \"date\" > \"l\".\"contract_line_end_date\"\n                AND (\"c\".\"status\" = 'Finished' OR \"l\".\"max_end_date\" IS NULL)\n                THEN 0*\/ --related to adding another status to the MRR, like status marking finished orders to calculate MRR in the past and cut the prediction when there is churn\n             WHEN \"date\" > \"l\".\"contract_line_end_date\"\n                 AND \"c\".\"status\" = 'Activated'\n                 AND \"l\".\"contract_line_end_date\" < current_date\n                 THEN 0\n             WHEN last_day(\"date\"::DATE) = iff(\"l\".\"contract_line_end_date\" LIKE '%-12-31',\n                                               dateadd(YEAR, 1, \"l\".\"contract_line_end_date\"),\n                                               YEAR(\"l\".\"contract_line_end_date\"::DATE) + 1 || '-12-31')\n                 AND \"status\" = 'Activated'\n                 AND \"l\".\"max_end_date\" IS NOT NULL\n                 THEN 0\n             ELSE \"l\".\"contract_line_unit_price\"\n         END)                                                         AS \"contract_line_unit_price\"\/*,\n        --you can use this if you have costs in your data\n        (CASE\n             WHEN \"date\" > \"l\".\"contract_line_end_date\"\n                 AND (\"c\".\"status\" = 'Finished' OR \"l\".\"max_end_date\" IS NULL)\n                 THEN 0\n             WHEN \"date\" > \"l\".\"contract_line_end_date\"\n                 AND \"c\".\"status\" = 'Activated'\n                 AND \"l\".\"contract_line_end_date\" < current_date\n                 THEN 0\n             WHEN last_day(\"date\"::DATE) = iff(\"l\".\"contract_line_end_date\" LIKE '%-12-31',\n                                               dateadd(YEAR, 1, \"l\".\"contract_line_end_date\"),\n                                               YEAR(\"l\".\"contract_line_end_date\"::DATE) + 1 || '-12-31')\n                 AND \"status\" = 'Activated'\n                 AND \"l\".\"max_end_date\" IS NOT NULL\n                 THEN 0\n             ELSE \"l\".\"contract_line_cost\"\n         END)                                                         AS \"contract_line_cost\"*\/\n    FROM \"dates\" \"d\"\n             LEFT JOIN \"contract_line_tmp\" \"l\"\n                       ON \"d\".\"date\" BETWEEN \"l\".\"contract_line_start_date\" AND\n                           (CASE\n                                WHEN \"l\".\"contract_line_end_date\" LIKE '%-12-31'\n                                    AND \"l\".\"max_end_date\" IS NOT NULL\n                                    AND \"l\".\"contract_line_end_date\" >= current_date\n                                    THEN dateadd(YEAR, 1, \"l\".\"contract_line_end_date\")\n                                WHEN \"l\".\"max_end_date\" IS NOT NULL\n                                    AND \"l\".\"contract_line_end_date\" >= current_date\n                                    THEN YEAR(\"l\".\"contract_line_end_date\"::DATE) + 1 || '-12-31'\n                                ELSE dateadd(MONTH, 1, \"l\".\"contract_line_end_date\"::DATE)\n                            END)\n             LEFT JOIN \"contract\" \"c\"\n                       ON \"l\".\"contract_id\" = \"c\".\"contract_id\"\n    WHERE \"l\".\"contract_line_quantity\" * \"l\".\"contract_line_unit_price\" > 0\n      AND (left(to_date(dateadd(MONTH, 1, \"c\".\"contract_end_date\")), 7) >= left(\"d\".\"date\", 7) OR\n           \"c\".\"status\" = 'Activated')\n      AND \"c\".\"status\" IN ('Activated'\/*, 'Finished'*\/) --you can add another status to be included in MRR calculation\n;",
+                "--divide quantity when some lines start or end in the middle of the month\n--mark prediction for future MRR\nCREATE TABLE \"mrr_tmp2\"\nAS\n    SELECT\n        \"l\".\"mrr_id\",\n        \"l\".\"contract_line_id\",\n        \"l\".\"opportunity_id\",\n        \"l\".\"contract_id\",\n        \"l\".\"product_id\",\n        \"l\".\"contract_line_currency\",\n        \"l\".\"contract_line_start_date\",\n        \"l\".\"contract_line_end_date\",\n        \"l\".\"date\",\n        iff(left(\"l\".\"date\", 7) > left(\"l\".\"contract_line_end_date\", 7) AND \"c\".\"status\" = 'Activated', 'true',\n            'false')                         AS \"mrr_prediction\",\n        \"l\".\"contract_line_quantity\" \/ (CASE\n                                            WHEN left(\"l\".\"contract_line_start_date\", 7) = left(\"l\".\"date\", 7)\n                                                AND \"l\".\"contract_line_start_date\" > \"l\".\"date\"\n                                                THEN (datediff(DAY, \"l\".\"date\", last_day(\"l\".\"date\"::DATE)) + 1) \/\n                                                     datediff(DAY, \"l\".\"date\", \"l\".\"contract_line_start_date\")\n                                            WHEN left(\"l\".\"contract_line_end_date\", 7) = left(\"l\".\"date\", 7)\n                                                AND \"l\".\"contract_line_end_date\" < last_day(\"l\".\"date\"::DATE)\n                                                THEN (datediff(DAY, \"l\".\"date\", last_day(\"l\".\"date\"::DATE)) + 1) \/\n                                                     datediff(DAY, \"l\".\"contract_line_end_date\",\n                                                              last_day(\"l\".\"date\"::DATE))\n                                            ELSE 1\n                                        END) AS \"contract_line_quantity\",\n        \"l\".\"contract_line_unit_price\"\/*,\n        \"l\".\"contract_line_cost\"*\/\n    FROM \"mrr_tmp\" \"l\"\n             LEFT JOIN \"contract\" \"c\"\n                       ON \"l\".\"contract_id\" = \"c\".\"contract_id\";",
+                "--output table\n--caulculate previous values and fill zeroes for null results\nCREATE TABLE \"out_mrr\"\nAS\n    SELECT\n        \"r\".*,\n        ifnull(lag(\"r\".\"contract_line_quantity\")\n                   OVER (PARTITION BY \"r\".\"contract_line_id\" ORDER BY \"r\".\"date\"),\n               0) AS \"previous_contract_line_quantity\",\n        ifnull(lag(\"r\".\"contract_line_unit_price\")\n                   OVER (PARTITION BY \"r\".\"contract_line_id\" ORDER BY \"r\".\"date\"),\n               0) AS \"previous_contract_line_unit_price\"\/*,\n        ifnull(lag(\"r\".\"contract_line_cost\")\n                   OVER (PARTITION BY \"r\".\"contract_line_id\" ORDER BY \"r\".\"date\"),\n               0) AS \"previous_contract_line_cost\"*\/\n    FROM \"mrr_tmp2\" \"r\";"
+            ],
+            "input": [
+                {
+                    "destination": "contract",
+                    "datatypes": [],
+                    "whereColumn": "",
+                    "whereValues": [],
+                    "whereOperator": "eq",
+                    "columns": [],
+                    "loadType": "clone",
+                    "source_search": {
+                        "key": "bdm.scaffold.table.tag",
+                        "__SCAFFOLD_CHECK__.value": "CRMMMR_Salesforce.internal.outCrmContract"
+                    },
+                    "__SCAFFOLD_CHECK__.source": "out.c-cRMMMRSalesforce.crmContract",
+                    "__SCAFFOLD_CHECK__.original_source": "out.c-crm.contract"
+                },
+                {
+                    "destination": "contract_line",
+                    "datatypes": [],
+                    "whereColumn": "",
+                    "whereValues": [],
+                    "whereOperator": "eq",
+                    "columns": [],
+                    "loadType": "clone",
+                    "source_search": {
+                        "key": "bdm.scaffold.table.tag",
+                        "__SCAFFOLD_CHECK__.value": "CRMMMR_Salesforce.internal.outCrmContractLine"
+                    },
+                    "__SCAFFOLD_CHECK__.source": "out.c-cRMMMRSalesforce.crmContractLine",
+                    "__SCAFFOLD_CHECK__.original_source": "out.c-crm.contract_line"
+                }
+            ],
+            "name": "MRR - Contract Line",
+            "packages": [],
+            "requires": [],
+            "backend": "snowflake",
+            "type": "simple",
+            "id": "530867897",
+            "phase": "4",
+            "disabled": false,
+            "description": ""
+        },
+        "description": "",
+        "name": "MRR - Contract Line"
+    }
+]
