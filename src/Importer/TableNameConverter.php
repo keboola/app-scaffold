@@ -6,6 +6,7 @@ namespace Keboola\ScaffoldApp\Importer;
 
 final class TableNameConverter
 {
+    private const EXPECTED_MATCH_COUNT = 4;
     private const STAGED_TABLE_MATCH_PATTERN = '/'
     . '([^\.]+)' // stage $1
     . '\.c-' // .c-
@@ -36,7 +37,7 @@ final class TableNameConverter
     private function matchTableName(string $tableName): ?array
     {
         $isMatched = preg_match(self::STAGED_TABLE_MATCH_PATTERN, $tableName, $matches);
-        if (false === $isMatched || 4 !== count($matches)) {
+        if (false === $isMatched || self::EXPECTED_MATCH_COUNT !== count($matches)) {
             return null;
         };
         return $matches;
