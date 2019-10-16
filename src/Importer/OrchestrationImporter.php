@@ -7,7 +7,6 @@ namespace Keboola\ScaffoldApp\Importer;
 use Keboola\Component\JsonHelper;
 use Keboola\Component\UserException;
 use Keboola\Orchestrator\Client as OrchestratorClient;
-use Keboola\Orchestrator\OrchestrationTask;
 use Keboola\ScaffoldApp\Operation\OperationsConfig;
 use Keboola\StorageApi\Client;
 use Keboola\StorageApi\Components;
@@ -23,6 +22,8 @@ class OrchestrationImporter
         OperationsConfig::CREATE_CONFIGURATION_ROWS,
         OperationsConfig::CREATE_ORCHESTREATION,
     ];
+    public const SCAFFOLD_TABLE_TAG = 'bdm.scaffold.table.tag';
+    public const SCAFFOLD_VALUE_PREFIX = 'bdm.scaffold';
 
     /**
      * @var Client
@@ -83,7 +84,7 @@ class OrchestrationImporter
         $this->prepareScaffoldFolderStructure($scaffoldId);
         $p->advance();
 
-        $importedOperations = [];
+        $importedOperations = new OperationImportCollection();
         foreach ($orchestration['tasks'] as $rawTask) {
             $task = OrchestrationTaskFactory::createTaskFromResponse($rawTask);
 
@@ -104,7 +105,11 @@ class OrchestrationImporter
                 $configurationId
             ));
 
-            $importedOperations[] = $this->importTask($scaffoldId, $task, $configurationId);
+            $configuration = $this->componentsApiClient->getConfiguration($task->getComponent(), $configurationId);
+
+            $operationImport = OperationImportFactory::createOperationImport($configuration, $task, $scaffoldId);
+            $this->dumpOperation($scaffoldId, $operationImport);
+            $importedOperations->addImportedOperation($operationImport);
 
             $p->advance();
         }
@@ -145,55 +150,20 @@ class OrchestrationImporter
         }
     }
 
-    private function importTask(
-        string $scaffoldId,
-        OrchestrationTask $task,
-        string $configurationId
-    ): OperationImport {
-        $configuration = $this->componentsApiClient->getConfiguration($task->getComponent(), $configurationId);
-
-        $operationId = $this->convertToCamelCase($task->getComponent() . '_' . $this->generateRandomSufix());
-        $operationImport = new OperationImport(
-            lcfirst($operationId),
-            $task->getComponent(),
-            [
-                'name' => $configuration['name'],
-                'configuration' => $configuration['configuration'],
-            ],
-            $task,
-            $configuration['rows']
-        );
-
-        $this->dumpOperation($scaffoldId, $operationImport);
-
-        return $operationImport;
-    }
-
-    private function convertToCamelCase(string $string): string
-    {
-        foreach (['-', '.'] as $delimiter) {
-            $string = ucwords($string, $delimiter);
-        }
-        return str_replace(['-', '.'], '', $string);
-    }
-
-    private function generateRandomSufix(): string
-    {
-        return bin2hex(random_bytes(2));
-    }
-
     private function dumpOperation(
         string $scaffoldId,
         OperationImport $import
     ): void {
+        $operationFileName = sprintf(
+            '%s/%s/operations/%s/%s.json',
+            $this->scaffoldsDir,
+            $scaffoldId,
+            OperationsConfig::CREATE_CONFIGURATION,
+            $import->getOperationId()
+        );
+
         JsonHelper::writeFile(
-            sprintf(
-                '%s/%s/operations/%s/%s.json',
-                $this->scaffoldsDir,
-                $scaffoldId,
-                OperationsConfig::CREATE_CONFIGURATION,
-                $import->getOperationId()
-            ),
+            $operationFileName,
             $import->getCreateConfigurationJsonArray(),
             true
         );
@@ -215,15 +185,10 @@ class OrchestrationImporter
         );
     }
 
-    /**
-     * @param array $orchestration
-     * @param string $scaffoldId
-     * @param OperationImport[] $importedOperations
-     */
     private function dumpOrchestration(
         array $orchestration,
         string $scaffoldId,
-        array $importedOperations
+        OperationImportCollection $importedOperations
     ): void {
         $orchestrationOperationConfig = [
             'payload' => [
@@ -231,17 +196,20 @@ class OrchestrationImporter
                 'tasks' => [],
             ],
         ];
-        foreach ($importedOperations as $operation) {
+        foreach ($importedOperations->getImportedOperations() as $operation) {
             $orchestrationOperationConfig['payload']['tasks'][] = $operation->getOrchestrationTaskJsonArray();
         }
 
         JsonHelper::writeFile(
             sprintf(
-                '%s/%s/operations/%s/orchestration_%s.json',
+                '%s/%s/operations/%s/%s.json',
                 $this->scaffoldsDir,
                 $scaffoldId,
                 OperationsConfig::CREATE_ORCHESTREATION,
-                $this->generateRandomSufix()
+                CamelCaseConverterHelper::convertToCamelCase(
+                    'orchestration-' . $orchestration['name'],
+                    CamelCaseConverterHelper::STOP_WORDS_NO_UNDERSCORE
+                )
             ),
             $orchestrationOperationConfig,
             true

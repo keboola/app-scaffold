@@ -6,23 +6,12 @@ namespace Keboola\ScaffoldApp\Tests\Importer;
 
 use Keboola\Orchestrator\OrchestrationTask;
 use Keboola\ScaffoldApp\Importer\OperationImport;
-use Keboola\ScaffoldApp\Importer\OrchestrationTaskFactory;
-use PHPUnit\Framework\TestCase;
 
-class OperationImportTest extends TestCase
+class OperationImportTest extends ImporterBaseTestCase
 {
     public function testOperationImport(): void
     {
-        $task = OrchestrationTaskFactory::createTaskFromResponse([
-            'component' => 'keboola.component',
-            'action' => 'run',
-            'actionParameters' => [
-            ],
-            'continueOnFailure' => false,
-            'active' => true,
-            'timeoutMinutes' => null,
-            'phase' => 1,
-        ]);
+        $task = $this->getExampleOrchstrationTask();
         self::assertInstanceOf(OrchestrationTask::class, $task);
 
         $configurationRows = [
@@ -40,6 +29,7 @@ class OperationImportTest extends TestCase
         ];
 
         $operationImport = new OperationImport(
+            'scaffoldId',
             'operationId',
             'keboola.component',
             $payload,
@@ -47,6 +37,7 @@ class OperationImportTest extends TestCase
             $configurationRows
         );
 
+        self::assertEquals('scaffoldId', $operationImport->getScaffoldId());
         self::assertEquals('keboola.component', $operationImport->getComponentId());
         self::assertEquals($configurationRows, $operationImport->getConfigurationRows());
         self::assertEquals([

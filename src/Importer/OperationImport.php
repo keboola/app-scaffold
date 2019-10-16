@@ -33,7 +33,13 @@ class OperationImport
      */
     private $configurationRows;
 
+    /**
+     * @var string
+     */
+    private $scaffoldId;
+
     public function __construct(
+        string $scaffoldId,
         string $operationId,
         string $componentId,
         array $payload,
@@ -45,6 +51,12 @@ class OperationImport
         $this->payload = $payload;
         $this->task = $task;
         $this->configurationRows = $configurationRows;
+        $this->scaffoldId = $scaffoldId;
+    }
+
+    public function getScaffoldId(): string
+    {
+        return $this->scaffoldId;
     }
 
     public function getComponentId(): string
@@ -96,5 +108,15 @@ class OperationImport
             'continueOnFailure' => $this->task->getContinueOnFailure(),
             'phase' => $this->task->getPhase(),
         ];
+    }
+
+    public function getPayload(): array
+    {
+        return $this->payload;
+    }
+
+    public function getTask(): OrchestrationTask
+    {
+        return $this->task;
     }
 }
