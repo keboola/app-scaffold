@@ -54,7 +54,6 @@ class ExSalesforceConfigurationRowsDecoratorTest extends ImporterBaseTestCase
             $operationImport->getOrchestrationTaskJsonArray()['operationReferenceId']
         );
 
-        // phpcs:disable
         $expectedRows = [
             [
                 'configuration' => [
@@ -87,33 +86,29 @@ class ExSalesforceConfigurationRowsDecoratorTest extends ImporterBaseTestCase
                                     ],
                             ],
                             [
-                                'definition' =>
-                                    [
-                                        'component' => 'keboola.processor-add-metadata',
-                                    ],
-                                'parameters' =>
-                                    [
-                                        'tables' =>
-                                            [
+                                'definition' => [
+                                    'component' => 'keboola.processor-add-metadata',
+                                ],
+                                'parameters' => [
+                                    'tables' => [
+                                        [
+                                            'table' => 'sampleTableName.csv',
+                                            'metadata' => [
                                                 [
-                                                    'table' => 'sampleTableName.csv',
-                                                    'metadata' => [
-                                                        [
-                                                            'key' => 'bdm.scaffold.table.tag',
-                                                            '__SCAFFOLD_CHECK__value' =>
-                                                                'Scaffold_Id.internal.inHtnsExSalesforce######SampleTableName',
-                                                        ],
-                                                    ],
+                                                    'key' => 'bdm.scaffold.table.tag',
+                                                    '__SCAFFOLD_CHECK__value' =>
+                                                        'Scaffold_Id.internal.inHtnsExSalesforce######SampleTableName',
                                                 ],
                                             ],
+                                        ],
                                     ],
+                                ],
                             ],
                         ],
                     ],
                 ],
             ],
         ];
-        // phpcs:enable
         self::assertSame($expectedRows, $operationImport->getConfigurationRows());
     }
 
