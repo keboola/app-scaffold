@@ -26,7 +26,7 @@ class TableNameConverterTest extends TestCase
     {
         $import = $this->getOperationImport();
         self::assertEquals(
-            'out.scaffoldId.crmCompany',
+            'out.c-scaffoldId.crmCompany',
             $this->converterInstance->convertTableName($import, 'out.c-crm.company')
         );
 
