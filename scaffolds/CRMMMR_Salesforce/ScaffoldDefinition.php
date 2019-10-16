@@ -19,7 +19,7 @@ class ScaffoldDefinition implements ScaffoldInputDefinitionInterface
         // Add snowflake writer parameters
         $node->append(
             CommonDefinitions::getSnowflakeWriterConfig(
-                new TreeBuilder('keboolaWrDbSnowflake_2c7b')
+                new TreeBuilder('keboolaWrDbSnowflakeLooker')
             )
         );
         return $node;
@@ -29,7 +29,7 @@ class ScaffoldDefinition implements ScaffoldInputDefinitionInterface
         ArrayNodeDefinition $scaffoldNode
     ): void {
         // @formatter:off
-        $treeBuilder = new TreeBuilder('htnsExSalesforce_7666');
+        $treeBuilder = new TreeBuilder('htnsExSalesforceMRR');
         /** @var ArrayNodeDefinition $extractorNode */
         $extractorNode = $treeBuilder->getRootNode();
         $extractorNode->isRequired();
