@@ -18,14 +18,8 @@ class CamelCaseConverterHelperTest extends TestCase
         self::assertEquals('keboolaExSnowflakeSufix_underscore', $converted);
 
         $converted = CamelCaseConverterHelper::convertToCamelCase(
-            'keboola.ex-snowflake sufix_underscore',
-            CamelCaseConverterHelper::STOP_WORDS_NO_DOT
-        );
-        self::assertEquals('keboola.exSnowflakeSufixUnderscore', $converted);
-
-        $converted = CamelCaseConverterHelper::convertToCamelCase(
             'keboola.ex-snowflake sufix_underscore'
         );
-        self::assertEquals('keboola.exSnowflakeSufixUnderscore', $converted);
+        self::assertEquals('keboolaExSnowflakeSufixUnderscore', $converted);
     }
 }

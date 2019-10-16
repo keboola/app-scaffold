@@ -21,16 +21,21 @@ final class TableNameConverter
     ): string {
         $tableParts = $this->matchTableName($tableName);
         if (null === $tableParts) {
-            return $tableName;
+            // when not matching bucket table patern convert only to camel case
+            return CamelCaseConverterHelper::convertToCamelCase(
+                $tableName
+            );
         }
         [, $stage, $bucketName, $tableName] = $tableParts;
 
-        return $stage.'.c-'.CamelCaseConverterHelper::convertToCamelCase(sprintf(
-            '%s.%s-%s',
-            $operationImport->getScaffoldId(),
-            $bucketName,
-            $tableName
-        ));
+        $scaffoldId = CamelCaseConverterHelper::convertToCamelCase(
+            $operationImport->getScaffoldId()
+        );
+        $tableName = CamelCaseConverterHelper::convertToCamelCase(
+            $bucketName . '.' . $tableName
+        );
+
+        return sprintf('%s.c-%s.%s', $stage, $scaffoldId, $tableName);
     }
 
     private function matchTableName(string $tableName): ?array
@@ -49,26 +54,25 @@ final class TableNameConverter
         $tableParts = $this->matchTableName($tableName);
         if (null === $tableParts) {
             // in this case table si simple string and not in stage.c-bucketName.tableName format
-            return CamelCaseConverterHelper::convertToCamelCase(sprintf(
+            $tableName = CamelCaseConverterHelper::convertToCamelCase(
+                $tableName
+            );
+            return sprintf(
                 '%s.internal.%s',
                 $operationImport->getScaffoldId(),
                 $tableName
-            ));
+            );
         }
         [/** ignore $0 match */, $stage, $bucketName, $tableName] = $tableParts;
 
-        $tableName = CamelCaseConverterHelper::convertToCamelCase(
-            $tableName,
-            CamelCaseConverterHelper::STOP_WORDS_FULL
-        );
+        $tagName = CamelCaseConverterHelper::convertToCamelCase(sprintf(
+            '%s-%s-%s', // "-" will be removed it's only for camel case conversion
+            $stage,
+            $bucketName,
+            $tableName
+        ));
 
         // scaffoldId is not converted to camel case
-        return $operationImport->getScaffoldId()
-            . CamelCaseConverterHelper::convertToCamelCase(sprintf(
-                '.internal.%s-%s-%s',
-                $stage,
-                $bucketName,
-                $tableName
-            ));
+        return sprintf('%s.internal.%s', $operationImport->getScaffoldId(), $tagName);
     }
 }

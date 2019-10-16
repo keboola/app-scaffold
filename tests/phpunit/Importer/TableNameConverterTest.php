@@ -30,9 +30,9 @@ class TableNameConverterTest extends TestCase
             $this->converterInstance->convertTableName($import, 'out.c-crm.company')
         );
 
-        // not matching patern
+        // not matching patern only camel case
         self::assertEquals(
-            'something-else',
+            'somethingElse',
             $this->converterInstance->convertTableName($import, 'something-else')
         );
     }
