@@ -23,12 +23,12 @@
             "componentId": "keboola.ex-db-snowflake",
             "schema": {
                 "type": "object",
-                "title": "Database Credentials",
                 "required": [
                     "db"
                 ],
                 "properties": {
                     "db": {
+                        "title": "Database Credentials",
                         "type": "object",
                         "required": [
                             "host",
