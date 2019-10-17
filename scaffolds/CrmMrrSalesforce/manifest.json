@@ -1,9 +1,12 @@
 {
+    "name": "CRM & MRR-Salesforce (+SF Writer)",
     "author": "Keboola",
     "description": "CRM & MRR-Salesforce (+SF Writer)",
     "inputs": [
         {
             "id": "htnsExSalesforceMRR",
+            "name": "Extractor",
+            "required": true,
             "componentId": "htns.ex-salesforce",
             "schema": {
                 "type": "object",
@@ -29,10 +32,17 @@
                     },
                     "sandbox": {
                         "type": "boolean",
-                        "default" : false
+                        "default": false
                     }
                 }
             }
+        },
+        {
+            "id": "keboolaWrDbSnowflakeLooker",
+            "name": "Writer",
+            "required": true,
+            "componentId": "keboola.wr-db-snowflake",
+            "schema": null
         }
     ]
 }

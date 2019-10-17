@@ -1,10 +1,13 @@
 {
+    "name": "This is only a test",
     "author": "John Doe",
-    "description": "Sample Description",
+    "description": "Sample Description longer than 20 characters.",
     "inputs": [
         {
             "id": "connectionWriter",
             "componentId": "keboola.wr-storage",
+            "name": "Writer",
+            "required": true,
             "schema": {
                 "type": "object",
                 "required": [
@@ -21,6 +24,8 @@
         {
             "id": "snowflakeExtractor",
             "componentId": "keboola.ex-db-snowflake",
+            "name": "Extractor",
+            "required": true,
             "schema": {
                 "type": "object",
                 "required": [
