@@ -2,6 +2,6 @@
     "componentId": "transformation",
     "payload": {
         "name": "Salesforce CRM & MRR",
-        "configuration": []
+        "configuration": {}
     }
 }

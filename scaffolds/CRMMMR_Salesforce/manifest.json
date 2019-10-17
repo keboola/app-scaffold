@@ -14,13 +14,16 @@
                 ],
                 "properties": {
                     "loginname": {
+                        "title": "Login Name",
                         "type": "string"
                     },
                     "#password": {
-                        "type": "string"
+                        "title": "Password",
+                        "type": "password"
                     },
                     "#securitytoken": {
-                        "type": "string"
+                        "title": "Security Token",
+                        "type": "password"
                     },
                     "sandbox": {
                         "type": "boolean",
@@ -50,21 +53,27 @@
                         ],
                         "properties": {
                             "host": {
+                                "title": "Host Name",
                                 "type": "string"
                             },
                             "user": {
+                                "title": "Username",
                                 "type": "string"
                             },
                             "schema": {
+                                "title": "Schema",
                                 "type": "string"
                             },
                             "database": {
+                                "title": "Database",
                                 "type": "string"
                             },
                             "#password": {
-                                "type": "string"
+                                "title": "Password",
+                                "type": "password"
                             },
                             "warehouse": {
+                                "title": "Warehouse",
                                 "type": "string"
                             }
                         }
