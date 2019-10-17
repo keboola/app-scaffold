@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Keboola\Scaffolds\CRMMMR_Salesforce;
+namespace Keboola\Scaffolds\CrmMrrSalesforce;
 
 use Keboola\ScaffoldApp\ScaffoldInputDefinitionInterface;
 use Keboola\Scaffolds\CommonDefinitions;
