@@ -29,7 +29,7 @@ class ValidateScaffoldsCommand extends Command
     protected function configure(): void
     {
         $this
-            ->setDescription('Vallidate all scaffolds.');
+            ->setDescription('Validate all scaffolds.');
     }
 
     /**
