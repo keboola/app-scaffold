@@ -49,7 +49,7 @@ class AbstractDecoratorTest extends TestCase
         return $import;
     }
 
-    public function getInstance(): DecoratorInterface
+    public function getInstance(): AbstractDecorator
     {
         return new class(new NullOutput) extends AbstractDecorator
         {
