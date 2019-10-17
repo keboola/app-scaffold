@@ -41,6 +41,7 @@ Import command will import orchestration and tasks configurations. Template of `
 ```
 docker-compose run --rm dev composer console scaffold:import:orchestration <KBC_URL> <SAPI_TOKEN> <ORCHESTRATION_ID> <SCAFFOLD_ID>
 ```
+SCAFFOLD_ID - is part of namespace of `ScaffoldDefinition` class, keep this in mind and use `CamelCase` syntax with alpha characters only.
 
 ### Decorators
 

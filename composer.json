@@ -4,7 +4,8 @@
         "keboola/orchestrator-php-client": "^1.2",
         "keboola/php-component": "^7.0.1",
         "keboola/storage-api-client": "^10.7",
-        "symfony/console": "^4.3"
+        "symfony/console": "^4.3",
+        "symfony/validator": "^4.3"
     },
     "require-dev": {
         "jakub-onderka/php-parallel-lint": "^1.0",

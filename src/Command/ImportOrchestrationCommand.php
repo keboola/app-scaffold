@@ -13,6 +13,9 @@ use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
+use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Component\Validator\ConstraintViolationListInterface;
+use Symfony\Component\Validator\Validation;
 
 class ImportOrchestrationCommand extends Command
 {
@@ -51,6 +54,10 @@ ____ ____ ____ ____ ____ ____ ____ ____
 EOT
         );
 
+        if ($this->validateArguments($input, $output) !== null) {
+            return 1;
+        }
+
         $logger = $output->isVerbose() ? new Logger() : new NullLogger();
 
         $client = new Client(
@@ -65,7 +72,51 @@ EOT
         $importer = new OrchestrationImporter($client, $orchestrationApiClient, $output);
         $importer->importOrchestration(
             (int) $input->getArgument('ORCHESTRATION_ID'),
-            $input->getArgument('SCAFFOLD_ID')
+            ucfirst($input->getArgument('SCAFFOLD_ID'))
         );
+
+        return 0;
+    }
+
+    private function validateArguments(
+        InputInterface $input,
+        OutputInterface $output
+    ): ?ConstraintViolationListInterface {
+        $validator = Validation::createValidator();
+        $arguments = $input->getArguments();
+
+        $constraint = new Assert\Collection([
+            'allowExtraFields' => true,
+            'fields' => [
+                'KBC_URL' => new Assert\Url([
+                    'protocols' => ['https'],
+                    'message' => 'The url {{ value }} is not a valid KBC url.',
+                ]),
+                'ORCHESTRATION_ID' => new Assert\Type([
+                    'type' => 'numeric',
+                    'message' => 'Orchestration id must be number.',
+                ]),
+                'SCAFFOLD_ID' => [
+                    new Assert\Length([
+                        'min' => 5,
+                        'minMessage' => 'Scaffold id must be at least {{ limit }} characters long.',
+                    ]),
+                    new Assert\Type([
+                        'type' => 'alpha',
+                        'message' => 'Scaffold id is part of PHP namespace alpha characters are only allowed.',
+                    ]),
+                ],
+            ],
+        ]);
+
+        $violations = $validator->validate($arguments, $constraint);
+
+        if (0 !== count($violations)) {
+            foreach ($violations as $violation) {
+                $output->writeln($violation->getMessage());
+            }
+            return $violations;
+        }
+        return null;
     }
 }
