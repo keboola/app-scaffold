@@ -128,7 +128,7 @@ class OrchestrationImporter
         $p->advance();
 
         $p->setMessage('# Dumping Scaffold manifest file.');
-        $this->dumpScaffoldManifestTemplate($scaffoldId);
+        $this->dumpScaffoldManifestTemplate($scaffoldId, $importedOperations, $orchestration);
         $p->advance();
 
         $p->finish();
@@ -210,13 +210,18 @@ class OrchestrationImporter
                 $this->scaffoldsDir,
                 $scaffoldId,
                 OperationsConfig::CREATE_ORCHESTREATION,
-                CamelCaseConverterHelper::convertToCamelCase(
-                    'orchestration-' . $orchestration['name'],
-                    CamelCaseConverterHelper::STOP_WORDS_NO_UNDERSCORE
-                )
+                $this->getOrchestrationOperationId($orchestration)
             ),
             $orchestrationOperationConfig,
             true
+        );
+    }
+
+    private function getOrchestrationOperationId(array $orchestration): string
+    {
+        return CamelCaseConverterHelper::convertToCamelCase(
+            'orchestration-' . $orchestration['name'],
+            CamelCaseConverterHelper::STOP_WORDS_NO_UNDERSCORE
         );
     }
 
@@ -261,12 +266,34 @@ EOT;
         );
     }
 
-    private function dumpScaffoldManifestTemplate(string $scaffoldId): void
-    {
+    private function dumpScaffoldManifestTemplate(
+        string $scaffoldId,
+        OperationImportCollection $importedOperations,
+        array $orchestration
+    ): void {
         $manifestTemplate = [
+            'name' => '',
             'author' => 'Keboola',
-            'description' => 'Sample Description',
+            'description' => '',
             'inputs' => [],
+        ];
+
+        foreach ($importedOperations->getImportedOperations() as $operation) {
+            $manifestTemplate['inputs'][] = [
+                'id' => $operation->getOperationId(),
+                'componentId' => $operation->getComponentId(),
+                'name' => $operation->getPayload()['name'] ?? '',
+                'required' => true,
+                'schema' => null,
+            ];
+        }
+
+        $manifestTemplate['inputs'][] = [
+            'id' => $this->getOrchestrationOperationId($orchestration),
+            'componentId' => 'orchestration',
+            'name' => $orchestration['name'],
+            'required' => true,
+            'schema' => null,
         ];
 
         JsonHelper::writeFile(
