@@ -19,11 +19,13 @@
                     },
                     "#password": {
                         "title": "Password",
-                        "type": "password"
+                        "type": "string",
+                        "format": "password"
                     },
                     "#securitytoken": {
                         "title": "Security Token",
-                        "type": "password"
+                        "type": "string",
+                        "format": "password"
                     },
                     "sandbox": {
                         "type": "boolean",
@@ -70,7 +72,8 @@
                             },
                             "#password": {
                                 "title": "Password",
-                                "type": "password"
+                                "type": "string",
+                                "format": "password"
                             },
                             "warehouse": {
                                 "title": "Warehouse",
