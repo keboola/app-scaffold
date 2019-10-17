@@ -11,10 +11,41 @@ use PHPUnit\Framework\TestCase;
 
 class TableNameConverterTest extends TestCase
 {
+    public const CONVERT_TABLE_NAME_TO_METADATA_VALUES = [
+        [
+            'expected' => 'scaffoldId.internal.outCrmCompany',
+            'input' => 'out.c-crm.company',
+        ],
+        [ // not matching patern
+            'expected' => 'scaffoldId.internal.somethingElse',
+            'input' => 'something-else',
+        ],
+    ];
+    public const CONVERT_TABLE_NAME_VALUES = [
+        [
+            'expected' => 'out.c-scaffoldId.crmCompany',
+            'input' => 'out.c-crm.company',
+        ],
+        [ // not matching patern only camel case
+            'expected' => 'somethingElse',
+            'input' => 'something-else',
+        ],
+    ];
+
     /**
      * @var TableNameConverter
      */
     private $converterInstance;
+
+    public function convertTableNameProvider(): array
+    {
+        return self::CONVERT_TABLE_NAME_VALUES;
+    }
+
+    public function convertTableNameToMetadataValueProvider(): array
+    {
+        return self::CONVERT_TABLE_NAME_TO_METADATA_VALUES;
+    }
 
     protected function setUp(): void
     {
@@ -22,33 +53,15 @@ class TableNameConverterTest extends TestCase
         $this->converterInstance = new TableNameConverter;
     }
 
-    public function testConvertTableName(): void
+    /**
+     * @dataProvider convertTableNameProvider
+     */
+    public function testConvertTableName(string $expected, string $input): void
     {
         $import = $this->getOperationImport();
         self::assertEquals(
-            'out.c-scaffoldId.crmCompany',
-            $this->converterInstance->convertTableName($import, 'out.c-crm.company')
-        );
-
-        // not matching patern only camel case
-        self::assertEquals(
-            'somethingElse',
-            $this->converterInstance->convertTableName($import, 'something-else')
-        );
-    }
-
-    public function testConvertTableNameToMetadataValue(): void
-    {
-        $import = $this->getOperationImport();
-        self::assertEquals(
-            'scaffoldId.internal.outCrmCompany',
-            $this->converterInstance->convertTableNameToMetadataValue($import, 'out.c-crm.company')
-        );
-
-        // not matching patern
-        self::assertEquals(
-            'scaffoldId.internal.somethingElse',
-            $this->converterInstance->convertTableNameToMetadataValue($import, 'something-else')
+            $expected,
+            $this->converterInstance->convertTableName($import, $input)
         );
     }
 
@@ -62,5 +75,19 @@ class TableNameConverterTest extends TestCase
             new OrchestrationTask()
         );
         return $import;
+    }
+
+    /**
+     * @dataProvider convertTableNameToMetadataValueProvider
+     */
+    public function testConvertTableNameToMetadataValue(
+        string $expected,
+        string $input
+    ): void {
+        $import = $this->getOperationImport();
+        self::assertEquals(
+            $expected,
+            $this->converterInstance->convertTableNameToMetadataValue($import, $input)
+        );
     }
 }

@@ -6,7 +6,6 @@ namespace Keboola\ScaffoldApp\Importer\Decorator;
 
 use Keboola\ScaffoldApp\Importer\OperationImport;
 use Keboola\ScaffoldApp\Importer\OrchestrationImporter;
-use Keboola\ScaffoldApp\Importer\TableNameConverter;
 
 /**
  * # Use case:
@@ -23,20 +22,8 @@ use Keboola\ScaffoldApp\Importer\TableNameConverter;
  * and original source is kept under `__SCAFFOLD_CHECK__.original_source`
  *
  */
-class StorageInputTablesDecorator implements DecoratorInterface
+class StorageInputTablesDecorator extends AbstractDecorator
 {
-    /**
-     * @var TableNameConverter
-     */
-    private $tableNameConverter;
-
-    /**
-     * ExSalesforceConfigurationRowsDecorator constructor.
-     */
-    public function __construct()
-    {
-        $this->tableNameConverter = new TableNameConverter;
-    }
 
     public function getDecoratedProjectImport(
         OperationImport $operationImport
@@ -58,7 +45,7 @@ class StorageInputTablesDecorator implements DecoratorInterface
         foreach ($payload['configuration']['storage']['input']['tables'] as &$table) {
             if (!empty($table['source']) && empty($table['source_search'])) {
                 $convertedMetadataValue =
-                    $this->tableNameConverter->convertTableNameToMetadataValue(
+                    $this->convertTableNameToMetadataValue(
                         $operationImport,
                         $table['source']
                     );

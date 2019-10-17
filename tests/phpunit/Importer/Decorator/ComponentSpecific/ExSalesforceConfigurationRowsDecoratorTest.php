@@ -7,6 +7,7 @@ namespace Keboola\ScaffoldApp\Tests\Importer\Decorator;
 use Keboola\ScaffoldApp\Importer\Decorator\ComponentSpecific\ExSalesforceConfigurationRowsDecorator;
 use Keboola\ScaffoldApp\Importer\OperationImportFactory;
 use Keboola\ScaffoldApp\Tests\Importer\ImporterBaseTestCase;
+use Symfony\Component\Console\Output\NullOutput;
 
 class ExSalesforceConfigurationRowsDecoratorTest extends ImporterBaseTestCase
 {
@@ -44,7 +45,8 @@ class ExSalesforceConfigurationRowsDecoratorTest extends ImporterBaseTestCase
         $operationImport = OperationImportFactory::createOperationImport(
             $configuration,
             $task,
-            'Scaffold_Id'
+            'Scaffold_Id',
+            new NullOutput
         );
 
         self::assertEquals('htnsExSalesforceConfigurationName', $operationImport->getOperationId());
@@ -123,10 +125,11 @@ class ExSalesforceConfigurationRowsDecoratorTest extends ImporterBaseTestCase
                 'rows' => [],
             ],
             $task,
-            'scaffoldId'
+            'scaffoldId',
+            new NullOutput
         );
 
-        $decorator = new ExSalesforceConfigurationRowsDecorator();
+        $decorator = new ExSalesforceConfigurationRowsDecorator(new NullOutput);
 
         self::assertFalse($decorator->supports($operationImport));
     }
@@ -167,10 +170,11 @@ class ExSalesforceConfigurationRowsDecoratorTest extends ImporterBaseTestCase
         $operationImport = OperationImportFactory::createOperationImport(
             $configuration,
             $task,
-            'scaffoldId'
+            'scaffoldId',
+            new NullOutput
         );
 
-        $decorator = new ExSalesforceConfigurationRowsDecorator();
+        $decorator = new ExSalesforceConfigurationRowsDecorator(new NullOutput);
 
         self::assertFalse($decorator->supports($operationImport));
     }
@@ -201,10 +205,11 @@ class ExSalesforceConfigurationRowsDecoratorTest extends ImporterBaseTestCase
         $operationImport = OperationImportFactory::createOperationImport(
             $configuration,
             $task,
-            'scaffoldId'
+            'scaffoldId',
+            new NullOutput
         );
 
-        $decorator = new ExSalesforceConfigurationRowsDecorator();
+        $decorator = new ExSalesforceConfigurationRowsDecorator(new NullOutput);
 
         self::assertTrue($decorator->supports($operationImport));
     }
