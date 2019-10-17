@@ -16,5 +16,5 @@ interface AuthorizationInterface
         Configuration $configuration,
         Client $storageClient,
         EncryptionClient $encryptionClient
-    );
+    ): void;
 }

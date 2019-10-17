@@ -18,7 +18,7 @@ class SnowflakeAuthorization implements AuthorizationInterface
         Configuration $configuration,
         Client $storageClient,
         EncryptionClient $encryptionClient
-    ) {
+    ): void {
         $workspace = new Workspaces($storageClient);
         $data = $workspace->createWorkspace([
             'name' => $configuration->getConfigurationId(),

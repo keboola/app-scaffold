@@ -83,7 +83,12 @@ class CreateConfigurationOperation implements OperationInterface
             )
         );
 
-        $operationConfig->getAuthorization()->authorize($this->logger, $configuration, $this->storageApiClient, $this->encryptionApiClient);
+        $operationConfig->getAuthorization()->authorize(
+            $this->logger,
+            $configuration,
+            $this->storageApiClient,
+            $this->encryptionApiClient
+        );
         // save id for use in orchestration
         $store->add($operationConfig->getId(), self::class, $configuration);
     }
