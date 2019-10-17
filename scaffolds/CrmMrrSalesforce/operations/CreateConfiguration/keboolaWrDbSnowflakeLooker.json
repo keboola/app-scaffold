@@ -765,7 +765,7 @@
                             ],
                             "source_search": {
                                 "key": "bdm.scaffold.table.tag",
-                                "value": "CRMMMR_Salesforce.internal.outCrmCompany"
+                                "value": "CrmMrrSalesforce.internal.outCrmCompany"
                             }
                         },
                         {
@@ -782,7 +782,7 @@
                             ],
                             "source_search": {
                                 "key": "bdm.scaffold.table.tag",
-                                "value": "CRMMMR_Salesforce.internal.outCrmContract"
+                                "value": "CrmMrrSalesforce.internal.outCrmContract"
                             }
                         },
                         {
@@ -800,7 +800,7 @@
                             ],
                             "source_search": {
                                 "key": "bdm.scaffold.table.tag",
-                                "value": "CRMMMR_Salesforce.internal.outCrmContractLine"
+                                "value": "CrmMrrSalesforce.internal.outCrmContractLine"
                             }
                         },
                         {
@@ -813,7 +813,7 @@
                             ],
                             "source_search": {
                                 "key": "bdm.scaffold.table.tag",
-                                "value": "CRMMMR_Salesforce.internal.outCrmEmployee"
+                                "value": "CrmMrrSalesforce.internal.outCrmEmployee"
                             }
                         },
                         {
@@ -833,7 +833,7 @@
                             ],
                             "source_search": {
                                 "key": "bdm.scaffold.table.tag",
-                                "value": "CRMMMR_Salesforce.internal.outCrmOpportunity"
+                                "value": "CrmMrrSalesforce.internal.outCrmOpportunity"
                             }
                         },
                         {
@@ -850,7 +850,7 @@
                             ],
                             "source_search": {
                                 "key": "bdm.scaffold.table.tag",
-                                "value": "CRMMMR_Salesforce.internal.outCrmOpportunitySnapshot"
+                                "value": "CrmMrrSalesforce.internal.outCrmOpportunitySnapshot"
                             }
                         },
                         {
@@ -862,7 +862,7 @@
                             ],
                             "source_search": {
                                 "key": "bdm.scaffold.table.tag",
-                                "value": "CRMMMR_Salesforce.internal.outCrmProduct"
+                                "value": "CrmMrrSalesforce.internal.outCrmProduct"
                             }
                         },
                         {
@@ -880,7 +880,7 @@
                             ],
                             "source_search": {
                                 "key": "bdm.scaffold.table.tag",
-                                "value": "CRMMMR_Salesforce.internal.outMrrMrr"
+                                "value": "CrmMrrSalesforce.internal.outMrrMrr"
                             }
                         },
                         {
@@ -898,7 +898,7 @@
                             ],
                             "source_search": {
                                 "key": "bdm.scaffold.table.tag",
-                                "value": "CRMMMR_Salesforce.internal.outMrrMrrAggregated"
+                                "value": "CrmMrrSalesforce.internal.outMrrMrrAggregated"
                             }
                         },
                         {
@@ -916,7 +916,7 @@
                             ],
                             "source_search": {
                                 "key": "bdm.scaffold.table.tag",
-                                "value": "CRMMMR_Salesforce.internal.outCrmContact"
+                                "value": "CrmMrrSalesforce.internal.outCrmContact"
                             }
                         },
                         {
@@ -930,7 +930,7 @@
                             ],
                             "source_search": {
                                 "key": "bdm.scaffold.table.tag",
-                                "value": "CRMMMR_Salesforce.internal.outCrmOpportunityContact"
+                                "value": "CrmMrrSalesforce.internal.outCrmOpportunityContact"
                             }
                         }
                     ]

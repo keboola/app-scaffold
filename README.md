@@ -71,7 +71,7 @@ Naming must contain Component name, if decorator supports more than one componen
 
 **Component specific decorators:**
 
-- **ExSalesforceConfigurationRowsDecorator**: appends after [processors](https://developers.keboola.com/extend/component/processors/). Configuration rows has `configuration.parameters.objects[].name` path. Metadata tag looks like this: `CRMMMR_Salesforce.internal.inHtnsExSalesforce######Order` Component uses default bucket and `######` must be replaced with configurationId or changed to something specific.
+- **ExSalesforceConfigurationRowsDecorator**: appends after [processors](https://developers.keboola.com/extend/component/processors/). Configuration rows has `configuration.parameters.objects[].name` path. Metadata tag looks like this: `CrmMrrSalesforce.internal.inHtnsExSalesforce######Order` Component uses default bucket and `######` must be replaced with configurationId or changed to something specific.
 
 #### Disabling decorators
 

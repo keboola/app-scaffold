@@ -35,7 +35,7 @@
                                     "metadata": [
                                         {
                                             "key": "bdm.scaffold.table.tag",
-                                            "value": "CRMMMR_Salesforce.internal.inHtnsExSalesforce01Account"
+                                            "value": "CrmMrrSalesforce.internal.inHtnsExSalesforce01Account"
                                         }
                                     ]
                                 }
@@ -84,7 +84,7 @@
                                     "metadata": [
                                         {
                                             "key": "bdm.scaffold.table.tag",
-                                            "value": "CRMMMR_Salesforce.internal.inHtnsExSalesforce01Opportunity"
+                                            "value": "CrmMrrSalesforce.internal.inHtnsExSalesforce01Opportunity"
                                         }
                                     ]
                                 }
@@ -133,7 +133,7 @@
                                     "metadata": [
                                         {
                                             "key": "bdm.scaffold.table.tag",
-                                            "value": "CRMMMR_Salesforce.internal.inHtnsExSalesforce01Order"
+                                            "value": "CrmMrrSalesforce.internal.inHtnsExSalesforce01Order"
                                         }
                                     ]
                                 }
@@ -182,7 +182,7 @@
                                     "metadata": [
                                         {
                                             "key": "bdm.scaffold.table.tag",
-                                            "value": "CRMMMR_Salesforce.internal.inHtnsExSalesforce01Orderitem"
+                                            "value": "CrmMrrSalesforce.internal.inHtnsExSalesforce01Orderitem"
                                         }
                                     ]
                                 }
@@ -231,7 +231,7 @@
                                     "metadata": [
                                         {
                                             "key": "bdm.scaffold.table.tag",
-                                            "value": "CRMMMR_Salesforce.internal.inHtnsExSalesforce01Product2"
+                                            "value": "CrmMrrSalesforce.internal.inHtnsExSalesforce01Product2"
                                         }
                                     ]
                                 }
@@ -280,7 +280,7 @@
                                     "metadata": [
                                         {
                                             "key": "bdm.scaffold.table.tag",
-                                            "value": "CRMMMR_Salesforce.internal.inHtnsExSalesforce01User"
+                                            "value": "CrmMrrSalesforce.internal.inHtnsExSalesforce01User"
                                         }
                                     ]
                                 }
@@ -329,7 +329,7 @@
                                     "metadata": [
                                         {
                                             "key": "bdm.scaffold.table.tag",
-                                            "value": "CRMMMR_Salesforce.internal.inHtnsExSalesforce01Lead"
+                                            "value": "CrmMrrSalesforce.internal.inHtnsExSalesforce01Lead"
                                         }
                                     ]
                                 }
@@ -378,7 +378,7 @@
                                     "metadata": [
                                         {
                                             "key": "bdm.scaffold.table.tag",
-                                            "value": "CRMMMR_Salesforce.internal.inHtnsExSalesforce01Contact"
+                                            "value": "CrmMrrSalesforce.internal.inHtnsExSalesforce01Contact"
                                         }
                                     ]
                                 }
@@ -427,7 +427,7 @@
                                     "metadata": [
                                         {
                                             "key": "bdm.scaffold.table.tag",
-                                            "value": "CRMMMR_Salesforce.internal.inHtnsExSalesforce01Opportunitycontactrole"
+                                            "value": "CrmMrrSalesforce.internal.inHtnsExSalesforce01Opportunitycontactrole"
                                         }
                                     ]
                                 }
