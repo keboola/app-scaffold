@@ -12,6 +12,7 @@
                 ],
                 "properties": {
                     "#token": {
+                        "title": "Storage API Token",
                         "type": "string"
                     }
                 }
@@ -22,6 +23,7 @@
             "componentId": "keboola.ex-db-snowflake",
             "schema": {
                 "type": "object",
+                "title": "Database Credentials",
                 "required": [
                     "db"
                 ],
@@ -38,21 +40,27 @@
                         ],
                         "properties": {
                             "host": {
+                                "title": "Host Name",
                                 "type": "string"
                             },
                             "user": {
+                                "title": "Username",
                                 "type": "string"
                             },
                             "schema": {
+                                "title": "Schema",
                                 "type": "string"
                             },
                             "database": {
+                                "title": "Database",
                                 "type": "string"
                             },
                             "#password": {
-                                "type": "string"
+                                "title": "Password",
+                                "type": "password"
                             },
                             "warehouse": {
+                                "title": "Warehouse",
                                 "type": "string"
                             }
                         }
