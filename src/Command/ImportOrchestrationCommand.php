@@ -81,7 +81,7 @@ EOT
     private function validateArguments(
         InputInterface $input,
         OutputInterface $output
-    ) :?ConstraintViolationListInterface{
+    ): ?ConstraintViolationListInterface {
         $validator = Validation::createValidator();
         $arguments = $input->getArguments();
 

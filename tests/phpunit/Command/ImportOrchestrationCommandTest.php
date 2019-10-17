@@ -25,10 +25,11 @@ class ImportOrchestrationCommandTest extends TestCase
         ]);
 
         $output = $commandTester->getDisplay();
-        $this->assertContains('The url "http://connection.keboola.com" is not a valid KBC url.', $output);
-        $this->assertContains('Orchestration id must be number.', $output);
-        $this->assertContains('Scaffold id must be at least 5 characters long.', $output);
-        $this->assertContains('Scaffold id is part of PHP namespace alpha characters are only allowed.', $output);
+        self::assertContains('The url "http://connection.keboola.com" is not a valid KBC url.', $output);
+        self::assertContains('Orchestration id must be number.', $output);
+        self::assertContains('Scaffold id must be at least 5 characters long.', $output);
+        self::assertContains('Scaffold id is part of PHP namespace alpha characters are only allowed.', $output);
+        self::assertEquals(1, $commandTester->getStatusCode());
     }
 
     private function getCommand(): Command
