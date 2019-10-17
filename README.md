@@ -85,9 +85,10 @@ Any decorator can be disabled in `Keboola\ScaffoldApp\Importer\OperationImportFa
 - If any parameters are going to be passed from runner `manifest.json` file `inputs` must be configured and can be validated by ScaffoldDefinition.php
 - Don't forget to test scaffold in sample project if all mappings works, this is not possible to validate.
 - If you want to use Snowflake or Redshift provisioned database, add `"authorization": "provisionedSnowflake"` or `"authorization": "provisionedRedshift"`
-to the root of a Snowflake or Redshift writer operation configuration. 
-- If the component uses OAuth authorization, add `"authorization": "oauth"` to the root of the operation configuration. This will mark the created configuration 
-that it needs to be authorized manually by the end-user. 
+to the root of a Snowflake or Redshift writer operation configuration.
+- If the component uses OAuth authorization, add `"authorization": "oauth"` to the root of the operation configuration. This will mark the created configuration
+that it needs to be authorized manually by the end-user.
+- Use command `docker-compose run --rm dev composer console scaffold:validate` to validate created scaffold
 
 ## Parameters
 
