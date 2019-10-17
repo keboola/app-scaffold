@@ -39,7 +39,6 @@ final class ManifestValidator
 
     private function getConstraints(): Assert\Collection
     {
-        $that = $this;
         return new Assert\Collection([
             'allowExtraFields' => true,
             'fields' => [
@@ -63,8 +62,8 @@ final class ManifestValidator
                         array $object,
                         ExecutionContextInterface $context,
                         $payload
-                    ) use ($that): void {
-                        $that->validateScaffoldInputsOperationListing($context, $payload);
+                    ): void {
+                        $this->validateScaffoldInputsOperationListing($context);
                     }),
                 ],
             ],
@@ -97,12 +96,9 @@ final class ManifestValidator
         ];
     }
 
-    // phpcs:ignore
     private function validateScaffoldInputsOperationListing(
-        ExecutionContextInterface $context,
-        $payload
+        ExecutionContextInterface $context
     ): void {
-        // phpcs:enable
         $missingOperations = $this->getMissingOperationsInInputs(OperationsConfig::CREATE_CONFIGURATION);
         $missingOperations = array_merge(
             $missingOperations,
