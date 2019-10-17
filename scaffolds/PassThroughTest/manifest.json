@@ -7,6 +7,7 @@
             "componentId": "keboola.wr-storage",
             "schema": {
                 "type": "object",
+                "title": "Keboola Connection Storage Writer",
                 "required": [
                     "#token"
                 ],
@@ -23,12 +24,13 @@
             "componentId": "keboola.ex-db-snowflake",
             "schema": {
                 "type": "object",
-                "title": "Database Credentials",
+                "title": "Snowflake Extractor",
                 "required": [
                     "db"
                 ],
                 "properties": {
                     "db": {
+                        "title": "Database Credentials",
                         "type": "object",
                         "required": [
                             "host",
