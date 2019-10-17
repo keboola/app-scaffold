@@ -43,6 +43,20 @@
             "required": true,
             "componentId": "keboola.wr-db-snowflake",
             "schema": null
+        },
+        {
+            "id": "transformationSalesforceCRM&MRR",
+            "componentId": "transformation",
+            "name": "Salesforce CRM & MRR",
+            "required": true,
+            "schema": null
+        },
+        {
+            "id": "orchestrationMRR",
+            "componentId": "orchestration",
+            "name": "MRR",
+            "required": true,
+            "schema": null
         }
     ]
 }
