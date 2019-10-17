@@ -81,6 +81,146 @@ class CreateConfigurationOperationTestCaseTest extends BaseOperationTestCase
         ], $created->getConfiguration());
     }
 
+    public function testExecuteAuthorizationSnowflake(): void
+    {
+        /** @var EncryptionClient|MockObject $encryptionApiClient */
+        $encryptionApiClient = self::createMock(EncryptionClient::class);
+        $encryptionApiClient->expects(self::exactly(2))->method('encryptConfigurationData')
+            ->willReturnCallback(function (array $data) {
+                return $data;
+            });
+        $this->sapiClient->method('apiPost')->willReturn([
+            'connection' => [
+                'backend' => 'snowflake',
+                'host' => 'keboola.snowflakecomputing.com',
+                'database' => 'keboola_123',
+                'schema' => 'boring_wozniak',
+                'warehouse' => 'SAPI_PROD',
+                'user' => 'xzy',
+                'password' => 'abc',
+            ],
+            'id' => '1234',
+        ]);
+
+        $operation = new CreateConfigurationOperation(
+            $this->sapiClient,
+            $encryptionApiClient,
+            $this->componentsApiClient,
+            new NullLogger()
+        );
+
+        $operationConfig = [
+            'componentId' => 'keboola.ex.test',
+            'authorization' => 'provisionedSnowflake',
+            'payload' => [
+                'name' => 'Test Extractor',
+                'configuration' => [
+                    'val1' => 'val',
+                ],
+            ],
+        ];
+
+        $parameters = [
+            'op1' => [
+                'val2' => 'val',
+            ],
+        ];
+
+        $config = CreateConfigurationOperationConfig::create('op1', $operationConfig, $parameters);
+        $store = new FinishedOperationsStore();
+
+        $operation->execute($config, $store);
+        /** @var Configuration $created */
+        $created = $store->getOperationData('op1');
+        self::assertInstanceOf(Configuration::class, $created);
+        self::assertEquals('createdConfigurationId', $created->getConfigurationId());
+        self::assertSame([
+            'val1' => 'val',
+            'val2' => 'val',
+            'parameters' => [
+                'db' => [
+                    'host' => 'keboola.snowflakecomputing.com',
+                    'database' => 'keboola_123',
+                    'schema' => 'boring_wozniak',
+                    'warehouse' => 'SAPI_PROD',
+                    'user' => 'xzy',
+                    '#password' => 'abc',
+                    'port' => '443',
+                    'driver' => 'snowflake',
+                ],
+            ],
+        ], $created->getConfiguration());
+    }
+
+    public function testExecuteAuthorizationRedshift(): void
+    {
+        /** @var EncryptionClient|MockObject $encryptionApiClient */
+        $encryptionApiClient = self::createMock(EncryptionClient::class);
+        $encryptionApiClient->expects(self::exactly(2))->method('encryptConfigurationData')
+            ->willReturnCallback(function (array $data) {
+                return $data;
+            });
+        $this->sapiClient->method('apiPost')->willReturn([
+            'connection' => [
+                'backend' => 'redshift',
+                'host' => 'testing.us-east-1.redshift.amazonaws.com',
+                'database' => 'sapi_123',
+                'schema' => 'workspace_123456',
+                'user' => 'sapi_workspace_123456',
+                'password' => 'abc',
+            ],
+            'id' => '1234',
+        ]);
+
+        $operation = new CreateConfigurationOperation(
+            $this->sapiClient,
+            $encryptionApiClient,
+            $this->componentsApiClient,
+            new NullLogger()
+        );
+
+        $operationConfig = [
+            'componentId' => 'keboola.ex.test',
+            'authorization' => 'provisionedRedshift',
+            'payload' => [
+                'name' => 'Test Extractor',
+                'configuration' => [
+                    'val1' => 'val',
+                ],
+            ],
+        ];
+
+        $parameters = [
+            'op1' => [
+                'val2' => 'val',
+            ],
+        ];
+
+        $config = CreateConfigurationOperationConfig::create('op1', $operationConfig, $parameters);
+        $store = new FinishedOperationsStore();
+
+        $operation->execute($config, $store);
+        /** @var Configuration $created */
+        $created = $store->getOperationData('op1');
+        self::assertInstanceOf(Configuration::class, $created);
+        self::assertEquals('createdConfigurationId', $created->getConfigurationId());
+        self::assertSame([
+            'val1' => 'val',
+            'val2' => 'val',
+            'parameters' => [
+                'db' => [
+                    'host' => 'testing.us-east-1.redshift.amazonaws.com',
+                    'database' => 'sapi_123',
+                    'schema' => 'workspace_123456',
+                    'user' => 'sapi_workspace_123456',
+                    '#password' => 'abc',
+                    'port' => '5439',
+                    'driver' => 'redshift',
+                ],
+            ],
+        ], $created->getConfiguration());
+    }
+
     public function testExecuteEmptyConfiguration(): void
     {
         /** @var EncryptionClient|MockObject $encryptionApiClient */

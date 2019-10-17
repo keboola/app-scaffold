@@ -39,7 +39,7 @@ class CreateConfigurationOperationConfigTest extends TestCase
 
     public function testValidationMissingComponentId(): void
     {
-        // misisng SAPI component id
+        // missing SAPI component id
         $this->expectException(Throwable::class);
         $this->expectExceptionMessage('Component Id is missing in operation create.configuration with id "ex01".');
         CreateConfigurationOperationConfig::create(
@@ -78,6 +78,20 @@ class CreateConfigurationOperationConfigTest extends TestCase
             [
                 'componentId' => 'ex01',
             ],
+            []
+        );
+    }
+
+    public function testValidationInvalidAuthorization(): void
+    {
+        // missing payload
+        $this->expectException(Throwable::class);
+        $this->expectExceptionMessage(
+            'Invalid authorization value "invalid" for configuration with id "ex01".'
+        );
+        CreateConfigurationOperationConfig::create(
+            'ex01',
+            ['componentId' => 'ex01', 'payload' => ['name' => 'ex01'], 'authorization' => 'invalid'],
             []
         );
     }

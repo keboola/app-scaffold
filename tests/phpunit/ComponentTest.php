@@ -128,7 +128,7 @@ class ComponentTest extends TestCase
         $method->setAccessible(true);
 
         $this->expectException(Throwable::class);
-        $this->expectExceptionMessage('Scaffold "NonExistingScaffold" not exists.');
+        $this->expectExceptionMessage('Scaffold "NonExistingScaffold" does not exist.');
         $method->invokeArgs($reflection->newInstanceWithoutConstructor(), ['NonExistingScaffold']);
     }
 }

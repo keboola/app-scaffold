@@ -16,12 +16,6 @@ class ScaffoldDefinition implements ScaffoldInputDefinitionInterface
     ): ArrayNodeDefinition {
         // Add salesforce extractor
         $this->appendSalesForceExtractor($node);
-        // Add snowflake writer parameters
-        $node->append(
-            CommonDefinitions::getSnowflakeWriterConfig(
-                new TreeBuilder('keboolaWrDbSnowflakeLooker')
-            )
-        );
         return $node;
     }
 
