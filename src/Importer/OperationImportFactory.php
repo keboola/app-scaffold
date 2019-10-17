@@ -10,6 +10,7 @@ use Keboola\ScaffoldApp\Importer\Decorator\DecoratorInterface;
 use Keboola\ScaffoldApp\Importer\Decorator\ClearEncryptedParametersDecorator;
 use Keboola\ScaffoldApp\Importer\Decorator\StorageInputTablesDecorator;
 use Keboola\ScaffoldApp\Importer\Decorator\TransformationConfigurationRowsDecorator;
+use Symfony\Component\Console\Output\OutputInterface;
 
 class OperationImportFactory
 {
@@ -23,7 +24,8 @@ class OperationImportFactory
     public static function createOperationImport(
         array $configuration,
         OrchestrationTask $task,
-        string $scaffoldId
+        string $scaffoldId,
+        OutputInterface $output
     ): OperationImport {
         $payload = [
             'name' => $configuration['name'],
@@ -45,7 +47,7 @@ class OperationImportFactory
 
         foreach (self::DECORATORS as $decorator) {
             /** @var DecoratorInterface $decorator */
-            $decorator = new $decorator();
+            $decorator = new $decorator($output);
             if ($decorator->supports($operationImport)) {
                 $operationImport = $decorator->getDecoratedProjectImport($operationImport);
             }

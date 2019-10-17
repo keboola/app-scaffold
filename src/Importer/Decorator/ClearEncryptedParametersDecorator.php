@@ -6,7 +6,7 @@ namespace Keboola\ScaffoldApp\Importer\Decorator;
 
 use Keboola\ScaffoldApp\Importer\OperationImport;
 
-class ClearEncryptedParametersDecorator implements DecoratorInterface
+class ClearEncryptedParametersDecorator extends AbstractDecorator
 {
     private const CRYPTED_KEY_PREFIX = '#';
 

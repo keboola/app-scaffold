@@ -4,10 +4,9 @@ declare(strict_types=1);
 
 namespace Keboola\ScaffoldApp\Importer\Decorator\ComponentSpecific;
 
-use Keboola\ScaffoldApp\Importer\Decorator\DecoratorInterface;
+use Keboola\ScaffoldApp\Importer\Decorator\AbstractDecorator;
 use Keboola\ScaffoldApp\Importer\OperationImport;
 use Keboola\ScaffoldApp\Importer\OrchestrationImporter;
-use Keboola\ScaffoldApp\Importer\TableNameConverter;
 
 /**
  * # Use case:
@@ -26,7 +25,7 @@ use Keboola\ScaffoldApp\Importer\TableNameConverter;
  * after processors are prefixed for control.
  *
  */
-class ExSalesforceConfigurationRowsDecorator implements DecoratorInterface
+class ExSalesforceConfigurationRowsDecorator extends AbstractDecorator
 {
     private const AFTER_PROCESSORS_TEMPLATE =
         [
@@ -61,19 +60,6 @@ class ExSalesforceConfigurationRowsDecorator implements DecoratorInterface
         ];
     private const SUPPORTED_COMPONENTS = ['htns.ex-salesforce'];
 
-    /**
-     * @var TableNameConverter
-     */
-    private $tableNameConverter;
-
-    /**
-     * ExSalesforceConfigurationRowsDecorator constructor.
-     */
-    public function __construct()
-    {
-        $this->tableNameConverter = new TableNameConverter;
-    }
-
     public function getDecoratedProjectImport(
         OperationImport $operationImport
     ): OperationImport {
@@ -81,6 +67,11 @@ class ExSalesforceConfigurationRowsDecorator implements DecoratorInterface
         foreach ($operationImport->getConfigurationRows() as $row) {
             $decoratedRows[] = $this->getDecoratedComponentConfigurationRow($row, $operationImport);
         }
+
+        $this->output->writeln(sprintf(
+            'If multiple components "%s" are used don\'t forget to make their tags unique.',
+            $operationImport->getComponentId()
+        ));
 
         return new OperationImport(
             $operationImport->getScaffoldId(),
@@ -120,7 +111,7 @@ class ExSalesforceConfigurationRowsDecorator implements DecoratorInterface
         foreach ($tableNames as $tableName) {
             // simulate configuration id
             $realTableName = sprintf('in.c-htns-ex-salesforce-######.%s', $tableName);
-            $metadataValue = $this->tableNameConverter->convertTableNameToMetadataValue(
+            $metadataValue = $this->convertTableNameToMetadataValue(
                 $operationImport,
                 $realTableName
             );

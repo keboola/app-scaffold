@@ -8,6 +8,7 @@ use Keboola\ScaffoldApp\Importer\Decorator\TransformationConfigurationRowsDecora
 use Keboola\ScaffoldApp\Importer\OperationImport;
 use Keboola\ScaffoldApp\Importer\OperationImportFactory;
 use Keboola\ScaffoldApp\Tests\Importer\ImporterBaseTestCase;
+use Symfony\Component\Console\Output\NullOutput;
 
 class TransformationConfigurationRowsDecoratorTest extends ImporterBaseTestCase
 {
@@ -115,7 +116,8 @@ class TransformationConfigurationRowsDecoratorTest extends ImporterBaseTestCase
         $operationImport = OperationImportFactory::createOperationImport(
             $configuration,
             $task,
-            'scaffold_Id'
+            'scaffold_Id',
+            new NullOutput
         );
 
         self::assertInstanceOf(OperationImport::class, $operationImport);
@@ -259,10 +261,11 @@ class TransformationConfigurationRowsDecoratorTest extends ImporterBaseTestCase
                 'rows' => [],
             ],
             $task,
-            'scaffoldId'
+            'scaffoldId',
+            new NullOutput
         );
 
-        $decorator = new TransformationConfigurationRowsDecorator();
+        $decorator = new TransformationConfigurationRowsDecorator(new NullOutput);
 
         self::assertFalse($decorator->supports($operationImport));
     }
@@ -285,10 +288,11 @@ class TransformationConfigurationRowsDecoratorTest extends ImporterBaseTestCase
                 ],
             ],
             $task,
-            'scaffoldId'
+            'scaffoldId',
+            new NullOutput
         );
 
-        $decorator = new TransformationConfigurationRowsDecorator();
+        $decorator = new TransformationConfigurationRowsDecorator(new NullOutput);
 
         self::assertFalse($decorator->supports($operationImport));
     }
@@ -314,10 +318,11 @@ class TransformationConfigurationRowsDecoratorTest extends ImporterBaseTestCase
         $operationImport = OperationImportFactory::createOperationImport(
             $configuration,
             $task,
-            'scaffoldId'
+            'scaffoldId',
+            new NullOutput
         );
 
-        $decorator = new TransformationConfigurationRowsDecorator();
+        $decorator = new TransformationConfigurationRowsDecorator(new NullOutput);
 
         self::assertTrue($decorator->supports($operationImport));
     }

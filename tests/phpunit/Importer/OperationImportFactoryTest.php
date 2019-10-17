@@ -6,6 +6,7 @@ namespace Keboola\ScaffoldApp\Tests\Importer;
 
 use Keboola\ScaffoldApp\Importer\OperationImport;
 use Keboola\ScaffoldApp\Importer\OperationImportFactory;
+use Symfony\Component\Console\Output\NullOutput;
 
 class OperationImportFactoryTest extends ImporterBaseTestCase
 {
@@ -22,7 +23,8 @@ class OperationImportFactoryTest extends ImporterBaseTestCase
                 'rows' => [],
             ],
             $task,
-            'scaffoldId'
+            'scaffoldId',
+            new NullOutput
         );
 
         self::assertInstanceOf(OperationImport::class, $operationImport);

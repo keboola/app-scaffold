@@ -8,6 +8,7 @@ use Keboola\ScaffoldApp\Importer\Decorator\ClearEncryptedParametersDecorator;
 use Keboola\ScaffoldApp\Importer\OperationImport;
 use Keboola\ScaffoldApp\Importer\OperationImportFactory;
 use Keboola\ScaffoldApp\Tests\Importer\ImporterBaseTestCase;
+use Symfony\Component\Console\Output\NullOutput;
 
 class ClearEncryptedParametersDecoratorTest extends ImporterBaseTestCase
 {
@@ -44,7 +45,8 @@ class ClearEncryptedParametersDecoratorTest extends ImporterBaseTestCase
         $operationImport = OperationImportFactory::createOperationImport(
             $configuration,
             $task,
-            'scaffoldId'
+            'scaffoldId',
+            new NullOutput
         );
 
         self::assertInstanceOf(OperationImport::class, $operationImport);
@@ -96,10 +98,11 @@ class ClearEncryptedParametersDecoratorTest extends ImporterBaseTestCase
                 'rows' => [],
             ],
             $task,
-            'scaffoldId'
+            'scaffoldId',
+            new NullOutput
         );
 
-        $decorator = new ClearEncryptedParametersDecorator();
+        $decorator = new ClearEncryptedParametersDecorator(new NullOutput);
 
         self::assertTrue($decorator->supports($operationImport));
     }
@@ -115,10 +118,11 @@ class ClearEncryptedParametersDecoratorTest extends ImporterBaseTestCase
                 'rows' => [],
             ],
             $task,
-            'scaffoldId'
+            'scaffoldId',
+            new NullOutput
         );
 
-        $decorator = new ClearEncryptedParametersDecorator();
+        $decorator = new ClearEncryptedParametersDecorator(new NullOutput);
 
         self::assertFalse($decorator->supports($operationImport));
     }

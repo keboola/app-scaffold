@@ -7,6 +7,7 @@ namespace Keboola\ScaffoldApp\Importer;
 use Keboola\Component\JsonHelper;
 use Keboola\Component\UserException;
 use Keboola\Orchestrator\Client as OrchestratorClient;
+use Keboola\ScaffoldApp\Component;
 use Keboola\ScaffoldApp\Operation\OperationsConfig;
 use Keboola\StorageApi\Client;
 use Keboola\StorageApi\Components;
@@ -23,7 +24,6 @@ class OrchestrationImporter
         OperationsConfig::CREATE_ORCHESTREATION,
     ];
     public const SCAFFOLD_TABLE_TAG = 'bdm.scaffold.table.tag';
-    public const SCAFFOLD_VALUE_PREFIX = 'bdm.scaffold';
 
     /**
      * @var Client
@@ -54,7 +54,7 @@ class OrchestrationImporter
         Client $storageApiClient,
         OrchestratorClient $orchestrationApiClient,
         OutputInterface $output,
-        string $scaffoldsDir = __DIR__ . '/../../scaffolds'
+        string $scaffoldsDir = Component::SCAFFOLDS_DIR
     ) {
         $this->storageApiClient = $storageApiClient;
         $this->orchestrationApiClient = $orchestrationApiClient;
@@ -107,8 +107,13 @@ class OrchestrationImporter
 
             $configuration = $this->componentsApiClient->getConfiguration($task->getComponent(), $configurationId);
 
-            $operationImport = OperationImportFactory::createOperationImport($configuration, $task, $scaffoldId);
-            $this->dumpOperation($scaffoldId, $operationImport);
+            $operationImport = OperationImportFactory::createOperationImport(
+                $configuration,
+                $task,
+                $scaffoldId,
+                $this->output
+            );
+            $this->dumpOperation($operationImport);
             $importedOperations->addImportedOperation($operationImport);
 
             $p->advance();
@@ -151,13 +156,12 @@ class OrchestrationImporter
     }
 
     private function dumpOperation(
-        string $scaffoldId,
         OperationImport $import
     ): void {
         $operationFileName = sprintf(
             '%s/%s/operations/%s/%s.json',
             $this->scaffoldsDir,
-            $scaffoldId,
+            $import->getScaffoldId(),
             OperationsConfig::CREATE_CONFIGURATION,
             $import->getOperationId()
         );
@@ -176,7 +180,7 @@ class OrchestrationImporter
             sprintf(
                 '%s/%s/operations/%s/%s.json',
                 $this->scaffoldsDir,
-                $scaffoldId,
+                $import->getScaffoldId(),
                 OperationsConfig::CREATE_CONFIGURATION_ROWS,
                 $import->getOperationId()
             ),

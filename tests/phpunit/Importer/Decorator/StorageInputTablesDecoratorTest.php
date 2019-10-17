@@ -7,6 +7,7 @@ namespace Keboola\ScaffoldApp\Tests\Importer\Decorator;
 use Keboola\ScaffoldApp\Importer\Decorator\StorageInputTablesDecorator;
 use Keboola\ScaffoldApp\Importer\OperationImportFactory;
 use Keboola\ScaffoldApp\Tests\Importer\ImporterBaseTestCase;
+use Symfony\Component\Console\Output\NullOutput;
 
 class StorageInputTablesDecoratorTest extends ImporterBaseTestCase
 {
@@ -39,7 +40,8 @@ class StorageInputTablesDecoratorTest extends ImporterBaseTestCase
         $operationImport = OperationImportFactory::createOperationImport(
             $configuration,
             $task,
-            'scaffoldId'
+            'scaffoldId',
+            new NullOutput
         );
 
         self::assertEquals('keboolaComponent', $operationImport->getOperationId());
@@ -102,10 +104,11 @@ class StorageInputTablesDecoratorTest extends ImporterBaseTestCase
         $operationImport = OperationImportFactory::createOperationImport(
             $configuration,
             $task,
-            'scaffoldId'
+            'scaffoldId',
+            new NullOutput
         );
 
-        $decorator = new StorageInputTablesDecorator();
+        $decorator = new StorageInputTablesDecorator(new NullOutput);
         self::assertFalse($decorator->supports($operationImport));
 
         $configuration = [
@@ -124,7 +127,8 @@ class StorageInputTablesDecoratorTest extends ImporterBaseTestCase
         $operationImport = OperationImportFactory::createOperationImport(
             $configuration,
             $task,
-            'scaffoldId'
+            'scaffoldId',
+            new NullOutput
         );
 
         self::assertFalse($decorator->supports($operationImport));
@@ -143,7 +147,8 @@ class StorageInputTablesDecoratorTest extends ImporterBaseTestCase
         $operationImport = OperationImportFactory::createOperationImport(
             $configuration,
             $task,
-            'scaffoldId'
+            'scaffoldId',
+            new NullOutput
         );
 
         self::assertFalse($decorator->supports($operationImport));
@@ -160,7 +165,8 @@ class StorageInputTablesDecoratorTest extends ImporterBaseTestCase
         $operationImport = OperationImportFactory::createOperationImport(
             $configuration,
             $task,
-            'scaffoldId'
+            'scaffoldId',
+            new NullOutput
         );
 
         self::assertFalse($decorator->supports($operationImport));
@@ -191,10 +197,11 @@ class StorageInputTablesDecoratorTest extends ImporterBaseTestCase
         $operationImport = OperationImportFactory::createOperationImport(
             $configuration,
             $task,
-            'scaffoldId'
+            'scaffoldId',
+            new NullOutput
         );
 
-        $decorator = new StorageInputTablesDecorator();
+        $decorator = new StorageInputTablesDecorator(new NullOutput);
 
         self::assertTrue($decorator->supports($operationImport));
     }
