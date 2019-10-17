@@ -7,7 +7,6 @@
             "componentId": "htns.ex-salesforce",
             "schema": {
                 "type": "object",
-                "title": "Salesforce Extractor",
                 "required": [
                     "loginname",
                     "#password",
@@ -40,7 +39,6 @@
             "componentId": "keboola.wr-db-snowflake",
             "schema": {
                 "type": "object",
-                "title": "Snowflake Writer",
                 "required": [
                     "db"
                 ],
