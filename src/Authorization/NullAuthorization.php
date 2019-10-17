@@ -17,5 +17,6 @@ class NullAuthorization implements AuthorizationInterface
         Client $storageClient,
         EncryptionClient $encryptionClient
     ): array {
+        return [];
     }
 }

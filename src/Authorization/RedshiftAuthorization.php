@@ -52,5 +52,6 @@ class RedshiftAuthorization implements AuthorizationInterface
         $configuration->setConfiguration($configData);
         $components = new Components($storageClient);
         $components->updateConfiguration($configuration);
+        return [];
     }
 }
