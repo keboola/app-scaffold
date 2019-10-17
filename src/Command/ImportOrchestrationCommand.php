@@ -62,7 +62,7 @@ EOT
             ]),
             new Assert\Type([
                 'type' => 'alpha',
-                'message' => 'Scaffold id is part of PHP namespace alphanumeric characters are only allowed.',
+                'message' => 'Scaffold id is part of PHP namespace alpha characters are only allowed.',
             ]),
         ]);
 
