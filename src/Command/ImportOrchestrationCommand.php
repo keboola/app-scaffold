@@ -13,6 +13,8 @@ use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
+use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Component\Validator\Validation;
 
 class ImportOrchestrationCommand extends Command
 {
@@ -51,6 +53,27 @@ ____ ____ ____ ____ ____ ____ ____ ____
 EOT
         );
 
+        $scaffoldId = ucfirst($input->getArgument('SCAFFOLD_ID'));
+        $validator = Validation::createValidator();
+        $violations = $validator->validate($scaffoldId, [
+            new Assert\Length([
+                'min' => 5,
+                'minMessage' => 'Scaffold id must be at least {{ limit }} characters long.',
+            ]),
+            new Assert\Type([
+                'type' => 'alpha',
+                'message' => 'Scaffold id is part of PHP namespace alphanumeric characters are only allowed.',
+            ]),
+        ]);
+
+        if (0 !== count($violations)) {
+            // there are errors, now you can show them
+            foreach ($violations as $violation) {
+                $output->writeln($violation->getMessage());
+            }
+            return 1;
+        }
+
         $logger = $output->isVerbose() ? new Logger() : new NullLogger();
 
         $client = new Client(
@@ -65,7 +88,9 @@ EOT
         $importer = new OrchestrationImporter($client, $orchestrationApiClient, $output);
         $importer->importOrchestration(
             (int) $input->getArgument('ORCHESTRATION_ID'),
-            $input->getArgument('SCAFFOLD_ID')
+            $scaffoldId
         );
+
+        return 0;
     }
 }
