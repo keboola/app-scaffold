@@ -20,12 +20,14 @@ class FinishedOperationsStore
     public function add(
         string $operationId,
         string $operationClass,
-        $data
+        $data,
+        array $userActions = []
     ): void {
         $this->operations[] = [
             'id' => $operationId,
             'operationClass' => $operationClass,
             'data' => $data,
+            'userActions' => $userActions,
         ];
     }
 
@@ -61,13 +63,15 @@ class FinishedOperationsStore
                     $data = $operation['data'];
                     $response[] = [
                         'id' => $operation['id'],
-                        'componentId' => $data->getConfigurationId(),
+                        'configurationId' => $data->getConfigurationId(),
+                        'userActions' => $operation['userActions'],
                     ];
                     break;
                 case CreateOrchestrationOperation::class:
                     $response[] = [
                         'id' => $operation['id'],
-                        'componentId' => $operation['data'],
+                        'configurationId' => $operation['data'],
+                        'userActions' => $operation['userActions'],
                     ];
                     break;
                 default:

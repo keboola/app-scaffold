@@ -18,6 +18,8 @@ class AuthorizationFactory
                 return new SnowflakeAuthorization();
             case RedshiftAuthorization::NAME:
                 return new RedshiftAuthorization();
+            case 'oauth':
+                return new OAuthAuthorization();
             default:
                 throw new \Exception(sprintf('Invalid authorization method: "%s".', $method));
         }
