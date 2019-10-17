@@ -4,26 +4,20 @@ declare(strict_types=1);
 
 namespace Keboola\ScaffoldApp\Command;
 
-use Keboola\Component\JsonHelper;
 use Keboola\ScaffoldApp\Command\Validation\InvalidScaffoldException;
-use Keboola\ScaffoldApp\Command\Validation\ManifestConstraints;
-use Keboola\ScaffoldApp\Command\Validation\ManifestDefinition;
+use Keboola\ScaffoldApp\Command\Validation\ManifestValidator;
 use Keboola\ScaffoldApp\Component;
 use Keboola\ScaffoldApp\Importer\Decorator\DecoratorInterface;
 use Keboola\ScaffoldApp\Operation\OperationsConfig;
-use Symfony\Component\Config\Definition\Exception\InvalidConfigurationException;
-use Symfony\Component\Config\Definition\Processor;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Helper\Table;
 use Symfony\Component\Console\Input\InputInterface;
-use Symfony\Component\Console\Output\ConsoleOutput;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\Finder\Finder;
 use Symfony\Component\Finder\SplFileInfo;
 use Symfony\Component\Validator\ConstraintViolationInterface;
-use Symfony\Component\Validator\Validation;
 
 class ValidateScaffoldsCommand extends Command
 {
@@ -63,10 +57,7 @@ class ValidateScaffoldsCommand extends Command
 
     private function validateManifest(SplFileInfo $scaffoldDir): void
     {
-        $validator = Validation::createValidator();
-        $manifest = JsonHelper::readFile(sprintf('%s/manifest.json', $scaffoldDir->getPathname()));
-
-        $violations = $validator->validate($manifest, ManifestConstraints::getConstraints());
+        $violations = (new ManifestValidator($scaffoldDir))->validate();
 
         if (0 !== count($violations)) {
             $messages = '';

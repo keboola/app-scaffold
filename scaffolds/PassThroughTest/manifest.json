@@ -73,6 +73,12 @@
                     }
                 }
             }
+        },
+        {
+            "id": "main",
+            "componentId": "orchestration",
+            "name": "Orchestration",
+            "required": true
         }
     ]
 }
