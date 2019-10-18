@@ -9,12 +9,16 @@ use Keboola\StorageApi\Client;
 use Keboola\StorageApi\Options\Components\Configuration;
 use Psr\Log\LoggerInterface;
 
-interface AuthorizationInterface
+class OAuthAuthorization implements AuthorizationInterface
 {
+    public const NAME = 'oauth';
+
     public function authorize(
         LoggerInterface $logger,
         Configuration $configuration,
         Client $storageClient,
         EncryptionClient $encryptionClient
-    ): array;
+    ): array {
+        return ['oauth'];
+    }
 }

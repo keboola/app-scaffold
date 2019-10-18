@@ -20,7 +20,7 @@ class RedshiftAuthorization implements AuthorizationInterface
         Configuration $configuration,
         Client $storageClient,
         EncryptionClient $encryptionClient
-    ): void {
+    ): array {
         $workspace = new Workspaces($storageClient);
         $data = $workspace->createWorkspace([
             'name' => $configuration->getConfigurationId(),
@@ -52,5 +52,6 @@ class RedshiftAuthorization implements AuthorizationInterface
         $configuration->setConfiguration($configData);
         $components = new Components($storageClient);
         $components->updateConfiguration($configuration);
+        return [];
     }
 }
