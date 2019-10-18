@@ -1,0 +1,113 @@
+{
+    "componentId": "geneea.nlp-analysis-v2",
+    "payload": {
+        "name": "Reviews analysis",
+        "configuration": {
+            "storage": {
+                "input": {
+                    "tables": [
+                        {
+                            "destination": "out.c-reviews.pre_nlp_review",
+                            "days": 2,
+                            "columns": [
+                                "review_id",
+                                "review_text",
+                                "review_title"
+                            ],
+                            "source_search": {
+                                "key": "bdm.scaffold.table.tag",
+                                "value": "ReviewTrackersHospitality.internal.outReviewsPreNlpReview"
+                            }
+                        }
+                    ]
+                }
+            },
+            "parameters": {
+                "language": "en",
+                "columns": {
+                    "id": [
+                        "review_id"
+                    ],
+                    "title": [
+                        "review_title"
+                    ],
+                    "text": [
+                        "review_text"
+                    ]
+                },
+                "analysis_types": [
+                    "tags",
+                    "entities",
+                    "sentiment",
+                    "relations"
+                ],
+                "domain": "voc-hospitality",
+                "use_beta": false,
+                "correction": "basic",
+                "diacritization": "none",
+                "advanced": []
+            },
+            "processors": {
+                "after": [
+                    {
+                        "definition": {
+                            "component": "keboola.processor-create-manifest"
+                        },
+                        "parameters": {
+                            "delimiter": ",",
+                            "enclosure": "\"",
+                            "incremental": false,
+                            "primary_key": [],
+                            "columns_from": "header"
+                        }
+                    },
+                    {
+                        "definition": {
+                            "component": "keboola.processor-add-metadata"
+                        },
+                        "parameters": {
+                            "tables": [
+                                {
+                                    "table": "analysis-result-entities.csv",
+                                    "metadata": [
+                                        {
+                                            "key": "bdm.scaffold.table.tag",
+                                            "value": "ReviewTrackersHospitality.internal.GeneeaAnalysisResultEntities"
+                                        }
+                                    ]
+                                },
+                                {
+                                    "table": "analysis-result-relations.csv",
+                                    "metadata": [
+                                        {
+                                            "key": "bdm.scaffold.table.tag",
+                                            "value": "ReviewTrackersHospitality.internal.GeneeaAnalysisResultRelations"
+                                        }
+                                    ]
+                                },
+                                {
+                                    "table": "analysis-result-sentences.csv",
+                                    "metadata": [
+                                        {
+                                            "key": "bdm.scaffold.table.tag",
+                                            "value": "ReviewTrackersHospitality.internal.GeneeaAnalysisResultSentences"
+                                        }
+                                    ]
+                                },
+                                {
+                                    "table": "analysis-result-documents.csv",
+                                    "metadata": [
+                                        {
+                                            "key": "bdm.scaffold.table.tag",
+                                            "value": "ReviewTrackersHospitality.internal.GeneeaAnalysisResultDocuments"
+                                        }
+                                    ]
+                                }
+                            ]
+                        }
+                    }
+                ]
+            }
+        }
+    }
+}

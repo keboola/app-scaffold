@@ -1,0 +1,621 @@
+{
+    "componentId": "keboola.wr-db-snowflake",
+    "authorization": "provisionedSnowflake",
+    "payload": {
+        "name": "Looker",
+        "configuration": {
+            "parameters": {
+                "db": {},
+                "tables": [
+                    {
+                        "dbName": "LOCATION",
+                        "export": true,
+                        "tableId": "out.c-reviews.location",
+                        "items": [
+                            {
+                                "name": "location_id",
+                                "dbName": "LOCATION_ID",
+                                "type": "string",
+                                "size": "255",
+                                "nullable": false,
+                                "default": ""
+                            },
+                            {
+                                "name": "location",
+                                "dbName": "LOCATION",
+                                "type": "string",
+                                "size": "255",
+                                "nullable": false,
+                                "default": ""
+                            },
+                            {
+                                "name": "street",
+                                "dbName": "STREET",
+                                "type": "string",
+                                "size": "255",
+                                "nullable": false,
+                                "default": ""
+                            },
+                            {
+                                "name": "city",
+                                "dbName": "CITY",
+                                "type": "string",
+                                "size": "255",
+                                "nullable": false,
+                                "default": ""
+                            },
+                            {
+                                "name": "zipcode",
+                                "dbName": "ZIPCODE",
+                                "type": "string",
+                                "size": "255",
+                                "nullable": false,
+                                "default": ""
+                            },
+                            {
+                                "name": "country",
+                                "dbName": "COUNTRY",
+                                "type": "string",
+                                "size": "255",
+                                "nullable": false,
+                                "default": ""
+                            },
+                            {
+                                "name": "state",
+                                "dbName": "STATE",
+                                "type": "string",
+                                "size": "255",
+                                "nullable": false,
+                                "default": ""
+                            },
+                            {
+                                "name": "latitude",
+                                "dbName": "LATITUDE",
+                                "type": "string",
+                                "size": "255",
+                                "nullable": false,
+                                "default": ""
+                            },
+                            {
+                                "name": "longitude",
+                                "dbName": "LONGITUDE",
+                                "type": "string",
+                                "size": "255",
+                                "nullable": false,
+                                "default": ""
+                            }
+                        ],
+                        "primaryKey": [
+                            "LOCATION_ID"
+                        ]
+                    },
+                    {
+                        "dbName": "REVIEW",
+                        "export": true,
+                        "tableId": "out.c-reviews.review",
+                        "items": [
+                            {
+                                "name": "review_id",
+                                "dbName": "REVIEW_ID",
+                                "type": "varchar",
+                                "size": "255",
+                                "nullable": false,
+                                "default": ""
+                            },
+                            {
+                                "name": "location_id",
+                                "dbName": "LOCATION_ID",
+                                "type": "varchar",
+                                "size": "255",
+                                "nullable": false,
+                                "default": ""
+                            },
+                            {
+                                "name": "review_published_at",
+                                "dbName": "REVIEW_PUBLISHED_AT",
+                                "type": "date",
+                                "size": "",
+                                "nullable": true,
+                                "default": ""
+                            },
+                            {
+                                "name": "review_title",
+                                "dbName": "REVIEW_TITLE",
+                                "type": "varchar",
+                                "size": "255",
+                                "nullable": false,
+                                "default": ""
+                            },
+                            {
+                                "name": "review_text",
+                                "dbName": "REVIEW_TEXT",
+                                "type": "varchar",
+                                "size": "1024",
+                                "nullable": false,
+                                "default": ""
+                            },
+                            {
+                                "name": "rating",
+                                "dbName": "RATING",
+                                "type": "integer",
+                                "size": "",
+                                "nullable": true,
+                                "default": ""
+                            },
+                            {
+                                "name": "source",
+                                "dbName": "SOURCE",
+                                "type": "varchar",
+                                "size": "255",
+                                "nullable": false,
+                                "default": ""
+                            },
+                            {
+                                "name": "source_url",
+                                "dbName": "SOURCE_URL",
+                                "type": "varchar",
+                                "size": "1000",
+                                "nullable": false,
+                                "default": ""
+                            },
+                            {
+                                "name": "sentiment_label",
+                                "dbName": "SENTIMENT_LABEL",
+                                "type": "varchar",
+                                "size": "255",
+                                "nullable": false,
+                                "default": ""
+                            },
+                            {
+                                "name": "sentiment_value",
+                                "dbName": "SENTIMENT_VALUE",
+                                "type": "number",
+                                "size": "12,5",
+                                "nullable": true,
+                                "default": ""
+                            },
+                            {
+                                "name": "review_text_length",
+                                "dbName": "REVIEW_TEXT_LENGTH",
+                                "type": "integer",
+                                "size": "",
+                                "nullable": true,
+                                "default": ""
+                            },
+                            {
+                                "name": "response_published_at",
+                                "dbName": "RESPONSE_PUBLISHED_AT",
+                                "type": "date",
+                                "size": "",
+                                "nullable": true,
+                                "default": ""
+                            },
+                            {
+                                "name": "response_text",
+                                "dbName": "RESPONSE_TEXT",
+                                "type": "varchar",
+                                "size": "1024",
+                                "nullable": false,
+                                "default": ""
+                            },
+                            {
+                                "name": "has_response",
+                                "dbName": "HAS_RESPONSE",
+                                "type": "varchar",
+                                "size": "255",
+                                "nullable": false,
+                                "default": ""
+                            },
+                            {
+                                "name": "days_to_response",
+                                "dbName": "DAYS_TO_RESPONSE",
+                                "type": "integer",
+                                "size": "",
+                                "nullable": true,
+                                "default": ""
+                            }
+                        ],
+                        "primaryKey": [
+                            "REVIEW_ID"
+                        ]
+                    },
+                    {
+                        "dbName": "ENTITY",
+                        "export": true,
+                        "tableId": "out.c-reviews.entity",
+                        "items": [
+                            {
+                                "name": "entity_id",
+                                "dbName": "ENTITY_ID",
+                                "type": "varchar",
+                                "size": "255",
+                                "nullable": false,
+                                "default": ""
+                            },
+                            {
+                                "name": "review_id",
+                                "dbName": "REVIEW_ID",
+                                "type": "varchar",
+                                "size": "255",
+                                "nullable": false,
+                                "default": ""
+                            },
+                            {
+                                "name": "entity_type",
+                                "dbName": "ENTITY_TYPE",
+                                "type": "varchar",
+                                "size": "255",
+                                "nullable": false,
+                                "default": ""
+                            },
+                            {
+                                "name": "entity",
+                                "dbName": "ENTITY",
+                                "type": "varchar",
+                                "size": "255",
+                                "nullable": false,
+                                "default": ""
+                            },
+                            {
+                                "name": "sentiment_value",
+                                "dbName": "SENTIMENT_VALUE",
+                                "type": "number",
+                                "size": "12,5",
+                                "nullable": true,
+                                "default": ""
+                            },
+                            {
+                                "name": "sentiment_label",
+                                "dbName": "SENTIMENT_LABEL",
+                                "type": "varchar",
+                                "size": "255",
+                                "nullable": false,
+                                "default": ""
+                            }
+                        ],
+                        "primaryKey": [
+                            "ENTITY_ID"
+                        ]
+                    },
+                    {
+                        "dbName": "TAG",
+                        "export": true,
+                        "tableId": "out.c-reviews.tag",
+                        "items": [
+                            {
+                                "name": "tag_id",
+                                "dbName": "TAG_ID",
+                                "type": "varchar",
+                                "size": "255",
+                                "nullable": false,
+                                "default": ""
+                            },
+                            {
+                                "name": "review_id",
+                                "dbName": "REVIEW_ID",
+                                "type": "varchar",
+                                "size": "255",
+                                "nullable": false,
+                                "default": ""
+                            },
+                            {
+                                "name": "tag",
+                                "dbName": "TAG",
+                                "type": "varchar",
+                                "size": "255",
+                                "nullable": false,
+                                "default": ""
+                            }
+                        ],
+                        "primaryKey": [
+                            "TAG_ID"
+                        ]
+                    },
+                    {
+                        "dbName": "SENTENCE",
+                        "export": true,
+                        "tableId": "out.c-reviews.sentence",
+                        "items": [
+                            {
+                                "name": "sentence_id",
+                                "dbName": "SENTENCE_ID",
+                                "type": "varchar",
+                                "size": "255",
+                                "nullable": false,
+                                "default": ""
+                            },
+                            {
+                                "name": "review_id",
+                                "dbName": "REVIEW_ID",
+                                "type": "varchar",
+                                "size": "255",
+                                "nullable": false,
+                                "default": ""
+                            },
+                            {
+                                "name": "sentence",
+                                "dbName": "SENTENCE",
+                                "type": "varchar",
+                                "size": "1024",
+                                "nullable": false,
+                                "default": ""
+                            },
+                            {
+                                "name": "order",
+                                "dbName": "ORDER",
+                                "type": "integer",
+                                "size": "",
+                                "nullable": true,
+                                "default": ""
+                            },
+                            {
+                                "name": "segment",
+                                "dbName": "SEGMENT",
+                                "type": "varchar",
+                                "size": "255",
+                                "nullable": false,
+                                "default": ""
+                            },
+                            {
+                                "name": "sentiment_value",
+                                "dbName": "SENTIMENT_VALUE",
+                                "type": "number",
+                                "size": "12,5",
+                                "nullable": true,
+                                "default": ""
+                            },
+                            {
+                                "name": "sentiment_label",
+                                "dbName": "SENTIMENT_LABEL",
+                                "type": "varchar",
+                                "size": "255",
+                                "nullable": false,
+                                "default": ""
+                            }
+                        ],
+                        "primaryKey": [
+                            "SENTENCE_ID"
+                        ]
+                    },
+                    {
+                        "dbName": "ATTRIBUTE_RELATION",
+                        "export": true,
+                        "tableId": "out.c-reviews.attribute_relation",
+                        "items": [
+                            {
+                                "name": "attribute_relation_id",
+                                "dbName": "ATTRIBUTE_RELATION_ID",
+                                "type": "varchar",
+                                "size": "255",
+                                "nullable": false,
+                                "default": ""
+                            },
+                            {
+                                "name": "review_id",
+                                "dbName": "REVIEW_ID",
+                                "type": "varchar",
+                                "size": "255",
+                                "nullable": false,
+                                "default": ""
+                            },
+                            {
+                                "name": "subject",
+                                "dbName": "SUBJECT",
+                                "type": "varchar",
+                                "size": "255",
+                                "nullable": false,
+                                "default": ""
+                            },
+                            {
+                                "name": "attribute",
+                                "dbName": "ATTRIBUTE",
+                                "type": "varchar",
+                                "size": "255",
+                                "nullable": false,
+                                "default": ""
+                            },
+                            {
+                                "name": "sentiment_label",
+                                "dbName": "SENTIMENT_LABEL",
+                                "type": "varchar",
+                                "size": "255",
+                                "nullable": false,
+                                "default": ""
+                            },
+                            {
+                                "name": "sentiment_value",
+                                "dbName": "SENTIMENT_VALUE",
+                                "type": "number",
+                                "size": "12,5",
+                                "nullable": true,
+                                "default": ""
+                            }
+                        ],
+                        "primaryKey": [
+                            "ATTRIBUTE_RELATION_ID"
+                        ]
+                    },
+                    {
+                        "dbName": "HIERARCHY_RELATION",
+                        "export": true,
+                        "tableId": "out.c-reviews.hierarchy_relation",
+                        "items": [
+                            {
+                                "name": "hierarchy_relation_id",
+                                "dbName": "HIERARCHY_RELATION_ID",
+                                "type": "varchar",
+                                "size": "255",
+                                "nullable": false,
+                                "default": ""
+                            },
+                            {
+                                "name": "review_id",
+                                "dbName": "REVIEW_ID",
+                                "type": "varchar",
+                                "size": "255",
+                                "nullable": false,
+                                "default": ""
+                            },
+                            {
+                                "name": "object",
+                                "dbName": "OBJECT",
+                                "type": "varchar",
+                                "size": "255",
+                                "nullable": false,
+                                "default": ""
+                            },
+                            {
+                                "name": "entity",
+                                "dbName": "ENTITY",
+                                "type": "varchar",
+                                "size": "255",
+                                "nullable": false,
+                                "default": ""
+                            },
+                            {
+                                "name": "sentiment_label",
+                                "dbName": "SENTIMENT_LABEL",
+                                "type": "varchar",
+                                "size": "255",
+                                "nullable": false,
+                                "default": ""
+                            },
+                            {
+                                "name": "sentiment_value",
+                                "dbName": "SENTIMENT_VALUE",
+                                "type": "number",
+                                "size": "12,5",
+                                "nullable": true,
+                                "default": ""
+                            }
+                        ],
+                        "primaryKey": [
+                            "HIERARCHY_RELATION_ID"
+                        ]
+                    }
+                ]
+            },
+            "storage": {
+                "input": {
+                    "tables": [
+                        {
+                            "destination": "out.c-reviews.location.csv",
+                            "columns": [
+                                "location_id",
+                                "location",
+                                "street",
+                                "city",
+                                "zipcode",
+                                "country",
+                                "state",
+                                "latitude",
+                                "longitude"
+                            ],
+                            "source_search": {
+                                "key": "bdm.scaffold.table.tag",
+                                "value": "ReviewTrackersHospitality.internal.outReviewsLocation"
+                            }
+                        },
+                        {
+                            "destination": "out.c-reviews.review.csv",
+                            "columns": [
+                                "review_id",
+                                "location_id",
+                                "review_published_at",
+                                "review_title",
+                                "review_text",
+                                "rating",
+                                "source",
+                                "source_url",
+                                "sentiment_label",
+                                "sentiment_value",
+                                "review_text_length",
+                                "response_published_at",
+                                "response_text",
+                                "has_response",
+                                "days_to_response"
+                            ],
+                            "source_search": {
+                                "key": "bdm.scaffold.table.tag",
+                                "value": "ReviewTrackersHospitality.internal.outReviewsReview"
+                            }
+                        },
+                        {
+                            "destination": "out.c-reviews.entity.csv",
+                            "columns": [
+                                "entity_id",
+                                "review_id",
+                                "entity_type",
+                                "entity",
+                                "sentiment_value",
+                                "sentiment_label"
+                            ],
+                            "source_search": {
+                                "key": "bdm.scaffold.table.tag",
+                                "value": "ReviewTrackersHospitality.internal.outReviewsEntity"
+                            }
+                        },
+                        {
+                            "destination": "out.c-reviews.tag.csv",
+                            "columns": [
+                                "tag_id",
+                                "review_id",
+                                "tag"
+                            ],
+                            "source_search": {
+                                "key": "bdm.scaffold.table.tag",
+                                "value": "ReviewTrackersHospitality.internal.outReviewsTag"
+                            }
+                        },
+                        {
+                            "destination": "out.c-reviews.sentence.csv",
+                            "columns": [
+                                "sentence_id",
+                                "review_id",
+                                "sentence",
+                                "order",
+                                "segment",
+                                "sentiment_value",
+                                "sentiment_label"
+                            ],
+                            "source_search": {
+                                "key": "bdm.scaffold.table.tag",
+                                "value": "ReviewTrackersHospitality.internal.outReviewsSentence"
+                            }
+                        },
+                        {
+                            "destination": "out.c-reviews.attribute_relation.csv",
+                            "columns": [
+                                "attribute_relation_id",
+                                "review_id",
+                                "subject",
+                                "attribute",
+                                "sentiment_label",
+                                "sentiment_value"
+                            ],
+                            "source_search": {
+                                "key": "bdm.scaffold.table.tag",
+                                "value": "ReviewTrackersHospitality.internal.outReviewsAttributeRelation"
+                            }
+                        },
+                        {
+                            "destination": "out.c-reviews.hierarchy_relation.csv",
+                            "columns": [
+                                "hierarchy_relation_id",
+                                "review_id",
+                                "object",
+                                "entity",
+                                "sentiment_label",
+                                "sentiment_value"
+                            ],
+                            "source_search": {
+                                "key": "bdm.scaffold.table.tag",
+                                "value": "ReviewTrackersHospitality.internal.outReviewsHierarchyRelation"
+                            }
+                        }
+                    ]
+                }
+            }
+        }
+    }
+}

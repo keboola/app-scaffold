@@ -1,0 +1,7 @@
+{
+    "componentId": "transformation",
+    "payload": {
+        "name": "02 Reviews (post-NLP)",
+        "configuration": []
+    }
+}

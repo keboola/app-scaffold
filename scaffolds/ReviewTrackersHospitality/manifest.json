@@ -1,0 +1,63 @@
+{
+    "name": "Review Trackers Hospitality",
+    "author": "Keboola",
+    "description": "Reviews - ReviewTrackers Hospitality",
+    "inputs": [
+        {
+            "id": "kdsTeamExReviewtrackersSurveys",
+            "componentId": "kds-team.ex-reviewtrackers",
+            "name": "Surveys",
+            "required": true,
+            "schema": {
+                "type": "object",
+                "required": [],
+                "properties": {
+                    "username": {
+                        "title": "Username",
+                        "type": "string"
+                    },
+                    "#password": {
+                        "title": "Password",
+                        "type": "string",
+                        "format": "password"
+                    }
+                }
+            }
+        },
+        {
+            "id": "transformation01Reviews(preNLP)",
+            "componentId": "transformation",
+            "name": "01 Reviews (pre-NLP)",
+            "required": true,
+            "schema": null
+        },
+        {
+            "id": "geneeaNlpAnalysisV2ReviewsAnalysis",
+            "componentId": "geneea.nlp-analysis-v2",
+            "name": "Reviews analysis",
+            "required": true,
+            "schema": null
+        },
+        {
+            "id": "transformation02Reviews(postNLP)",
+            "componentId": "transformation",
+            "name": "02 Reviews (post-NLP)",
+            "required": true,
+            "schema": null
+        },
+        {
+            "id": "keboolaWrDbSnowflakeLooker",
+            "componentId": "keboola.wr-db-snowflake",
+            "name": "Looker",
+            "required": true,
+            "schema": null
+        },
+        {
+            "id": "orchestrationReviews",
+            "componentId": "orchestrator",
+            "name": "Reviews",
+            "required": true,
+            "schema": null
+        }
+    ]
+}
