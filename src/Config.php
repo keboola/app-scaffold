@@ -6,6 +6,7 @@ namespace Keboola\ScaffoldApp;
 
 use Keboola\Component\Config\BaseConfig;
 use Keboola\Component\Config\BaseConfigDefinition;
+use Keboola\ScaffoldApp\SyncActions\ListScaffoldsAction;
 use Symfony\Component\Config\Definition\ConfigurationInterface;
 use Keboola\Component\UserException;
 use Symfony\Component\Config\Definition\Exception\InvalidConfigurationException;
@@ -17,7 +18,7 @@ class Config extends BaseConfig
         array $config,
         ?ConfigurationInterface $configDefinition = null
     ) {
-        if ($config['action'] === Component::SYNC_ACTION_LIST_SCAFFOLDS) {
+        if ($config['action'] === ListScaffoldsAction::NAME) {
             parent::__construct($config, new BaseConfigDefinition);
         } else {
             parent::__construct($config, $configDefinition);

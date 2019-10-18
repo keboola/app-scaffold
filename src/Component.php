@@ -16,8 +16,6 @@ use Symfony\Component\Filesystem\Filesystem;
 class Component extends BaseComponent
 {
     public const SCAFFOLDS_DIR = __DIR__ . '/../scaffolds';
-    public const SYNC_ACTION_LIST_SCAFFOLDS = 'listScaffolds';
-    public const SYNC_ACTION_USE_SCAFFOLD = 'useScaffold';
 
     public function actionListScaffolds(): array
     {
@@ -79,8 +77,8 @@ class Component extends BaseComponent
     public function getSyncActions(): array
     {
         return [
-            self::SYNC_ACTION_LIST_SCAFFOLDS => 'actionListScaffolds',
-            self::SYNC_ACTION_USE_SCAFFOLD => 'actionUseScaffold',
+            ListScaffoldsAction::NAME => 'actionListScaffolds',
+            UseScaffoldAction::NAME => 'actionUseScaffold',
         ];
     }
 

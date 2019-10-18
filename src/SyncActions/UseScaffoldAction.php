@@ -9,7 +9,6 @@ use Keboola\ScaffoldApp\Operation\ExecutionContext;
 use Keboola\ScaffoldApp\Operation\CreateConfigurationOperation;
 use Keboola\ScaffoldApp\Operation\CreateConfigurationRowsOperation;
 use Keboola\ScaffoldApp\Operation\CreateOrchestrationOperation;
-use Keboola\ScaffoldApp\Operation\ExecutionContextValidator;
 use Keboola\ScaffoldApp\Operation\OperationsConfig;
 use Keboola\ScaffoldApp\OperationConfig\CreateCofigurationRowsOperationConfig;
 use Keboola\ScaffoldApp\OperationConfig\CreateConfigurationOperationConfig;
@@ -18,7 +17,7 @@ use Symfony\Component\Finder\SplFileInfo;
 
 class UseScaffoldAction
 {
-    public const NAME = 'actionUseScaffold';
+    public const NAME = 'useScaffold';
 
     /**
      * @var ExecutionContext

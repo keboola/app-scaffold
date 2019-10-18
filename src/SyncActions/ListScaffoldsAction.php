@@ -10,7 +10,7 @@ use Symfony\Component\Finder\Finder;
 
 class ListScaffoldsAction
 {
-    public const NAME = 'actionListScaffolds';
+    public const NAME = 'listScaffolds';
 
     public function __invoke(): array
     {
