@@ -76,7 +76,7 @@
         },
         {
             "id": "main",
-            "componentId": "orchestration",
+            "componentId": "orchestrator",
             "name": "Orchestration",
             "required": true
         }

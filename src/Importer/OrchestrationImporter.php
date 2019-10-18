@@ -290,7 +290,7 @@ EOT;
 
         $manifestTemplate['inputs'][] = [
             'id' => $this->getOrchestrationOperationId($orchestration),
-            'componentId' => 'orchestration',
+            'componentId' => 'orchestrator',
             'name' => $orchestration['name'],
             'required' => true,
             'schema' => null,
