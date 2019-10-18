@@ -44,11 +44,10 @@ class StorageInputTablesDecorator extends AbstractDecorator
         $payload = $operationImport->getPayload();
         foreach ($payload['configuration']['storage']['input']['tables'] as &$table) {
             if (!empty($table['source']) && empty($table['source_search'])) {
-                $convertedMetadataValue =
-                    $this->convertTableNameToMetadataValue(
-                        $operationImport,
-                        $table['source']
-                    );
+                $convertedMetadataValue = $this->convertTableNameToMetadataValue(
+                    $operationImport,
+                    $table['source']
+                );
 
                 $table['source_search'] = [
                     // value is annotated with "USER_ACTION_KEY_PREFIX" to notify user that this needs to be checked

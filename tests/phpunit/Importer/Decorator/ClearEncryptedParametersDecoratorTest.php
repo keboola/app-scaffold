@@ -14,7 +14,7 @@ class ClearEncryptedParametersDecoratorTest extends ImporterBaseTestCase
 {
     public function testGetDecoratedProjectImport(): void
     {
-        $task = $this->getExampleOrchstrationTask();
+        $task = $this->getExampleOrchestrationTask();
         $task->setComponent('transformation');
 
         $configuration = [
@@ -87,7 +87,7 @@ class ClearEncryptedParametersDecoratorTest extends ImporterBaseTestCase
 
     public function testSupports(): void
     {
-        $task = $this->getExampleOrchstrationTask();
+        $task = $this->getExampleOrchestrationTask();
 
         $operationImport = OperationImportFactory::createOperationImport(
             [
@@ -109,7 +109,7 @@ class ClearEncryptedParametersDecoratorTest extends ImporterBaseTestCase
 
     public function testSupportsNoParameters(): void
     {
-        $task = $this->getExampleOrchstrationTask();
+        $task = $this->getExampleOrchestrationTask();
 
         $operationImport = OperationImportFactory::createOperationImport(
             [

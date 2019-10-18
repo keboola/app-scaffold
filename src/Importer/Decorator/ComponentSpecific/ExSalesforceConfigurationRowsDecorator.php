@@ -101,7 +101,7 @@ class ExSalesforceConfigurationRowsDecorator extends AbstractDecorator
             $tableNames[] = $object['name'];
         }
 
-        if (0 === count($tableNames)) {
+        if (count($tableNames) === 0) {
             // no tables
             return $row;
         }
@@ -149,7 +149,7 @@ class ExSalesforceConfigurationRowsDecorator extends AbstractDecorator
 
     public function supports(OperationImport $operationImport): bool
     {
-        if (0 === count($operationImport->getConfigurationRows())) {
+        if (count($operationImport->getConfigurationRows()) === 0) {
             return false;
         }
         return in_array($operationImport->getComponentId(), self::SUPPORTED_COMPONENTS);

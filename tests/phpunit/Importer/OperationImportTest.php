@@ -11,7 +11,7 @@ class OperationImportTest extends ImporterBaseTestCase
 {
     public function testOperationImport(): void
     {
-        $task = $this->getExampleOrchstrationTask();
+        $task = $this->getExampleOrchestrationTask();
         self::assertInstanceOf(OrchestrationTask::class, $task);
 
         $configurationRows = [

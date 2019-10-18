@@ -105,11 +105,10 @@ class ComponentTest extends TestCase
         $json = JsonHelper::readFile(
             __DIR__ . '/mock/scaffolds/PassThroughTest/operations/CreateConfiguration/snowflakeExtractor.json'
         );
-        $expectedConfiguration =
-            array_merge_recursive(
-                $json['payload']['configuration'],
-                ['val2' => 'val']
-            );
+        $expectedConfiguration = array_merge_recursive(
+            $json['payload']['configuration'],
+            ['val2' => 'val']
+        );
         self::assertSame(
             $expectedConfiguration,
             $created->getConfiguration()

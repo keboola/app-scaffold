@@ -12,7 +12,7 @@ class OperationImportFactoryTest extends ImporterBaseTestCase
 {
     public function testCreateOperationImport(): void
     {
-        $task = $this->getExampleOrchstrationTask();
+        $task = $this->getExampleOrchestrationTask();
 
         $operationImport = OperationImportFactory::createOperationImport(
             [
