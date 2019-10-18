@@ -60,7 +60,7 @@ class ScaffoldDefinition implements ScaffoldInputDefinitionInterface
         ArrayNodeDefinition $scaffoldNode,
         string $operationId,
         bool $isRequired
-    ) {
+    ): void {
         $treeBuilder = new TreeBuilder($operationId);
         /** @var ArrayNodeDefinition $operationNode */
         $operationNode = $treeBuilder->getRootNode();
