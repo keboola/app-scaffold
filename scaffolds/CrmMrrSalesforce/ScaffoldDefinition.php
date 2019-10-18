@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Keboola\Scaffolds\CrmMrrSalesforce;
 
 use Keboola\ScaffoldApp\ScaffoldInputDefinitionInterface;
-use Keboola\Scaffolds\CommonDefinitions;
 use Symfony\Component\Config\Definition\Builder\ArrayNodeDefinition;
 use Symfony\Component\Config\Definition\Builder\TreeBuilder;
 
@@ -16,6 +15,9 @@ class ScaffoldDefinition implements ScaffoldInputDefinitionInterface
     ): ArrayNodeDefinition {
         // Add salesforce extractor
         $this->appendSalesForceExtractor($node);
+        $this->appendOperationWithoutSchema($node, 'keboolaWrDbSnowflakeLooker', true);
+        $this->appendOperationWithoutSchema($node, 'transformationSalesforceCRM&MRR', true);
+        $this->appendOperationWithoutSchema($node, 'orchestrationMRR', true);
         return $node;
     }
 
@@ -52,5 +54,19 @@ class ScaffoldDefinition implements ScaffoldInputDefinitionInterface
         ;
         // @formatter:on
         $scaffoldNode->append($extractorNode);
+    }
+
+    private function appendOperationWithoutSchema(
+        ArrayNodeDefinition $scaffoldNode,
+        string $operationId,
+        bool $isRequired
+    ): void {
+        $treeBuilder = new TreeBuilder($operationId);
+        /** @var ArrayNodeDefinition $operationNode */
+        $operationNode = $treeBuilder->getRootNode();
+        if ($isRequired === true) {
+            $operationNode->isRequired();
+        }
+        $scaffoldNode->append($operationNode);
     }
 }
