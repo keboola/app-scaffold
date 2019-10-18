@@ -6,7 +6,9 @@ namespace Keboola\ScaffoldApp\Authorization;
 
 class AuthorizationFactory
 {
-    public const AVAILABLE_AUTHORIZATION_METHODS = [SnowflakeAuthorization::NAME, RedshiftAuthorization::NAME,
+    public const AVAILABLE_AUTHORIZATION_METHODS = [
+        SnowflakeAuthorization::NAME,
+        RedshiftAuthorization::NAME,
         OAuthAuthorization::NAME,
     ];
 
