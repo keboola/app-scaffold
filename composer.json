@@ -46,7 +46,8 @@
             "@phplint",
             "@phpcs",
             "@phpstan",
-            "@tests"
+            "@tests",
+            "@composer console scaffold:validate"
         ],
         "ci": [
             "@composer validate --no-check-publish --no-check-all",

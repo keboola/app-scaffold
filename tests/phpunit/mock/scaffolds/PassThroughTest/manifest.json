@@ -1,9 +1,12 @@
 {
+    "name": "This is only a test",
     "author": "John Doe",
-    "description": "Sample Description",
+    "description": "Sample Description longer than 20 characters.",
     "inputs": [
         {
             "id": "connectionWriter",
+            "name": "writer",
+            "required": true,
             "componentId": "keboola.wr-storage",
             "schema": {
                 "type": "object",
@@ -19,6 +22,8 @@
         },
         {
             "id": "snowflakeExtractor",
+            "name": "extractor",
+            "required": true,
             "componentId": "keboola.ex-snowflake",
             "schema": {
                 "type": "object",
@@ -59,6 +64,12 @@
                     }
                 }
             }
+        },
+        {
+            "id": "main",
+            "componentId": "orchestration",
+            "name": "Orchestration",
+            "required": false
         }
     ]
 }

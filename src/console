@@ -4,10 +4,12 @@
 require __DIR__ . '/../vendor/autoload.php';
 
 use Keboola\ScaffoldApp\Command\ImportOrchestrationCommand;
+use Keboola\ScaffoldApp\Command\ValidateScaffoldsCommand;
 use Symfony\Component\Console\Application;
 
 $application = new Application();
 
 $application->add(new ImportOrchestrationCommand());
+$application->add(new ValidateScaffoldsCommand());
 
 $application->run();
