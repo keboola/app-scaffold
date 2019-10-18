@@ -63,7 +63,7 @@ class CreateConfigurationOperationConfig implements OperationConfigInterface
         $config->configurationName = $config->payload['name'];
 
         if (!empty($operationConfig['authorization']) &&
-            !in_array($operationConfig['authorization'], AuthorizationFactory::getAvailableMethods())
+            !in_array($operationConfig['authorization'], AuthorizationFactory::AVAILABLE_AUTHORIZATION_METHODS)
         ) {
             throw new Exception(sprintf(
                 'Invalid authorization value "%s" for configuration with id "%s".',

@@ -13,6 +13,8 @@ use Psr\Log\LoggerInterface;
 
 class RedshiftAuthorization implements AuthorizationInterface
 {
+    public const NAME = 'provisionedRedshift';
+
     public function authorize(
         LoggerInterface $logger,
         Configuration $configuration,
@@ -32,13 +34,15 @@ class RedshiftAuthorization implements AuthorizationInterface
             $data['id']
         ));
         $configData = $configuration->getConfiguration();
-        $configData['parameters']['db']['host'] = $data['connection']['host'];
-        $configData['parameters']['db']['database'] = $data['connection']['database'];
-        $configData['parameters']['db']['schema'] = $data['connection']['schema'];
-        $configData['parameters']['db']['user'] = $data['connection']['user'];
-        $configData['parameters']['db']['#password'] = $data['connection']['password'];
-        $configData['parameters']['db']['port'] = '5439';
-        $configData['parameters']['db']['driver'] = 'redshift';
+        $configData['parameters']['db'] = [
+            'host' => $data['connection']['host'],
+            'database' => $data['connection']['database'],
+            'schema' => $data['connection']['schema'],
+            'user' => $data['connection']['user'],
+            '#password' => $data['connection']['password'],
+            'port' => '5439',
+            'driver' => 'redshift',
+        ];
         $tokenInfo = $storageClient->verifyToken();
         $configData = $encryptionClient->encryptConfigurationData(
             $configData,

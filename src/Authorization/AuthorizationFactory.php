@@ -6,10 +6,7 @@ namespace Keboola\ScaffoldApp\Authorization;
 
 class AuthorizationFactory
 {
-    public static function getAvailableMethods(): array
-    {
-        return ['provisionedSnowflake', 'provisionedRedshift', 'oAuth'];
-    }
+    public const AVAILABLE_AUTHORIZATION_METHODS = [SnowflakeAuthorization::NAME, RedshiftAuthorization::NAME];
 
     public static function getAuthorization(?string $method): AuthorizationInterface
     {
@@ -17,9 +14,9 @@ class AuthorizationFactory
             return new NullAuthorization();
         }
         switch ($method) {
-            case 'provisionedSnowflake':
+            case SnowflakeAuthorization::NAME:
                 return new SnowflakeAuthorization();
-            case 'provisionedRedshift':
+            case RedshiftAuthorization::NAME:
                 return new RedshiftAuthorization();
             default:
                 throw new \Exception(sprintf('Invalid authorization method: "%s".', $method));

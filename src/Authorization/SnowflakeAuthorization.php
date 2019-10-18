@@ -13,6 +13,8 @@ use Psr\Log\LoggerInterface;
 
 class SnowflakeAuthorization implements AuthorizationInterface
 {
+    public const NAME = 'provisionedSnowflake';
+
     public function authorize(
         LoggerInterface $logger,
         Configuration $configuration,

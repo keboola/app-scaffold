@@ -14,7 +14,7 @@ use Psr\Log\NullLogger;
 use Keboola\StorageApi\Client;
 use Keboola\StorageApi\Components;
 
-class CreateConfigurationOperationTestCaseTest extends BaseOperationTestCase
+class CreateConfigurationOperationTest extends BaseOperationTestCase
 {
     /**
      * @var Client|MockObject
