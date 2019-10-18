@@ -6,13 +6,45 @@ namespace Keboola\ScaffoldApp\Tests\Operation;
 
 use Keboola\Orchestrator\Client as OrchestratorClient;
 use Keboola\ScaffoldApp\EncryptionClient;
+use Keboola\ScaffoldApp\Operation\ExecutionContext;
 use Keboola\StorageApi\Client;
 use Keboola\StorageApi\Components;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
+use Psr\Log\NullLogger;
 
 abstract class BaseOperationTestCase extends TestCase
 {
+    /**
+     * @return MockObject|ExecutionContext
+     */
+    public function getExecutionContextMock(
+        array $manifest = [],
+        array $inputs = [],
+        string $scaffoldFolder = ''
+    ) {
+        /** @var MockObject|ExecutionContext $contextMock */
+        $contextMock = self::getMockBuilder(ExecutionContext::class)
+            ->setConstructorArgs([
+                $manifest,
+                $inputs,
+                $scaffoldFolder,
+                new NullLogger(),
+            ])
+            ->disableOriginalClone()
+            ->disableArgumentCloning()
+            ->disallowMockingUnknownTypes()
+            ->setMethods([
+                'getComponentsApiClient',
+                'getStorageApiClient',
+                'getEncryptionApiClient',
+                'getOrchestrationApiClient',
+            ])
+            ->getMock();
+
+        return $contextMock;
+    }
+
     /**
      * @return Components|MockObject
      */

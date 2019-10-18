@@ -8,20 +8,10 @@ use Exception;
 use Keboola\Component\BaseComponent;
 use Keboola\Component\JsonHelper;
 use Keboola\Component\UserException;
-use Keboola\Orchestrator\Client as OrchestratorApiClient;
-use Keboola\ScaffoldApp\OperationConfig\CreateCofigurationRowsOperationConfig;
-use Keboola\ScaffoldApp\OperationConfig\CreateConfigurationOperationConfig;
-use Keboola\ScaffoldApp\OperationConfig\CreateOrchestrationOperationConfig;
-use Keboola\ScaffoldApp\Operation\CreateConfigurationRowsOperation;
-use Keboola\ScaffoldApp\Operation\CreateConfigurationOperation;
-use Keboola\ScaffoldApp\Operation\CreateOrchestrationOperation;
-use Keboola\ScaffoldApp\Operation\FinishedOperationsStore;
-use Keboola\ScaffoldApp\Operation\OperationsConfig;
-use Keboola\StorageApi\Client as StorageApiClient;
-use Keboola\StorageApi\Components as ComponentsApiClient;
-use Psr\Log\LoggerInterface;
+use Keboola\ScaffoldApp\Operation\ExecutionContext;
+use Keboola\ScaffoldApp\SyncActions\ListScaffoldsAction;
+use Keboola\ScaffoldApp\SyncActions\UseScaffoldAction;
 use Symfony\Component\Filesystem\Filesystem;
-use Symfony\Component\Finder\Finder;
 
 class Component extends BaseComponent
 {
@@ -31,52 +21,36 @@ class Component extends BaseComponent
 
     public function actionListScaffolds(): array
     {
-        $finder = new Finder();
-
-        // CreateConfiguration
-        $scaffolds = $finder->in(self::SCAFFOLDS_DIR)
-            ->directories()->depth(0);
-
-        $response = [];
-
-        foreach ($scaffolds->getIterator() as $directory) {
-            $manifest = JsonHelper::readFile(sprintf(
-                '%s/manifest.json',
-                $directory->getPathname()
-            ));
-            $manifest['id'] = $directory->getFilename();
-            $response[] = $manifest;
-        }
-
-        return $response;
+        $action = new ListScaffoldsAction();
+        return $action();
     }
 
     public function actionUseScaffold(): array
     {
         /** @var Config $config */
         $config = $this->getConfig();
+        $scaffoldFolder = $this->getScaffoldConfigurationFolder($config->getScaffoldName());
         $scaffoldInputs = $config->getScaffoldInputs();
-        $scaffoldConfigurationFolder = $this->getScaffoldConfigurationFolder($config->getScaffoldName());
+        $action = new UseScaffoldAction($this->getExecutionContext($scaffoldInputs, $scaffoldFolder));
+        return $action();
+    }
 
-        $storageApiClient = new StorageApiClient(
-            [
-                'token' => getenv('KBC_TOKEN'),
-                'url' => getenv('KBC_URL'),
-                'logger' => $this->getLogger(),
-            ]
-        );
+    private function getExecutionContext(
+        array $scaffoldInputs,
+        string $scaffoldFolder
+    ): ExecutionContext {
+        $manifest = JsonHelper::readFile(sprintf('%s/manifest.json', $scaffoldFolder));
 
-        $finishedOperations = $this->executeOperations(
-            $scaffoldConfigurationFolder,
+        $executionContext = new ExecutionContext(
+            $manifest,
             $scaffoldInputs,
-            $storageApiClient,
-            OrchestratorClientFactory::createForStorageApi($storageApiClient),
-            EncryptionClient::createForStorageApi($storageApiClient),
-            new ComponentsApiClient($storageApiClient),
+            $scaffoldFolder,
             $this->getLogger()
         );
+        $executionContext->loadOperations();
+        $executionContext->loadOperationsFiles();
 
-        return $finishedOperations->getOperationsResponse();
+        return $executionContext;
     }
 
     private function getScaffoldConfigurationFolder(
@@ -90,79 +64,6 @@ class Component extends BaseComponent
         }
 
         return $scaffoldFolder;
-    }
-
-    private function executeOperations(
-        string $scaffoldConfigurationFolder,
-        array $scaffoldParameters,
-        StorageApiClient $storageApiClient,
-        OrchestratorApiClient $orchestrationApiClient,
-        EncryptionClient $encryptionApiClient,
-        ComponentsApiClient $componentsApiClient,
-        LoggerInterface $logger
-    ): FinishedOperationsStore {
-        $operationsStore = new FinishedOperationsStore();
-
-        // CreateConfiguration
-        $operationsFiles = $this->getOperationsFiles(
-            $scaffoldConfigurationFolder,
-            OperationsConfig::CREATE_CONFIGURATION
-        );
-        foreach ($operationsFiles->getIterator() as $file) {
-            $config = CreateConfigurationOperationConfig::create(
-                $file->getBasename('.json'),
-                JsonHelper::readFile($file->getPathname()),
-                $scaffoldParameters
-            );
-            $operation = new CreateConfigurationOperation(
-                $storageApiClient,
-                $encryptionApiClient,
-                $componentsApiClient,
-                $logger
-            );
-            $operation->execute($config, $operationsStore);
-        }
-
-        // CreateConfigRows
-        $operationsFiles = $this->getOperationsFiles(
-            $scaffoldConfigurationFolder,
-            OperationsConfig::CREATE_CONFIGURATION_ROWS
-        );
-        foreach ($operationsFiles->getIterator() as $file) {
-            $config = CreateCofigurationRowsOperationConfig::create(
-                $file->getBasename('.json'),
-                JsonHelper::readFile($file->getPathname()),
-                []
-            );
-            $operation = new CreateConfigurationRowsOperation($componentsApiClient, $logger);
-            $operation->execute($config, $operationsStore);
-        }
-
-        // CreateOrchestration
-        $operationsFiles = $this->getOperationsFiles(
-            $scaffoldConfigurationFolder,
-            OperationsConfig::CREATE_ORCHESTREATION
-        );
-        foreach ($operationsFiles->getIterator() as $file) {
-            $config = CreateOrchestrationOperationConfig::create(
-                $file->getBasename('.json'),
-                JsonHelper::readFile($file->getPathname()),
-                []
-            );
-            $operation = new CreateOrchestrationOperation($orchestrationApiClient, $logger);
-            $operation->execute($config, $operationsStore);
-        }
-
-        return $operationsStore;
-    }
-
-    private function getOperationsFiles(
-        string $scaffoldConfigurationFolder,
-        string $operationFolder
-    ): Finder {
-        $finder = new Finder();
-        return $finder->in($scaffoldConfigurationFolder . '/operations/' . $operationFolder . '/')
-            ->files()->depth(0);
     }
 
     public function getConfigClass(): string

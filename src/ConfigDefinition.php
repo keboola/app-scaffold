@@ -18,6 +18,7 @@ class ConfigDefinition extends BaseConfigDefinition
             ->children()
                 ->scalarNode('id')->isRequired()->cannotBeEmpty()->end()
                 ->arrayNode('inputs')
+                    ->requiresAtLeastOneElement()
                     ->arrayPrototype()
                         ->children()
                             ->scalarNode('id')->isRequired()->cannotBeEmpty()->end()

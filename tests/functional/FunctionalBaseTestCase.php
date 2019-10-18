@@ -5,11 +5,14 @@ declare(strict_types=1);
 namespace Keboola\ScaffoldApp\FunctionalTests;
 
 use Exception;
+use Keboola\Component\JsonHelper;
 use Keboola\Orchestrator\Client as OrchestratorClient;
 use Keboola\ScaffoldApp\Component;
 use Keboola\ScaffoldApp\EncryptionClient;
+use Keboola\ScaffoldApp\Operation\ExecutionContext;
 use Keboola\ScaffoldApp\Operation\FinishedOperationsStore;
 use Keboola\ScaffoldApp\OrchestratorClientFactory;
+use Keboola\ScaffoldApp\SyncActions\UseScaffoldAction;
 use Keboola\StorageApi\Client;
 use Keboola\StorageApi\Components;
 use Keboola\StorageApi\Components as ComponentsApiClient;
@@ -63,29 +66,9 @@ abstract class FunctionalBaseTestCase extends TestCase
         );
     }
 
-    protected function exportTestScaffold(
-        string $scaffoldId,
-        array $inputParameters
-    ): FinishedOperationsStore {
-        $componentRef = new ReflectionClass(Component::class);
-        $executeOperationsRef = $componentRef->getMethod('executeOperations');
-        $executeOperationsRef->setAccessible(true);
-
-        /** @var FinishedOperationsStore $store */
-        $store = $executeOperationsRef->invokeArgs(
-            $componentRef->newInstanceWithoutConstructor(),
-            [
-                __DIR__ . '/../phpunit/mock/scaffolds/' . $scaffoldId,
-                $inputParameters,
-                $this->createStorageApiClient(),
-                $this->createOrchestrationApiClient(),
-                $this->createEncryptionApiClient(),
-                $this->createComponentsApiClient(),
-                new NullLogger(),
-            ]
-        );
-
-        return $store;
+    protected function createComponentsApiClient(): ComponentsApiClient
+    {
+        return new ComponentsApiClient($this->createStorageApiClient());
     }
 
     protected function createEncryptionApiClient(): EncryptionClient
@@ -93,9 +76,26 @@ abstract class FunctionalBaseTestCase extends TestCase
         return EncryptionClient::createForStorageApi($this->createStorageApiClient());
     }
 
-    protected function createComponentsApiClient(): ComponentsApiClient
-    {
-        return new ComponentsApiClient($this->createStorageApiClient());
+    protected function exportTestScaffold(
+        string $scaffoldId,
+        array $inputParameters
+    ): ExecutionContext {
+        $scaffoldFolder = __DIR__ . '/../phpunit/mock/scaffolds/' . $scaffoldId;
+        $manifest = JsonHelper::readFile(sprintf('%s/manifest.json', $scaffoldFolder));
+
+        $executionContext = new ExecutionContext(
+            $manifest,
+            $inputParameters,
+            $scaffoldFolder,
+            new NullLogger
+        );
+        $executionContext->loadOperations();
+        $executionContext->loadOperationsFiles();
+
+        $action = new UseScaffoldAction($executionContext);
+        $action();
+
+        return $executionContext;
     }
 
     protected function setUp(): void

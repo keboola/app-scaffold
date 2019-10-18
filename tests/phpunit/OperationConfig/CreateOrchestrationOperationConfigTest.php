@@ -5,7 +5,9 @@ declare(strict_types=1);
 namespace Keboola\ScaffoldApp\Tests\OperationConfig;
 
 use Keboola\ScaffoldApp\Operation\CreateOrchestrationOperation;
+use Keboola\ScaffoldApp\Operation\ExecutionContext;
 use Keboola\ScaffoldApp\Operation\FinishedOperationsStore;
+use Psr\Log\NullLogger;
 use Throwable;
 use Keboola\ScaffoldApp\OperationConfig\OperationConfigInterface;
 use Keboola\ScaffoldApp\OperationConfig\CreateOrchestrationOperationConfig;
@@ -35,10 +37,14 @@ class CreateOrchestrationOperationConfigTest extends TestCase
     {
         $instance = CreateOrchestrationOperationConfig::create('operation_id', self::WORKING_CONFIGURATION, []);
 
-        $store = new FinishedOperationsStore();
-        $store->add('ex01', CreateOrchestrationOperation::class, (new Configuration())->setConfigurationId('id'));
+        $exectutionContext = new ExecutionContext([], [], '', new NullLogger);
+        $exectutionContext->finishOperation(
+            'ex01',
+            CreateOrchestrationOperation::class,
+            (new Configuration())->setConfigurationId('id')
+        );
 
-        $instance->populateOrchestrationTasksWithConfigurationIds($store);
+        $instance->populateOrchestrationTasksWithConfigurationIds($exectutionContext);
 
         $this->assertSame(
             [

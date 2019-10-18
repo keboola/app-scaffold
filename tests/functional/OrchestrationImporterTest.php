@@ -20,10 +20,12 @@ class OrchestrationImporterTest extends FunctionalBaseTestCase
                 'snowflakeExtractor' => [
                     'val2' => 'val',
                 ],
+                'connectionWriter' => [],
+                'main' => [],
             ]
         );
 
-        $orchestrationId = $store->getOperationData('main');
+        $orchestrationId = $store->getFinishedOperationData('main');
 
         $temp = new Temp();
         $temp->initRunFolder();

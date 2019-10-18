@@ -8,5 +8,5 @@ use Keboola\ScaffoldApp\OperationConfig\OperationConfigInterface;
 
 interface OperationInterface
 {
-    public function execute(OperationConfigInterface $operationConfig, FinishedOperationsStore $store): void;
+    public function execute(OperationConfigInterface $operationConfig, ExecutionContext $executionContext): void;
 }

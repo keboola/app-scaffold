@@ -6,24 +6,24 @@ namespace Keboola\ScaffoldApp\Tests\Operation;
 
 use Keboola\ScaffoldApp\Operation\CreateConfigurationOperation;
 use Keboola\ScaffoldApp\Operation\CreateOrchestrationOperation;
-use Keboola\ScaffoldApp\Operation\FinishedOperationsStore;
+use Keboola\ScaffoldApp\Operation\ExecutionContext;
 use Keboola\ScaffoldApp\OperationConfig\CreateOrchestrationOperationConfig;
 use Keboola\StorageApi\Options\Components\Configuration;
-use Psr\Log\NullLogger;
+use PHPUnit\Framework\MockObject\MockObject;
 
 class CreateOrchestrationOperationTest extends BaseOperationTestCase
 {
     public function testExecute(): void
     {
+        /** @var MockObject|ExecutionContext $contextMock */
+        $executionMock = self::getExecutionContextMock();
         $orchestratorApiClient = $this->getMockOrchestrationApiClient();
         $orchestratorApiClient->method('createOrchestration')->willReturn(
             ['id' => 'createdOrchestrationId']
         );
+        $executionMock->method('getOrchestrationApiClient')->willReturn($orchestratorApiClient);
 
-        $operation = new CreateOrchestrationOperation(
-            $orchestratorApiClient,
-            new NullLogger()
-        );
+        $operation = new CreateOrchestrationOperation();
 
         $operationConfig = [
             'payload' => [
@@ -46,11 +46,14 @@ class CreateOrchestrationOperationTest extends BaseOperationTestCase
         $config = CreateOrchestrationOperationConfig::create('orch1', $operationConfig, []);
 
         // mock finished CreateConfiguration
-        $store = new FinishedOperationsStore();
-        $store->add('op1', CreateConfigurationOperation::class, (new Configuration())->setConfigurationId('1'));
+        $executionMock->finishOperation(
+            'op1',
+            CreateConfigurationOperation::class,
+            (new Configuration())->setConfigurationId('1')
+        );
 
-        $operation->execute($config, $store);
-        $orchestrationId = $store->getOperationData('orch1');
+        $operation->execute($config, $executionMock);
+        $orchestrationId = $executionMock->getFinishedOperationData('orch1');
         self::assertEquals('createdOrchestrationId', $orchestrationId);
     }
 }

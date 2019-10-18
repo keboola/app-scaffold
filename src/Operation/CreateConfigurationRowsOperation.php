@@ -7,43 +7,25 @@ namespace Keboola\ScaffoldApp\Operation;
 use Exception;
 use Keboola\ScaffoldApp\OperationConfig\CreateCofigurationRowsOperationConfig;
 use Keboola\ScaffoldApp\OperationConfig\OperationConfigInterface;
-use Keboola\StorageApi\Components;
 use Keboola\StorageApi\Options\Components\Configuration;
-use Psr\Log\LoggerInterface;
 
 class CreateConfigurationRowsOperation implements OperationInterface
 {
-    /**
-     * @var LoggerInterface
-     */
-    private $logger;
-
-    /**
-     * @var Components
-     */
-    private $componentsApiClient;
-
-    public function __construct(
-        Components $componentsApiClient,
-        LoggerInterface $logger
-    ) {
-        $this->logger = $logger;
-        $this->componentsApiClient = $componentsApiClient;
-    }
-
     /**
      * @param CreateCofigurationRowsOperationConfig $operationConfig
      */
     public function execute(
         OperationConfigInterface $operationConfig,
-        FinishedOperationsStore $store
+        ExecutionContext $executionContext
     ): void {
-        $this->logger->info(sprintf(
+        $executionContext->getLogger()->info(sprintf(
             'Creating config rows for operation "%s"',
             $operationConfig->getOperationReferenceId()
         ));
 
-        $componentConfiguration = $store->getOperationData($operationConfig->getOperationReferenceId());
+        $componentConfiguration = $executionContext->getFinishedOperationData(
+            $operationConfig->getOperationReferenceId()
+        );
 
         if (!$componentConfiguration instanceof Configuration) {
             throw new Exception(sprintf(
@@ -53,11 +35,11 @@ class CreateConfigurationRowsOperation implements OperationInterface
         }
 
         foreach ($operationConfig->getIterator($componentConfiguration) as $rowConfiguration) {
-            $response = $this->componentsApiClient->addConfigurationRow($rowConfiguration);
+            $response = $executionContext->getComponentsApiClient()->addConfigurationRow($rowConfiguration);
             $rowConfiguration->setRowId($response['id']);
-            $this->logger->info(sprintf('Row for %s created', $response['id']));
+            $executionContext->getLogger()->info(sprintf('Row for %s created', $response['id']));
 
-            $store->add(
+            $executionContext->finishOperation(
                 sprintf(
                     'row.%s.%s',
                     $operationConfig->getOperationReferenceId(),
