@@ -7,7 +7,7 @@
             "id": "connectionWriter",
             "componentId": "keboola.wr-storage",
             "name": "Writer",
-            "required": true,
+            "required": false,
             "schema": {
                 "type": "object",
                 "required": [
@@ -79,6 +79,12 @@
             "componentId": "orchestrator",
             "name": "Orchestration",
             "required": true
+        },
+        {
+            "id": "googleDrive",
+            "componentId": "keboola.ex-google-drive",
+            "name": "Test OAuth",
+            "required": false
         }
     ]
 }
