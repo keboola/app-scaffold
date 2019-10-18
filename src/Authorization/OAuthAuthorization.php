@@ -11,6 +11,8 @@ use Psr\Log\LoggerInterface;
 
 class OAuthAuthorization implements AuthorizationInterface
 {
+    public const NAME = 'oauth';
+
     public function authorize(
         LoggerInterface $logger,
         Configuration $configuration,
