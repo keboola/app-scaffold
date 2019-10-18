@@ -2,7 +2,7 @@
 
 [![Build Status](https://travis-ci.com/keboola/app-scaffold.svg?branch=master)](https://travis-ci.com/keboola/app-scaffold)
 
-> Scaffold application can setup project using list of oprerations.
+> Scaffold application can setup project using list of operations.
 
 # Usage
 
@@ -12,7 +12,7 @@ Scaffolds are saved in `scaffolds` directory, each scaffold has own directory. D
 
 - Scaffold must contain `manifest.json` file and operations folders.
 - Optionally parameters from runner can be validated with `ScaffoldDefinition.php`.
-- Each scaffold operation id must be camelCase optionally with sufix after underscore.
+- Each scaffold operation id must be camelCase optionally with suffix after underscore.
 - CreateConfigurationRows operations must match id with parent CreateConfiguration operation.
 
 Example scaffold structure:
@@ -49,12 +49,12 @@ Each task from orchestration is processed by decorators.
 
 #### TransformationConfigurationRowsDecorator
 
- - Each configuration row imput mapping is decorated with `source_search`
+ - Each configuration row input mapping is decorated with `source_search`
  - original source is kept for check with key name `__SCAFFOLD_CHECK__.original_source`.
- - source with rewriten table name in pattern `out.c-SCAFFOLD_ID.bucketNameTableName` is kept under key `__SCAFFOLD_CHECK__.source`. If input mapping point's to different configuration row in same transformation `source_search` can't be used [transformation-router#76](https://github.com/keboola/transformation-router/issues/76).
+ - source with rewritten table name in pattern `out.c-SCAFFOLD_ID.bucketNameTableName` is kept under key `__SCAFFOLD_CHECK__.source`. If input mapping point's to different configuration row in same transformation `source_search` can't be used [transformation-router#76](https://github.com/keboola/transformation-router/issues/76).
  - Each configuration row output mapping is decorated with `metadata` array, `destination` table has rewriten name with pattern `out.c-SCAFFOLD_ID.bucketNameTableName`. Original destination is kept under `__SCAFFOLD_CHECK__.original_destination` key name.
 
-Be carefull with sources from other components using default bucket since their bucket name has also configurationId and can't be matched automatically.
+Be careful with sources from other components using default bucket since their bucket name has also configurationId and can't be matched automatically.
 
 #### ClearEncryptedParametersDecorator
 
@@ -63,7 +63,7 @@ Clears all encrypted values in parameters. Please read https://github.com/kebool
 #### StorageInputTablesDecorator
 
 Decorates component path `configuration.storage.input.tables[]` with `source_search` and original source is kept for check with key name `__SCAFFOLD_CHECK__.original_source`.
-If source match patern `out.c-project.tableName` it's rewriten to `out.c-SCAFFOLD_ID.tableName`.
+If source match pattern `out.c-project.tableName` it's rewritten to `out.c-SCAFFOLD_ID.tableName`.
 
 #### Component specific
 
@@ -80,16 +80,18 @@ Any decorator can be disabled in `Keboola\ScaffoldApp\Importer\OperationImportFa
 
 ### Post import steps
 
-- All valus with `__SCAFFOLD_CHECK__` must be configured by scaffold author and appropriete changes has to be made to make scaffold work.
+- All values with `__SCAFFOLD_CHECK__` must be configured by scaffold author and appropriate changes has to be made to make scaffold work.
 - `CreateConfiguration` operation are not decorated automatically so processors or input/output mapping has to be created/edited manually.
 - If any parameters are going to be passed from runner `manifest.json` file `inputs` must be configured and can be validated by ScaffoldDefinition.php
 - Don't forget to test scaffold in sample project if all mappings works, this is not possible to validate.
+- If you want to use Snowflake or Redshift provisioned database, add `"authorization": "provisionedSnowflake"` or `"authorization": "provisionedSnowflake"`
+to the root of a Snowflake or Redshift writer configuration. 
 
 ## Parameters
 
 Optionally parameters from runner can be validated with `ScaffoldDefinition.php`
 
-CreateConfiguration operation path `payload.configuration.parameters` can be overide with parameters injected by runner.
+CreateConfiguration operation path `payload.configuration.parameters` can be override with parameters injected by runner.
 
 ```
 {

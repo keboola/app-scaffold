@@ -13,7 +13,7 @@ use Keboola\StorageApi\Options\Components\Configuration;
 use Keboola\StorageApi\Options\Components\ConfigurationRow;
 use Psr\Log\NullLogger;
 
-class CreateConfigurationRowsOperationTestCaseTest extends BaseOperationTestCase
+class CreateConfigurationRowsOperationTest extends BaseOperationTestCase
 {
     public function testExecute(): void
     {

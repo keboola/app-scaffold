@@ -5,6 +5,8 @@ declare(strict_types=1);
 namespace Keboola\ScaffoldApp\OperationConfig;
 
 use Exception;
+use Keboola\ScaffoldApp\Authorization\AuthorizationFactory;
+use Keboola\ScaffoldApp\Authorization\AuthorizationInterface;
 use Keboola\StorageApi\Options\Components\Configuration;
 
 class CreateConfigurationOperationConfig implements OperationConfigInterface
@@ -19,7 +21,10 @@ class CreateConfigurationOperationConfig implements OperationConfigInterface
     private $payload = [];
 
     /** @var string */
-    private $configrationName;
+    private $configurationName;
+
+    /** @var AuthorizationInterface */
+    private $authorization;
 
     /**
      * @return CreateConfigurationOperationConfig
@@ -55,7 +60,18 @@ class CreateConfigurationOperationConfig implements OperationConfigInterface
                 $config->getId()
             ));
         }
-        $config->configrationName = $config->payload['name'];
+        $config->configurationName = $config->payload['name'];
+
+        if (!empty($operationConfig['authorization']) &&
+            !in_array($operationConfig['authorization'], AuthorizationFactory::AVAILABLE_AUTHORIZATION_METHODS)
+        ) {
+            throw new Exception(sprintf(
+                'Invalid authorization value "%s" for configuration with id "%s".',
+                $operationConfig['authorization'],
+                $config->getId()
+            ));
+        }
+        $config->authorization = AuthorizationFactory::getAuthorization($operationConfig['authorization'] ?? null);
 
         if (is_array($parameters) && isset($parameters[$config->getId()])) {
             // actions has parameters merge it with payload configuration
@@ -71,6 +87,11 @@ class CreateConfigurationOperationConfig implements OperationConfigInterface
         return $config;
     }
 
+    public function getAuthorization(): AuthorizationInterface
+    {
+        return $this->authorization;
+    }
+
     public function getId(): string
     {
         return $this->id;
@@ -80,7 +101,7 @@ class CreateConfigurationOperationConfig implements OperationConfigInterface
     {
         $configuration = new Configuration;
         $configuration->setComponentId($this->componentId);
-        $configuration->setName($this->configrationName);
+        $configuration->setName($this->configurationName);
 
         if (!empty($this->payload['configuration'])) {
             $configuration->setConfiguration($this->payload['configuration']);

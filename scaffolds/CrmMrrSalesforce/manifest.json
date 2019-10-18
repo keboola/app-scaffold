@@ -33,56 +33,6 @@
                     }
                 }
             }
-        },
-        {
-            "id": "keboolaWrDbSnowflakeLooker",
-            "componentId": "keboola.wr-db-snowflake",
-            "schema": {
-                "type": "object",
-                "required": [
-                    "db"
-                ],
-                "properties": {
-                    "db": {
-                        "type": "object",
-                        "required": [
-                            "host",
-                            "user",
-                            "#password",
-                            "database",
-                            "schema",
-                            "warehouse"
-                        ],
-                        "properties": {
-                            "host": {
-                                "title": "Host Name",
-                                "type": "string"
-                            },
-                            "user": {
-                                "title": "Username",
-                                "type": "string"
-                            },
-                            "schema": {
-                                "title": "Schema",
-                                "type": "string"
-                            },
-                            "database": {
-                                "title": "Database",
-                                "type": "string"
-                            },
-                            "#password": {
-                                "title": "Password",
-                                "type": "string",
-                                "format": "password"
-                            },
-                            "warehouse": {
-                                "title": "Warehouse",
-                                "type": "string"
-                            }
-                        }
-                    }
-                }
-            }
         }
     ]
 }
