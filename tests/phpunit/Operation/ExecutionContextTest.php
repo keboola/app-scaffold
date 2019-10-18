@@ -9,10 +9,12 @@ use Keboola\Component\UserException;
 use Keboola\Orchestrator\Client as OrchestratorClient;
 use Keboola\ScaffoldApp\EncryptionClient;
 use Keboola\ScaffoldApp\Operation\CreateConfigurationOperation;
+use Keboola\ScaffoldApp\Operation\CreateConfigurationRowsOperation;
 use Keboola\ScaffoldApp\Operation\CreateOrchestrationOperation;
 use Keboola\ScaffoldApp\Operation\ExecutionContext;
 use Keboola\StorageApi\Client as StorageApiClient;
 use Keboola\StorageApi\Components as ComponentsApiClient;
+use Keboola\StorageApi\Options\Components\Configuration;
 use PHPUnit\Framework\TestCase;
 use Psr\Log\NullLogger;
 
@@ -55,7 +57,37 @@ class ExecutionContextTest extends TestCase
 
     public function testGetFinishedOperationsResponse(): void
     {
-        self::markTestSkipped();
+        $configuration = $this->getMockBuilder(Configuration::class)
+            ->setMethods(['getConfigurationId'])
+            ->disableOriginalConstructor()
+            ->getMock();
+        $configuration->method('getConfigurationId')
+            ->willReturnOnConsecutiveCalls('123', '345');
+        $executionContext = $this->getEmptyExecutionContext();
+        $executionContext->finishOperation('id1', CreateConfigurationOperation::class, $configuration);
+        $executionContext->finishOperation('id2', CreateOrchestrationOperation::class, '567');
+        $executionContext->finishOperation('id3', CreateConfigurationRowsOperation::class, ['data3']);
+        $executionContext->finishOperation('id4', CreateConfigurationOperation::class, $configuration, ['foo', 'bar']);
+        self::assertSame(
+            [
+                [
+                    'id' => 'id1',
+                    'configurationId' => '123',
+                    'userActions' => [],
+                ],
+                [
+                    'id' => 'id2',
+                    'configurationId' => '567',
+                    'userActions' => [],
+                ],
+                [
+                    'id' => 'id4',
+                    'configurationId' => '345',
+                    'userActions' => ['foo', 'bar'],
+                ],
+            ],
+            $executionContext->getFinishedOperationsResponse()
+        );
     }
 
     public function testGetLogger(): void
