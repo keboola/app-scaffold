@@ -17,7 +17,7 @@ use PHPUnit\Framework\TestCase;
 use Psr\Log\NullLogger;
 use ReflectionClass;
 
-class FunctionalBaseTestCase extends TestCase
+abstract class FunctionalBaseTestCase extends TestCase
 {
     protected function clearWorkspace(): void
     {

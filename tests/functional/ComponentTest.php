@@ -4,13 +4,13 @@ declare(strict_types=1);
 
 namespace Keboola\ScaffoldApp\FunctionalTests;
 
-use Keboola\DatadirTests\DatadirTestCase;
+use Keboola\DatadirTests\AbstractDatadirTestCase;
 use Keboola\DatadirTests\DatadirTestSpecification;
 use Keboola\DatadirTests\Exception\DatadirTestsException;
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\Process\Process;
 
-class ComponentTest extends DatadirTestCase
+class ComponentTest extends AbstractDatadirTestCase
 {
     public function testUseScaffold(): void
     {
