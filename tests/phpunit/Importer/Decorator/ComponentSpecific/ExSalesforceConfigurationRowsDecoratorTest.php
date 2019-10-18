@@ -13,7 +13,7 @@ class ExSalesforceConfigurationRowsDecoratorTest extends ImporterBaseTestCase
 {
     public function testGetDecoratorProjectImport(): void
     {
-        $task = $this->getExampleOrchstrationTask();
+        $task = $this->getExampleOrchestrationTask();
         $task->setComponent('htns.ex-salesforce');
 
         $configuration = [
@@ -116,7 +116,7 @@ class ExSalesforceConfigurationRowsDecoratorTest extends ImporterBaseTestCase
 
     public function testSupportsEmptyRows(): void
     {
-        $task = $this->getExampleOrchstrationTask();
+        $task = $this->getExampleOrchestrationTask();
 
         $operationImport = OperationImportFactory::createOperationImport(
             [
@@ -136,7 +136,7 @@ class ExSalesforceConfigurationRowsDecoratorTest extends ImporterBaseTestCase
 
     public function testSupportsOtherComponent(): void
     {
-        $task = $this->getExampleOrchstrationTask();
+        $task = $this->getExampleOrchestrationTask();
 
         $configuration = [
             'name' => '',
@@ -181,7 +181,7 @@ class ExSalesforceConfigurationRowsDecoratorTest extends ImporterBaseTestCase
 
     public function testSupportsValid(): void
     {
-        $task = $this->getExampleOrchstrationTask();
+        $task = $this->getExampleOrchestrationTask();
         $task->setComponent('htns.ex-salesforce');
 
         $configuration = [

@@ -10,7 +10,7 @@ require __DIR__ . '/../vendor/autoload.php';
 
 $logger = new Logger();
 try {
-    if (false === getenv('KBC_TOKEN') || false === getenv('KBC_URL')) {
+    if (getenv('KBC_TOKEN') === false || getenv('KBC_URL') === false) {
         throw new Exception('Env variable "KBC_TOKEN" or "KBC_URL" must be set to run component.');
     }
 

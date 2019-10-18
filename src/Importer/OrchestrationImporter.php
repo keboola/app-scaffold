@@ -172,7 +172,7 @@ class OrchestrationImporter
             true
         );
 
-        if (0 === count($import->getConfigurationRows())) {
+        if (count($import->getConfigurationRows()) === 0) {
             return;
         }
         // dump ConfigRows

@@ -111,7 +111,7 @@ EOT
 
         $violations = $validator->validate($arguments, $constraint);
 
-        if (0 !== count($violations)) {
+        if (count($violations) !== 0) {
             foreach ($violations as $violation) {
                 $output->writeln($violation->getMessage());
             }

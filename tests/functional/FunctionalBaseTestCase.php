@@ -17,7 +17,7 @@ use PHPUnit\Framework\TestCase;
 use Psr\Log\NullLogger;
 use ReflectionClass;
 
-class FunctionalBaseTestCase extends TestCase
+abstract class FunctionalBaseTestCase extends TestCase
 {
     protected function clearWorkspace(): void
     {
@@ -100,10 +100,10 @@ class FunctionalBaseTestCase extends TestCase
 
     protected function setUp(): void
     {
-        if (false === getenv('KBC_TOKEN')) {
+        if (getenv('KBC_TOKEN') === false) {
             throw new Exception('Env variable "KBC_TOKEN" must be set.');
         }
-        if (false === getenv('KBC_URL')) {
+        if (getenv('KBC_URL') === false) {
             throw new Exception('Env variable "KBC_URL" must be set.');
         }
     }

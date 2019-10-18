@@ -13,7 +13,7 @@ class StorageInputTablesDecoratorTest extends ImporterBaseTestCase
 {
     public function testGetDecoratedProjectImport(): void
     {
-        $task = $this->getExampleOrchstrationTask();
+        $task = $this->getExampleOrchestrationTask();
 
         $configuration = [
             'name' => '',
@@ -82,9 +82,9 @@ class StorageInputTablesDecoratorTest extends ImporterBaseTestCase
         self::assertSame($expectedPayload, $operationImport->getPayload());
     }
 
-    public function testSupportsInvlidInput(): void
+    public function testSupportsInvalidInput(): void
     {
-        $task = $this->getExampleOrchstrationTask();
+        $task = $this->getExampleOrchestrationTask();
 
         $configuration = [
             'name' => '',
@@ -174,7 +174,7 @@ class StorageInputTablesDecoratorTest extends ImporterBaseTestCase
 
     public function testSupportsValid(): void
     {
-        $task = $this->getExampleOrchstrationTask();
+        $task = $this->getExampleOrchestrationTask();
 
         $configuration = [
             'name' => '',

@@ -8,9 +8,9 @@ use Keboola\Orchestrator\OrchestrationTask;
 use Keboola\ScaffoldApp\Importer\OrchestrationTaskFactory;
 use PHPUnit\Framework\TestCase;
 
-class ImporterBaseTestCase extends TestCase
+abstract class ImporterBaseTestCase extends TestCase
 {
-    public function getExampleOrchstrationTask(): OrchestrationTask
+    public function getExampleOrchestrationTask(): OrchestrationTask
     {
         return OrchestrationTaskFactory::createTaskFromResponse([
             'component' => 'keboola.component',

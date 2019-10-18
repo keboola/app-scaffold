@@ -47,7 +47,7 @@ class ClearEncryptedParametersDecorator extends AbstractDecorator
 
     private function isValueCrypted(string $key): bool
     {
-        return self::CRYPTED_KEY_PREFIX === substr($key, 0, 1);
+        return substr($key, 0, 1) === self::CRYPTED_KEY_PREFIX;
     }
 
     public function supports(OperationImport $operationImport): bool

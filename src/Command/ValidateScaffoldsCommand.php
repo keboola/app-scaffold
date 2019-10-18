@@ -59,7 +59,7 @@ class ValidateScaffoldsCommand extends Command
     {
         $violations = (new ManifestValidator($scaffoldDir))->validate();
 
-        if (0 !== count($violations)) {
+        if (count($violations) !== 0) {
             $messages = '';
             /** @var ConstraintViolationInterface $violation */
             foreach ($violations as $violation) {

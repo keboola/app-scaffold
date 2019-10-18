@@ -20,7 +20,7 @@ final class TableNameConverter
         string $tableName
     ): string {
         $tableParts = $this->matchTableName($tableName);
-        if (null === $tableParts) {
+        if ($tableParts === null) {
             // when not matching bucket table patern convert only to camel case
             return CamelCaseConverterHelper::convertToCamelCase(
                 $tableName
@@ -41,7 +41,7 @@ final class TableNameConverter
     private function matchTableName(string $tableName): ?array
     {
         $isMatched = preg_match(self::STAGED_TABLE_MATCH_PATTERN, $tableName, $matches);
-        if (false === $isMatched || self::EXPECTED_MATCH_COUNT !== count($matches)) {
+        if ($isMatched === false || count($matches) !== self::EXPECTED_MATCH_COUNT) {
             return null;
         };
         return $matches;
@@ -52,7 +52,7 @@ final class TableNameConverter
         string $tableName
     ): string {
         $tableParts = $this->matchTableName($tableName);
-        if (null === $tableParts) {
+        if ($tableParts === null) {
             // in this case table si simple string and not in stage.c-bucketName.tableName format
             $tableName = CamelCaseConverterHelper::convertToCamelCase(
                 $tableName

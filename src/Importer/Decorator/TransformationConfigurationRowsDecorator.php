@@ -100,7 +100,7 @@ class TransformationConfigurationRowsDecorator extends AbstractDecorator
 
     public function supports(OperationImport $operationImport): bool
     {
-        if (0 === count($operationImport->getConfigurationRows())) {
+        if (count($operationImport->getConfigurationRows()) === 0) {
             return false;
         }
 

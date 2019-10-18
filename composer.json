@@ -1,4 +1,7 @@
 {
+    "license": "MIT",
+    "name": "keboola/app-scaffold",
+    "description": "Application to generate and use scaffolds",
     "require": {
         "php": "^7.1",
         "keboola/orchestrator-php-client": "^1.2",
@@ -30,7 +33,7 @@
         }
     },
     "scripts": {
-        "console": "src/console",
+        "console": "php src/console",
         "tests-phpunit": "phpunit",
         "tests-datadir": "phpunit tests/functional",
         "tests": [

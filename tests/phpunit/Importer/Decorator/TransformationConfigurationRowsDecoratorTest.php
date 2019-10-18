@@ -14,7 +14,7 @@ class TransformationConfigurationRowsDecoratorTest extends ImporterBaseTestCase
 {
     public function testGetDecoratorProjectImport(): void
     {
-        $task = $this->getExampleOrchstrationTask();
+        $task = $this->getExampleOrchestrationTask();
         $task->setComponent('transformation');
 
         $configuration = [
@@ -252,7 +252,7 @@ class TransformationConfigurationRowsDecoratorTest extends ImporterBaseTestCase
 
     public function testSupportsEmptyRows(): void
     {
-        $task = $this->getExampleOrchstrationTask();
+        $task = $this->getExampleOrchestrationTask();
 
         $operationImport = OperationImportFactory::createOperationImport(
             [
@@ -272,7 +272,7 @@ class TransformationConfigurationRowsDecoratorTest extends ImporterBaseTestCase
 
     public function testSupportsNotTransformation(): void
     {
-        $task = $this->getExampleOrchstrationTask();
+        $task = $this->getExampleOrchestrationTask();
 
         $operationImport = OperationImportFactory::createOperationImport(
             [
@@ -299,7 +299,7 @@ class TransformationConfigurationRowsDecoratorTest extends ImporterBaseTestCase
 
     public function testSupportsValid(): void
     {
-        $task = $this->getExampleOrchstrationTask();
+        $task = $this->getExampleOrchestrationTask();
         $task->setComponent('transformation');
 
         $configuration = [
