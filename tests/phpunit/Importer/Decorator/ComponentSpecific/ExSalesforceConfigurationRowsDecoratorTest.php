@@ -88,6 +88,17 @@ class ExSalesforceConfigurationRowsDecoratorTest extends ImporterBaseTestCase
                                     ],
                             ],
                             [
+                                'definition' =>
+                                    [
+                                        'component' => 'keboola.processor-skip-lines',
+                                    ],
+                                'parameters' =>
+                                    [
+                                        'lines' => 1,
+                                        'direction_from' => 'top',
+                                    ]
+                            ],
+                            [
                                 'definition' => [
                                     'component' => 'keboola.processor-add-metadata',
                                 ],

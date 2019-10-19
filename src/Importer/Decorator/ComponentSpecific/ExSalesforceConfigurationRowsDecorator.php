@@ -115,7 +115,7 @@ class ExSalesforceConfigurationRowsDecorator extends AbstractDecorator
                 $operationImport,
                 $realTableName
             );
-            $processors[1]['parameters']['tables'][] = [
+            $processors[2]['parameters']['tables'][] = [
                 'table' => sprintf('%s.csv', $tableName),
                 'metadata' =>
                     [
