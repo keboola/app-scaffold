@@ -17,7 +17,7 @@
                             "value": "CrmMrrSalesforce.internal.outCrmCompany"
                         }
                     ],
-                    "destination": "out.c-cRMMMRSalesforce.crmCompany"
+                    "destination": "out.c-CrmMrrSalesforce.crmCompany"
                 }
             ],
             "queries": [
@@ -33,7 +33,7 @@
                     "whereOperator": "eq",
                     "columns": [],
                     "loadType": "clone",
-                    "source": "in.c-cRMMMRSalesforce.salesforceAccount"
+                    "source": "in.c-CrmMrrSalesforce.salesforceAccount"
                 }
             ],
             "name": "Company",
@@ -63,7 +63,7 @@
                             "value": "CrmMrrSalesforce.internal.outCrmProduct"
                         }
                     ],
-                    "destination": "out.c-cRMMMRSalesforce.crmProduct"
+                    "destination": "out.c-CrmMrrSalesforce.crmProduct"
                 }
             ],
             "queries": [
@@ -78,7 +78,7 @@
                     "whereOperator": "eq",
                     "columns": [],
                     "loadType": "clone",
-                    "source": "in.c-cRMMMRSalesforce.salesforceProduct2"
+                    "source": "in.c-CrmMrrSalesforce.salesforceProduct2"
                 }
             ],
             "name": "Product",
@@ -108,7 +108,7 @@
                             "value": "CrmMrrSalesforce.internal.outCrmOpportunity"
                         }
                     ],
-                    "destination": "out.c-cRMMMRSalesforce.crmOpportunity"
+                    "destination": "out.c-CrmMrrSalesforce.crmOpportunity"
                 },
                 {
                     "source": "out_contract",
@@ -121,7 +121,7 @@
                             "value": "CrmMrrSalesforce.internal.outCrmContract"
                         }
                     ],
-                    "destination": "out.c-cRMMMRSalesforce.crmContract"
+                    "destination": "out.c-CrmMrrSalesforce.crmContract"
                 },
                 {
                     "source": "out_contract_line",
@@ -134,7 +134,7 @@
                             "value": "CrmMrrSalesforce.internal.outCrmContractLine"
                         }
                     ],
-                    "destination": "out.c-cRMMMRSalesforce.crmContractLine"
+                    "destination": "out.c-CrmMrrSalesforce.crmContractLine"
                 },
                 {
                     "source": "out_opportunity_snapshot",
@@ -152,7 +152,7 @@
                             "value": "CrmMrrSalesforce.internal.outCrmAuxiliaryTablesOpportunitySnapshot"
                         }
                     ],
-                    "destination": "out.c-cRMMMRSalesforce.crmAuxiliaryTablesOpportunitySnapshot"
+                    "destination": "out.c-CrmMrrSalesforce.crmAuxiliaryTablesOpportunitySnapshot"
                 }
             ],
             "queries": [
@@ -172,7 +172,7 @@
                     "whereOperator": "eq",
                     "columns": [],
                     "loadType": "clone",
-                    "source": "in.c-cRMMMRSalesforce.salesforceOrder"
+                    "source": "in.c-CrmMrrSalesforce.salesforceOrder"
                 },
                 {
                     "destination": "order_item",
@@ -182,7 +182,7 @@
                     "whereOperator": "eq",
                     "columns": [],
                     "loadType": "clone",
-                    "source": "in.c-cRMMMRSalesforce.salesforceOrderitem"
+                    "source": "in.c-CrmMrrSalesforce.salesforceOrderitem"
                 },
                 {
                     "destination": "product",
@@ -192,7 +192,7 @@
                     "whereOperator": "eq",
                     "columns": [],
                     "loadType": "clone",
-                    "source": "out.c-cRMMMRSalesforce.crmProduct"
+                    "source": "out.c-CrmMrrSalesforce.crmProduct"
                 },
                 {
                     "destination": "opportunity",
@@ -202,7 +202,7 @@
                     "whereOperator": "eq",
                     "columns": [],
                     "loadType": "clone",
-                    "source": "in.c-cRMMMRSalesforce.salesforceOpportunity"
+                    "source": "in.c-CrmMrrSalesforce.salesforceOpportunity"
                 },
                 {
                     "destination": "company",
@@ -212,7 +212,7 @@
                     "whereOperator": "eq",
                     "columns": [],
                     "loadType": "clone",
-                    "source": "out.c-cRMMMRSalesforce.crmCompany"
+                    "source": "out.c-CrmMrrSalesforce.crmCompany"
                 },
                 {
                     "destination": "employee",
@@ -222,7 +222,7 @@
                     "whereOperator": "eq",
                     "columns": [],
                     "loadType": "clone",
-                    "source": "out.c-cRMMMRSalesforce.crmEmployee"
+                    "source": "out.c-CrmMrrSalesforce.crmEmployee"
                 }
             ],
             "name": "Contracts, Opportunities & Auxiliary Snapshot",
@@ -257,7 +257,7 @@
                             "value": "CrmMrrSalesforce.internal.outCrmOpportunitySnapshot"
                         }
                     ],
-                    "destination": "out.c-cRMMMRSalesforce.crmOpportunitySnapshot"
+                    "destination": "out.c-CrmMrrSalesforce.crmOpportunitySnapshot"
                 }
             ],
             "queries": [
@@ -273,7 +273,7 @@
                     "whereOperator": "eq",
                     "columns": [],
                     "loadType": "clone",
-                    "source": "out.c-cRMMMRSalesforce.crmAuxiliaryTablesOpportunitySnapshot"
+                    "source": "out.c-CrmMrrSalesforce.crmAuxiliaryTablesOpportunitySnapshot"
                 }
             ],
             "name": "Opportunity Snapshot",
@@ -303,7 +303,7 @@
                             "value": "CrmMrrSalesforce.internal.outCrmEmployee"
                         }
                     ],
-                    "destination": "out.c-cRMMMRSalesforce.crmEmployee"
+                    "destination": "out.c-CrmMrrSalesforce.crmEmployee"
                 }
             ],
             "queries": [
@@ -319,7 +319,7 @@
                     "whereOperator": "eq",
                     "columns": [],
                     "loadType": "clone",
-                    "source": "in.c-cRMMMRSalesforce.salesforceUser"
+                    "source": "in.c-CrmMrrSalesforce.salesforceUser"
                 }
             ],
             "name": "Employee",
@@ -349,7 +349,7 @@
                             "value": "CrmMrrSalesforce.internal.outMrrMrrAggregated"
                         }
                     ],
-                    "destination": "out.c-cRMMMRSalesforce.mrrMrrAggregated"
+                    "destination": "out.c-CrmMrrSalesforce.mrrMrrAggregated"
                 }
             ],
             "queries": [
@@ -365,7 +365,7 @@
                     "whereOperator": "eq",
                     "columns": [],
                     "loadType": "clone",
-                    "source": "out.c-cRMMMRSalesforce.mrrMrr"
+                    "source": "out.c-CrmMrrSalesforce.mrrMrr"
                 },
                 {
                     "destination": "contract_line",
@@ -375,7 +375,7 @@
                     "whereOperator": "eq",
                     "columns": [],
                     "loadType": "clone",
-                    "source": "out.c-cRMMMRSalesforce.crmContractLine"
+                    "source": "out.c-CrmMrrSalesforce.crmContractLine"
                 },
                 {
                     "destination": "contract",
@@ -385,7 +385,7 @@
                     "whereOperator": "eq",
                     "columns": [],
                     "loadType": "clone",
-                    "source": "out.c-cRMMMRSalesforce.crmContract"
+                    "source": "out.c-CrmMrrSalesforce.crmContract"
                 }
             ],
             "name": "MRR - Aggregation",
@@ -415,7 +415,7 @@
                             "value": "CrmMrrSalesforce.internal.outCrmContact"
                         }
                     ],
-                    "destination": "out.c-cRMMMRSalesforce.crmContact"
+                    "destination": "out.c-CrmMrrSalesforce.crmContact"
                 }
             ],
             "queries": [
@@ -431,7 +431,7 @@
                     "whereOperator": "eq",
                     "columns": [],
                     "loadType": "clone",
-                    "source": "in.c-cRMMMRSalesforce.salesforceContact"
+                    "source": "in.c-CrmMrrSalesforce.salesforceContact"
                 },
                 {
                     "destination": "lead",
@@ -441,7 +441,7 @@
                     "whereOperator": "eq",
                     "columns": [],
                     "loadType": "clone",
-                    "source": "in.c-cRMMMRSalesforce.salesforceLead"
+                    "source": "in.c-CrmMrrSalesforce.salesforceLead"
                 },
                 {
                     "destination": "company",
@@ -451,7 +451,7 @@
                     "whereOperator": "eq",
                     "columns": [],
                     "loadType": "clone",
-                    "source": "out.c-cRMMMRSalesforce.crmCompany"
+                    "source": "out.c-CrmMrrSalesforce.crmCompany"
                 },
                 {
                     "destination": "employee",
@@ -461,7 +461,7 @@
                     "whereOperator": "eq",
                     "columns": [],
                     "loadType": "clone",
-                    "source": "out.c-cRMMMRSalesforce.crmEmployee"
+                    "source": "out.c-CrmMrrSalesforce.crmEmployee"
                 }
             ],
             "name": "Contact",
@@ -491,7 +491,7 @@
                             "value": "CrmMrrSalesforce.internal.outCrmOpportunityContact"
                         }
                     ],
-                    "destination": "out.c-cRMMMRSalesforce.crmOpportunityContact"
+                    "destination": "out.c-CrmMrrSalesforce.crmOpportunityContact"
                 }
             ],
             "queries": [
@@ -506,7 +506,7 @@
                     "whereOperator": "eq",
                     "columns": [],
                     "loadType": "clone",
-                    "source": "in.c-cRMMMRSalesforce.salesforceOpportunitycontactrole"
+                    "source": "in.c-CrmMrrSalesforce.salesforceOpportunitycontactrole"
                 },
                 {
                     "destination": "contact",
@@ -516,7 +516,7 @@
                     "whereOperator": "eq",
                     "columns": [],
                     "loadType": "clone",
-                    "source": "out.c-cRMMMRSalesforce.crmContact"
+                    "source": "out.c-CrmMrrSalesforce.crmContact"
                 },
                 {
                     "destination": "opportunity",
@@ -526,7 +526,7 @@
                     "whereOperator": "eq",
                     "columns": [],
                     "loadType": "clone",
-                    "source": "out.c-cRMMMRSalesforce.crmOpportunity"
+                    "source": "out.c-CrmMrrSalesforce.crmOpportunity"
                 }
             ],
             "name": "Opportunity Contact",
@@ -556,7 +556,7 @@
                             "value": "CrmMrrSalesforce.internal.inSalesforceAccount"
                         }
                     ],
-                    "destination": "in.c-cRMMMRSalesforce.salesforceAccount"
+                    "destination": "in.c-CrmMrrSalesforce.salesforceAccount"
                 },
                 {
                     "primaryKey": [
@@ -569,7 +569,7 @@
                             "value": "CrmMrrSalesforce.internal.inSalesforceContact"
                         }
                     ],
-                    "destination": "in.c-cRMMMRSalesforce.salesforceContact"
+                    "destination": "in.c-CrmMrrSalesforce.salesforceContact"
                 },
                 {
                     "primaryKey": [
@@ -582,7 +582,7 @@
                             "value": "CrmMrrSalesforce.internal.inSalesforceLead"
                         }
                     ],
-                    "destination": "in.c-cRMMMRSalesforce.salesforceLead"
+                    "destination": "in.c-CrmMrrSalesforce.salesforceLead"
                 },
                 {
                     "primaryKey": [
@@ -595,7 +595,7 @@
                             "value": "CrmMrrSalesforce.internal.inSalesforceUser"
                         }
                     ],
-                    "destination": "in.c-cRMMMRSalesforce.salesforceUser"
+                    "destination": "in.c-CrmMrrSalesforce.salesforceUser"
                 },
                 {
                     "primaryKey": [
@@ -608,7 +608,7 @@
                             "value": "CrmMrrSalesforce.internal.inSalesforceOpportunity"
                         }
                     ],
-                    "destination": "in.c-cRMMMRSalesforce.salesforceOpportunity"
+                    "destination": "in.c-CrmMrrSalesforce.salesforceOpportunity"
                 },
                 {
                     "primaryKey": [
@@ -621,7 +621,7 @@
                             "value": "CrmMrrSalesforce.internal.inSalesforceOpportunitycontactrole"
                         }
                     ],
-                    "destination": "in.c-cRMMMRSalesforce.salesforceOpportunitycontactrole"
+                    "destination": "in.c-CrmMrrSalesforce.salesforceOpportunitycontactrole"
                 },
                 {
                     "primaryKey": [
@@ -634,7 +634,7 @@
                             "value": "CrmMrrSalesforce.internal.inSalesforceOrder"
                         }
                     ],
-                    "destination": "in.c-cRMMMRSalesforce.salesforceOrder"
+                    "destination": "in.c-CrmMrrSalesforce.salesforceOrder"
                 },
                 {
                     "primaryKey": [
@@ -647,7 +647,7 @@
                             "value": "CrmMrrSalesforce.internal.inSalesforceOrderitem"
                         }
                     ],
-                    "destination": "in.c-cRMMMRSalesforce.salesforceOrderitem"
+                    "destination": "in.c-CrmMrrSalesforce.salesforceOrderitem"
                 },
                 {
                     "primaryKey": [
@@ -660,7 +660,7 @@
                             "value": "CrmMrrSalesforce.internal.inSalesforceProduct2"
                         }
                     ],
-                    "destination": "in.c-cRMMMRSalesforce.salesforceProduct2"
+                    "destination": "in.c-CrmMrrSalesforce.salesforceProduct2"
                 }
             ],
             "queries": [
@@ -829,7 +829,7 @@
                             "value": "CrmMrrSalesforce.internal.outMrrMrr"
                         }
                     ],
-                    "destination": "out.c-cRMMMRSalesforce.mrrMrr"
+                    "destination": "out.c-CrmMrrSalesforce.mrrMrr"
                 }
             ],
             "queries": [
@@ -850,7 +850,7 @@
                     "whereOperator": "eq",
                     "columns": [],
                     "loadType": "clone",
-                    "source": "out.c-cRMMMRSalesforce.crmContract"
+                    "source": "out.c-CrmMrrSalesforce.crmContract"
                 },
                 {
                     "destination": "contract_line",
@@ -860,7 +860,7 @@
                     "whereOperator": "eq",
                     "columns": [],
                     "loadType": "clone",
-                    "source": "out.c-cRMMMRSalesforce.crmContractLine"
+                    "source": "out.c-CrmMrrSalesforce.crmContractLine"
                 }
             ],
             "name": "MRR - Contract Line",
