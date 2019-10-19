@@ -96,7 +96,7 @@ class ExSalesforceConfigurationRowsDecoratorTest extends ImporterBaseTestCase
                                     [
                                         'lines' => 1,
                                         'direction_from' => 'top',
-                                    ]
+                                    ],
                             ],
                             [
                                 'definition' => [
