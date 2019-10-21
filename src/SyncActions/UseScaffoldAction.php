@@ -5,7 +5,8 @@ declare(strict_types=1);
 namespace Keboola\ScaffoldApp\SyncActions;
 
 use Keboola\Component\JsonHelper;
-use Keboola\ScaffoldApp\Operation\ExecutionContext;
+use Keboola\ScaffoldApp\ApiClientStore;
+use Keboola\ScaffoldApp\Operation\UseScaffoldExecutionContext\ExecutionContext;
 use Keboola\ScaffoldApp\Operation\CreateConfigurationOperation;
 use Keboola\ScaffoldApp\Operation\CreateConfigurationRowsOperation;
 use Keboola\ScaffoldApp\Operation\CreateOrchestrationOperation;
@@ -24,9 +25,15 @@ class UseScaffoldAction
      */
     private $executionContext;
 
-    public function __construct(ExecutionContext $executionContext)
+    /**
+     * @var ApiClientStore
+     */
+    private $apiClientStore;
+
+    public function __construct(ExecutionContext $executionContext, ApiClientStore $apiClientStore)
     {
         $this->executionContext = $executionContext;
+        $this->apiClientStore = $apiClientStore;
     }
 
     public function __invoke(): array
@@ -54,7 +61,7 @@ class UseScaffoldAction
                     JsonHelper::decode($operationFile->getContents()),
                     $this->executionContext->getScaffoldInputs()
                 );
-                $operation = new CreateConfigurationOperation();
+                $operation = new CreateConfigurationOperation($this->apiClientStore);
                 $operation->execute($config, $this->executionContext);
                 break;
             case OperationsConfig::CREATE_CONFIGURATION_ROWS:
@@ -63,7 +70,7 @@ class UseScaffoldAction
                     JsonHelper::decode($operationFile->getContents()),
                     []
                 );
-                $operation = new CreateConfigurationRowsOperation();
+                $operation = new CreateConfigurationRowsOperation($this->apiClientStore);
                 $operation->execute($config, $this->executionContext);
                 break;
             case OperationsConfig::CREATE_ORCHESTREATION:
@@ -73,7 +80,7 @@ class UseScaffoldAction
                     []
                 );
 
-                $operation = new CreateOrchestrationOperation();
+                $operation = new CreateOrchestrationOperation($this->apiClientStore);
                 $operation->execute($config, $this->executionContext);
                 break;
         }

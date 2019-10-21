@@ -4,11 +4,23 @@ declare(strict_types=1);
 
 namespace Keboola\ScaffoldApp\Operation;
 
+use Keboola\ScaffoldApp\ApiClientStore;
+use Keboola\ScaffoldApp\Operation\UseScaffoldExecutionContext\ExecutionContext;
 use Keboola\ScaffoldApp\OperationConfig\CreateConfigurationOperationConfig;
 use Keboola\ScaffoldApp\OperationConfig\OperationConfigInterface;
 
 class CreateConfigurationOperation implements OperationInterface
 {
+    /**
+     * @var ApiClientStore
+     */
+    private $apiClientStore;
+
+    public function __construct(ApiClientStore $apiClientStore)
+    {
+        $this->apiClientStore = $apiClientStore;
+    }
+
     /**
      * @param CreateConfigurationOperationConfig $operationConfig
      */
@@ -18,7 +30,7 @@ class CreateConfigurationOperation implements OperationInterface
     ): void {
         $configuration = $operationConfig->getRequestConfiguration();
 
-        $executionContext->getLogger()->info(
+        $this->apiClientStore->getLogger()->info(
             sprintf(
                 'Creating configuration for component %s with name %s',
                 $configuration->getComponentId(),
@@ -28,18 +40,18 @@ class CreateConfigurationOperation implements OperationInterface
 
         if (!empty($configuration->getConfiguration())) {
             // encrypt configuration if any
-            $tokenInfo = $executionContext->getStorageApiClient()->verifyToken();
-            $configuration->setConfiguration($executionContext->getEncryptionApiClient()->encryptConfigurationData(
+            $tokenInfo = $this->apiClientStore->getStorageApiClient()->verifyToken();
+            $configuration->setConfiguration($this->apiClientStore->getEncryptionApiClient()->encryptConfigurationData(
                 $configuration->getConfiguration(),
                 $configuration->getComponentId(),
                 (string) $tokenInfo['owner']['id']
             ));
         }
 
-        $response = $executionContext->getComponentsApiClient()->addConfiguration($configuration);
+        $response = $this->apiClientStore->getComponentsApiClient()->addConfiguration($configuration);
         $configuration->setConfigurationId($response['id']);
 
-        $executionContext->getLogger()->info(
+        $this->apiClientStore->getLogger()->info(
             sprintf(
                 'Configuration for component %s with id %s created',
                 $configuration->getComponentId(),
@@ -48,10 +60,10 @@ class CreateConfigurationOperation implements OperationInterface
         );
 
         $userActions = $operationConfig->getAuthorization()->authorize(
-            $executionContext->getLogger(),
+            $this->apiClientStore->getLogger(),
             $configuration,
-            $executionContext->getStorageApiClient(),
-            $executionContext->getEncryptionApiClient()
+            $this->apiClientStore->getStorageApiClient(),
+            $this->apiClientStore->getEncryptionApiClient()
         );
         // save id for use in orchestration
         $executionContext->finishOperation($operationConfig->getId(), self::class, $configuration, $userActions);

@@ -7,10 +7,13 @@ namespace Keboola\ScaffoldApp\FunctionalTests;
 use Exception;
 use Keboola\Component\JsonHelper;
 use Keboola\Orchestrator\Client as OrchestratorClient;
+use Keboola\ScaffoldApp\ApiClientStore;
 use Keboola\ScaffoldApp\Component;
 use Keboola\ScaffoldApp\EncryptionClient;
-use Keboola\ScaffoldApp\Operation\ExecutionContext;
+use Keboola\ScaffoldApp\Operation\UseScaffoldExecutionContext\ExecutionContext;
 use Keboola\ScaffoldApp\Operation\FinishedOperationsStore;
+use Keboola\ScaffoldApp\Operation\UseScaffoldExecutionContext\ExecutionContextLoader;
+use Keboola\ScaffoldApp\Operation\UseScaffoldExecutionContext\OperationsQueue;
 use Keboola\ScaffoldApp\OrchestratorClientFactory;
 use Keboola\ScaffoldApp\SyncActions\UseScaffoldAction;
 use Keboola\StorageApi\Client;
@@ -81,18 +84,11 @@ abstract class FunctionalBaseTestCase extends TestCase
         array $inputParameters
     ): ExecutionContext {
         $scaffoldFolder = __DIR__ . '/../phpunit/mock/scaffolds/' . $scaffoldId;
-        $manifest = JsonHelper::readFile(sprintf('%s/manifest.json', $scaffoldFolder));
+        $loader = new ExecutionContextLoader($inputParameters, $scaffoldFolder);
 
-        $executionContext = new ExecutionContext(
-            $manifest,
-            $inputParameters,
-            $scaffoldFolder,
-            new NullLogger
-        );
-        $executionContext->loadOperations();
-        $executionContext->loadOperationsFiles();
+        $executionContext = $loader->getExecutionContext();
 
-        $action = new UseScaffoldAction($executionContext);
+        $action = new UseScaffoldAction($executionContext, new ApiClientStore(new NullLogger()));
         $action();
 
         return $executionContext;

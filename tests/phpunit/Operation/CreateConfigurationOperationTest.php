@@ -4,9 +4,10 @@ declare(strict_types=1);
 
 namespace Keboola\ScaffoldApp\Tests\Operation;
 
+use Keboola\ScaffoldApp\ApiClientStore;
 use Keboola\ScaffoldApp\EncryptionClient;
 use Keboola\ScaffoldApp\Operation\CreateConfigurationOperation;
-use Keboola\ScaffoldApp\Operation\ExecutionContext;
+use Keboola\ScaffoldApp\Operation\UseScaffoldExecutionContext\ExecutionContext;
 use Keboola\ScaffoldApp\OperationConfig\CreateConfigurationOperationConfig;
 use Keboola\StorageApi\Options\Components\Configuration;
 use PHPUnit\Framework\MockObject\MockObject;
@@ -42,24 +43,20 @@ class CreateConfigurationOperationTest extends BaseOperationTestCase
             ],
         ];
 
-        /** @var MockObject|ExecutionContext $contextMock */
-        $executionMock = self::getExecutionContextMock(
-            [],
-            $parameters
-        );
+        $executionMock = self::getExecutionContextMock([], $parameters);
 
+        $apiClientStoreMock = self::getApiClientStore();
         /** @var EncryptionClient|MockObject $encryptionApiClient */
         $encryptionApiClient = self::createMock(EncryptionClient::class);
         $encryptionApiClient->expects(self::once())->method('encryptConfigurationData')
             ->willReturnCallback(function (array $data) {
                 return $data;
             });
+        $apiClientStoreMock->method('getEncryptionApiClient')->willReturn($encryptionApiClient);
+        $apiClientStoreMock->method('getComponentsApiClient')->willReturn($this->componentsApiClient);
+        $apiClientStoreMock->method('getStorageApiClient')->willReturn($this->sapiClient);
 
-        $executionMock->method('getEncryptionApiClient')->willReturn($encryptionApiClient);
-        $executionMock->method('getComponentsApiClient')->willReturn($this->componentsApiClient);
-        $executionMock->method('getStorageApiClient')->willReturn($this->sapiClient);
-
-        $operation = new CreateConfigurationOperation();
+        $operation = new CreateConfigurationOperation($apiClientStoreMock);
 
         $operationConfig = [
             'componentId' => 'keboola.ex.test',
@@ -96,12 +93,9 @@ class CreateConfigurationOperationTest extends BaseOperationTestCase
             ],
         ];
 
-        /** @var MockObject|ExecutionContext $contextMock */
-        $executionMock = self::getExecutionContextMock(
-            [],
-            $parameters
-        );
+        $executionMock = self::getExecutionContextMock([], $parameters);
 
+        $apiClientStoreMock = self::getApiClientStore();
         /** @var EncryptionClient|MockObject $encryptionApiClient */
         $encryptionApiClient = self::createMock(EncryptionClient::class);
         $encryptionApiClient->expects(self::once())->method('encryptConfigurationData')
@@ -109,11 +103,11 @@ class CreateConfigurationOperationTest extends BaseOperationTestCase
                 return $data;
             });
 
-        $executionMock->method('getEncryptionApiClient')->willReturn($encryptionApiClient);
-        $executionMock->method('getComponentsApiClient')->willReturn($this->componentsApiClient);
-        $executionMock->method('getStorageApiClient')->willReturn($this->sapiClient);
+        $apiClientStoreMock->method('getEncryptionApiClient')->willReturn($encryptionApiClient);
+        $apiClientStoreMock->method('getComponentsApiClient')->willReturn($this->componentsApiClient);
+        $apiClientStoreMock->method('getStorageApiClient')->willReturn($this->sapiClient);
 
-        $operation = new CreateConfigurationOperation();
+        $operation = new CreateConfigurationOperation($apiClientStoreMock);
 
         $operationConfig = [
             'componentId' => 'keboola.ex.test',
@@ -153,12 +147,9 @@ class CreateConfigurationOperationTest extends BaseOperationTestCase
             ],
         ];
 
-        /** @var MockObject|ExecutionContext $contextMock */
-        $executionMock = self::getExecutionContextMock(
-            [],
-            $parameters
-        );
+        $executionMock = self::getExecutionContextMock([], $parameters);
 
+        $apiClientStoreMock = self::getApiClientStore();
         /** @var EncryptionClient|MockObject $encryptionApiClient */
         $encryptionApiClient = self::createMock(EncryptionClient::class);
         $encryptionApiClient->expects(self::exactly(2))->method('encryptConfigurationData')
@@ -166,8 +157,8 @@ class CreateConfigurationOperationTest extends BaseOperationTestCase
                 return $data;
             });
 
-        $executionMock->method('getEncryptionApiClient')->willReturn($encryptionApiClient);
-        $executionMock->method('getComponentsApiClient')->willReturn($this->componentsApiClient);
+        $apiClientStoreMock->method('getEncryptionApiClient')->willReturn($encryptionApiClient);
+        $apiClientStoreMock->method('getComponentsApiClient')->willReturn($this->componentsApiClient);
         $this->sapiClient->method('apiPost')->willReturn([
             'connection' => [
                 'backend' => 'redshift',
@@ -179,9 +170,9 @@ class CreateConfigurationOperationTest extends BaseOperationTestCase
             ],
             'id' => '1234',
         ]);
-        $executionMock->method('getStorageApiClient')->willReturn($this->sapiClient);
+        $apiClientStoreMock->method('getStorageApiClient')->willReturn($this->sapiClient);
 
-        $operation = new CreateConfigurationOperation();
+        $operation = new CreateConfigurationOperation($apiClientStoreMock);
 
         $operationConfig = [
             'componentId' => 'keboola.ex.test',
@@ -232,12 +223,9 @@ class CreateConfigurationOperationTest extends BaseOperationTestCase
             ],
         ];
 
-        /** @var MockObject|ExecutionContext $contextMock */
-        $executionMock = self::getExecutionContextMock(
-            [],
-            $parameters
-        );
+        $executionMock = self::getExecutionContextMock([], $parameters);
 
+        $apiClientStoreMock = self::getApiClientStore();
         /** @var EncryptionClient|MockObject $encryptionApiClient */
         $encryptionApiClient = self::createMock(EncryptionClient::class);
         $encryptionApiClient->expects(self::exactly(2))->method('encryptConfigurationData')
@@ -245,9 +233,8 @@ class CreateConfigurationOperationTest extends BaseOperationTestCase
                 return $data;
             });
 
-        $executionMock->method('getEncryptionApiClient')->willReturn($encryptionApiClient);
-        $executionMock->method('getComponentsApiClient')->willReturn($this->componentsApiClient);
-
+        $apiClientStoreMock->method('getEncryptionApiClient')->willReturn($encryptionApiClient);
+        $apiClientStoreMock->method('getComponentsApiClient')->willReturn($this->componentsApiClient);
         $this->sapiClient->method('apiPost')->willReturn([
             'connection' => [
                 'backend' => 'snowflake',
@@ -260,9 +247,9 @@ class CreateConfigurationOperationTest extends BaseOperationTestCase
             ],
             'id' => '1234',
         ]);
-        $executionMock->method('getStorageApiClient')->willReturn($this->sapiClient);
+        $apiClientStoreMock->method('getStorageApiClient')->willReturn($this->sapiClient);
 
-        $operation = new CreateConfigurationOperation();
+        $operation = new CreateConfigurationOperation($apiClientStoreMock);
 
         $operationConfig = [
             'componentId' => 'keboola.ex.test',
@@ -304,21 +291,17 @@ class CreateConfigurationOperationTest extends BaseOperationTestCase
     {
         $parameters = [];
 
-        /** @var MockObject|ExecutionContext $contextMock */
-        $executionMock = self::getExecutionContextMock(
-            [],
-            $parameters
-        );
+        $executionMock = self::getExecutionContextMock([], $parameters);
 
+        $apiClientStoreMock = self::getApiClientStore();
         /** @var EncryptionClient|MockObject $encryptionApiClient */
         $encryptionApiClient = self::createMock(EncryptionClient::class);
         $encryptionApiClient->expects(self::never())->method('encryptConfigurationData');
+        $apiClientStoreMock->method('getEncryptionApiClient')->willReturn($encryptionApiClient);
+        $apiClientStoreMock->method('getComponentsApiClient')->willReturn($this->componentsApiClient);
+        $apiClientStoreMock->method('getStorageApiClient')->willReturn($this->sapiClient);
 
-        $executionMock->method('getEncryptionApiClient')->willReturn($encryptionApiClient);
-        $executionMock->method('getComponentsApiClient')->willReturn($this->componentsApiClient);
-        $executionMock->method('getStorageApiClient')->willReturn($this->sapiClient);
-
-        $operation = new CreateConfigurationOperation();
+        $operation = new CreateConfigurationOperation($apiClientStoreMock);
 
         $operationConfig = [
             'componentId' => 'keboola.ex.test',

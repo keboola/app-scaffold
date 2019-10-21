@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Keboola\ScaffoldApp\Tests\Operation;
 
-use Keboola\ScaffoldApp\Operation\ExecutionContext;
+use Keboola\ScaffoldApp\Operation\UseScaffoldExecutionContext\ExecutionContext;
 use Keboola\ScaffoldApp\OperationConfig\CreateCofigurationRowsOperationConfig;
 use Keboola\ScaffoldApp\Operation\CreateConfigurationRowsOperation;
 use Keboola\ScaffoldApp\Operation\CreateConfigurationOperation;
@@ -16,15 +16,14 @@ class CreateConfigurationRowsOperationTest extends BaseOperationTestCase
 {
     public function testExecute(): void
     {
-        /** @var MockObject|ExecutionContext $contextMock */
         $executionMock = self::getExecutionContextMock();
 
+        $apiClientStoreMock = self::getApiClientStore();
         $componentsApiClient = $this->getMockComponentsApiClient();
         $componentsApiClient->method('addConfigurationRow')->willReturn(['id' => 'createdRowId']);
+        $apiClientStoreMock->method('getComponentsApiClient')->willReturn($componentsApiClient);
 
-        $executionMock->method('getComponentsApiClient')->willReturn($componentsApiClient);
-
-        $operation = new CreateConfigurationRowsOperation();
+        $operation = new CreateConfigurationRowsOperation($apiClientStoreMock);
         $config = CreateCofigurationRowsOperationConfig::create('operationCreatedConfigurationId', [
             [
                 'name' => 'row1',
@@ -48,11 +47,12 @@ class CreateConfigurationRowsOperationTest extends BaseOperationTestCase
 
     public function testExecuteInvalidReference(): void
     {
-        /** @var MockObject|ExecutionContext $contextMock */
         $executionMock = self::getExecutionContextMock();
-        $executionMock->method('getComponentsApiClient')->willReturn($this->getMockComponentsApiClient());
 
-        $operation = new CreateConfigurationRowsOperation();
+        $apiClientStoreMock = self::getApiClientStore();
+        $apiClientStoreMock->method('getComponentsApiClient')->willReturn($this->getMockComponentsApiClient());
+
+        $operation = new CreateConfigurationRowsOperation($apiClientStoreMock);
         $config = CreateCofigurationRowsOperationConfig::create(
             'operationCreatedConfigurationId',
             [['name' => 'row1']],

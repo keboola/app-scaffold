@@ -5,8 +5,10 @@ declare(strict_types=1);
 namespace Keboola\ScaffoldApp\Tests\Operation;
 
 use Keboola\Orchestrator\Client as OrchestratorClient;
+use Keboola\ScaffoldApp\ApiClientStore;
 use Keboola\ScaffoldApp\EncryptionClient;
-use Keboola\ScaffoldApp\Operation\ExecutionContext;
+use Keboola\ScaffoldApp\Operation\UseScaffoldExecutionContext\ExecutionContext;
+use Keboola\ScaffoldApp\Operation\UseScaffoldExecutionContext\OperationsQueue;
 use Keboola\StorageApi\Client;
 use Keboola\StorageApi\Components;
 use PHPUnit\Framework\MockObject\MockObject;
@@ -21,14 +23,42 @@ abstract class BaseOperationTestCase extends TestCase
     public function getExecutionContextMock(
         array $manifest = [],
         array $inputs = [],
-        string $scaffoldFolder = ''
+        string $scaffoldFolder = '',
+        ?OperationsQueue $operationsQueue = null
     ) {
+        if ($operationsQueue === null) {
+            $operationsQueue = new OperationsQueue();
+        }
         /** @var MockObject|ExecutionContext $contextMock */
         $contextMock = self::getMockBuilder(ExecutionContext::class)
             ->setConstructorArgs([
                 $manifest,
                 $inputs,
                 $scaffoldFolder,
+                $operationsQueue,
+            ])
+            ->disableOriginalClone()
+            ->disableArgumentCloning()
+            ->disallowMockingUnknownTypes()
+            ->setMethods([
+                'getComponentsApiClient',
+                'getStorageApiClient',
+                'getEncryptionApiClient',
+                'getOrchestrationApiClient',
+            ])
+            ->getMock();
+
+        return $contextMock;
+    }
+
+    /**
+     * @return MockObject|ApiClientStore
+     */
+    public function getApiClientStore()
+    {
+        /** @var MockObject|ApiClientStore $contextMock */
+        $contextMock = self::getMockBuilder(ApiClientStore::class)
+            ->setConstructorArgs([
                 new NullLogger(),
             ])
             ->disableOriginalClone()

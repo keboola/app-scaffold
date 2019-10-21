@@ -6,9 +6,8 @@ namespace Keboola\ScaffoldApp;
 
 use Exception;
 use Keboola\Component\BaseComponent;
-use Keboola\Component\JsonHelper;
 use Keboola\Component\UserException;
-use Keboola\ScaffoldApp\Operation\ExecutionContext;
+use Keboola\ScaffoldApp\Operation\UseScaffoldExecutionContext\ExecutionContextLoader;
 use Keboola\ScaffoldApp\SyncActions\ListScaffoldsAction;
 use Keboola\ScaffoldApp\SyncActions\UseScaffoldAction;
 use Symfony\Component\Filesystem\Filesystem;
@@ -29,26 +28,9 @@ class Component extends BaseComponent
         $config = $this->getConfig();
         $scaffoldFolder = $this->getScaffoldConfigurationFolder($config->getScaffoldName());
         $scaffoldInputs = $config->getParsedInputs();
-        $action = new UseScaffoldAction($this->getExecutionContext($scaffoldInputs, $scaffoldFolder));
+        $loader = new ExecutionContextLoader($scaffoldInputs, $scaffoldFolder);
+        $action = new UseScaffoldAction($loader->getExecutionContext(), new ApiClientStore($this->getLogger()));
         return $action();
-    }
-
-    private function getExecutionContext(
-        array $scaffoldInputs,
-        string $scaffoldFolder
-    ): ExecutionContext {
-        $manifest = JsonHelper::readFile(sprintf('%s/manifest.json', $scaffoldFolder));
-
-        $executionContext = new ExecutionContext(
-            $manifest,
-            $scaffoldInputs,
-            $scaffoldFolder,
-            $this->getLogger()
-        );
-        $executionContext->loadOperations();
-        $executionContext->loadOperationsFiles();
-
-        return $executionContext;
     }
 
     private function getScaffoldConfigurationFolder(

@@ -6,24 +6,22 @@ namespace Keboola\ScaffoldApp\Tests\Operation;
 
 use Keboola\ScaffoldApp\Operation\CreateConfigurationOperation;
 use Keboola\ScaffoldApp\Operation\CreateOrchestrationOperation;
-use Keboola\ScaffoldApp\Operation\ExecutionContext;
 use Keboola\ScaffoldApp\OperationConfig\CreateOrchestrationOperationConfig;
 use Keboola\StorageApi\Options\Components\Configuration;
-use PHPUnit\Framework\MockObject\MockObject;
 
 class CreateOrchestrationOperationTest extends BaseOperationTestCase
 {
     public function testExecute(): void
     {
-        /** @var MockObject|ExecutionContext $contextMock */
         $executionMock = self::getExecutionContextMock();
+        $apiClientStoreMock = self::getApiClientStore();
         $orchestratorApiClient = $this->getMockOrchestrationApiClient();
         $orchestratorApiClient->method('createOrchestration')->willReturn(
             ['id' => 'createdOrchestrationId']
         );
-        $executionMock->method('getOrchestrationApiClient')->willReturn($orchestratorApiClient);
+        $apiClientStoreMock->method('getOrchestrationApiClient')->willReturn($orchestratorApiClient);
 
-        $operation = new CreateOrchestrationOperation();
+        $operation = new CreateOrchestrationOperation($apiClientStoreMock);
 
         $operationConfig = [
             'payload' => [

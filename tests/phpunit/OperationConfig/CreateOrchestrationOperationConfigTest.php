@@ -5,9 +5,8 @@ declare(strict_types=1);
 namespace Keboola\ScaffoldApp\Tests\OperationConfig;
 
 use Keboola\ScaffoldApp\Operation\CreateOrchestrationOperation;
-use Keboola\ScaffoldApp\Operation\ExecutionContext;
-use Keboola\ScaffoldApp\Operation\FinishedOperationsStore;
-use Psr\Log\NullLogger;
+use Keboola\ScaffoldApp\Operation\UseScaffoldExecutionContext\ExecutionContext;
+use Keboola\ScaffoldApp\Operation\UseScaffoldExecutionContext\OperationsQueue;
 use Throwable;
 use Keboola\ScaffoldApp\OperationConfig\OperationConfigInterface;
 use Keboola\ScaffoldApp\OperationConfig\CreateOrchestrationOperationConfig;
@@ -37,7 +36,7 @@ class CreateOrchestrationOperationConfigTest extends TestCase
     {
         $instance = CreateOrchestrationOperationConfig::create('operation_id', self::WORKING_CONFIGURATION, []);
 
-        $exectutionContext = new ExecutionContext([], [], '', new NullLogger);
+        $exectutionContext = new ExecutionContext([], [], '', new OperationsQueue());
         $exectutionContext->finishOperation(
             'ex01',
             CreateOrchestrationOperation::class,

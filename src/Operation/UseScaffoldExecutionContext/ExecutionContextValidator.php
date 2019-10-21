@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Keboola\ScaffoldApp\Operation;
+namespace Keboola\ScaffoldApp\Operation\UseScaffoldExecutionContext;
 
 use Keboola\Component\UserException;
 use Keboola\ScaffoldApp\ScaffoldInputDefinitionInterface;
@@ -15,37 +15,24 @@ use Symfony\Component\Config\Definition\Processor;
 
 class ExecutionContextValidator
 {
-    public static function validateContext(ExecutionContext $executionContext): void
-    {
-        $missingRequieredOpeartions = array_diff(
-            $executionContext->getRequiredOperations(),
-            $executionContext->getOperationsToExecute()
-        );
-        if (!empty($missingRequieredOpeartions)) {
-            throw new UserException(sprintf(
-                'One or more required operations "%s" is missing.',
-                implode(', ', $missingRequieredOpeartions)
-            ));
-        }
-
-        self::validateSchema($executionContext);
-    }
-
-    private static function validateSchema(ExecutionContext $executionContext): void
-    {
+    public static function validateContext(
+        ExecutionContext $executionContext,
+        OperationsContext $operationsContext
+    ): void {
         $scaffoldDefinitionClass = $executionContext->getScaffoldDefinitionClass();
 
         if ($scaffoldDefinitionClass === null || !class_exists($scaffoldDefinitionClass)) {
-            self::validateWithJsonSchema($executionContext);
+            self::validateWithJsonSchema($executionContext, $operationsContext);
         } else {
             self::validateWithDefinitionClass($executionContext, new $scaffoldDefinitionClass);
         }
     }
 
     private static function validateWithJsonSchema(
-        ExecutionContext $executionContext
+        ExecutionContext $executionContext,
+        OperationsContext $operationsContext
     ): void {
-        $operationsToExecute = $executionContext->getOperationsToExecute();
+        $operationsToExecute = $operationsContext->getOperationsToExecute();
         $validationErrors = [];
         foreach ($operationsToExecute as $operationid) {
             $schema = $executionContext->getSchemaForOperation($operationid);
