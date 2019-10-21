@@ -14,6 +14,7 @@ use Keboola\ScaffoldApp\Operation\OperationsConfig;
 use Keboola\ScaffoldApp\OperationConfig\CreateCofigurationRowsOperationConfig;
 use Keboola\ScaffoldApp\OperationConfig\CreateConfigurationOperationConfig;
 use Keboola\ScaffoldApp\OperationConfig\CreateOrchestrationOperationConfig;
+use Psr\Log\LoggerInterface;
 use Symfony\Component\Finder\SplFileInfo;
 
 class UseScaffoldAction
@@ -30,10 +31,19 @@ class UseScaffoldAction
      */
     private $apiClientStore;
 
-    public function __construct(ExecutionContext $executionContext, ApiClientStore $apiClientStore)
-    {
+    /**
+     * @var LoggerInterface
+     */
+    private $logger;
+
+    public function __construct(
+        ExecutionContext $executionContext,
+        ApiClientStore $apiClientStore,
+        LoggerInterface $logger
+    ) {
         $this->executionContext = $executionContext;
         $this->apiClientStore = $apiClientStore;
+        $this->logger = $logger;
     }
 
     public function __invoke(): array
@@ -61,7 +71,7 @@ class UseScaffoldAction
                     JsonHelper::decode($operationFile->getContents()),
                     $this->executionContext->getScaffoldInputs()
                 );
-                $operation = new CreateConfigurationOperation($this->apiClientStore);
+                $operation = new CreateConfigurationOperation($this->apiClientStore, $this->logger);
                 $operation->execute($config, $this->executionContext);
                 break;
             case OperationsConfig::CREATE_CONFIGURATION_ROWS:
@@ -70,7 +80,7 @@ class UseScaffoldAction
                     JsonHelper::decode($operationFile->getContents()),
                     []
                 );
-                $operation = new CreateConfigurationRowsOperation($this->apiClientStore);
+                $operation = new CreateConfigurationRowsOperation($this->apiClientStore, $this->logger);
                 $operation->execute($config, $this->executionContext);
                 break;
             case OperationsConfig::CREATE_ORCHESTREATION:
@@ -80,7 +90,7 @@ class UseScaffoldAction
                     []
                 );
 
-                $operation = new CreateOrchestrationOperation($this->apiClientStore);
+                $operation = new CreateOrchestrationOperation($this->apiClientStore, $this->logger);
                 $operation->execute($config, $this->executionContext);
                 break;
         }

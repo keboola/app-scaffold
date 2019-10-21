@@ -4,13 +4,12 @@ declare(strict_types=1);
 
 namespace Keboola\ScaffoldApp\Tests\Operation;
 
-use Keboola\ScaffoldApp\Operation\UseScaffoldExecutionContext\ExecutionContext;
 use Keboola\ScaffoldApp\OperationConfig\CreateCofigurationRowsOperationConfig;
 use Keboola\ScaffoldApp\Operation\CreateConfigurationRowsOperation;
 use Keboola\ScaffoldApp\Operation\CreateConfigurationOperation;
 use Keboola\StorageApi\Options\Components\Configuration;
 use Keboola\StorageApi\Options\Components\ConfigurationRow;
-use PHPUnit\Framework\MockObject\MockObject;
+use Psr\Log\NullLogger;
 
 class CreateConfigurationRowsOperationTest extends BaseOperationTestCase
 {
@@ -23,7 +22,7 @@ class CreateConfigurationRowsOperationTest extends BaseOperationTestCase
         $componentsApiClient->method('addConfigurationRow')->willReturn(['id' => 'createdRowId']);
         $apiClientStoreMock->method('getComponentsApiClient')->willReturn($componentsApiClient);
 
-        $operation = new CreateConfigurationRowsOperation($apiClientStoreMock);
+        $operation = new CreateConfigurationRowsOperation($apiClientStoreMock, new NullLogger);
         $config = CreateCofigurationRowsOperationConfig::create('operationCreatedConfigurationId', [
             [
                 'name' => 'row1',
@@ -52,7 +51,7 @@ class CreateConfigurationRowsOperationTest extends BaseOperationTestCase
         $apiClientStoreMock = self::getApiClientStore();
         $apiClientStoreMock->method('getComponentsApiClient')->willReturn($this->getMockComponentsApiClient());
 
-        $operation = new CreateConfigurationRowsOperation($apiClientStoreMock);
+        $operation = new CreateConfigurationRowsOperation($apiClientStoreMock, new NullLogger);
         $config = CreateCofigurationRowsOperationConfig::create(
             'operationCreatedConfigurationId',
             [['name' => 'row1']],

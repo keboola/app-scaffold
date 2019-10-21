@@ -10,6 +10,7 @@ use Keboola\ScaffoldApp\Operation\UseScaffoldExecutionContext\ExecutionContext;
 use Keboola\ScaffoldApp\OperationConfig\CreateCofigurationRowsOperationConfig;
 use Keboola\ScaffoldApp\OperationConfig\OperationConfigInterface;
 use Keboola\StorageApi\Options\Components\Configuration;
+use Psr\Log\LoggerInterface;
 
 class CreateConfigurationRowsOperation implements OperationInterface
 {
@@ -18,9 +19,15 @@ class CreateConfigurationRowsOperation implements OperationInterface
      */
     private $apiClientStore;
 
-    public function __construct(ApiClientStore $apiClientStore)
+    /**
+     * @var LoggerInterface
+     */
+    private $logger;
+
+    public function __construct(ApiClientStore $apiClientStore, LoggerInterface $logger)
     {
         $this->apiClientStore = $apiClientStore;
+        $this->logger = $logger;
     }
 
     /**
@@ -30,7 +37,7 @@ class CreateConfigurationRowsOperation implements OperationInterface
         OperationConfigInterface $operationConfig,
         ExecutionContext $executionContext
     ): void {
-        $this->apiClientStore->getLogger()->info(sprintf(
+        $this->logger->info(sprintf(
             'Creating config rows for operation "%s"',
             $operationConfig->getOperationReferenceId()
         ));
@@ -49,7 +56,7 @@ class CreateConfigurationRowsOperation implements OperationInterface
         foreach ($operationConfig->getIterator($componentConfiguration) as $rowConfiguration) {
             $response = $this->apiClientStore->getComponentsApiClient()->addConfigurationRow($rowConfiguration);
             $rowConfiguration->setRowId($response['id']);
-            $this->apiClientStore->getLogger()->info(sprintf('Row for %s created', $response['id']));
+            $this->logger->info(sprintf('Row for %s created', $response['id']));
 
             $executionContext->finishOperation(
                 sprintf(

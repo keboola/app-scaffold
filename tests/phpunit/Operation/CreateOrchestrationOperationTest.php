@@ -8,6 +8,7 @@ use Keboola\ScaffoldApp\Operation\CreateConfigurationOperation;
 use Keboola\ScaffoldApp\Operation\CreateOrchestrationOperation;
 use Keboola\ScaffoldApp\OperationConfig\CreateOrchestrationOperationConfig;
 use Keboola\StorageApi\Options\Components\Configuration;
+use Psr\Log\NullLogger;
 
 class CreateOrchestrationOperationTest extends BaseOperationTestCase
 {
@@ -21,7 +22,7 @@ class CreateOrchestrationOperationTest extends BaseOperationTestCase
         );
         $apiClientStoreMock->method('getOrchestrationApiClient')->willReturn($orchestratorApiClient);
 
-        $operation = new CreateOrchestrationOperation($apiClientStoreMock);
+        $operation = new CreateOrchestrationOperation($apiClientStoreMock, new NullLogger);
 
         $operationConfig = [
             'payload' => [

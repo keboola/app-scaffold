@@ -8,6 +8,7 @@ use Keboola\ScaffoldApp\ApiClientStore;
 use Keboola\ScaffoldApp\Operation\UseScaffoldExecutionContext\ExecutionContext;
 use Keboola\ScaffoldApp\OperationConfig\CreateOrchestrationOperationConfig;
 use Keboola\ScaffoldApp\OperationConfig\OperationConfigInterface;
+use Psr\Log\LoggerInterface;
 
 class CreateOrchestrationOperation implements OperationInterface
 {
@@ -16,11 +17,16 @@ class CreateOrchestrationOperation implements OperationInterface
      */
     private $apiClientStore;
 
-    public function __construct(ApiClientStore $apiClientStore)
+    /**
+     * @var LoggerInterface
+     */
+    private $logger;
+
+    public function __construct(ApiClientStore $apiClientStore, LoggerInterface $logger)
     {
         $this->apiClientStore = $apiClientStore;
+        $this->logger = $logger;
     }
-
     /**
      * @param CreateOrchestrationOperationConfig $operationConfig
      */
@@ -28,7 +34,7 @@ class CreateOrchestrationOperation implements OperationInterface
         OperationConfigInterface $operationConfig,
         ExecutionContext $executionContext
     ): void {
-        $this->apiClientStore->getLogger()->info('Creating configuration for orchstration');
+        $this->logger->info('Creating configuration for orchstration');
 
         $operationConfig->populateOrchestrationTasksWithConfigurationIds($executionContext);
         $response = $this->apiClientStore->getOrchestrationApiClient()->createOrchestration(
@@ -38,6 +44,6 @@ class CreateOrchestrationOperation implements OperationInterface
 
         // save id, this for tests
         $executionContext->finishOperation($operationConfig->getId(), self::class, $response['id']);
-        $this->apiClientStore->getLogger()->info(sprintf('Orchestration %s created', $response['id']));
+        $this->logger->info(sprintf('Orchestration %s created', $response['id']));
     }
 }

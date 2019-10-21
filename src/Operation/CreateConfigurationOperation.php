@@ -8,6 +8,7 @@ use Keboola\ScaffoldApp\ApiClientStore;
 use Keboola\ScaffoldApp\Operation\UseScaffoldExecutionContext\ExecutionContext;
 use Keboola\ScaffoldApp\OperationConfig\CreateConfigurationOperationConfig;
 use Keboola\ScaffoldApp\OperationConfig\OperationConfigInterface;
+use Psr\Log\LoggerInterface;
 
 class CreateConfigurationOperation implements OperationInterface
 {
@@ -16,9 +17,15 @@ class CreateConfigurationOperation implements OperationInterface
      */
     private $apiClientStore;
 
-    public function __construct(ApiClientStore $apiClientStore)
+    /**
+     * @var LoggerInterface
+     */
+    private $logger;
+
+    public function __construct(ApiClientStore $apiClientStore, LoggerInterface $logger)
     {
         $this->apiClientStore = $apiClientStore;
+        $this->logger = $logger;
     }
 
     /**
@@ -30,7 +37,7 @@ class CreateConfigurationOperation implements OperationInterface
     ): void {
         $configuration = $operationConfig->getRequestConfiguration();
 
-        $this->apiClientStore->getLogger()->info(
+        $this->logger->info(
             sprintf(
                 'Creating configuration for component %s with name %s',
                 $configuration->getComponentId(),
@@ -51,7 +58,7 @@ class CreateConfigurationOperation implements OperationInterface
         $response = $this->apiClientStore->getComponentsApiClient()->addConfiguration($configuration);
         $configuration->setConfigurationId($response['id']);
 
-        $this->apiClientStore->getLogger()->info(
+        $this->logger->info(
             sprintf(
                 'Configuration for component %s with id %s created',
                 $configuration->getComponentId(),
@@ -60,7 +67,7 @@ class CreateConfigurationOperation implements OperationInterface
         );
 
         $userActions = $operationConfig->getAuthorization()->authorize(
-            $this->apiClientStore->getLogger(),
+            $this->logger,
             $configuration,
             $this->apiClientStore->getStorageApiClient(),
             $this->apiClientStore->getEncryptionApiClient()

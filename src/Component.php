@@ -29,7 +29,11 @@ class Component extends BaseComponent
         $scaffoldFolder = $this->getScaffoldConfigurationFolder($config->getScaffoldName());
         $scaffoldInputs = $config->getParsedInputs();
         $loader = new ExecutionContextLoader($scaffoldInputs, $scaffoldFolder);
-        $action = new UseScaffoldAction($loader->getExecutionContext(), new ApiClientStore($this->getLogger()));
+        $action = new UseScaffoldAction(
+            $loader->getExecutionContext(),
+            new ApiClientStore($this->getLogger()),
+            $this->getLogger()
+        );
         return $action();
     }
 

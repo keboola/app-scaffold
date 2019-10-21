@@ -46,12 +46,6 @@ class ApiClientStoreTest extends BaseOperationTestCase
         self::assertInstanceOf(EncryptionClient::class, $store->getEncryptionApiClient());
     }
 
-    public function testGetLogger(): void
-    {
-        $executionContext = $this->getInstance();
-        self::assertInstanceOf(NullLogger::class, $executionContext->getLogger());
-    }
-
     public function testGetOrchestrationApiClient(): void
     {
         /** @var ApiClientStore|MockObject $executionContextMock */

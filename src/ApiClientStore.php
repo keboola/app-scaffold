@@ -71,12 +71,6 @@ class ApiClientStore
         return $this->encryptionApiClient;
     }
 
-    public function getLogger(): LoggerInterface
-    {
-        return $this->logger;
-    }
-
-
     public function getOrchestrationApiClient(): OrchestratorClient
     {
         if ($this->orchestrationApiClient === null) {

@@ -4,15 +4,14 @@ declare(strict_types=1);
 
 namespace Keboola\ScaffoldApp\Tests\Operation;
 
-use Keboola\ScaffoldApp\ApiClientStore;
 use Keboola\ScaffoldApp\EncryptionClient;
 use Keboola\ScaffoldApp\Operation\CreateConfigurationOperation;
-use Keboola\ScaffoldApp\Operation\UseScaffoldExecutionContext\ExecutionContext;
 use Keboola\ScaffoldApp\OperationConfig\CreateConfigurationOperationConfig;
 use Keboola\StorageApi\Options\Components\Configuration;
 use PHPUnit\Framework\MockObject\MockObject;
 use Keboola\StorageApi\Client;
 use Keboola\StorageApi\Components;
+use Psr\Log\NullLogger;
 
 class CreateConfigurationOperationTest extends BaseOperationTestCase
 {
@@ -56,7 +55,7 @@ class CreateConfigurationOperationTest extends BaseOperationTestCase
         $apiClientStoreMock->method('getComponentsApiClient')->willReturn($this->componentsApiClient);
         $apiClientStoreMock->method('getStorageApiClient')->willReturn($this->sapiClient);
 
-        $operation = new CreateConfigurationOperation($apiClientStoreMock);
+        $operation = new CreateConfigurationOperation($apiClientStoreMock, new NullLogger);
 
         $operationConfig = [
             'componentId' => 'keboola.ex.test',
@@ -107,7 +106,7 @@ class CreateConfigurationOperationTest extends BaseOperationTestCase
         $apiClientStoreMock->method('getComponentsApiClient')->willReturn($this->componentsApiClient);
         $apiClientStoreMock->method('getStorageApiClient')->willReturn($this->sapiClient);
 
-        $operation = new CreateConfigurationOperation($apiClientStoreMock);
+        $operation = new CreateConfigurationOperation($apiClientStoreMock, new NullLogger);
 
         $operationConfig = [
             'componentId' => 'keboola.ex.test',
@@ -172,7 +171,7 @@ class CreateConfigurationOperationTest extends BaseOperationTestCase
         ]);
         $apiClientStoreMock->method('getStorageApiClient')->willReturn($this->sapiClient);
 
-        $operation = new CreateConfigurationOperation($apiClientStoreMock);
+        $operation = new CreateConfigurationOperation($apiClientStoreMock, new NullLogger);
 
         $operationConfig = [
             'componentId' => 'keboola.ex.test',
@@ -249,7 +248,7 @@ class CreateConfigurationOperationTest extends BaseOperationTestCase
         ]);
         $apiClientStoreMock->method('getStorageApiClient')->willReturn($this->sapiClient);
 
-        $operation = new CreateConfigurationOperation($apiClientStoreMock);
+        $operation = new CreateConfigurationOperation($apiClientStoreMock, new NullLogger);
 
         $operationConfig = [
             'componentId' => 'keboola.ex.test',
@@ -301,7 +300,7 @@ class CreateConfigurationOperationTest extends BaseOperationTestCase
         $apiClientStoreMock->method('getComponentsApiClient')->willReturn($this->componentsApiClient);
         $apiClientStoreMock->method('getStorageApiClient')->willReturn($this->sapiClient);
 
-        $operation = new CreateConfigurationOperation($apiClientStoreMock);
+        $operation = new CreateConfigurationOperation($apiClientStoreMock, new NullLogger);
 
         $operationConfig = [
             'componentId' => 'keboola.ex.test',

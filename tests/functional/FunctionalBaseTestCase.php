@@ -88,7 +88,11 @@ abstract class FunctionalBaseTestCase extends TestCase
 
         $executionContext = $loader->getExecutionContext();
 
-        $action = new UseScaffoldAction($executionContext, new ApiClientStore(new NullLogger()));
+        $action = new UseScaffoldAction(
+            $executionContext,
+            new ApiClientStore(new NullLogger()),
+            new NullLogger
+        );
         $action();
 
         return $executionContext;
