@@ -123,8 +123,9 @@ class CreateConfigurationOperationTest extends BaseOperationTestCase
         self::assertSame([
             [
                 'id' => 'op1',
-                'configurationId' => 'createdConfigurationId',
                 'userActions' => ['oauth'],
+                'configurationId' => 'createdConfigurationId',
+                'componentId' => 'keboola.ex.test',
             ],
         ], $response);
     }
