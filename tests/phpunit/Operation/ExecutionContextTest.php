@@ -15,10 +15,10 @@ use Keboola\ScaffoldApp\Operation\ExecutionContext;
 use Keboola\StorageApi\Client as StorageApiClient;
 use Keboola\StorageApi\Components as ComponentsApiClient;
 use Keboola\StorageApi\Options\Components\Configuration;
-use PHPUnit\Framework\TestCase;
+use PHPUnit\Framework\MockObject\MockObject;
 use Psr\Log\NullLogger;
 
-class ExecutionContextTest extends TestCase
+class ExecutionContextTest extends BaseOperationTestCase
 {
     public function testFinishOperation(): void
     {
@@ -41,8 +41,21 @@ class ExecutionContextTest extends TestCase
 
     public function testGetEncryptionApiClient(): void
     {
-        $executionContext = $this->getEmptyExecutionContext();
-        self::assertInstanceOf(EncryptionClient::class, $executionContext->getEncryptionApiClient());
+        /** @var ExecutionContext|MockObject $executionContextMock */
+        $executionContextMock = self::createPartialMock(ExecutionContext::class, ['getStorageApiClient']);
+        $clientMock = $this->getMockStorageApiClient();
+        $clientMock->expects(self::once())->method('indexAction')->willReturn([
+            'services' => [
+                [
+                    'id' => 'encryption',
+                    'url' => 'https://url',
+                ],
+            ],
+        ]);
+        $executionContextMock->expects(self::once())->method('getStorageApiClient')->willReturn($clientMock);
+        self::assertInstanceOf(EncryptionClient::class, $executionContextMock->getEncryptionApiClient());
+        //second test is because api is not called
+        self::assertInstanceOf(EncryptionClient::class, $executionContextMock->getEncryptionApiClient());
     }
 
     public function testGetFinishedOperationDataMissingReference(): void
@@ -101,8 +114,21 @@ class ExecutionContextTest extends TestCase
 
     public function testGetOrchestrationApiClient(): void
     {
-        $executionContext = $this->getEmptyExecutionContext();
-        self::assertInstanceOf(OrchestratorClient::class, $executionContext->getOrchestrationApiClient());
+        /** @var ExecutionContext|MockObject $executionContextMock */
+        $executionContextMock = self::createPartialMock(ExecutionContext::class, ['getStorageApiClient']);
+        $clientMock = $this->getMockStorageApiClient();
+        $clientMock->expects(self::once())->method('indexAction')->willReturn([
+            'services' => [
+                [
+                    'id' => 'syrup',
+                    'url' => 'https://url',
+                ],
+            ],
+        ]);
+        $executionContextMock->expects(self::once())->method('getStorageApiClient')->willReturn($clientMock);
+        self::assertInstanceOf(OrchestratorClient::class, $executionContextMock->getOrchestrationApiClient());
+        //second test is because api is not called
+        self::assertInstanceOf(OrchestratorClient::class, $executionContextMock->getOrchestrationApiClient());
     }
 
     public function testGetScaffoldDefinitionClass(): void
