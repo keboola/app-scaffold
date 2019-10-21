@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Keboola\ScaffoldApp\Operation;
 
 use Exception;
-use Keboola\Component\UserException;
 use Keboola\ScaffoldApp\EncryptionClient;
 use Keboola\ScaffoldApp\OrchestratorClientFactory;
 use Keboola\StorageApi\Client as StorageApiClient;
@@ -13,6 +12,7 @@ use Keboola\Orchestrator\Client as OrchestratorClient;
 use Keboola\StorageApi\Components as ComponentsApiClient;
 use Keboola\StorageApi\Options\Components\Configuration;
 use Psr\Log\LoggerInterface;
+use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\Finder\Finder;
 use Symfony\Component\Finder\SplFileInfo;
 
@@ -249,6 +249,26 @@ class ExecutionContext
         return $this->scaffoldInputs;
     }
 
+    public function getSchemaForOperation(string $seekOperationId): ?array
+    {
+        foreach ($this->manifest['inputs'] as $operationInput) {
+            if ($operationInput['id'] === $seekOperationId) {
+                return empty($operationInput['schema']) ? null : $operationInput['schema'];
+            }
+        }
+        return null;
+    }
+
+    public function getUserInputsForOperation(string $seekOperationId): ?array
+    {
+        foreach ($this->scaffoldInputs as $operationId => $operationInput) {
+            if ($operationId === $seekOperationId) {
+                return empty($operationInput) ? null : $operationInput;
+            }
+        }
+        return null;
+    }
+
     public function loadOperations(): void
     {
         foreach ($this->manifest['inputs'] as $operationInput) {
@@ -268,11 +288,11 @@ class ExecutionContext
     public function loadOperationsFiles(): void
     {
         foreach ([
-                // order is important
-                OperationsConfig::CREATE_CONFIGURATION,
-                OperationsConfig::CREATE_CONFIGURATION_ROWS,
-                OperationsConfig::CREATE_ORCHESTREATION,
-            ] as $operationsName) {
+                     // order is important
+                     OperationsConfig::CREATE_CONFIGURATION,
+                     OperationsConfig::CREATE_CONFIGURATION_ROWS,
+                     OperationsConfig::CREATE_ORCHESTREATION,
+                 ] as $operationsName) {
             $operationsFileNames = array_map(function ($operation) {
                 return $operation . '.json';
             }, $this->operationsToExecute);
@@ -289,5 +309,16 @@ class ExecutionContext
                 $this->operationsQueue[$operationsName][] = $operationFile;
             }
         }
+    }
+
+    public function getScaffoldDefinitionClass(): ?string
+    {
+        if ((new Filesystem())->exists(sprintf(
+            '%s/ScaffoldDefinition.php',
+            $this->scaffoldFolder
+        ))) {
+            return 'Keboola\\Scaffolds\\' . $this->scaffoldId . '\\ScaffoldDefinition';
+        }
+        return null;
     }
 }

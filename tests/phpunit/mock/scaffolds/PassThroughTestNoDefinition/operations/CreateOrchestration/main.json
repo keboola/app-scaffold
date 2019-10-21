@@ -1,0 +1,25 @@
+{
+    "payload": {
+        "name": "Main",
+        "tasks": [
+            {
+                "component": "keboola.ex-db-snowflake",
+                "operationReferenceId": "snowflakeExtractor",
+                "action": "run",
+                "timeoutMinutes": null,
+                "active": true,
+                "continueOnFailure": false,
+                "phase": "Extraction"
+            },
+            {
+                "component": "keboola.wr-storage",
+                "operationReferenceId": "connectionWriter",
+                "action": "run",
+                "timeoutMinutes": null,
+                "active": true,
+                "continueOnFailure": false,
+                "phase": "Writing"
+            }
+        ]
+    }
+}

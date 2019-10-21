@@ -67,7 +67,10 @@ class ExecutionContextTest extends TestCase
         $executionContext->finishOperation('id1', CreateConfigurationOperation::class, $configuration);
         $executionContext->finishOperation('id2', CreateOrchestrationOperation::class, '567');
         $executionContext->finishOperation('id3', CreateConfigurationRowsOperation::class, ['data3']);
-        $executionContext->finishOperation('id4', CreateConfigurationOperation::class, $configuration, ['foo', 'bar']);
+        $executionContext->finishOperation('id4', CreateConfigurationOperation::class, $configuration, [
+            'foo',
+            'bar',
+        ]);
         self::assertSame(
             [
                 [
@@ -102,6 +105,30 @@ class ExecutionContextTest extends TestCase
         self::assertInstanceOf(OrchestratorClient::class, $executionContext->getOrchestrationApiClient());
     }
 
+    public function testGetScaffoldDefinitionClass(): void
+    {
+        $executionContext = new ExecutionContext(
+            [],
+            [],
+            __DIR__ . '/../mock/scaffolds/PassThroughTest',
+            new NullLogger
+        );
+        $class = $executionContext->getScaffoldDefinitionClass();
+        self::assertEquals('Keboola\Scaffolds\PassThroughTest\ScaffoldDefinition', $class);
+    }
+
+    public function testGetScaffoldDefinitionClassNoClass(): void
+    {
+        $executionContext = new ExecutionContext(
+            [],
+            [],
+            __DIR__ . '/../mock/scaffolds/PassThroughTestNoDefinition',
+            new NullLogger
+        );
+        $class = $executionContext->getScaffoldDefinitionClass();
+        self::assertNull($class);
+    }
+
     public function testGetScaffoldId(): void
     {
         $executionContext = new ExecutionContext([], [], 'scaffoldId', new NullLogger);
@@ -114,10 +141,65 @@ class ExecutionContextTest extends TestCase
         self::assertSame(['someInput'], $executionContext->getScaffoldInputs());
     }
 
+    public function testGetSchemaForOperation(): void
+    {
+        $manifest = [
+            'inputs' => [
+                [
+                    'id' => 'op1',
+                    'required' => true,
+                    'schema' => [
+                        'type' => 'object',
+                    ],
+                ],
+            ],
+        ];
+        $parameters = [
+            'op1' => [
+                'parameters' => [
+                    'prop' => 'testProp',
+                ],
+            ],
+        ];
+        $executionContext = new ExecutionContext($manifest, $parameters, 'scaffoldId', new NullLogger);
+        $executionContext->loadOperations();
+        $schema = $executionContext->getSchemaForOperation('op1');
+        self::assertSame(['type' => 'object'], $schema);
+    }
+
     public function testGetStorageApiClient(): void
     {
         $executionContext = $this->getEmptyExecutionContext();
         self::assertInstanceOf(StorageApiClient::class, $executionContext->getStorageApiClient());
+    }
+
+    public function testGetUserInputsForOperation(): void
+    {
+        $manifest = [
+            'inputs' => [
+                [
+                    'id' => 'op1',
+                    'required' => true,
+                    'schema' => [
+                        'type' => 'object',
+                    ],
+                ],
+            ],
+        ];
+        $parameters = [
+            'op1' => [
+                'parameters' => [
+                    'prop' => 'testProp',
+                ],
+            ],
+        ];
+        $executionContext = new ExecutionContext($manifest, $parameters, 'scaffoldId', new NullLogger);
+        $userInput = $executionContext->getUserInputsForOperation('op1');
+        self::assertSame([
+            'parameters' => [
+                'prop' => 'testProp',
+            ],
+        ], $userInput);
     }
 
     public function testLoadOperations(): void
@@ -202,7 +284,7 @@ class ExecutionContextTest extends TestCase
 
         $executionContext = new ExecutionContext($manifest, $parameters, 'scaffoldId', new NullLogger);
         self::expectException(UserException::class);
-        self::expectExceptionMessage('One or more required operations "op3" from scaffold id "scaffoldId" is missing.');
+        self::expectExceptionMessage('One or more required operations "op3" is missing.');
         $executionContext->loadOperations();
     }
 }

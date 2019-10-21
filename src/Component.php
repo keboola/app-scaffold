@@ -28,7 +28,7 @@ class Component extends BaseComponent
         /** @var Config $config */
         $config = $this->getConfig();
         $scaffoldFolder = $this->getScaffoldConfigurationFolder($config->getScaffoldName());
-        $scaffoldInputs = $config->getScaffoldInputs();
+        $scaffoldInputs = $config->getParsedInputs();
         $action = new UseScaffoldAction($this->getExecutionContext($scaffoldInputs, $scaffoldFolder));
         return $action();
     }

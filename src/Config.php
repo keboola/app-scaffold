@@ -25,29 +25,6 @@ class Config extends BaseConfig
         }
     }
 
-    public function getScaffoldInputs(): array
-    {
-        $scaffoldInputsDefinition = $this->getScaffoldInputDefinition();
-        $processor = new Processor();
-
-        try {
-            $processedConfig = $processor->processConfiguration(
-                $scaffoldInputsDefinition,
-                [$this->getParsedInputs()]
-            );
-        } catch (InvalidConfigurationException $e) {
-            throw new UserException($e->getMessage(), 0, $e);
-        }
-
-        return $processedConfig;
-    }
-
-    protected function getScaffoldInputDefinition(): ScaffoldInputsDefinition
-    {
-        $scaffoldInputsDefinition = new ScaffoldInputsDefinition($this->getScaffoldName());
-        return $scaffoldInputsDefinition;
-    }
-
     public function getScaffoldName(): string
     {
         return $this->getParameters()['id'];
@@ -60,6 +37,17 @@ class Config extends BaseConfig
             $parsed[$input['id']] = $input['values'];
         }
 
-        return $parsed;
+        $processor = new Processor();
+
+        try {
+            $processedConfig = $processor->processConfiguration(
+                new ScaffoldInputsDefinition(),
+                [$parsed]
+            );
+        } catch (InvalidConfigurationException $e) {
+            throw new UserException($e->getMessage(), 0, $e);
+        }
+
+        return $processedConfig;
     }
 }
