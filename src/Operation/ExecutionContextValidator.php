@@ -68,7 +68,7 @@ class ExecutionContextValidator
                 $schema->in($input);
             } catch (Exception $e) {
                 $validationErrors[$operationid] = sprintf(
-                    'Operation %s has invalid parameters: %s.',
+                    '%s: %s.',
                     $operationid,
                     $e->getMessage()
                 );
@@ -77,7 +77,7 @@ class ExecutionContextValidator
 
         if (!empty($validationErrors)) {
             throw new UserException(sprintf(
-                'One or more operation has invalid parameters: %s',
+                "One or more operation has invalid parameters:\n%s",
                 implode(PHP_EOL, $validationErrors)
             ));
         }
