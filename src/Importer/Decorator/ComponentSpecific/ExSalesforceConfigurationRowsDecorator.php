@@ -27,37 +27,37 @@ use Keboola\ScaffoldApp\Importer\OrchestrationImporter;
  */
 class ExSalesforceConfigurationRowsDecorator extends AbstractDecorator
 {
-    private const AFTER_PROCESSORS_TEMPLATE =
+    private const AFTER_PROCESSORS_TEMPLATE = [
         [
-            [
-                'definition' =>
-                    [
-                        'component' => 'keboola.processor-create-manifest',
-                    ],
-                'parameters' =>
-                    [
-                        'delimiter' => ',',
-                        'enclosure' => '"',
-                        'incremental' => false,
-                        'primary_key' =>
-                            [
-                            ],
-                        'columns_from' => 'header',
-                    ],
+            'definition' => [
+                'component' => 'keboola.processor-create-manifest',
             ],
-            [
-                'definition' =>
-                    [
-                        'component' => 'keboola.processor-add-metadata',
-                    ],
-                'parameters' =>
-                    [
-                        'tables' =>
-                            [
-                            ],
-                    ],
+            'parameters' => [
+                'delimiter' => ',',
+                'enclosure' => '"',
+                'incremental' => false,
+                'primary_key' => [],
+                'columns_from' => 'header',
             ],
-        ];
+        ],
+        [
+            'definition' => [
+                'component' => 'keboola.processor-skip-lines',
+            ],
+            'parameters' => [
+                'lines' => 1,
+                'direction_from' => 'top',
+            ],
+        ],
+        [
+            'definition' => [
+                'component' => 'keboola.processor-add-metadata',
+            ],
+            'parameters' => [
+                'tables' => [],
+            ],
+        ],
+    ];
     private const SUPPORTED_COMPONENTS = ['htns.ex-salesforce'];
 
     public function getDecoratedProjectImport(
@@ -115,7 +115,7 @@ class ExSalesforceConfigurationRowsDecorator extends AbstractDecorator
                 $operationImport,
                 $realTableName
             );
-            $processors[1]['parameters']['tables'][] = [
+            $processors[2]['parameters']['tables'][] = [
                 'table' => sprintf('%s.csv', $tableName),
                 'metadata' =>
                     [
