@@ -36,18 +36,6 @@ class Config extends BaseConfig
         foreach ($this->getParameters()['inputs'] as $input) {
             $parsed[$input['id']] = $input['values'];
         }
-
-        $processor = new Processor();
-
-        try {
-            $processedConfig = $processor->processConfiguration(
-                new ScaffoldInputsDefinition(),
-                [$parsed]
-            );
-        } catch (InvalidConfigurationException $e) {
-            throw new UserException($e->getMessage(), 0, $e);
-        }
-
-        return $processedConfig;
+        return $parsed;
     }
 }
