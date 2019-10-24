@@ -2,8 +2,9 @@
 
 declare(strict_types=1);
 
-namespace Keboola\ScaffoldApp\Operation\UseScaffoldExecutionContext;
+namespace Keboola\ScaffoldApp\Operation;
 
+use Exception;
 use Symfony\Component\Finder\SplFileInfo;
 
 class OperationsQueue
@@ -57,7 +58,7 @@ class OperationsQueue
             }
         }
 
-        throw new \Exception(sprintf(
+        throw new Exception(sprintf(
             'Operation "%s" was not finished or it\'s wrongly configured.',
             $operationId
         ));

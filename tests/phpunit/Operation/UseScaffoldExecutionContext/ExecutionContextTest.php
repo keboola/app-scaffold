@@ -7,8 +7,8 @@ namespace Keboola\ScaffoldApp\Tests\Operation;
 use Keboola\ScaffoldApp\Operation\CreateConfigurationOperation;
 use Keboola\ScaffoldApp\Operation\CreateConfigurationRowsOperation;
 use Keboola\ScaffoldApp\Operation\CreateOrchestrationOperation;
-use Keboola\ScaffoldApp\Operation\UseScaffoldExecutionContext\ExecutionContext;
-use Keboola\ScaffoldApp\Operation\UseScaffoldExecutionContext\OperationsQueue;
+use Keboola\ScaffoldApp\SyncActions\UseScaffoldExecutionContext\ExecutionContext;
+use Keboola\ScaffoldApp\Operation\OperationsQueue;
 use Keboola\StorageApi\Options\Components\Configuration;
 
 class ExecutionContextTest extends BaseOperationTestCase

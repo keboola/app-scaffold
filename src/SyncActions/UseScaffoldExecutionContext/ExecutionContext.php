@@ -2,10 +2,11 @@
 
 declare(strict_types=1);
 
-namespace Keboola\ScaffoldApp\Operation\UseScaffoldExecutionContext;
+namespace Keboola\ScaffoldApp\SyncActions\UseScaffoldExecutionContext;
 
 use Keboola\ScaffoldApp\Operation\CreateConfigurationOperation;
 use Keboola\ScaffoldApp\Operation\CreateOrchestrationOperation;
+use Keboola\ScaffoldApp\Operation\OperationsQueue;
 use Keboola\StorageApi\Options\Components\Configuration;
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\Finder\SplFileInfo;

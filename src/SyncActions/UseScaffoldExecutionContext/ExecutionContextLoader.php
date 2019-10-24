@@ -2,10 +2,11 @@
 
 declare(strict_types=1);
 
-namespace Keboola\ScaffoldApp\Operation\UseScaffoldExecutionContext;
+namespace Keboola\ScaffoldApp\SyncActions\UseScaffoldExecutionContext;
 
 use Keboola\Component\JsonHelper;
 use Keboola\ScaffoldApp\Operation\OperationsConfig;
+use Keboola\ScaffoldApp\Operation\OperationsQueue;
 use Symfony\Component\Finder\Finder;
 
 class ExecutionContextLoader

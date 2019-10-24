@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Keboola\ScaffoldApp\Tests\Operation\UseScaffoldExecutionContext;
 
 use Keboola\ScaffoldApp\Operation\CreateOrchestrationOperation;
-use Keboola\ScaffoldApp\Operation\UseScaffoldExecutionContext\OperationsQueue;
+use Keboola\ScaffoldApp\Operation\OperationsQueue;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\Finder\SplFileInfo;
 

@@ -5,15 +5,11 @@ declare(strict_types=1);
 namespace Keboola\ScaffoldApp\FunctionalTests;
 
 use Exception;
-use Keboola\Component\JsonHelper;
 use Keboola\Orchestrator\Client as OrchestratorClient;
 use Keboola\ScaffoldApp\ApiClientStore;
-use Keboola\ScaffoldApp\Component;
 use Keboola\ScaffoldApp\EncryptionClient;
-use Keboola\ScaffoldApp\Operation\UseScaffoldExecutionContext\ExecutionContext;
-use Keboola\ScaffoldApp\Operation\FinishedOperationsStore;
-use Keboola\ScaffoldApp\Operation\UseScaffoldExecutionContext\ExecutionContextLoader;
-use Keboola\ScaffoldApp\Operation\UseScaffoldExecutionContext\OperationsQueue;
+use Keboola\ScaffoldApp\SyncActions\UseScaffoldExecutionContext\ExecutionContext;
+use Keboola\ScaffoldApp\SyncActions\UseScaffoldExecutionContext\ExecutionContextLoader;
 use Keboola\ScaffoldApp\OrchestratorClientFactory;
 use Keboola\ScaffoldApp\SyncActions\UseScaffoldAction;
 use Keboola\StorageApi\Client;
@@ -21,7 +17,6 @@ use Keboola\StorageApi\Components;
 use Keboola\StorageApi\Components as ComponentsApiClient;
 use PHPUnit\Framework\TestCase;
 use Psr\Log\NullLogger;
-use ReflectionClass;
 
 abstract class FunctionalBaseTestCase extends TestCase
 {

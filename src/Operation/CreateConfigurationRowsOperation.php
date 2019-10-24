@@ -6,7 +6,7 @@ namespace Keboola\ScaffoldApp\Operation;
 
 use Exception;
 use Keboola\ScaffoldApp\ApiClientStore;
-use Keboola\ScaffoldApp\Operation\UseScaffoldExecutionContext\ExecutionContext;
+use Keboola\ScaffoldApp\SyncActions\UseScaffoldExecutionContext\ExecutionContext;
 use Keboola\ScaffoldApp\OperationConfig\CreateCofigurationRowsOperationConfig;
 use Keboola\ScaffoldApp\OperationConfig\OperationConfigInterface;
 use Keboola\StorageApi\Options\Components\Configuration;

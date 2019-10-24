@@ -7,7 +7,7 @@ namespace Keboola\ScaffoldApp;
 use Exception;
 use Keboola\Component\BaseComponent;
 use Keboola\Component\UserException;
-use Keboola\ScaffoldApp\Operation\UseScaffoldExecutionContext\ExecutionContextLoader;
+use Keboola\ScaffoldApp\SyncActions\UseScaffoldExecutionContext\ExecutionContextLoader;
 use Keboola\ScaffoldApp\SyncActions\ListScaffoldsAction;
 use Keboola\ScaffoldApp\SyncActions\UseScaffoldAction;
 use Symfony\Component\Filesystem\Filesystem;

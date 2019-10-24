@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Keboola\ScaffoldApp\Operation\UseScaffoldExecutionContext;
+namespace Keboola\ScaffoldApp\SyncActions\UseScaffoldExecutionContext;
 
 use Keboola\Component\UserException;
 use Keboola\ScaffoldApp\ScaffoldInputDefinitionInterface;
@@ -40,7 +40,7 @@ class ExecutionContextValidator
                 continue;
             }
             $context = new Context();
-            $context->version = Schema::VERSION_DRAFT_04;
+            $context->version = Schema::VERSION_DRAFT_07;
             // we need schema as object
             $schema = Schema::import(json_decode(json_encode($schema)));
             $input = $executionContext->getUserInputsForOperation($operationid);

@@ -6,7 +6,7 @@ namespace Keboola\ScaffoldApp\SyncActions;
 
 use Keboola\Component\JsonHelper;
 use Keboola\ScaffoldApp\ApiClientStore;
-use Keboola\ScaffoldApp\Operation\UseScaffoldExecutionContext\ExecutionContext;
+use Keboola\ScaffoldApp\SyncActions\UseScaffoldExecutionContext\ExecutionContext;
 use Keboola\ScaffoldApp\Operation\CreateConfigurationOperation;
 use Keboola\ScaffoldApp\Operation\CreateConfigurationRowsOperation;
 use Keboola\ScaffoldApp\Operation\CreateOrchestrationOperation;

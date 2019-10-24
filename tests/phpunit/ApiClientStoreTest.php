@@ -7,7 +7,6 @@ namespace Keboola\ScaffoldApp\Tests;
 use Keboola\Orchestrator\Client as OrchestratorClient;
 use Keboola\ScaffoldApp\ApiClientStore;
 use Keboola\ScaffoldApp\EncryptionClient;
-use Keboola\ScaffoldApp\Operation\UseScaffoldExecutionContext\ExecutionContext;
 use Keboola\ScaffoldApp\Tests\Operation\BaseOperationTestCase;
 use Keboola\StorageApi\Client as StorageApiClient;
 use Keboola\StorageApi\Components as ComponentsApiClient;

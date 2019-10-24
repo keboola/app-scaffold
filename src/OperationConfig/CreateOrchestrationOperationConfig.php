@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Keboola\ScaffoldApp\OperationConfig;
 
 use Exception;
-use Keboola\ScaffoldApp\Operation\UseScaffoldExecutionContext\ExecutionContext;
+use Keboola\ScaffoldApp\SyncActions\UseScaffoldExecutionContext\ExecutionContext;
 use Keboola\StorageApi\Options\Components\Configuration;
 
 class CreateOrchestrationOperationConfig implements OperationConfigInterface

@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Keboola\ScaffoldApp\Operation\UseScaffoldExecutionContext;
+namespace Keboola\ScaffoldApp\SyncActions\UseScaffoldExecutionContext;
 
 use Keboola\Component\UserException;
 

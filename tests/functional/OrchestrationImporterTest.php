@@ -14,7 +14,7 @@ class OrchestrationImporterTest extends FunctionalBaseTestCase
     public function testImport(): void
     {
         $this->clearWorkspace();
-        $store = $this->exportTestScaffold(
+        $executionContext = $this->exportTestScaffold(
             'PassThroughTest',
             [
                 'snowflakeExtractor' => [
@@ -25,7 +25,7 @@ class OrchestrationImporterTest extends FunctionalBaseTestCase
             ]
         );
 
-        $orchestrationId = $store->getFinishedOperationData('main');
+        $orchestrationId = $executionContext->getFinishedOperationData('main');
 
         $temp = new Temp();
         $temp->initRunFolder();

@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Keboola\ScaffoldApp\Tests\Operation\UseScaffoldExecutionContext;
 
-use Keboola\ScaffoldApp\Operation\UseScaffoldExecutionContext\ExecutionContextLoader;
+use Keboola\ScaffoldApp\SyncActions\UseScaffoldExecutionContext\ExecutionContextLoader;
 use PHPUnit\Framework\TestCase;
 
 class ExecutionContextLoaderTest extends TestCase

@@ -5,8 +5,8 @@ declare(strict_types=1);
 namespace Keboola\ScaffoldApp\Tests\OperationConfig;
 
 use Keboola\ScaffoldApp\Operation\CreateOrchestrationOperation;
-use Keboola\ScaffoldApp\Operation\UseScaffoldExecutionContext\ExecutionContext;
-use Keboola\ScaffoldApp\Operation\UseScaffoldExecutionContext\OperationsQueue;
+use Keboola\ScaffoldApp\SyncActions\UseScaffoldExecutionContext\ExecutionContext;
+use Keboola\ScaffoldApp\Operation\OperationsQueue;
 use Throwable;
 use Keboola\ScaffoldApp\OperationConfig\OperationConfigInterface;
 use Keboola\ScaffoldApp\OperationConfig\CreateOrchestrationOperationConfig;
