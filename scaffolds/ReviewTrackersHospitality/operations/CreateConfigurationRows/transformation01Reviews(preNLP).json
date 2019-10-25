@@ -1,0 +1,129 @@
+[
+    {
+        "configuration": {
+            "output": [
+                {
+                    "primaryKey": [
+                        "location_id"
+                    ],
+                    "source": "out_locations",
+                    "incremental": true,
+                    "deleteWhereColumn": "",
+                    "deleteWhereOperator": "eq",
+                    "deleteWhereValues": [],
+                    "metadata": [
+                        {
+                            "key": "bdm.scaffold.table.tag",
+                            "value": "ReviewTrackersHospitality.internal.outReviewsLocation"
+                        }
+                    ],
+                    "destination": "out.c-reviewTrackersHospitality.reviewsLocation"
+                }
+            ],
+            "queries": [
+                "--create output table with locations\n--keep location importnat information\n--user-friendly names\nCREATE TABLE \"out_locations\"\nAS\n    SELECT\n        \"id\"      AS \"location_id\",\n        \"name\"    AS \"location\",\n        \"address\" AS \"street\",\n        \"city\",\n        \"zipcode\",\n        \"country\",\n        \"state\",\n        \"latitude\",\n        \"longitude\"\n    FROM \"locations\";"
+            ],
+            "input": [
+                {
+                    "destination": "locations",
+                    "datatypes": [],
+                    "whereColumn": "",
+                    "whereValues": [],
+                    "whereOperator": "eq",
+                    "columns": [],
+                    "loadType": "clone",
+                    "source_search": {
+                        "key": "bdm.scaffold.table.tag",
+                        "value": "ReviewTrackersHospitality.internal.kdsTeamExReviewtrackersLocations"
+                    }
+                }
+            ],
+            "name": "Locations",
+            "packages": [],
+            "requires": [],
+            "backend": "snowflake",
+            "type": "simple",
+            "id": "492076531",
+            "phase": 1,
+            "disabled": false,
+            "description": ""
+        },
+        "description": "",
+        "name": "Locations"
+    },
+    {
+        "configuration": {
+            "output": [
+                {
+                    "source": "out_review",
+                    "primaryKey": [
+                        "review_id"
+                    ],
+                    "incremental": true,
+                    "deleteWhereColumn": "",
+                    "deleteWhereOperator": "eq",
+                    "deleteWhereValues": [],
+                    "metadata": [
+                        {
+                            "key": "bdm.scaffold.table.tag",
+                            "value": "ReviewTrackersHospitality.internal.outReviewsPreNlpReview"
+                        }
+                    ],
+                    "destination": "out.c-reviewTrackersHospitality.reviewsPreNlpReview"
+                }
+            ],
+            "queries": [
+                "CREATE TABLE \"out_review\"\nAS\n    SELECT\n        \"r\".\"id\"                                                                  AS \"review_id\",\n        \"l\".\"location_id\"                                                         AS \"location_id\",\n        trim(regexp_replace(\"r\".\"published_at\", 'T|Z', ' '))                      AS \"review_published_at\",\n        \"r\".\"source_name\"                                                         AS \"source\",\n        \"r\".\"author\"                                                              AS \"author\",\n        \"r\".\"name\"                                                                AS \"review_title\",\n        \"r\".\"content\"                                                             AS \"review_text\",\n        \"r\".\"permalink\"                                                           AS \"review_url\",\n        \"r\".\"rating\"                                                              AS \"rating\",\n        trim(regexp_replace(\"a\".\"published_at\", 'T|Z', ' '))                      AS \"response_published_at\",\n        iff(\"a\".\"id\" IS NULL, 'false', 'true')                                    AS \"has_response\",\n        \"a\".\"content\"                                                             AS \"response_text\",\n        iff(\"a\".\"published_at\" = '', NULL,\n            datediff(DAY, \"r\".\"published_at\" ::DATE, \"a\".\"published_at\" :: DATE)) AS \"days_to_response\"\n    FROM \"reviews\" \"r\"\n             LEFT JOIN \"locations\" \"l\"\n                       ON \"r\".\"location_id\" = \"l\".\"location_id\"\n             LEFT JOIN \"responses\" \"a\"\n                       ON \"r\".\"id\" = \"a\".\"review_id\";"
+            ],
+            "input": [
+                {
+                    "destination": "reviews",
+                    "datatypes": [],
+                    "whereColumn": "",
+                    "whereValues": [],
+                    "whereOperator": "eq",
+                    "columns": [],
+                    "loadType": "clone",
+                    "source_search": {
+                        "key": "bdm.scaffold.table.tag",
+                        "value": "ReviewTrackersHospitality.internal.kdsTeamExReviewtrackersReviews"
+                    }
+                },
+                {
+                    "destination": "responses",
+                    "datatypes": [],
+                    "whereColumn": "",
+                    "whereValues": [],
+                    "whereOperator": "eq",
+                    "columns": [],
+                    "loadType": "clone",
+                    "source_search": {
+                        "key": "bdm.scaffold.table.tag",
+                        "value": "ReviewTrackersHospitality.internal.kdsTeamExReviewtrackersResponses"
+                    }
+                },
+                {
+                    "destination": "locations",
+                    "datatypes": [],
+                    "whereColumn": "",
+                    "whereValues": [],
+                    "whereOperator": "eq",
+                    "columns": [],
+                    "loadType": "clone",
+                    "source": "out.c-reviewTrackersHospitality.reviewsLocation"
+                }
+            ],
+            "name": "Reviews & Responses",
+            "packages": [],
+            "requires": [],
+            "backend": "snowflake",
+            "type": "simple",
+            "id": "503497028",
+            "phase": "2",
+            "disabled": false,
+            "description": ""
+        },
+        "description": "",
+        "name": "Reviews & Responses"
+    }
+]

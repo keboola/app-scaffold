@@ -1,0 +1,52 @@
+{
+    "payload": {
+        "name": "Reviews",
+        "tasks": [
+            {
+                "component": "kds-team.ex-reviewtrackers",
+                "operationReferenceId": "kdsTeamExReviewtrackersSurveys",
+                "action": "run",
+                "timeoutMinutes": null,
+                "active": true,
+                "continueOnFailure": false,
+                "phase": null
+            },
+            {
+                "component": "transformation",
+                "operationReferenceId": "transformation01Reviews(preNLP)",
+                "action": "run",
+                "timeoutMinutes": null,
+                "active": true,
+                "continueOnFailure": false,
+                "phase": null
+            },
+            {
+                "component": "geneea.nlp-analysis-v2",
+                "operationReferenceId": "geneeaNlpAnalysisV2ReviewsAnalysis",
+                "action": "run",
+                "timeoutMinutes": null,
+                "active": true,
+                "continueOnFailure": false,
+                "phase": null
+            },
+            {
+                "component": "transformation",
+                "operationReferenceId": "transformation02Reviews(postNLP)",
+                "action": "run",
+                "timeoutMinutes": null,
+                "active": true,
+                "continueOnFailure": false,
+                "phase": null
+            },
+            {
+                "component": "keboola.wr-db-snowflake",
+                "operationReferenceId": "keboolaWrDbSnowflakeLooker",
+                "action": "run",
+                "timeoutMinutes": null,
+                "active": true,
+                "continueOnFailure": false,
+                "phase": null
+            }
+        ]
+    }
+}

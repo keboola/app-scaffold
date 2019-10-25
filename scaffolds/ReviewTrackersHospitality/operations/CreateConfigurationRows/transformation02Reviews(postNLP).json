@@ -1,0 +1,171 @@
+[
+    {
+        "configuration": {
+            "output": [
+                {
+                    "source": "out_review",
+                    "primaryKey": [
+                        "review_id"
+                    ],
+                    "metadata": [
+                        {
+                            "key": "bdm.scaffold.table.tag",
+                            "value": "ReviewTrackersHospitality.internal.outReviewsReview"
+                        }
+                    ],
+                    "destination": "out.c-reviewTrackersHospitality.reviewsReview"
+                },
+                {
+                    "source": "out_entity",
+                    "primaryKey": [
+                        "entity_id"
+                    ],
+                    "metadata": [
+                        {
+                            "key": "bdm.scaffold.table.tag",
+                            "value": "ReviewTrackersHospitality.internal.outReviewsEntity"
+                        }
+                    ],
+                    "destination": "out.c-reviewTrackersHospitality.reviewsEntity"
+                },
+                {
+                    "source": "out_tag",
+                    "primaryKey": [
+                        "tag_id"
+                    ],
+                    "metadata": [
+                        {
+                            "key": "bdm.scaffold.table.tag",
+                            "value": "ReviewTrackersHospitality.internal.outReviewsTag"
+                        }
+                    ],
+                    "destination": "out.c-reviewTrackersHospitality.reviewsTag"
+                },
+                {
+                    "source": "out_attribute_relation",
+                    "primaryKey": [
+                        "attribute_relation_id"
+                    ],
+                    "metadata": [
+                        {
+                            "key": "bdm.scaffold.table.tag",
+                            "value": "ReviewTrackersHospitality.internal.outReviewsAttributeRelation"
+                        }
+                    ],
+                    "destination": "out.c-reviewTrackersHospitality.reviewsAttributeRelation"
+                },
+                {
+                    "source": "out_hierarchy_relation",
+                    "primaryKey": [
+                        "hierarchy_relation_id"
+                    ],
+                    "metadata": [
+                        {
+                            "key": "bdm.scaffold.table.tag",
+                            "value": "ReviewTrackersHospitality.internal.outReviewsHierarchyRelation"
+                        }
+                    ],
+                    "destination": "out.c-reviewTrackersHospitality.reviewsHierarchyRelation"
+                },
+                {
+                    "source": "out_sentence",
+                    "primaryKey": [
+                        "sentence_id"
+                    ],
+                    "metadata": [
+                        {
+                            "key": "bdm.scaffold.table.tag",
+                            "value": "ReviewTrackersHospitality.internal.outReviewsSentence"
+                        }
+                    ],
+                    "destination": "out.c-reviewTrackersHospitality.reviewsSentence"
+                }
+            ],
+            "queries": [
+                "CREATE TABLE \"out_review\"\nAS\n    SELECT\n        \"d\".\"review_id\"             AS \"review_id\",\n        \"r\".\"location_id\"           AS \"location_id\",\n        \"r\".\"review_published_at\"   AS \"review_published_at\",\n        \"r\".\"review_title\"          AS \"review_title\",\n        IFF(LENGTH(\"r\".\"review_text\") > 1024, LEFT(\"r\".\"review_text\", 1021) || '...',\n            \"r\".\"review_text\")      AS \"review_text\",\n        \"r\".\"rating\"                AS \"rating\",\n        \"r\".\"source\"                AS \"source\",\n        \"r\".\"review_url\"            AS \"source_url\",\n        \"d\".\"sentimentLabel\"        AS \"sentiment_label\",\n        \"d\".\"sentimentValue\"        AS \"sentiment_value\",\n        \"d\".\"usedChars\"             AS \"review_text_length\",\n        \"r\".\"response_published_at\" AS \"response_published_at\",\n        IFF(LENGTH(\"r\".\"response_text\") > 1024, LEFT(\"r\".\"response_text\", 1021) || '...',\n            \"r\".\"response_text\")    AS \"response_text\",\n        \"r\".\"has_response\"          AS \"has_response\",\n        \"r\".\"days_to_response\"      AS \"days_to_response\"\n    FROM \"nlp_documents\" \"d\"\n             LEFT JOIN \"pre_nlp_review\" \"r\"\n                       ON \"d\".\"review_id\" = \"r\".\"review_id\";",
+                "--list of entities\n--entities have more records that relations, because they contain keywords without relation as well\n--keeping only the main types in the output table\nCREATE TABLE \"out_entity\"\nAS\n    SELECT\n        \"review_id\" || '-' || \"type\" || '-' || \"text\" AS \"entity_id\",\n        \"review_id\"                                   AS \"review_id\",\n        \"type\"                                        AS \"entity_type\",\n        \"text\"                                        AS \"entity\",\n        \"sentimentValue\"                              AS \"sentiment_value\",\n        \"sentimentLabel\"                              AS \"sentiment_label\"\n    FROM \"nlp_entities\"\n    WHERE \"type\" IN ('food', 'general');",
+                "--list of tags for the review\nCREATE TABLE \"out_tag\"\nAS\n    SELECT\n        \"review_id\" || '-' || \"text\" AS \"tag_id\",\n        \"review_id\"                  AS \"review_id\",\n        \"text\"                       AS \"tag\"\n    FROM \"nlp_entities\"\n    WHERE \"type\" = 'tag';",
+                "-- list of attributes related to subjects (like \"cozy\" \"place\")\nCREATE TABLE \"out_attribute_relation\"\nAS\n    SELECT\n        \"review_id\" || '-' || \"subject\" || '-' || \"name\" AS \"attribute_relation_id\",\n        \"review_id\"                                      AS \"review_id\",\n        \"subject\"                                        AS \"subject\",\n        \"name\"                                           AS \"attribute\",\n        \"sentimentLabel\"                                 AS \"sentiment_label\",\n        \"sentimentValue\"                                 AS \"sentiment_value\"\n    FROM \"nlp_relations\"\n    WHERE \"type\" = 'ATTR';",
+                "-- list of external relations which describe hierarchy\nCREATE TABLE \"out_hierarchy_relation\"\nAS\n    SELECT\n        \"review_id\" || '-' || \"object\" || '-' || \"subject\" AS \"hierarchy_relation_id\",\n        \"review_id\"                                        AS \"review_id\",\n        \"object\"                                           AS \"object\",\n        \"subject\"                                          AS \"entity\",\n        \"sentimentLabel\"                                   AS \"sentiment_label\",\n        \"sentimentValue\"                                   AS \"sentiment_value\"\n    FROM \"nlp_relations\"\n    WHERE \"type\" = 'EXTERNAL';",
+                "--sentences of the review\nCREATE TABLE \"out_sentence\"\nAS\n    SELECT\n        \"review_id\" || '-' || \"index\"                                   AS \"sentence_id\",\n        \"review_id\"                                                     AS \"review_id\",\n        IFF(LENGTH(\"text\") > 1024, LEFT(\"text\", 1021) || '...', \"text\") AS \"sentence\",\n        \"index\"                                                         AS \"order\",\n        \"segment\"                                                       AS \"segment\",\n        \"sentimentValue\"                                                AS \"sentiment_value\",\n        \"sentimentLabel\"                                                AS \"sentiment_label\"\n    FROM \"nlp_sentences\";"
+            ],
+            "input": [
+                {
+                    "destination": "nlp_documents",
+                    "datatypes": [],
+                    "whereColumn": "",
+                    "whereValues": [],
+                    "whereOperator": "eq",
+                    "columns": [],
+                    "loadType": "clone",
+                    "source_search": {
+                        "key": "bdm.scaffold.table.tag",
+                        "value": "ReviewTrackersHospitality.internal.GeneeaAnalysisResultDocuments"
+                    }
+                },
+                {
+                    "destination": "nlp_relations",
+                    "datatypes": [],
+                    "whereColumn": "",
+                    "whereValues": [],
+                    "whereOperator": "eq",
+                    "columns": [],
+                    "loadType": "clone",
+                    "source_search": {
+                        "key": "bdm.scaffold.table.tag",
+                        "value": "ReviewTrackersHospitality.internal.GeneeaAnalysisResultRelations"
+                    }
+                },
+                {
+                    "destination": "pre_nlp_review",
+                    "datatypes": [],
+                    "whereColumn": "",
+                    "whereValues": [],
+                    "whereOperator": "eq",
+                    "columns": [],
+                    "loadType": "clone",
+                    "source_search": {
+                        "key": "bdm.scaffold.table.tag",
+                        "value": "ReviewTrackersHospitality.internal.outReviewsPreNlpReview"
+                    }
+                },
+                {
+                    "destination": "nlp_entities",
+                    "datatypes": [],
+                    "whereColumn": "",
+                    "whereValues": [],
+                    "whereOperator": "eq",
+                    "columns": [],
+                    "loadType": "clone",
+                    "source_search": {
+                        "key": "bdm.scaffold.table.tag",
+                        "value": "ReviewTrackersHospitality.internal.GeneeaAnalysisResultEntities"
+                    }
+                },
+                {
+                    "destination": "nlp_sentences",
+                    "datatypes": [],
+                    "whereColumn": "",
+                    "whereValues": [],
+                    "whereOperator": "eq",
+                    "columns": [],
+                    "loadType": "clone",
+                    "source_search": {
+                        "key": "bdm.scaffold.table.tag",
+                        "value": "ReviewTrackersHospitality.internal.GeneeaAnalysisResultSentences"
+                    }
+                }
+            ],
+            "name": "Reviews Enhancement",
+            "packages": [],
+            "requires": [],
+            "backend": "snowflake",
+            "type": "simple",
+            "id": "505080955",
+            "phase": 1,
+            "disabled": false
+        },
+        "description": "Combining processed data with Geneea app output.",
+        "name": "Reviews Enhancement"
+    }
+]
