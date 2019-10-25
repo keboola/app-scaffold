@@ -8,10 +8,10 @@ use Keboola\Component\UserException;
 use Keboola\ScaffoldApp\SyncActions\UseScaffoldExecutionContext\ExecutionContext;
 use Keboola\ScaffoldApp\SyncActions\UseScaffoldExecutionContext\ExecutionContextValidator;
 use Keboola\ScaffoldApp\SyncActions\UseScaffoldExecutionContext\OperationsContext;
-use Keboola\ScaffoldApp\Tests\Operation\BaseOperationTestCase;
 use PHPUnit\Framework\MockObject\MockObject;
+use PHPUnit\Framework\TestCase;
 
-class ExecutionContextValidatorTest extends BaseOperationTestCase
+class ExecutionContextValidatorTest extends TestCase
 {
 
     public function testValidateWithDefinitionClass(): void

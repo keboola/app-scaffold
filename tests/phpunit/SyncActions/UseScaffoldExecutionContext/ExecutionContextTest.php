@@ -9,10 +9,10 @@ use Keboola\ScaffoldApp\Operation\CreateConfigurationRowsOperation;
 use Keboola\ScaffoldApp\Operation\CreateOrchestrationOperation;
 use Keboola\ScaffoldApp\SyncActions\UseScaffoldExecutionContext\ExecutionContext;
 use Keboola\ScaffoldApp\Operation\OperationsQueue;
-use Keboola\ScaffoldApp\Tests\Operation\BaseOperationTestCase;
 use Keboola\StorageApi\Options\Components\Configuration;
+use PHPUnit\Framework\TestCase;
 
-class ExecutionContextTest extends BaseOperationTestCase
+class ExecutionContextTest extends TestCase
 {
     public function testFinishOperation(): void
     {
