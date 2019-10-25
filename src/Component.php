@@ -44,7 +44,7 @@ class Component extends BaseComponent
 
         $fs = new Filesystem();
         if (!$fs->exists($scaffoldFolder)) {
-            throw new Exception(sprintf('Scaffold "%s" does not exist.', $scaffoldId));
+            throw new UserException(sprintf('Scaffold "%s" does not exist.', $scaffoldId));
         }
 
         return $scaffoldFolder;
