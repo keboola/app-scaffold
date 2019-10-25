@@ -21,7 +21,7 @@ class OrchestrationImporter
     private const SCAFFOLD_DIRS = [
         OperationsConfig::CREATE_CONFIGURATION,
         OperationsConfig::CREATE_CONFIGURATION_ROWS,
-        OperationsConfig::CREATE_ORCHESTREATION,
+        OperationsConfig::CREATE_ORCHESTRATION,
     ];
     public const SCAFFOLD_TABLE_TAG = 'bdm.scaffold.table.tag';
 
@@ -209,7 +209,7 @@ class OrchestrationImporter
                 '%s/%s/operations/%s/%s.json',
                 $this->scaffoldsDir,
                 $scaffoldId,
-                OperationsConfig::CREATE_ORCHESTREATION,
+                OperationsConfig::CREATE_ORCHESTRATION,
                 $this->getOrchestrationOperationId($orchestration)
             ),
             $orchestrationOperationConfig,

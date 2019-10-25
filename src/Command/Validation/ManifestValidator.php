@@ -102,7 +102,7 @@ final class ManifestValidator
         $missingOperations = $this->getMissingOperationsInInputs(OperationsConfig::CREATE_CONFIGURATION);
         $missingOperations = array_merge(
             $missingOperations,
-            $this->getMissingOperationsInInputs(OperationsConfig::CREATE_ORCHESTREATION)
+            $this->getMissingOperationsInInputs(OperationsConfig::CREATE_ORCHESTRATION)
         );
 
         if (empty($missingOperations)) {

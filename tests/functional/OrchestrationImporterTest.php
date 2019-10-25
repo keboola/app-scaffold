@@ -40,7 +40,7 @@ class OrchestrationImporterTest extends FunctionalBaseTestCase
         $importer->importOrchestration($orchestrationId, 'TestScaffold');
 
         self::assertFileExists($tmpFolder . '/TestScaffold/operations');
-        self::assertFileExists($tmpFolder . '/TestScaffold/operations/' . OperationsConfig::CREATE_ORCHESTREATION);
+        self::assertFileExists($tmpFolder . '/TestScaffold/operations/' . OperationsConfig::CREATE_ORCHESTRATION);
         self::assertFileExists($tmpFolder . '/TestScaffold/operations/' . OperationsConfig::CREATE_CONFIGURATION_ROWS);
         self::assertFileExists($tmpFolder . '/TestScaffold/operations/' . OperationsConfig::CREATE_CONFIGURATION);
         self::assertFileExists($tmpFolder . '/TestScaffold/manifest.json');

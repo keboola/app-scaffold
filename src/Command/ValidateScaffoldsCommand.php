@@ -74,7 +74,7 @@ class ValidateScaffoldsCommand extends Command
     {
         $fs = new Filesystem();
         foreach ([
-                OperationsConfig::CREATE_ORCHESTREATION,
+                OperationsConfig::CREATE_ORCHESTRATION,
                 OperationsConfig::CREATE_CONFIGURATION_ROWS,
                 OperationsConfig::CREATE_CONFIGURATION,
             ] as $operationDir) {

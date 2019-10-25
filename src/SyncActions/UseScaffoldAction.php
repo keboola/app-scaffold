@@ -83,7 +83,7 @@ class UseScaffoldAction
                 $operation = new CreateConfigurationRowsOperation($this->apiClientStore, $this->logger);
                 $operation->execute($config, $this->executionContext);
                 break;
-            case OperationsConfig::CREATE_ORCHESTREATION:
+            case OperationsConfig::CREATE_ORCHESTRATION:
                 $config = CreateOrchestrationOperationConfig::create(
                     $operationFile->getBasename('.json'),
                     JsonHelper::decode($operationFile->getContents()),

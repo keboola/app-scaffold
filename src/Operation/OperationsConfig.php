@@ -8,5 +8,5 @@ final class OperationsConfig
 {
     public const CREATE_CONFIGURATION = 'CreateConfiguration';
     public const CREATE_CONFIGURATION_ROWS = 'CreateConfigurationRows';
-    public const CREATE_ORCHESTREATION = 'CreateOrchestration';
+    public const CREATE_ORCHESTRATION = 'CreateOrchestration';
 }

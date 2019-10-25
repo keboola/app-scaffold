@@ -72,7 +72,7 @@ class ExecutionContextLoader
                      // order is important
                      OperationsConfig::CREATE_CONFIGURATION,
                      OperationsConfig::CREATE_CONFIGURATION_ROWS,
-                     OperationsConfig::CREATE_ORCHESTREATION,
+                     OperationsConfig::CREATE_ORCHESTRATION,
                  ] as $operationsName
         ) {
             $operationsFileNames = array_map(function ($operation) {
