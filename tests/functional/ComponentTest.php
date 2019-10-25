@@ -26,7 +26,20 @@ class ComponentTest extends AbstractDatadirTestCase
             'action' => 'useScaffold',
             'parameters' => [
                 'id' => 'PassThroughTest',
-                'inputs' => [],
+                'inputs' => [
+                    [
+                        'id'=>'connectionWriter',
+                        'values'=>null,
+                    ],
+                    [
+                        'id'=>'snowflakeExtractor',
+                        'values'=>null,
+                    ],
+                    [
+                        'id'=>'main',
+                        'values'=>null,
+                    ],
+                ],
             ],
         ];
         file_put_contents($tempDatadir->getTmpFolder() . '/config.json', \GuzzleHttp\json_encode($data));

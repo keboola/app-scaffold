@@ -6,7 +6,6 @@ namespace Keboola\ScaffoldApp\Tests\Operation;
 
 use Keboola\ScaffoldApp\Operation\CreateConfigurationOperation;
 use Keboola\ScaffoldApp\Operation\CreateOrchestrationOperation;
-use Keboola\ScaffoldApp\Operation\FinishedOperationsStore;
 use Keboola\ScaffoldApp\OperationConfig\CreateOrchestrationOperationConfig;
 use Keboola\StorageApi\Options\Components\Configuration;
 use Psr\Log\NullLogger;
@@ -15,15 +14,16 @@ class CreateOrchestrationOperationTest extends BaseOperationTestCase
 {
     public function testExecute(): void
     {
+        $executionMock = self::getExecutionContext();
+
         $orchestratorApiClient = $this->getMockOrchestrationApiClient();
-        $orchestratorApiClient->method('createOrchestration')->willReturn(
+        $orchestratorApiClient->expects(self::once())->method('createOrchestration')->willReturn(
             ['id' => 'createdOrchestrationId']
         );
 
-        $operation = new CreateOrchestrationOperation(
-            $orchestratorApiClient,
-            new NullLogger()
-        );
+        $apiClientStoreMock = self::getApiClientStore(null, null, null, $orchestratorApiClient);
+
+        $operation = new CreateOrchestrationOperation($apiClientStoreMock, new NullLogger);
 
         $operationConfig = [
             'payload' => [
@@ -46,11 +46,14 @@ class CreateOrchestrationOperationTest extends BaseOperationTestCase
         $config = CreateOrchestrationOperationConfig::create('orch1', $operationConfig, []);
 
         // mock finished CreateConfiguration
-        $store = new FinishedOperationsStore();
-        $store->add('op1', CreateConfigurationOperation::class, (new Configuration())->setConfigurationId('1'));
+        $executionMock->getOperationsQueue()->finishOperation(
+            'op1',
+            CreateConfigurationOperation::class,
+            (new Configuration())->setConfigurationId('1')
+        );
 
-        $operation->execute($config, $store);
-        $orchestrationId = $store->getOperationData('orch1');
+        $operation->execute($config, $executionMock);
+        $orchestrationId = $executionMock->getOperationsQueue()->getFinishedOperationData('orch1');
         self::assertEquals('createdOrchestrationId', $orchestrationId);
     }
 }

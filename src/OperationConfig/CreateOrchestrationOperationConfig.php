@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Keboola\ScaffoldApp\OperationConfig;
 
 use Exception;
-use Keboola\ScaffoldApp\Operation\FinishedOperationsStore;
+use Keboola\ScaffoldApp\SyncActions\UseScaffoldExecutionContext\ExecutionContext;
 use Keboola\StorageApi\Options\Components\Configuration;
 
 class CreateOrchestrationOperationConfig implements OperationConfigInterface
@@ -70,11 +70,12 @@ class CreateOrchestrationOperationConfig implements OperationConfigInterface
     }
 
     public function populateOrchestrationTasksWithConfigurationIds(
-        FinishedOperationsStore $store
+        ExecutionContext $executionContext
     ): void {
         foreach ($this->tasks as &$task) {
             /** @var Configuration $componentConfiguration */
-            $componentConfiguration = $store->getOperationData($task['operationReferenceId']);
+            $componentConfiguration = $executionContext->getOperationsQueue()
+                ->getFinishedOperationData($task['operationReferenceId']);
             $task = array_merge(
                 $task,
                 [

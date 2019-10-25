@@ -199,7 +199,7 @@ Any decorator can be disabled in `Keboola\ScaffoldApp\Importer\OperationImportFa
 
 ### Parameters
 
-Optionally parameters from runner can be validated with `ScaffoldDefinition.php`
+Parameters are validated against schema defined in manifest file. If `ScaffoldDefinition.php` file is present validation against json schema is skipped.
 
 CreateConfiguration operation path `payload.configuration.parameters` can be override with parameters injected by runner.
 

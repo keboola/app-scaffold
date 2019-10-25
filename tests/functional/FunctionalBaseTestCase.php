@@ -5,31 +5,26 @@ declare(strict_types=1);
 namespace Keboola\ScaffoldApp\FunctionalTests;
 
 use Exception;
-use Keboola\Orchestrator\Client as OrchestratorClient;
-use Keboola\ScaffoldApp\Component;
-use Keboola\ScaffoldApp\EncryptionClient;
-use Keboola\ScaffoldApp\Operation\FinishedOperationsStore;
-use Keboola\ScaffoldApp\OrchestratorClientFactory;
-use Keboola\StorageApi\Client;
-use Keboola\StorageApi\Components;
-use Keboola\StorageApi\Components as ComponentsApiClient;
+use Keboola\ScaffoldApp\ApiClientStore;
 use PHPUnit\Framework\TestCase;
 use Psr\Log\NullLogger;
-use ReflectionClass;
 
 abstract class FunctionalBaseTestCase extends TestCase
 {
+    /**
+     * @var ApiClientStore
+     */
+    protected $apiClients;
+
     protected function clearWorkspace(): void
     {
-        $orchestrationApiClient = $this->createOrchestrationApiClient();
-        $orchestrations = $orchestrationApiClient->getOrchestrations();
+        $orchestrations = $this->apiClients->getOrchestrationApiClient()->getOrchestrations();
         foreach ($orchestrations as $orchestration) {
             if ($orchestration['name'] === 'orch01') {
-                $orchestrationApiClient->deleteOrchestration($orchestration['id']);
+                $this->apiClients->getOrchestrationApiClient()->deleteOrchestration($orchestration['id']);
             }
         }
-        $componentApiClient = new Components($this->createStorageApiClient());
-        $components = $componentApiClient->listComponents();
+        $components = $this->apiClients->getComponentsApiClient()->listComponents();
         foreach ($components as $component) {
             if ($component['id'] === 'orchestration') {
                 continue;
@@ -41,61 +36,11 @@ abstract class FunctionalBaseTestCase extends TestCase
                         'ex01',
                     ]
                 )) {
-                    $componentApiClient->deleteConfiguration($component['id'], $configuration['id']);
+                    $this->apiClients->getComponentsApiClient()
+                        ->deleteConfiguration($component['id'], $configuration['id']);
                 }
             }
         }
-    }
-
-    protected function createOrchestrationApiClient(): OrchestratorClient
-    {
-        return OrchestratorClientFactory::createForStorageApi($this->createStorageApiClient());
-    }
-
-    protected function createStorageApiClient(): Client
-    {
-        return new Client(
-            [
-                'token' => getenv('KBC_TOKEN'),
-                'url' => getenv('KBC_URL'),
-                'logger' => new NullLogger(),
-            ]
-        );
-    }
-
-    protected function exportTestScaffold(
-        string $scaffoldId,
-        array $inputParameters
-    ): FinishedOperationsStore {
-        $componentRef = new ReflectionClass(Component::class);
-        $executeOperationsRef = $componentRef->getMethod('executeOperations');
-        $executeOperationsRef->setAccessible(true);
-
-        /** @var FinishedOperationsStore $store */
-        $store = $executeOperationsRef->invokeArgs(
-            $componentRef->newInstanceWithoutConstructor(),
-            [
-                __DIR__ . '/../phpunit/mock/scaffolds/' . $scaffoldId,
-                $inputParameters,
-                $this->createStorageApiClient(),
-                $this->createOrchestrationApiClient(),
-                $this->createEncryptionApiClient(),
-                $this->createComponentsApiClient(),
-                new NullLogger(),
-            ]
-        );
-
-        return $store;
-    }
-
-    protected function createEncryptionApiClient(): EncryptionClient
-    {
-        return EncryptionClient::createForStorageApi($this->createStorageApiClient());
-    }
-
-    protected function createComponentsApiClient(): ComponentsApiClient
-    {
-        return new ComponentsApiClient($this->createStorageApiClient());
     }
 
     protected function setUp(): void
@@ -106,5 +51,7 @@ abstract class FunctionalBaseTestCase extends TestCase
         if (getenv('KBC_URL') === false) {
             throw new Exception('Env variable "KBC_URL" must be set.');
         }
+
+        $this->apiClients = new ApiClientStore(new NullLogger());
     }
 }

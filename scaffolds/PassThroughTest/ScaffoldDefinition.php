@@ -15,6 +15,7 @@ class ScaffoldDefinition implements ScaffoldInputDefinitionInterface
         $node->children()
             ->arrayNode('snowflakeExtractor')->ignoreExtraKeys(false)->end()
             ->arrayNode('connectionWriter')->ignoreExtraKeys(false)->end()
+            ->arrayNode('main')->ignoreExtraKeys(false)->end()
             ->end();
         return $node;
     }

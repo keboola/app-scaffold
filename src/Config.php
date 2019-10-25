@@ -6,6 +6,7 @@ namespace Keboola\ScaffoldApp;
 
 use Keboola\Component\Config\BaseConfig;
 use Keboola\Component\Config\BaseConfigDefinition;
+use Keboola\ScaffoldApp\SyncActions\ListScaffoldsAction;
 use Symfony\Component\Config\Definition\ConfigurationInterface;
 use Keboola\Component\UserException;
 use Symfony\Component\Config\Definition\Exception\InvalidConfigurationException;
@@ -17,34 +18,11 @@ class Config extends BaseConfig
         array $config,
         ?ConfigurationInterface $configDefinition = null
     ) {
-        if ($config['action'] === Component::SYNC_ACTION_LIST_SCAFFOLDS) {
+        if ($config['action'] === ListScaffoldsAction::NAME) {
             parent::__construct($config, new BaseConfigDefinition);
         } else {
             parent::__construct($config, $configDefinition);
         }
-    }
-
-    public function getScaffoldInputs(): array
-    {
-        $scaffoldInputsDefinition = $this->getScaffoldInputDefinition();
-        $processor = new Processor();
-
-        try {
-            $processedConfig = $processor->processConfiguration(
-                $scaffoldInputsDefinition,
-                [$this->getParsedInputs()]
-            );
-        } catch (InvalidConfigurationException $e) {
-            throw new UserException($e->getMessage(), 0, $e);
-        }
-
-        return $processedConfig;
-    }
-
-    protected function getScaffoldInputDefinition(): ScaffoldInputsDefinition
-    {
-        $scaffoldInputsDefinition = new ScaffoldInputsDefinition($this->getScaffoldName());
-        return $scaffoldInputsDefinition;
     }
 
     public function getScaffoldName(): string
@@ -58,7 +36,6 @@ class Config extends BaseConfig
         foreach ($this->getParameters()['inputs'] as $input) {
             $parsed[$input['id']] = $input['values'];
         }
-
         return $parsed;
     }
 }

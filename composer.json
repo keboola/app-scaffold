@@ -4,9 +4,11 @@
     "description": "Application to generate and use scaffolds",
     "require": {
         "php": "^7.1",
+        "ext-json": "*",
         "keboola/orchestrator-php-client": "^1.2",
         "keboola/php-component": "^7.0.1",
         "keboola/storage-api-client": "^10.7",
+        "swaggest/json-schema": "^0.12.21",
         "symfony/console": "^4.3",
         "symfony/validator": "^4.3"
     },
