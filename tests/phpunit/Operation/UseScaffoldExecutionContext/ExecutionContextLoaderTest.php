@@ -68,7 +68,6 @@ class ExecutionContextLoaderTest extends TestCase
         self::assertCount(1, $context->getOperationsQueue()['CreateOrchestration']);
     }
 
-
     public function testGetExecutionContextWithoutRequiredOperation(): void
     {
         $inputs = [
@@ -88,7 +87,7 @@ class ExecutionContextLoaderTest extends TestCase
                         'warehouse' => 'xxx',
                     ],
                 ],
-            ]
+            ],
         ];
         $loader = new ExecutionContextLoader($inputs, __DIR__ . '/../../mock/scaffolds/PassThroughTestNoDefinition');
         $context = $loader->getExecutionContext();
