@@ -11,14 +11,14 @@ use Symfony\Component\Finder\SplFileInfo;
 class OperationsQueue
 {
     /**
-     * @var array
+     * @var ArrayObject
      */
-    private $operationsQueue = [];
+    private $operationsQueue;
 
     /**
-     * @var array
+     * @var ArrayObject
      */
-    private $finishedOperations = [];
+    private $finishedOperations;
 
     public function __construct()
     {

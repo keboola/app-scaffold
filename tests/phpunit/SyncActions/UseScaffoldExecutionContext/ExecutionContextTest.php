@@ -46,13 +46,22 @@ class ExecutionContextTest extends TestCase
         $configuration->method('getConfigurationId')
             ->willReturnOnConsecutiveCalls('123', '345');
         $executionContext = $this->getEmptyExecutionContext();
-        $executionContext->getOperationsQueue()->finishOperation('id1', CreateConfigurationOperation::class, $configuration);
-        $executionContext->getOperationsQueue()->finishOperation('id2', CreateOrchestrationOperation::class, '567');
-        $executionContext->getOperationsQueue()->finishOperation('id3', CreateConfigurationRowsOperation::class, ['data3']);
-        $executionContext->getOperationsQueue()->finishOperation('id4', CreateConfigurationOperation::class, $configuration, [
-            'foo',
-            'bar',
-        ]);
+        $executionContext->getOperationsQueue()
+            ->finishOperation('id1', CreateConfigurationOperation::class, $configuration);
+        $executionContext->getOperationsQueue()
+            ->finishOperation('id2', CreateOrchestrationOperation::class, '567');
+        $executionContext->getOperationsQueue()
+            ->finishOperation('id3', CreateConfigurationRowsOperation::class, ['data3']);
+        $executionContext->getOperationsQueue()
+            ->finishOperation(
+                'id4',
+                CreateConfigurationOperation::class,
+                $configuration,
+                [
+                    'foo',
+                    'bar',
+                ]
+            );
         self::assertSame(
             [
                 [

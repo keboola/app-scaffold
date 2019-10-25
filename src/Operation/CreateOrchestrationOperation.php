@@ -43,7 +43,8 @@ class CreateOrchestrationOperation implements OperationInterface
         );
 
         // save id, this for tests
-        $executionContext->getOperationsQueue()->finishOperation($operationConfig->getId(), self::class, $response['id']);
+        $executionContext->getOperationsQueue()
+            ->finishOperation($operationConfig->getId(), self::class, $response['id']);
         $this->logger->info(sprintf('Orchestration %s created', $response['id']));
     }
 }
