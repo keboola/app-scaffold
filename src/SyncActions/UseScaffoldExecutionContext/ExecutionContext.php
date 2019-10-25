@@ -74,20 +74,20 @@ class ExecutionContext
     public function getFinishedOperationsResponse(): array
     {
         $response = [];
-        foreach ($this->operationsQueue->getFinishedOperations() as $operation) {
+        foreach ($this->operationsQueue->getFinishedOperations() as $operationId => $operation) {
             switch ($operation['operationClass']) {
                 case CreateConfigurationOperation::class:
                     /** @var Configuration $data */
                     $data = $operation['data'];
                     $response[] = [
-                        'id' => $operation['id'],
+                        'id' => $operationId,
                         'configurationId' => $data->getConfigurationId(),
                         'userActions' => $operation['userActions'],
                     ];
                     break;
                 case CreateOrchestrationOperation::class:
                     $response[] = [
-                        'id' => $operation['id'],
+                        'id' => $operationId,
                         'configurationId' => $operation['data'],
                         'userActions' => $operation['userActions'],
                     ];

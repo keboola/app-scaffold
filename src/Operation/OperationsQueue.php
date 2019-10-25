@@ -35,8 +35,7 @@ class OperationsQueue
         $data,
         array $userActions = []
     ): void {
-        $this->finishedOperations[] = [
-            'id' => $operationId,
+        $this->finishedOperations[$operationId] = [
             'operationClass' => $operationClass,
             'data' => $data,
             'userActions' => $userActions,
@@ -48,16 +47,13 @@ class OperationsQueue
      */
     public function getFinishedOperationData(string $operationId)
     {
-        foreach ($this->finishedOperations as $operation) {
-            if ($operation['id'] === $operationId) {
-                return $operation['data'];
-            }
+        if (empty($this->finishedOperations[$operationId])) {
+            throw new Exception(sprintf(
+                'Operation "%s" was not finished or it\'s wrongly configured.',
+                $operationId
+            ));
         }
-
-        throw new Exception(sprintf(
-            'Operation "%s" was not finished or it\'s wrongly configured.',
-            $operationId
-        ));
+        return $this->finishedOperations[$operationId]['data'];
     }
 
     /**
