@@ -34,9 +34,9 @@ Example scaffold structure:
 
 # Usage
 
-The main steps in creating a new scaffod are:
+The main steps in creating a new scaffold are:
 
-- [import an orchestration](#import-orchestation)
+- [import an orchestration](#importing-orchestration)
 - [check all the configurations](#check-configurations)
 - [configure authorization](#authorization)
 - optionally - set-up [validation](#parameters) in `ScaffoldDefinition.php`
@@ -63,7 +63,7 @@ docker-compose run --rm dev composer console scaffold:import:orchestration <KBC_
 SCAFFOLD_ID - use `CamelCase` syntax with alpha characters only. This is part of namespace of `ScaffoldDefinition` class.
 
 ## Check Configurations
-Check all the configurations for `__SCAFFOLD_CHECK__` occurences:
+Check all the configurations for `__SCAFFOLD_CHECK__` occurrences:
 - These are encrypted values, be sure to also check other values in the configurations which are variable (username, url, ...). Remove all of them (remove the nodes from the configuration, not just the values) and replace them with configuration schema:
     - In manifest.json, find the corresponding node in `inputs` and put a JSON schema directly in the `schema` node. 
     - Root properties map to the configuration `parameters` node. 
@@ -159,7 +159,7 @@ The contents of the `parameters` node are the values received by the correspondi
 
 Place the configuration in a `config.json` file inside a data directory and run the component:
 ```
-docker-compose run -e KBC_URL=https://connection.keboola.com -e KBC_TOKEN=6855-182533-ZknO6T55e6OZftjrcZ2sDg7E4HJidatnbvhax6iR dev
+docker-compose run -e KBC_URL=https://connection.keboola.com -e KBC_TOKEN=xxxx-xxxxxx-xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx dev
 ```
 
 ## Internals
