@@ -12,7 +12,7 @@ class ListScaffoldsActionTest extends TestCase
     public function testAction(): void
     {
         $action = new ListScaffoldsAction();
-        $response = $action(__DIR__ . '/../mock/scaffolds');
+        $response = $action->run(__DIR__ . '/../mock/scaffolds');
         self::assertCount(2, $response);
         foreach ($response as $scaffold) {
             self::assertArrayHasKey('id', $scaffold);

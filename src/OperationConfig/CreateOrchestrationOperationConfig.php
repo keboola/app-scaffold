@@ -74,7 +74,7 @@ class CreateOrchestrationOperationConfig implements OperationConfigInterface
     ): void {
         foreach ($this->tasks as &$task) {
             /** @var Configuration $componentConfiguration */
-            $componentConfiguration = $executionContext->getFinishedOperationData($task['operationReferenceId']);
+            $componentConfiguration = $executionContext->getOperationsQueue()->getFinishedOperationData($task['operationReferenceId']);
             $task = array_merge(
                 $task,
                 [

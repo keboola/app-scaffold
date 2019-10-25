@@ -75,7 +75,7 @@ class CreateConfigurationOperationTest extends BaseOperationTestCase
 
         $operation->execute($config, $executionMock);
         /** @var Configuration $created */
-        $created = $executionMock->getFinishedOperationData('op1');
+        $created = $executionMock->getOperationsQueue()->getFinishedOperationData('op1');
         self::assertInstanceOf(Configuration::class, $created);
         self::assertEquals('createdConfigurationId', $created->getConfigurationId());
         self::assertSame([
@@ -194,7 +194,7 @@ class CreateConfigurationOperationTest extends BaseOperationTestCase
 
         $operation->execute($config, $executionMock);
         /** @var Configuration $created */
-        $created = $executionMock->getFinishedOperationData('op1');
+        $created = $executionMock->getOperationsQueue()->getFinishedOperationData('op1');
         self::assertInstanceOf(Configuration::class, $created);
         self::assertEquals('createdConfigurationId', $created->getConfigurationId());
         self::assertSame([
@@ -265,7 +265,7 @@ class CreateConfigurationOperationTest extends BaseOperationTestCase
 
         $operation->execute($config, $executionMock);
         /** @var Configuration $created */
-        $created = $executionMock->getFinishedOperationData('op1');
+        $created = $executionMock->getOperationsQueue()->getFinishedOperationData('op1');
         self::assertInstanceOf(Configuration::class, $created);
         self::assertEquals('createdConfigurationId', $created->getConfigurationId());
         self::assertSame([
@@ -315,7 +315,7 @@ class CreateConfigurationOperationTest extends BaseOperationTestCase
 
         $operation->execute($config, $executionMock);
         /** @var Configuration $created */
-        $created = $executionMock->getFinishedOperationData('op1');
+        $created = $executionMock->getOperationsQueue()->getFinishedOperationData('op1');
         self::assertInstanceOf(Configuration::class, $created);
         self::assertEquals('createdConfigurationId', $created->getConfigurationId());
         self::assertIsArray($created->getConfiguration());

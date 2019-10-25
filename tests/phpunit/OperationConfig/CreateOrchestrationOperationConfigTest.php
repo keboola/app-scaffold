@@ -37,7 +37,7 @@ class CreateOrchestrationOperationConfigTest extends TestCase
         $instance = CreateOrchestrationOperationConfig::create('operation_id', self::WORKING_CONFIGURATION, []);
 
         $exectutionContext = new ExecutionContext([], [], '', new OperationsQueue());
-        $exectutionContext->finishOperation(
+        $exectutionContext->getOperationsQueue()->finishOperation(
             'ex01',
             CreateOrchestrationOperation::class,
             (new Configuration())->setConfigurationId('id')

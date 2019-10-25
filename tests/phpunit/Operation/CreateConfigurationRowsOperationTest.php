@@ -31,7 +31,7 @@ class CreateConfigurationRowsOperationTest extends BaseOperationTestCase
         ], []);
 
         // mock finished CreateConfiguration
-        $executionMock->finishOperation(
+        $executionMock->getOperationsQueue()->finishOperation(
             'operationCreatedConfigurationId',
             CreateConfigurationOperation::class,
             (new Configuration())->setConfigurationId('1')
@@ -39,7 +39,7 @@ class CreateConfigurationRowsOperationTest extends BaseOperationTestCase
 
         $operation->execute($config, $executionMock);
         /** @var ConfigurationRow $created */
-        $created = $executionMock->getFinishedOperationData('row.operationCreatedConfigurationId.createdRowId');
+        $created = $executionMock->getOperationsQueue()->getFinishedOperationData('row.operationCreatedConfigurationId.createdRowId');
         self::assertInstanceOf(ConfigurationRow::class, $created);
         self::assertSame('1', $created->getComponentConfiguration()->getConfigurationId());
     }
@@ -59,7 +59,7 @@ class CreateConfigurationRowsOperationTest extends BaseOperationTestCase
         );
 
         // mock finished CreateConfiguration
-        $executionMock->finishOperation('opCreateRow1', CreateConfigurationOperation::class, ['invalidData']);
+        $executionMock->getOperationsQueue()->finishOperation('opCreateRow1', CreateConfigurationOperation::class, ['invalidData']);
 
         self::expectException(\Throwable::class);
         self::expectExceptionMessage(

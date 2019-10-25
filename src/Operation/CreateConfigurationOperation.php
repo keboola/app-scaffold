@@ -73,6 +73,7 @@ class CreateConfigurationOperation implements OperationInterface
             $this->apiClientStore->getEncryptionApiClient()
         );
         // save id for use in orchestration
-        $executionContext->finishOperation($operationConfig->getId(), self::class, $configuration, $userActions);
+        $executionContext->getOperationsQueue()
+            ->finishOperation($operationConfig->getId(), self::class, $configuration, $userActions);
     }
 }

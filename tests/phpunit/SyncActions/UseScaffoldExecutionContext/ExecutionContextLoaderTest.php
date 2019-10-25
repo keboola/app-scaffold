@@ -25,12 +25,12 @@ class ExecutionContextLoaderTest extends TestCase
         $loader = new ExecutionContextLoader($inputs, __DIR__ . '/../../mock/scaffolds/PassThroughTest');
         $context = $loader->getExecutionContext();
 
-        self::assertArrayHasKey('CreateConfiguration', $context->getOperationsQueue());
-        self::assertCount(2, $context->getOperationsQueue()['CreateConfiguration']);
-        self::assertArrayHasKey('CreateConfigurationRows', $context->getOperationsQueue());
-        self::assertCount(1, $context->getOperationsQueue()['CreateConfigurationRows']);
-        self::assertArrayHasKey('CreateOrchestration', $context->getOperationsQueue());
-        self::assertCount(1, $context->getOperationsQueue()['CreateOrchestration']);
+        self::assertArrayHasKey('CreateConfiguration', $context->getOperationsQueue()->getOperationsQueue());
+        self::assertCount(2, $context->getOperationsQueue()->getOperationsQueue()['CreateConfiguration']);
+        self::assertArrayHasKey('CreateConfigurationRows', $context->getOperationsQueue()->getOperationsQueue());
+        self::assertCount(1, $context->getOperationsQueue()->getOperationsQueue()['CreateConfigurationRows']);
+        self::assertArrayHasKey('CreateOrchestration', $context->getOperationsQueue()->getOperationsQueue());
+        self::assertCount(1, $context->getOperationsQueue()->getOperationsQueue()['CreateOrchestration']);
     }
 
     public function testGetExecutionContextValidateSchema(): void
@@ -60,12 +60,12 @@ class ExecutionContextLoaderTest extends TestCase
         $loader = new ExecutionContextLoader($inputs, __DIR__ . '/../../mock/scaffolds/PassThroughTestNoDefinition');
         $context = $loader->getExecutionContext();
 
-        self::assertArrayHasKey('CreateConfiguration', $context->getOperationsQueue());
-        self::assertCount(2, $context->getOperationsQueue()['CreateConfiguration']);
-        self::assertArrayHasKey('CreateConfigurationRows', $context->getOperationsQueue());
-        self::assertCount(1, $context->getOperationsQueue()['CreateConfigurationRows']);
-        self::assertArrayHasKey('CreateOrchestration', $context->getOperationsQueue());
-        self::assertCount(1, $context->getOperationsQueue()['CreateOrchestration']);
+        self::assertArrayHasKey('CreateConfiguration', $context->getOperationsQueue()->getOperationsQueue());
+        self::assertCount(2, $context->getOperationsQueue()->getOperationsQueue()['CreateConfiguration']);
+        self::assertArrayHasKey('CreateConfigurationRows', $context->getOperationsQueue()->getOperationsQueue());
+        self::assertCount(1, $context->getOperationsQueue()->getOperationsQueue()['CreateConfigurationRows']);
+        self::assertArrayHasKey('CreateOrchestration', $context->getOperationsQueue()->getOperationsQueue());
+        self::assertCount(1, $context->getOperationsQueue()->getOperationsQueue()['CreateOrchestration']);
     }
 
     public function testGetExecutionContextWithoutRequiredOperation(): void
@@ -92,9 +92,9 @@ class ExecutionContextLoaderTest extends TestCase
         $loader = new ExecutionContextLoader($inputs, __DIR__ . '/../../mock/scaffolds/PassThroughTestNoDefinition');
         $context = $loader->getExecutionContext();
 
-        self::assertArrayHasKey('CreateConfiguration', $context->getOperationsQueue());
-        self::assertCount(2, $context->getOperationsQueue()['CreateConfiguration']);
-        self::assertArrayHasKey('CreateConfigurationRows', $context->getOperationsQueue());
-        self::assertCount(1, $context->getOperationsQueue()['CreateConfigurationRows']);
+        self::assertArrayHasKey('CreateConfiguration', $context->getOperationsQueue()->getOperationsQueue());
+        self::assertCount(2, $context->getOperationsQueue()->getOperationsQueue()['CreateConfiguration']);
+        self::assertArrayHasKey('CreateConfigurationRows', $context->getOperationsQueue()->getOperationsQueue());
+        self::assertCount(1, $context->getOperationsQueue()->getOperationsQueue()['CreateConfigurationRows']);
     }
 }

@@ -34,8 +34,8 @@ class ExecutionContextValidator
     ): void {
         $operationsToExecute = $operationsContext->getOperationsToExecute();
         $validationErrors = [];
-        foreach ($operationsToExecute as $operationid) {
-            $schema = $executionContext->getSchemaForOperation($operationid);
+        foreach ($operationsToExecute as $operationId) {
+            $schema = $executionContext->getSchemaForOperation($operationId);
             if ($schema === null) {
                 continue;
             }
@@ -43,8 +43,8 @@ class ExecutionContextValidator
             $context->version = Schema::VERSION_DRAFT_07;
             // we need schema as object
             $schema = Schema::import(json_decode(json_encode($schema)));
-            $input = $executionContext->getUserInputsForOperation($operationid);
-            if (empty($input) || !array_key_exists('parameters', $input)) {
+            $input = $executionContext->getUserInputsForOperation($operationId);
+            if (!array_key_exists('parameters', $input)) {
                 // set default and continue to validation
                 $input['parameters'] = null;
             }
@@ -54,9 +54,9 @@ class ExecutionContextValidator
                 $input = json_decode(json_encode($input['parameters']));
                 $schema->in($input);
             } catch (Exception $e) {
-                $validationErrors[$operationid] = sprintf(
+                $validationErrors[$operationId] = sprintf(
                     '%s: %s.',
-                    $operationid,
+                    $operationId,
                     $e->getMessage()
                 );
             }

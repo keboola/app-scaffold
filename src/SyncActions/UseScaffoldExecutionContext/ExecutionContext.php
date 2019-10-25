@@ -51,26 +51,6 @@ class ExecutionContext
         $this->operationsQueue = $operationsQueue;
     }
 
-    /**
-     * @param mixed $data
-     */
-    public function finishOperation(
-        string $operationId,
-        string $operationClass,
-        $data,
-        array $userActions = []
-    ): void {
-        $this->operationsQueue->finishOperation($operationId, $operationClass, $data, $userActions);
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getFinishedOperationData(string $operationId)
-    {
-        return $this->operationsQueue->getFinishedOperationData($operationId);
-    }
-
     public function getFinishedOperationsResponse(): array
     {
         $response = [];
@@ -100,12 +80,9 @@ class ExecutionContext
         return $response;
     }
 
-    /**
-     * @return array
-     */
-    public function getOperationsQueue(): array
+    public function getOperationsQueue(): OperationsQueue
     {
-        return $this->operationsQueue->getOperationsQueue();
+        return $this->operationsQueue;
     }
 
     public function getScaffoldDefinitionClass(): ?string
@@ -142,13 +119,13 @@ class ExecutionContext
         return null;
     }
 
-    public function getUserInputsForOperation(string $seekOperationId): ?array
+    public function getUserInputsForOperation(string $seekOperationId): array
     {
         foreach ($this->scaffoldInputs as $operationId => $operationInput) {
             if ($operationId === $seekOperationId) {
-                return empty($operationInput) ? null : $operationInput;
+                return $operationInput ?? [];
             }
         }
-        return null;
+        return [];
     }
 }

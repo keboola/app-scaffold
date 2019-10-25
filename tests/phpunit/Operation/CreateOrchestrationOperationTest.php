@@ -45,14 +45,14 @@ class CreateOrchestrationOperationTest extends BaseOperationTestCase
         $config = CreateOrchestrationOperationConfig::create('orch1', $operationConfig, []);
 
         // mock finished CreateConfiguration
-        $executionMock->finishOperation(
+        $executionMock->getOperationsQueue()->finishOperation(
             'op1',
             CreateConfigurationOperation::class,
             (new Configuration())->setConfigurationId('1')
         );
 
         $operation->execute($config, $executionMock);
-        $orchestrationId = $executionMock->getFinishedOperationData('orch1');
+        $orchestrationId = $executionMock->getOperationsQueue()->getFinishedOperationData('orch1');
         self::assertEquals('createdOrchestrationId', $orchestrationId);
     }
 }

@@ -19,7 +19,7 @@ class Component extends BaseComponent
     public function actionListScaffolds(): array
     {
         $action = new ListScaffoldsAction();
-        return $action(self::SCAFFOLDS_DIR);
+        return $action->run(self::SCAFFOLDS_DIR);
     }
 
     public function actionUseScaffold(): array
@@ -34,7 +34,7 @@ class Component extends BaseComponent
             new ApiClientStore($this->getLogger()),
             $this->getLogger()
         );
-        return $action();
+        return $action->run();
     }
 
     private function getScaffoldConfigurationFolder(

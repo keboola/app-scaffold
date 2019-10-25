@@ -17,8 +17,8 @@ class ExecutionContextTest extends TestCase
     public function testFinishOperation(): void
     {
         $executionContext = $this->getEmptyExecutionContext();
-        $executionContext->finishOperation('id', CreateOrchestrationOperation::class, ['data']);
-        self::assertSame(['data'], $executionContext->getFinishedOperationData('id'));
+        $executionContext->getOperationsQueue()->finishOperation('id', CreateOrchestrationOperation::class, ['data']);
+        self::assertSame(['data'], $executionContext->getOperationsQueue()->getFinishedOperationData('id'));
         self::assertCount(1, $executionContext->getFinishedOperationsResponse());
     }
 
@@ -30,11 +30,11 @@ class ExecutionContextTest extends TestCase
     public function testGetFinishedOperationDataMissingReference(): void
     {
         $executionContext = $this->getEmptyExecutionContext();
-        $executionContext->finishOperation('id', CreateConfigurationOperation::class, ['data']);
+        $executionContext->getOperationsQueue()->finishOperation('id', CreateConfigurationOperation::class, ['data']);
 
         self::expectException(\Throwable::class);
         self::expectExceptionMessage('Operation "NoId" was not finished or it\'s wrongly configured.');
-        $executionContext->getFinishedOperationData('NoId');
+        $executionContext->getOperationsQueue()->getFinishedOperationData('NoId');
     }
 
     public function testGetFinishedOperationsResponse(): void
@@ -46,10 +46,10 @@ class ExecutionContextTest extends TestCase
         $configuration->method('getConfigurationId')
             ->willReturnOnConsecutiveCalls('123', '345');
         $executionContext = $this->getEmptyExecutionContext();
-        $executionContext->finishOperation('id1', CreateConfigurationOperation::class, $configuration);
-        $executionContext->finishOperation('id2', CreateOrchestrationOperation::class, '567');
-        $executionContext->finishOperation('id3', CreateConfigurationRowsOperation::class, ['data3']);
-        $executionContext->finishOperation('id4', CreateConfigurationOperation::class, $configuration, [
+        $executionContext->getOperationsQueue()->finishOperation('id1', CreateConfigurationOperation::class, $configuration);
+        $executionContext->getOperationsQueue()->finishOperation('id2', CreateOrchestrationOperation::class, '567');
+        $executionContext->getOperationsQueue()->finishOperation('id3', CreateConfigurationRowsOperation::class, ['data3']);
+        $executionContext->getOperationsQueue()->finishOperation('id4', CreateConfigurationOperation::class, $configuration, [
             'foo',
             'bar',
         ]);

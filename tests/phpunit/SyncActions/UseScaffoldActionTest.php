@@ -24,7 +24,7 @@ class UseScaffoldActionTest extends BaseOperationTestCase
             __DIR__ . '/../mock/scaffolds/PassThroughTest'
         );
         $action = new UseScaffoldAction($loader->getExecutionContext(), $this->getApiClientStore(), new NullLogger());
-        $response = $action();
+        $response = $action->run();
         foreach ($response as $finishedOperation) {
             self::assertArrayHasKey('id', $finishedOperation);
             self::assertArrayHasKey('configurationId', $finishedOperation);

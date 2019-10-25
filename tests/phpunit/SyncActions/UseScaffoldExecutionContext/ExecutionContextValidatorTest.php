@@ -54,7 +54,7 @@ class ExecutionContextValidatorTest extends TestCase
             $operation
         ) {
             if ($operation === 'op2') {
-                return null;
+                return [];
             }
             // op1
             return [

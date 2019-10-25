@@ -22,11 +22,14 @@ class CreateOrchestrationOperation implements OperationInterface
      */
     private $logger;
 
-    public function __construct(ApiClientStore $apiClientStore, LoggerInterface $logger)
-    {
+    public function __construct(
+        ApiClientStore $apiClientStore,
+        LoggerInterface $logger
+    ) {
         $this->apiClientStore = $apiClientStore;
         $this->logger = $logger;
     }
+
     /**
      * @param CreateOrchestrationOperationConfig $operationConfig
      */
@@ -43,7 +46,8 @@ class CreateOrchestrationOperation implements OperationInterface
         );
 
         // save id, this for tests
-        $executionContext->finishOperation($operationConfig->getId(), self::class, $response['id']);
+        $executionContext->getOperationsQueue()
+            ->finishOperation($operationConfig->getId(), self::class, $response['id']);
         $this->logger->info(sprintf('Orchestration %s created', $response['id']));
     }
 }

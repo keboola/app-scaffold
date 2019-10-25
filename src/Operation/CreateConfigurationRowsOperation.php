@@ -24,8 +24,10 @@ class CreateConfigurationRowsOperation implements OperationInterface
      */
     private $logger;
 
-    public function __construct(ApiClientStore $apiClientStore, LoggerInterface $logger)
-    {
+    public function __construct(
+        ApiClientStore $apiClientStore,
+        LoggerInterface $logger
+    ) {
         $this->apiClientStore = $apiClientStore;
         $this->logger = $logger;
     }
@@ -42,9 +44,11 @@ class CreateConfigurationRowsOperation implements OperationInterface
             $operationConfig->getOperationReferenceId()
         ));
 
-        $componentConfiguration = $executionContext->getFinishedOperationData(
-            $operationConfig->getOperationReferenceId()
-        );
+        $componentConfiguration = $executionContext
+            ->getOperationsQueue()
+            ->getFinishedOperationData(
+                $operationConfig->getOperationReferenceId()
+            );
 
         if (!$componentConfiguration instanceof Configuration) {
             throw new Exception(sprintf(
@@ -58,15 +62,16 @@ class CreateConfigurationRowsOperation implements OperationInterface
             $rowConfiguration->setRowId($response['id']);
             $this->logger->info(sprintf('Row for %s created', $response['id']));
 
-            $executionContext->finishOperation(
-                sprintf(
-                    'row.%s.%s',
-                    $operationConfig->getOperationReferenceId(),
-                    $rowConfiguration->getRowId()
-                ),
-                self::class,
-                $rowConfiguration
-            );
+            $executionContext->getOperationsQueue()
+                ->finishOperation(
+                    sprintf(
+                        'row.%s.%s',
+                        $operationConfig->getOperationReferenceId(),
+                        $rowConfiguration->getRowId()
+                    ),
+                    self::class,
+                    $rowConfiguration
+                );
         }
     }
 }

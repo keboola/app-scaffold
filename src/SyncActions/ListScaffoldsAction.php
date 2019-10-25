@@ -11,7 +11,7 @@ class ListScaffoldsAction
 {
     public const NAME = 'listScaffolds';
 
-    public function __invoke(string $scaffoldsDir): array
+    public function run(string $scaffoldsDir): array
     {
         $scaffolds = (new Finder())->in($scaffoldsDir)
             ->directories()->depth(0);

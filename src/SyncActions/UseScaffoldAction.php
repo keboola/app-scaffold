@@ -46,9 +46,9 @@ class UseScaffoldAction
         $this->logger = $logger;
     }
 
-    public function __invoke(): array
+    public function run(): array
     {
-        $queue = $this->executionContext->getOperationsQueue();
+        $queue = $this->executionContext->getOperationsQueue()->getOperationsQueue();
 
         foreach ($queue as $operationName => $operationsFiles) {
             /** @var SplFileInfo $operationFile */
