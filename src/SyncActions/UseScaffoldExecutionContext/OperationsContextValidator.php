@@ -10,14 +10,14 @@ class OperationsContextValidator
 {
     public static function validate(OperationsContext $context): void
     {
-        $missingRequieredOpeartions = array_diff(
+        $missingRequiredOperations = array_diff(
             $context->getRequiredOperations(),
             $context->getOperationsToExecute()
         );
-        if (!empty($missingRequieredOpeartions)) {
+        if (!empty($missingRequiredOperations)) {
             throw new UserException(sprintf(
                 'One or more required operations "%s" is missing.',
-                implode(', ', $missingRequieredOpeartions)
+                implode(', ', $missingRequiredOperations)
             ));
         }
     }
