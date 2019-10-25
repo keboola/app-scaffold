@@ -52,7 +52,7 @@ class ExecutionContext
     {
         $response = [];
         foreach ($this->operationsQueue->getFinishedOperations()->getIterator() as $operation) {
-            if ($operation->isInResponse() === false) {
+            if (!$operation->isInResponse()) {
                 continue;
             }
             $response[] = $operation->toResponseArray();

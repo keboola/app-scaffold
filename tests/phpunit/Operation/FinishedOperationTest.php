@@ -15,7 +15,7 @@ class FinishedOperationTest extends TestCase
 {
     public function testGetData(): void
     {
-        $finishedOperation = $this->getInstance(['sample' => 'value']);
+        $finishedOperation = $this->getInstance(['sample' => 'value'], CreateConfigurationOperation::class);
         self::assertSame(['sample' => 'value'], $finishedOperation->getData());
     }
 
@@ -24,14 +24,14 @@ class FinishedOperationTest extends TestCase
      */
     private function getInstance(
         $data,
-        string $operationClass = CreateConfigurationOperation::class
+        string $operationClass
     ): FinishedOperation {
         return new FinishedOperation('operationId', $operationClass, $data, ['action1']);
     }
 
     public function testGetOperationId(): void
     {
-        $finishedOperation = $this->getInstance(null);
+        $finishedOperation = $this->getInstance(null, CreateConfigurationOperation::class);
         self::assertEquals('operationId', $finishedOperation->getOperationId());
     }
 
