@@ -40,11 +40,13 @@ class ExecutionContextTest extends TestCase
     public function testGetFinishedOperationsResponse(): void
     {
         $configuration = $this->getMockBuilder(Configuration::class)
-            ->setMethods(['getConfigurationId'])
+            ->setMethods(['getConfigurationId', 'getComponentId'])
             ->disableOriginalConstructor()
             ->getMock();
         $configuration->method('getConfigurationId')
             ->willReturnOnConsecutiveCalls('123', '345');
+        $configuration->method('getComponentId')
+            ->willReturnOnConsecutiveCalls('keboola.cmp.1', 'keboola.cmp.2');
         $executionContext = $this->getEmptyExecutionContext();
         $executionContext->getOperationsQueue()
             ->finishOperation('id1', CreateConfigurationOperation::class, $configuration);
@@ -66,18 +68,21 @@ class ExecutionContextTest extends TestCase
             [
                 [
                     'id' => 'id1',
-                    'configurationId' => '123',
                     'userActions' => [],
+                    'configurationId' => '123',
+                    'componentId' => 'keboola.cmp.1',
                 ],
                 [
                     'id' => 'id2',
-                    'configurationId' => '567',
                     'userActions' => [],
+                    'configurationId' => '567',
+                    'componentId' => 'orchestrator',
                 ],
                 [
                     'id' => 'id4',
-                    'configurationId' => '345',
                     'userActions' => ['foo', 'bar'],
+                    'configurationId' => '345',
+                    'componentId' => 'keboola.cmp.2',
                 ],
             ],
             $executionContext->getFinishedOperationsResponse()

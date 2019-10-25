@@ -4,10 +4,7 @@ declare(strict_types=1);
 
 namespace Keboola\ScaffoldApp\SyncActions\UseScaffoldExecutionContext;
 
-use Keboola\ScaffoldApp\Operation\CreateConfigurationOperation;
-use Keboola\ScaffoldApp\Operation\CreateOrchestrationOperation;
 use Keboola\ScaffoldApp\Operation\OperationsQueue;
-use Keboola\StorageApi\Options\Components\Configuration;
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\Finder\SplFileInfo;
 
@@ -32,6 +29,7 @@ class ExecutionContext
      * @var string
      */
     private $scaffoldId;
+
     /**
      * @var OperationsQueue
      */
@@ -53,27 +51,11 @@ class ExecutionContext
     public function getFinishedOperationsResponse(): array
     {
         $response = [];
-        foreach ($this->operationsQueue->getFinishedOperations()->getIterator() as $operationId => $operation) {
-            switch ($operation['operationClass']) {
-                case CreateConfigurationOperation::class:
-                    /** @var Configuration $data */
-                    $data = $operation['data'];
-                    $response[] = [
-                        'id' => $operationId,
-                        'configurationId' => $data->getConfigurationId(),
-                        'userActions' => $operation['userActions'],
-                    ];
-                    break;
-                case CreateOrchestrationOperation::class:
-                    $response[] = [
-                        'id' => $operationId,
-                        'configurationId' => $operation['data'],
-                        'userActions' => $operation['userActions'],
-                    ];
-                    break;
-                default:
-                    break;
+        foreach ($this->operationsQueue->getFinishedOperations()->getIterator() as $operation) {
+            if (!$operation->isInResponse()) {
+                continue;
             }
+            $response[] = $operation->toResponseArray();
         }
 
         return $response;
@@ -94,6 +76,7 @@ class ExecutionContext
         }
         return null;
     }
+
     /**
      * @return array
      */
