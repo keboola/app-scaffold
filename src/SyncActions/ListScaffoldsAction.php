@@ -13,10 +13,7 @@ class ListScaffoldsAction
 
     public function __invoke(string $scaffoldsDir): array
     {
-        $finder = new Finder();
-
-        // CreateConfiguration
-        $scaffolds = $finder->in($scaffoldsDir)
+        $scaffolds = (new Finder())->in($scaffoldsDir)
             ->directories()->depth(0);
 
         $response = [];
