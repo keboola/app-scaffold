@@ -23,7 +23,7 @@ class ExecutionContextValidatorTest extends TestCase
         );
         $contextMock->expects(self::once())->method('getScaffoldInputs')->willReturn([
             'ex01' => [],
-//                'wr01' => [], missing
+//            'wr01' => [], missing
         ]);
         self::expectException(UserException::class);
         self::expectExceptionMessage('The child node "wr01" at path "inputs" must be configured.');
