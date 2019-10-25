@@ -25,25 +25,10 @@ class UseScaffoldActionTest extends BaseOperationTestCase
         );
         $action = new UseScaffoldAction($loader->getExecutionContext(), $this->getApiClientStore(), new NullLogger());
         $response = $action();
-        self::assertSame(
-            [
-                [
-                    'id' => 'snowflakeExtractor',
-                    'configurationId' => null,
-                    'userActions' => [],
-                ],
-                [
-                    'id' => 'connectionWriter',
-                    'configurationId' => null,
-                    'userActions' => [],
-                ],
-                [
-                    'id' => 'main',
-                    'configurationId' => null,
-                    'userActions' => [],
-                ],
-            ],
-            $response
-        );
+        foreach ($response as $finishedOperation) {
+            self::assertArrayHasKey('id', $finishedOperation);
+            self::assertArrayHasKey('configurationId', $finishedOperation);
+            self::assertArrayHasKey('userActions', $finishedOperation);
+        }
     }
 }
