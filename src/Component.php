@@ -19,7 +19,7 @@ class Component extends BaseComponent
     public function actionListScaffolds(): array
     {
         $action = new ListScaffoldsAction();
-        return $action();
+        return $action(self::SCAFFOLDS_DIR);
     }
 
     public function actionUseScaffold(): array

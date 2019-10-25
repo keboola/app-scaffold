@@ -5,19 +5,18 @@ declare(strict_types=1);
 namespace Keboola\ScaffoldApp\SyncActions;
 
 use Keboola\Component\JsonHelper;
-use Keboola\ScaffoldApp\Component;
 use Symfony\Component\Finder\Finder;
 
 class ListScaffoldsAction
 {
     public const NAME = 'listScaffolds';
 
-    public function __invoke(): array
+    public function __invoke(string $scaffoldsDir): array
     {
         $finder = new Finder();
 
         // CreateConfiguration
-        $scaffolds = $finder->in(Component::SCAFFOLDS_DIR)
+        $scaffolds = $finder->in($scaffoldsDir)
             ->directories()->depth(0);
 
         $response = [];
