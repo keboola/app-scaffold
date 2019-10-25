@@ -20,14 +20,10 @@ class OperationsQueue
     private $finishedOperations = [];
 
     public function addOperation(
-        string $operationName,
+        string $operationClass,
         SplFileInfo $operationFile
     ): void {
-        if (!array_key_exists($operationName, $this->operationsQueue)) {
-            $this->operationsQueue[$operationName] = [];
-        }
-
-        $this->operationsQueue[$operationName][] = $operationFile;
+        $this->operationsQueue[$operationClass][] = $operationFile;
     }
 
     /**
