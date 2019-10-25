@@ -14,7 +14,7 @@ class CreateOrchestrationOperationTest extends BaseOperationTestCase
 {
     public function testExecute(): void
     {
-        $executionMock = self::getExecutionContextMock();
+        $executionMock = self::getExecutionContext();
         $apiClientStoreMock = self::getApiClientStore();
         $orchestratorApiClient = $this->getMockOrchestrationApiClient();
         $orchestratorApiClient->method('createOrchestration')->willReturn(

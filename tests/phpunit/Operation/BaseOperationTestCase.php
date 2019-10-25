@@ -17,38 +17,17 @@ use Psr\Log\NullLogger;
 
 abstract class BaseOperationTestCase extends TestCase
 {
-    /**
-     * @return MockObject|ExecutionContext
-     */
-    public function getExecutionContextMock(
+    public function getExecutionContext(
         array $manifest = [],
         array $inputs = [],
         string $scaffoldFolder = '',
         ?OperationsQueue $operationsQueue = null
-    ) {
+    ): ExecutionContext {
         if ($operationsQueue === null) {
             $operationsQueue = new OperationsQueue();
         }
-        /** @var MockObject|ExecutionContext $contextMock */
-        $contextMock = self::getMockBuilder(ExecutionContext::class)
-            ->setConstructorArgs([
-                $manifest,
-                $inputs,
-                $scaffoldFolder,
-                $operationsQueue,
-            ])
-            ->disableOriginalClone()
-            ->disableArgumentCloning()
-            ->disallowMockingUnknownTypes()
-            ->setMethods([
-                'getComponentsApiClient',
-                'getStorageApiClient',
-                'getEncryptionApiClient',
-                'getOrchestrationApiClient',
-            ])
-            ->getMock();
 
-        return $contextMock;
+        return new ExecutionContext($manifest, $inputs, $scaffoldFolder, $operationsQueue);
     }
 
     /**

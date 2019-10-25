@@ -15,7 +15,7 @@ class CreateConfigurationRowsOperationTest extends BaseOperationTestCase
 {
     public function testExecute(): void
     {
-        $executionMock = self::getExecutionContextMock();
+        $executionMock = self::getExecutionContext();
 
         $apiClientStoreMock = self::getApiClientStore();
         $componentsApiClient = $this->getMockComponentsApiClient();
@@ -46,7 +46,7 @@ class CreateConfigurationRowsOperationTest extends BaseOperationTestCase
 
     public function testExecuteInvalidReference(): void
     {
-        $executionMock = self::getExecutionContextMock();
+        $executionMock = self::getExecutionContext();
 
         $apiClientStoreMock = self::getApiClientStore();
         $apiClientStoreMock->method('getComponentsApiClient')->willReturn($this->getMockComponentsApiClient());

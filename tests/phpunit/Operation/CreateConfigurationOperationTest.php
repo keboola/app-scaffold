@@ -42,7 +42,7 @@ class CreateConfigurationOperationTest extends BaseOperationTestCase
             ],
         ];
 
-        $executionMock = self::getExecutionContextMock([], $parameters);
+        $executionMock = self::getExecutionContext([], $parameters);
 
         $apiClientStoreMock = self::getApiClientStore();
         /** @var EncryptionClient|MockObject $encryptionApiClient */
@@ -92,7 +92,7 @@ class CreateConfigurationOperationTest extends BaseOperationTestCase
             ],
         ];
 
-        $executionMock = self::getExecutionContextMock([], $parameters);
+        $executionMock = self::getExecutionContext([], $parameters);
 
         $apiClientStoreMock = self::getApiClientStore();
         /** @var EncryptionClient|MockObject $encryptionApiClient */
@@ -146,7 +146,7 @@ class CreateConfigurationOperationTest extends BaseOperationTestCase
             ],
         ];
 
-        $executionMock = self::getExecutionContextMock([], $parameters);
+        $executionMock = self::getExecutionContext([], $parameters);
 
         $apiClientStoreMock = self::getApiClientStore();
         /** @var EncryptionClient|MockObject $encryptionApiClient */
@@ -222,7 +222,7 @@ class CreateConfigurationOperationTest extends BaseOperationTestCase
             ],
         ];
 
-        $executionMock = self::getExecutionContextMock([], $parameters);
+        $executionMock = self::getExecutionContext([], $parameters);
 
         $apiClientStoreMock = self::getApiClientStore();
         /** @var EncryptionClient|MockObject $encryptionApiClient */
@@ -290,7 +290,7 @@ class CreateConfigurationOperationTest extends BaseOperationTestCase
     {
         $parameters = [];
 
-        $executionMock = self::getExecutionContextMock([], $parameters);
+        $executionMock = self::getExecutionContext([], $parameters);
 
         $apiClientStoreMock = self::getApiClientStore();
         /** @var EncryptionClient|MockObject $encryptionApiClient */
