@@ -99,12 +99,6 @@ class ExecutionContextTest extends TestCase
         self::assertNull($class);
     }
 
-    public function testGetScaffoldId(): void
-    {
-        $executionContext = new ExecutionContext([], [], 'scaffoldId', new OperationsQueue());
-        self::assertSame('scaffoldId', $executionContext->getScaffoldId());
-    }
-
     public function testGetScaffoldInputs(): void
     {
         $executionContext = new ExecutionContext([], ['someInput'], '', new OperationsQueue());

@@ -50,7 +50,7 @@ class UseScaffoldAction
     {
         $queue = $this->executionContext->getOperationsQueue()->getOperationsQueue();
 
-        foreach ($queue as $operationName => $operationsFiles) {
+        foreach ($queue->getIterator() as $operationName => $operationsFiles) {
             /** @var SplFileInfo $operationFile */
             foreach ($operationsFiles as $operationFile) {
                 $this->executeOperation($operationName, $operationFile);

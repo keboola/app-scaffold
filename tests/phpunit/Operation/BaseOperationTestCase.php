@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Keboola\ScaffoldApp\Tests\Operation;
 
+use ArrayObject;
 use Keboola\Orchestrator\Client as OrchestratorClient;
 use Keboola\ScaffoldApp\ApiClientStore;
 use Keboola\ScaffoldApp\EncryptionClient;

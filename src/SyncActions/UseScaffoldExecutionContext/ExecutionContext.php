@@ -32,7 +32,6 @@ class ExecutionContext
      * @var string
      */
     private $scaffoldId;
-
     /**
      * @var OperationsQueue
      */
@@ -54,7 +53,7 @@ class ExecutionContext
     public function getFinishedOperationsResponse(): array
     {
         $response = [];
-        foreach ($this->operationsQueue->getFinishedOperations() as $operationId => $operation) {
+        foreach ($this->operationsQueue->getFinishedOperations()->getIterator() as $operationId => $operation) {
             switch ($operation['operationClass']) {
                 case CreateConfigurationOperation::class:
                     /** @var Configuration $data */
@@ -95,12 +94,6 @@ class ExecutionContext
         }
         return null;
     }
-
-    public function getScaffoldId(): string
-    {
-        return $this->scaffoldId;
-    }
-
     /**
      * @return array
      */

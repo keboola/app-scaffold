@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Keboola\ScaffoldApp\Operation;
 
+use ArrayObject;
 use Exception;
 use Symfony\Component\Finder\SplFileInfo;
 
@@ -18,6 +19,12 @@ class OperationsQueue
      * @var array
      */
     private $finishedOperations = [];
+
+    public function __construct()
+    {
+        $this->finishedOperations = new ArrayObject([], ArrayObject::STD_PROP_LIST);
+        $this->operationsQueue = new ArrayObject([], ArrayObject::STD_PROP_LIST);
+    }
 
     public function addOperation(
         string $operationClass,
@@ -56,18 +63,12 @@ class OperationsQueue
         return $this->finishedOperations[$operationId]['data'];
     }
 
-    /**
-     * @return array
-     */
-    public function getFinishedOperations(): array
+    public function getFinishedOperations(): ArrayObject
     {
         return $this->finishedOperations;
     }
 
-    /**
-     * @return array
-     */
-    public function getOperationsQueue(): array
+    public function getOperationsQueue(): ArrayObject
     {
         return $this->operationsQueue;
     }
