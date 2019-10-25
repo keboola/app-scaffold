@@ -1,6 +1,5 @@
 parameters:
     ignoreErrors:
         - '#Calling method end\(\) on possibly null value of type Symfony\\Component\\Config\\Definition\\Builder\\NodeParentInterface|null.#'
-        - '#Parameter \#1 $json of function json_decode expects string, string|false given.#'
 includes:
     - vendor/phpstan/phpstan-phpunit/extension.neon

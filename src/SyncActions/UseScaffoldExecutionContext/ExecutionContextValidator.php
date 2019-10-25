@@ -41,8 +41,9 @@ class ExecutionContextValidator
             }
             $context = new Context();
             $context->version = Schema::VERSION_DRAFT_07;
-            // we need schema as object
-            $schema = Schema::import(json_decode(json_encode($schema)));
+
+            $schema = (string) json_encode($schema);
+            $schema = Schema::import(json_decode($schema, false));
             $input = $executionContext->getUserInputsForOperation($operationId);
             if (!array_key_exists('parameters', $input)) {
                 // set default and continue to validation
@@ -50,9 +51,8 @@ class ExecutionContextValidator
             }
 
             try {
-                // we need input as object
-                $input = json_decode(json_encode($input['parameters']));
-                $schema->in($input);
+                $parameters = (string) json_encode($input['parameters']);
+                $schema->in(json_decode($parameters, false));
             } catch (Exception $e) {
                 $validationErrors[$operationId] = sprintf(
                     '%s: %s.',
