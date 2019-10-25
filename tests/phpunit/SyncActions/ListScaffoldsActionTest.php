@@ -14,7 +14,8 @@ class ListScaffoldsActionTest extends TestCase
         $action = new ListScaffoldsAction();
         $response = $action(__DIR__ . '/../mock/scaffolds');
         self::assertCount(2, $response);
-        self::assertEquals('PassThroughTestNoDefinition', $response[0]['id']);
-        self::assertEquals('PassThroughTest', $response[1]['id']);
+        foreach ($response as $scaffold) {
+            self::assertArrayHasKey('id', $scaffold);
+        }
     }
 }
