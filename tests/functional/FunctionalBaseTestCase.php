@@ -6,9 +6,6 @@ namespace Keboola\ScaffoldApp\FunctionalTests;
 
 use Exception;
 use Keboola\ScaffoldApp\ApiClientStore;
-use Keboola\ScaffoldApp\SyncActions\UseScaffoldExecutionContext\ExecutionContext;
-use Keboola\ScaffoldApp\SyncActions\UseScaffoldExecutionContext\ExecutionContextLoader;
-use Keboola\ScaffoldApp\SyncActions\UseScaffoldAction;
 use PHPUnit\Framework\TestCase;
 use Psr\Log\NullLogger;
 
@@ -44,25 +41,6 @@ abstract class FunctionalBaseTestCase extends TestCase
                 }
             }
         }
-    }
-
-    protected function exportTestScaffold(
-        string $scaffoldId,
-        array $inputParameters
-    ): ExecutionContext {
-        $scaffoldFolder = __DIR__ . '/../phpunit/mock/scaffolds/' . $scaffoldId;
-        $loader = new ExecutionContextLoader($inputParameters, $scaffoldFolder);
-
-        $executionContext = $loader->getExecutionContext();
-
-        $action = new UseScaffoldAction(
-            $executionContext,
-            new ApiClientStore(new NullLogger()),
-            new NullLogger
-        );
-        $action();
-
-        return $executionContext;
     }
 
     protected function setUp(): void
