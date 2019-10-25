@@ -2,13 +2,14 @@
 
 declare(strict_types=1);
 
-namespace Keboola\ScaffoldApp\Tests\Operation;
+namespace Keboola\ScaffoldApp\Tests\SyncActions\UseScaffoldExecutionContext;
 
 use Keboola\ScaffoldApp\Operation\CreateConfigurationOperation;
 use Keboola\ScaffoldApp\Operation\CreateConfigurationRowsOperation;
 use Keboola\ScaffoldApp\Operation\CreateOrchestrationOperation;
 use Keboola\ScaffoldApp\SyncActions\UseScaffoldExecutionContext\ExecutionContext;
 use Keboola\ScaffoldApp\Operation\OperationsQueue;
+use Keboola\ScaffoldApp\Tests\Operation\BaseOperationTestCase;
 use Keboola\StorageApi\Options\Components\Configuration;
 
 class ExecutionContextTest extends BaseOperationTestCase

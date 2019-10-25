@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Keboola\ScaffoldApp\Tests\Operation\UseScaffoldExecutionContext;
+namespace Keboola\ScaffoldApp\Tests\Operation;
 
 use Keboola\ScaffoldApp\Operation\CreateOrchestrationOperation;
 use Keboola\ScaffoldApp\Operation\OperationsQueue;

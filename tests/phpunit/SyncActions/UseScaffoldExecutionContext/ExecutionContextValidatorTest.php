@@ -2,12 +2,13 @@
 
 declare(strict_types=1);
 
-namespace Keboola\ScaffoldApp\Tests\Operation;
+namespace Keboola\ScaffoldApp\Tests\SyncActions\UseScaffoldExecutionContext;
 
 use Keboola\Component\UserException;
 use Keboola\ScaffoldApp\SyncActions\UseScaffoldExecutionContext\ExecutionContext;
 use Keboola\ScaffoldApp\SyncActions\UseScaffoldExecutionContext\ExecutionContextValidator;
 use Keboola\ScaffoldApp\SyncActions\UseScaffoldExecutionContext\OperationsContext;
+use Keboola\ScaffoldApp\Tests\Operation\BaseOperationTestCase;
 use PHPUnit\Framework\MockObject\MockObject;
 
 class ExecutionContextValidatorTest extends BaseOperationTestCase

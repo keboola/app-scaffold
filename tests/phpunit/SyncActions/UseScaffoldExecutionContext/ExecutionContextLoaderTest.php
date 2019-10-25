@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Keboola\ScaffoldApp\Tests\Operation\UseScaffoldExecutionContext;
+namespace Keboola\ScaffoldApp\Tests\SyncActions\UseScaffoldExecutionContext;
 
 use Keboola\ScaffoldApp\SyncActions\UseScaffoldExecutionContext\ExecutionContextLoader;
 use PHPUnit\Framework\TestCase;
