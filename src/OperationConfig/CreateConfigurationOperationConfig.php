@@ -23,6 +23,9 @@ class CreateConfigurationOperationConfig implements OperationConfigInterface
     /** @var string */
     private $configurationName;
 
+    /** @var string */
+    private $configurationDescription;
+
     /** @var AuthorizationInterface */
     private $authorization;
 
@@ -62,6 +65,12 @@ class CreateConfigurationOperationConfig implements OperationConfigInterface
         }
         $config->configurationName = $config->payload['name'];
 
+        if (!empty($config->payload['description'])) {
+            $config->configurationDescription = $config->payload['description'];
+        } else {
+            $config->configurationDescription = '';
+        }
+
         if (!empty($operationConfig['authorization']) &&
             !in_array($operationConfig['authorization'], AuthorizationFactory::AVAILABLE_AUTHORIZATION_METHODS)
         ) {
@@ -97,11 +106,16 @@ class CreateConfigurationOperationConfig implements OperationConfigInterface
         return $this->id;
     }
 
-    public function getRequestConfiguration(): Configuration
+    public function getRequestConfiguration(string $scaffoldId): Configuration
     {
         $configuration = new Configuration;
         $configuration->setComponentId($this->componentId);
         $configuration->setName($this->configurationName);
+        $configuration->setDescription(sprintf(
+            '%s |ScaffoldId: %s|',
+            $this->configurationDescription,
+            $scaffoldId
+        ));
 
         if (!empty($this->payload['configuration'])) {
             $configuration->setConfiguration($this->payload['configuration']);

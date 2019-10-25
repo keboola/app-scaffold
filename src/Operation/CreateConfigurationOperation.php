@@ -35,7 +35,7 @@ class CreateConfigurationOperation implements OperationInterface
         OperationConfigInterface $operationConfig,
         ExecutionContext $executionContext
     ): void {
-        $configuration = $operationConfig->getRequestConfiguration();
+        $configuration = $operationConfig->getRequestConfiguration($executionContext->getScaffoldId());
 
         $this->logger->info(
             sprintf(

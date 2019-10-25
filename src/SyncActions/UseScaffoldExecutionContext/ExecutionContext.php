@@ -104,4 +104,9 @@ class ExecutionContext
         }
         return [];
     }
+
+    public function getScaffoldId(): string
+    {
+        return $this->scaffoldId;
+    }
 }

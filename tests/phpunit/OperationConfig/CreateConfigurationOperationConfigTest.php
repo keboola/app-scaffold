@@ -32,7 +32,7 @@ class CreateConfigurationOperationConfigTest extends TestCase
             ['ex01' => ['parameters' => ['params1' => ['param1Value']]]]
         );
 
-        $configuration = $instance->getRequestConfiguration();
+        $configuration = $instance->getRequestConfiguration('scaffold_Id');
 
         $this->assertSame(['parameters' => ['params1' => ['param1Value']]], $configuration->getConfiguration());
     }

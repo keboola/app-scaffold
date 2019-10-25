@@ -7,27 +7,45 @@ namespace Keboola\ScaffoldApp\Tests\Operation;
 use Keboola\ScaffoldApp\Operation\CreateConfigurationOperation;
 use Keboola\ScaffoldApp\Operation\CreateOrchestrationOperation;
 use Keboola\ScaffoldApp\OperationConfig\CreateOrchestrationOperationConfig;
+use Keboola\StorageApi\Client;
+use Keboola\StorageApi\Components;
 use Keboola\StorageApi\Options\Components\Configuration;
+use PHPUnit\Framework\MockObject\MockObject;
 use Psr\Log\NullLogger;
 
 class CreateOrchestrationOperationTest extends BaseOperationTestCase
 {
     public function testExecute(): void
     {
-        $executionMock = self::getExecutionContext();
+        $executionMock = self::getExecutionContext([], [], 'dummy/scaffold_id');
 
         $orchestratorApiClient = $this->getMockOrchestrationApiClient();
         $orchestratorApiClient->expects(self::once())->method('createOrchestration')->willReturn(
             ['id' => 'createdOrchestrationId']
         );
 
-        $apiClientStoreMock = self::getApiClientStore(null, null, null, $orchestratorApiClient);
+        /** @var Client|MockObject $componentsClient */
+        $componentsClient = self::getMockBuilder(Components::class)
+            ->disableOriginalConstructor()
+            ->getMock();
+        $componentsClient
+            ->expects(self::once())->method('updateConfiguration')
+            ->with(
+                (new Configuration())
+                    ->setDescription('Test Description |ScaffoldId: scaffold_id|')
+                    ->setComponentId('orchestrator')
+                    ->setConfigurationId('createdOrchestrationId')
+            )
+            ->willReturn([]);
+
+        $apiClientStoreMock = self::getApiClientStore(null, $componentsClient, null, $orchestratorApiClient);
 
         $operation = new CreateOrchestrationOperation($apiClientStoreMock, new NullLogger);
 
         $operationConfig = [
             'payload' => [
                 'name' => 'Test Orchestration',
+                'description' => 'Test Description',
                 'tasks' => [
                     [
                         'component' => 'kds-team.ex-reviewtrackers',

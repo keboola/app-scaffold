@@ -162,6 +162,10 @@ class TransformationConfigurationRowsDecoratorTest extends ImporterBaseTestCase
                                     'key' => 'bdm.scaffold.table.tag',
                                     'value' => 'scaffold_Id.internal.account',
                                 ],
+                                [
+                                    'key' => 'scaffold.id',
+                                    'value' => 'scaffold_Id',
+                                ],
                             ],
                             'destination' => 'account',
                             '__SCAFFOLD_CHECK__original_destination' => 'account',
@@ -201,6 +205,10 @@ class TransformationConfigurationRowsDecoratorTest extends ImporterBaseTestCase
                                     'key' => 'bdm.scaffold.table.tag',
                                     'value' => 'scaffold_Id.internal.account',
                                 ],
+                                [
+                                    'key' => 'scaffold.id',
+                                    'value' => 'scaffold_Id',
+                                ],
                             ],
                             'destination' => 'account',
                             '__SCAFFOLD_CHECK__original_destination' => 'account',
@@ -237,6 +245,10 @@ class TransformationConfigurationRowsDecoratorTest extends ImporterBaseTestCase
                                 [
                                     'key' => 'bdm.scaffold.table.tag',
                                     'value' => 'scaffold_Id.internal.outBucketNameAccount2',
+                                ],
+                                [
+                                    'key' => 'scaffold.id',
+                                    'value' => 'scaffold_Id',
                                 ],
                             ],
                             'destination' => 'out.c-scaffoldId.bucketNameAccount2',

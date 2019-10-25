@@ -63,6 +63,12 @@ class ComponentTest extends AbstractDatadirTestCase
         file_put_contents($tempDatadir->getTmpFolder() . '/config.json', \GuzzleHttp\json_encode($data));
         $process = $this->runScript($tempDatadir->getTmpFolder());
         $this->assertMatchesSpecification($specification, $process, $tempDatadir->getTmpFolder());
+        $data  = json_decode($process->getOutput(), true);
+        self::assertGreaterThan(0, count($data));
+        self::assertArrayHasKey('name', $data[1]);
+        self::assertArrayHasKey('author', $data[1]);
+        self::assertArrayHasKey('id', $data[1]);
+        self::assertArrayHasKey('objects', $data[1]);
     }
 
     protected function runScript(string $datadirPath): Process

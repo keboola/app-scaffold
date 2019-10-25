@@ -112,6 +112,10 @@ class ExSalesforceConfigurationRowsDecoratorTest extends ImporterBaseTestCase
                                                     '__SCAFFOLD_CHECK__value' =>
                                                         'Scaffold_Id.internal.inHtnsExSalesforce######SampleTableName',
                                                 ],
+                                                [
+                                                    'key' => 'scaffold.id',
+                                                    'Scaffold_Id',
+                                                ],
                                             ],
                                         ],
                                     ],

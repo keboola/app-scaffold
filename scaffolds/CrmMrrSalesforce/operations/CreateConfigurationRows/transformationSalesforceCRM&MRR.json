@@ -15,6 +15,10 @@
                         {
                             "key": "bdm.scaffold.table.tag",
                             "value": "CrmMrrSalesforce.internal.outCrmCompany"
+                        },
+                        {
+                            "key": "scaffold.id",
+                            "value": "CrmMrrSalesforce"
                         }
                     ],
                     "destination": "out.c-CrmMrrSalesforce.crmCompany"
@@ -61,6 +65,10 @@
                         {
                             "key": "bdm.scaffold.table.tag",
                             "value": "CrmMrrSalesforce.internal.outCrmProduct"
+                        },
+                        {
+                            "key": "scaffold.id",
+                            "value": "CrmMrrSalesforce"
                         }
                     ],
                     "destination": "out.c-CrmMrrSalesforce.crmProduct"
@@ -106,6 +114,10 @@
                         {
                             "key": "bdm.scaffold.table.tag",
                             "value": "CrmMrrSalesforce.internal.outCrmOpportunity"
+                        },
+                        {
+                            "key": "scaffold.id",
+                            "value": "CrmMrrSalesforce"
                         }
                     ],
                     "destination": "out.c-CrmMrrSalesforce.crmOpportunity"
@@ -119,6 +131,10 @@
                         {
                             "key": "bdm.scaffold.table.tag",
                             "value": "CrmMrrSalesforce.internal.outCrmContract"
+                        },
+                        {
+                            "key": "scaffold.id",
+                            "value": "CrmMrrSalesforce"
                         }
                     ],
                     "destination": "out.c-CrmMrrSalesforce.crmContract"
@@ -132,6 +148,10 @@
                         {
                             "key": "bdm.scaffold.table.tag",
                             "value": "CrmMrrSalesforce.internal.outCrmContractLine"
+                        },
+                        {
+                            "key": "scaffold.id",
+                            "value": "CrmMrrSalesforce"
                         }
                     ],
                     "destination": "out.c-CrmMrrSalesforce.crmContractLine"
@@ -150,6 +170,10 @@
                         {
                             "key": "bdm.scaffold.table.tag",
                             "value": "CrmMrrSalesforce.internal.outCrmAuxiliaryTablesOpportunitySnapshot"
+                        },
+                        {
+                            "key": "scaffold.id",
+                            "value": "CrmMrrSalesforce"
                         }
                     ],
                     "destination": "out.c-CrmMrrSalesforce.crmAuxiliaryTablesOpportunitySnapshot"
@@ -255,6 +279,10 @@
                         {
                             "key": "bdm.scaffold.table.tag",
                             "value": "CrmMrrSalesforce.internal.outCrmOpportunitySnapshot"
+                        },
+                        {
+                            "key": "scaffold.id",
+                            "value": "CrmMrrSalesforce"
                         }
                     ],
                     "destination": "out.c-CrmMrrSalesforce.crmOpportunitySnapshot"
@@ -301,6 +329,10 @@
                         {
                             "key": "bdm.scaffold.table.tag",
                             "value": "CrmMrrSalesforce.internal.outCrmEmployee"
+                        },
+                        {
+                            "key": "scaffold.id",
+                            "value": "CrmMrrSalesforce"
                         }
                     ],
                     "destination": "out.c-CrmMrrSalesforce.crmEmployee"
@@ -347,6 +379,10 @@
                         {
                             "key": "bdm.scaffold.table.tag",
                             "value": "CrmMrrSalesforce.internal.outMrrMrrAggregated"
+                        },
+                        {
+                            "key": "scaffold.id",
+                            "value": "CrmMrrSalesforce"
                         }
                     ],
                     "destination": "out.c-CrmMrrSalesforce.mrrMrrAggregated"
@@ -413,6 +449,10 @@
                         {
                             "key": "bdm.scaffold.table.tag",
                             "value": "CrmMrrSalesforce.internal.outCrmContact"
+                        },
+                        {
+                            "key": "scaffold.id",
+                            "value": "CrmMrrSalesforce"
                         }
                     ],
                     "destination": "out.c-CrmMrrSalesforce.crmContact"
@@ -489,6 +529,10 @@
                         {
                             "key": "bdm.scaffold.table.tag",
                             "value": "CrmMrrSalesforce.internal.outCrmOpportunityContact"
+                        },
+                        {
+                            "key": "scaffold.id",
+                            "value": "CrmMrrSalesforce"
                         }
                     ],
                     "destination": "out.c-CrmMrrSalesforce.crmOpportunityContact"
@@ -554,6 +598,10 @@
                         {
                             "key": "bdm.scaffold.table.tag",
                             "value": "CrmMrrSalesforce.internal.inSalesforceAccount"
+                        },
+                        {
+                            "key": "scaffold.id",
+                            "value": "CrmMrrSalesforce"
                         }
                     ],
                     "destination": "in.c-CrmMrrSalesforce.salesforceAccount"
@@ -567,6 +615,10 @@
                         {
                             "key": "bdm.scaffold.table.tag",
                             "value": "CrmMrrSalesforce.internal.inSalesforceContact"
+                        },
+                        {
+                            "key": "scaffold.id",
+                            "value": "CrmMrrSalesforce"
                         }
                     ],
                     "destination": "in.c-CrmMrrSalesforce.salesforceContact"
@@ -580,6 +632,10 @@
                         {
                             "key": "bdm.scaffold.table.tag",
                             "value": "CrmMrrSalesforce.internal.inSalesforceLead"
+                        },
+                        {
+                            "key": "scaffold.id",
+                            "value": "CrmMrrSalesforce"
                         }
                     ],
                     "destination": "in.c-CrmMrrSalesforce.salesforceLead"
@@ -593,6 +649,10 @@
                         {
                             "key": "bdm.scaffold.table.tag",
                             "value": "CrmMrrSalesforce.internal.inSalesforceUser"
+                        },
+                        {
+                            "key": "scaffold.id",
+                            "value": "CrmMrrSalesforce"
                         }
                     ],
                     "destination": "in.c-CrmMrrSalesforce.salesforceUser"
@@ -606,6 +666,10 @@
                         {
                             "key": "bdm.scaffold.table.tag",
                             "value": "CrmMrrSalesforce.internal.inSalesforceOpportunity"
+                        },
+                        {
+                            "key": "scaffold.id",
+                            "value": "CrmMrrSalesforce"
                         }
                     ],
                     "destination": "in.c-CrmMrrSalesforce.salesforceOpportunity"
@@ -619,6 +683,10 @@
                         {
                             "key": "bdm.scaffold.table.tag",
                             "value": "CrmMrrSalesforce.internal.inSalesforceOpportunitycontactrole"
+                        },
+                        {
+                            "key": "scaffold.id",
+                            "value": "CrmMrrSalesforce"
                         }
                     ],
                     "destination": "in.c-CrmMrrSalesforce.salesforceOpportunitycontactrole"
@@ -632,6 +700,10 @@
                         {
                             "key": "bdm.scaffold.table.tag",
                             "value": "CrmMrrSalesforce.internal.inSalesforceOrder"
+                        },
+                        {
+                            "key": "scaffold.id",
+                            "value": "CrmMrrSalesforce"
                         }
                     ],
                     "destination": "in.c-CrmMrrSalesforce.salesforceOrder"
@@ -645,6 +717,10 @@
                         {
                             "key": "bdm.scaffold.table.tag",
                             "value": "CrmMrrSalesforce.internal.inSalesforceOrderitem"
+                        },
+                        {
+                            "key": "scaffold.id",
+                            "value": "CrmMrrSalesforce"
                         }
                     ],
                     "destination": "in.c-CrmMrrSalesforce.salesforceOrderitem"
@@ -658,6 +734,10 @@
                         {
                             "key": "bdm.scaffold.table.tag",
                             "value": "CrmMrrSalesforce.internal.inSalesforceProduct2"
+                        },
+                        {
+                            "key": "scaffold.id",
+                            "value": "CrmMrrSalesforce"
                         }
                     ],
                     "destination": "in.c-CrmMrrSalesforce.salesforceProduct2"
@@ -827,6 +907,10 @@
                         {
                             "key": "bdm.scaffold.table.tag",
                             "value": "CrmMrrSalesforce.internal.outMrrMrr"
+                        },
+                        {
+                            "key": "scaffold.id",
+                            "value": "CrmMrrSalesforce"
                         }
                     ],
                     "destination": "out.c-CrmMrrSalesforce.mrrMrr"
