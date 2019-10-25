@@ -17,10 +17,9 @@ class CreateConfigurationRowsOperationTest extends BaseOperationTestCase
     {
         $executionMock = self::getExecutionContext();
 
-        $apiClientStoreMock = self::getApiClientStore();
         $componentsApiClient = $this->getMockComponentsApiClient();
         $componentsApiClient->method('addConfigurationRow')->willReturn(['id' => 'createdRowId']);
-        $apiClientStoreMock->method('getComponentsApiClient')->willReturn($componentsApiClient);
+        $apiClientStoreMock = self::getApiClientStore(null, $componentsApiClient, null, null);
 
         $operation = new CreateConfigurationRowsOperation($apiClientStoreMock, new NullLogger);
         $config = CreateCofigurationRowsOperationConfig::create('operationCreatedConfigurationId', [
@@ -49,8 +48,7 @@ class CreateConfigurationRowsOperationTest extends BaseOperationTestCase
     {
         $executionMock = self::getExecutionContext();
 
-        $apiClientStoreMock = self::getApiClientStore();
-        $apiClientStoreMock->method('getComponentsApiClient')->willReturn($this->getMockComponentsApiClient());
+        $apiClientStoreMock = self::getApiClientStore(null, $this->getMockComponentsApiClient(), null, null);
 
         $operation = new CreateConfigurationRowsOperation($apiClientStoreMock, new NullLogger);
         $config = CreateCofigurationRowsOperationConfig::create(

@@ -44,16 +44,12 @@ class CreateConfigurationOperationTest extends BaseOperationTestCase
 
         $executionMock = self::getExecutionContext([], $parameters);
 
-        $apiClientStoreMock = self::getApiClientStore();
-        /** @var EncryptionClient|MockObject $encryptionApiClient */
-        $encryptionApiClient = self::createMock(EncryptionClient::class);
-        $encryptionApiClient->expects(self::once())->method('encryptConfigurationData')
-            ->willReturnCallback(function (array $data) {
-                return $data;
-            });
-        $apiClientStoreMock->method('getEncryptionApiClient')->willReturn($encryptionApiClient);
-        $apiClientStoreMock->method('getComponentsApiClient')->willReturn($this->componentsApiClient);
-        $apiClientStoreMock->method('getStorageApiClient')->willReturn($this->sapiClient);
+        $apiClientStoreMock = self::getApiClientStore(
+            $this->sapiClient,
+            $this->componentsApiClient,
+            self::getMockEncryptionApiClient(self::once()),
+            null
+        );
 
         $operation = new CreateConfigurationOperation($apiClientStoreMock, new NullLogger);
 
@@ -94,17 +90,12 @@ class CreateConfigurationOperationTest extends BaseOperationTestCase
 
         $executionMock = self::getExecutionContext([], $parameters);
 
-        $apiClientStoreMock = self::getApiClientStore();
-        /** @var EncryptionClient|MockObject $encryptionApiClient */
-        $encryptionApiClient = self::createMock(EncryptionClient::class);
-        $encryptionApiClient->expects(self::once())->method('encryptConfigurationData')
-            ->willReturnCallback(function (array $data) {
-                return $data;
-            });
-
-        $apiClientStoreMock->method('getEncryptionApiClient')->willReturn($encryptionApiClient);
-        $apiClientStoreMock->method('getComponentsApiClient')->willReturn($this->componentsApiClient);
-        $apiClientStoreMock->method('getStorageApiClient')->willReturn($this->sapiClient);
+        $apiClientStoreMock = self::getApiClientStore(
+            $this->sapiClient,
+            $this->componentsApiClient,
+            self::getMockEncryptionApiClient(self::once()),
+            null
+        );
 
         $operation = new CreateConfigurationOperation($apiClientStoreMock, new NullLogger);
 
@@ -149,13 +140,7 @@ class CreateConfigurationOperationTest extends BaseOperationTestCase
         $executionMock = self::getExecutionContext([], $parameters);
 
         $apiClientStoreMock = self::getApiClientStore();
-        /** @var EncryptionClient|MockObject $encryptionApiClient */
-        $encryptionApiClient = self::createMock(EncryptionClient::class);
-        $encryptionApiClient->expects(self::exactly(2))->method('encryptConfigurationData')
-            ->willReturnCallback(function (array $data) {
-                return $data;
-            });
-
+        $encryptionApiClient = self::getMockEncryptionApiClient(self::exactly(2));
         $apiClientStoreMock->method('getEncryptionApiClient')->willReturn($encryptionApiClient);
         $apiClientStoreMock->method('getComponentsApiClient')->willReturn($this->componentsApiClient);
         $this->sapiClient->method('apiPost')->willReturn([
@@ -224,16 +209,6 @@ class CreateConfigurationOperationTest extends BaseOperationTestCase
 
         $executionMock = self::getExecutionContext([], $parameters);
 
-        $apiClientStoreMock = self::getApiClientStore();
-        /** @var EncryptionClient|MockObject $encryptionApiClient */
-        $encryptionApiClient = self::createMock(EncryptionClient::class);
-        $encryptionApiClient->expects(self::exactly(2))->method('encryptConfigurationData')
-            ->willReturnCallback(function (array $data) {
-                return $data;
-            });
-
-        $apiClientStoreMock->method('getEncryptionApiClient')->willReturn($encryptionApiClient);
-        $apiClientStoreMock->method('getComponentsApiClient')->willReturn($this->componentsApiClient);
         $this->sapiClient->method('apiPost')->willReturn([
             'connection' => [
                 'backend' => 'snowflake',
@@ -246,7 +221,12 @@ class CreateConfigurationOperationTest extends BaseOperationTestCase
             ],
             'id' => '1234',
         ]);
-        $apiClientStoreMock->method('getStorageApiClient')->willReturn($this->sapiClient);
+        $apiClientStoreMock = self::getApiClientStore(
+            $this->sapiClient,
+            $this->componentsApiClient,
+            self::getMockEncryptionApiClient(self::exactly(2)),
+            null
+        );
 
         $operation = new CreateConfigurationOperation($apiClientStoreMock, new NullLogger);
 
@@ -292,13 +272,12 @@ class CreateConfigurationOperationTest extends BaseOperationTestCase
 
         $executionMock = self::getExecutionContext([], $parameters);
 
-        $apiClientStoreMock = self::getApiClientStore();
-        /** @var EncryptionClient|MockObject $encryptionApiClient */
-        $encryptionApiClient = self::createMock(EncryptionClient::class);
-        $encryptionApiClient->expects(self::never())->method('encryptConfigurationData');
-        $apiClientStoreMock->method('getEncryptionApiClient')->willReturn($encryptionApiClient);
-        $apiClientStoreMock->method('getComponentsApiClient')->willReturn($this->componentsApiClient);
-        $apiClientStoreMock->method('getStorageApiClient')->willReturn($this->sapiClient);
+        $apiClientStoreMock = self::getApiClientStore(
+            $this->sapiClient,
+            $this->componentsApiClient,
+            self::getMockEncryptionApiClient(self::never()),
+            null
+        );
 
         $operation = new CreateConfigurationOperation($apiClientStoreMock, new NullLogger);
 
