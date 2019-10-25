@@ -32,8 +32,8 @@ class OrchestrationImporterTest extends FunctionalBaseTestCase
         $tmpFolder = $temp->getTmpFolder();
 
         $importer = new OrchestrationImporter(
-            $this->createStorageApiClient(),
-            $this->createOrchestrationApiClient(),
+            $this->apiClients->getStorageApiClient(),
+            $this->apiClients->getOrchestrationApiClient(),
             new NullOutput(),
             $tmpFolder
         );
