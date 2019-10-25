@@ -67,4 +67,35 @@ class ExecutionContextLoaderTest extends TestCase
         self::assertArrayHasKey('CreateOrchestration', $context->getOperationsQueue());
         self::assertCount(1, $context->getOperationsQueue()['CreateOrchestration']);
     }
+
+
+    public function testGetExecutionContextWithoutRequiredOperation(): void
+    {
+        $inputs = [
+            'connectionWriter' => [
+                'parameters' => [
+                    '#token' => 'xxxxx',
+                ],
+            ],
+            'snowflakeExtractor' => [
+                'parameters' => [
+                    'db' => [
+                        'host' => 'xxx',
+                        'user' => 'xxx',
+                        '#password' => 'xxx',
+                        'database' => 'xxx',
+                        'schema' => 'xxx',
+                        'warehouse' => 'xxx',
+                    ],
+                ],
+            ]
+        ];
+        $loader = new ExecutionContextLoader($inputs, __DIR__ . '/../../mock/scaffolds/PassThroughTestNoDefinition');
+        $context = $loader->getExecutionContext();
+
+        self::assertArrayHasKey('CreateConfiguration', $context->getOperationsQueue());
+        self::assertCount(2, $context->getOperationsQueue()['CreateConfiguration']);
+        self::assertArrayHasKey('CreateConfigurationRows', $context->getOperationsQueue());
+        self::assertCount(1, $context->getOperationsQueue()['CreateConfigurationRows']);
+    }
 }
