@@ -13,11 +13,6 @@ class OperationsContextTest extends TestCase
     {
         $instance = new OperationsContext(['op1', 'op2'], ['op3', 'op4']);
         self::assertSame(['op3', 'op4'], $instance->getOperationsToExecute());
-    }
-
-    public function testGetRequiredOperations(): void
-    {
-        $instance = new OperationsContext(['op1', 'op2'], ['op3', 'op4']);
         self::assertSame(['op1', 'op2'], $instance->getRequiredOperations());
     }
 }
