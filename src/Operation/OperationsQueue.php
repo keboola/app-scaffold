@@ -11,12 +11,12 @@ use Symfony\Component\Finder\SplFileInfo;
 class OperationsQueue
 {
     /**
-     * @var ArrayObject
+     * @var ArrayObject|SplFileInfo[]
      */
     private $operationsQueue;
 
     /**
-     * @var ArrayObject
+     * @var ArrayObject|FinishedOperation[]
      */
     private $finishedOperations;
 
@@ -42,11 +42,12 @@ class OperationsQueue
         $data,
         array $userActions = []
     ): void {
-        $this->finishedOperations[$operationId] = [
-            'operationClass' => $operationClass,
-            'data' => $data,
-            'userActions' => $userActions,
-        ];
+        $this->finishedOperations[$operationId] = new FinishedOperation(
+            $operationId,
+            $operationClass,
+            $data,
+            $userActions
+        );
     }
 
     /**
@@ -60,7 +61,7 @@ class OperationsQueue
                 $operationId
             ));
         }
-        return $this->finishedOperations[$operationId]['data'];
+        return $this->finishedOperations[$operationId]->getData();
     }
 
     public function getFinishedOperations(): ArrayObject

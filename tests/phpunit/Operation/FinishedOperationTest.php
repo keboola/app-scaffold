@@ -7,7 +7,7 @@ namespace Keboola\ScaffoldApp\Tests\Operation;
 use Keboola\ScaffoldApp\Operation\CreateConfigurationOperation;
 use Keboola\ScaffoldApp\Operation\CreateConfigurationRowsOperation;
 use Keboola\ScaffoldApp\Operation\CreateOrchestrationOperation;
-use Keboola\ScaffoldApp\Operation\UseScaffoldExecutionContext\FinishedOperation;
+use Keboola\ScaffoldApp\Operation\FinishedOperation;
 use Keboola\StorageApi\Options\Components\Configuration;
 use PHPUnit\Framework\TestCase;
 

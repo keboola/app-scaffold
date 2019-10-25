@@ -2,11 +2,9 @@
 
 declare(strict_types=1);
 
-namespace Keboola\ScaffoldApp\Operation\UseScaffoldExecutionContext;
+namespace Keboola\ScaffoldApp\Operation;
 
 use Exception;
-use Keboola\ScaffoldApp\Operation\CreateConfigurationOperation;
-use Keboola\ScaffoldApp\Operation\CreateOrchestrationOperation;
 use Keboola\StorageApi\Options\Components\Configuration;
 
 class FinishedOperation
