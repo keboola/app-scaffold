@@ -12,7 +12,14 @@ class ListScaffoldsActionTest extends BaseOperationTestCase
     public function testAction(): void
     {
         $action = new ListScaffoldsAction();
-        $response = $action->run(__DIR__ . '/../mock/scaffolds', $this->getApiClientStore());
+        $clientMock = $this->getMockStorageApiClient();
+        $clientMock->method('searchTables')->willReturn([]);
+        $componentMock = $this->getMockComponentsApiClient();
+        $componentMock->method('listComponents')->willReturn([]);
+        $response = $action->run(
+            __DIR__ . '/../mock/scaffolds',
+            $this->getApiClientStore($clientMock, $componentMock)
+        );
         self::assertCount(2, $response);
         foreach ($response as $scaffold) {
             self::assertArrayHasKey('id', $scaffold);

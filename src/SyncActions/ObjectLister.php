@@ -13,9 +13,8 @@ use Keboola\StorageApi\Options\SearchTablesOptions;
 
 class ObjectLister
 {
-    public static function listObjects(StorageApiClient $storageApiClient): array
+    public static function listObjects(StorageApiClient $storageApiClient, Components $components): array
     {
-        $components = new Components($storageApiClient);
         $listOptions = new ListComponentsOptions();
         $listOptions->setInclude(['configurations']);
         $components = $components->listComponents($listOptions);
