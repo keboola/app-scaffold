@@ -18,7 +18,10 @@ class ListScaffoldsAction
             ->directories()->depth(0);
 
         $response = [];
-        $scaffoldObjects = ObjectLister::listObjects($apiClientStore->getStorageApiClient(), $apiClientStore->getComponentsApiClient());
+        $scaffoldObjects = ObjectLister::listObjects(
+            $apiClientStore->getStorageApiClient(),
+            $apiClientStore->getComponentsApiClient()
+        );
 
         foreach ($scaffolds->getIterator() as $directory) {
             $manifest = JsonHelper::readFile(sprintf(
