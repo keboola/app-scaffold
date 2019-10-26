@@ -10,7 +10,7 @@
             "required": true,
             "schema": {
                 "type": "object",
-                "required": [],
+                "required": ["username", "#password"],
                 "properties": {
                     "username": {
                         "title": "Username",
