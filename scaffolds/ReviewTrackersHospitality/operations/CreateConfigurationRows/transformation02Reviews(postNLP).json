@@ -11,6 +11,10 @@
                         {
                             "key": "bdm.scaffold.table.tag",
                             "value": "ReviewTrackersHospitality.internal.outReviewsReview"
+                        },
+                        {
+                            "key": "scaffold.id",
+                            "value": "ReviewTrackersHospitality"
                         }
                     ],
                     "destination": "out.c-reviewTrackersHospitality.reviewsReview"
@@ -24,6 +28,10 @@
                         {
                             "key": "bdm.scaffold.table.tag",
                             "value": "ReviewTrackersHospitality.internal.outReviewsEntity"
+                        },
+                        {
+                            "key": "scaffold.id",
+                            "value": "ReviewTrackersHospitality"
                         }
                     ],
                     "destination": "out.c-reviewTrackersHospitality.reviewsEntity"
@@ -37,6 +45,10 @@
                         {
                             "key": "bdm.scaffold.table.tag",
                             "value": "ReviewTrackersHospitality.internal.outReviewsTag"
+                        },
+                        {
+                            "key": "scaffold.id",
+                            "value": "ReviewTrackersHospitality"
                         }
                     ],
                     "destination": "out.c-reviewTrackersHospitality.reviewsTag"
@@ -50,6 +62,10 @@
                         {
                             "key": "bdm.scaffold.table.tag",
                             "value": "ReviewTrackersHospitality.internal.outReviewsAttributeRelation"
+                        },
+                        {
+                            "key": "scaffold.id",
+                            "value": "ReviewTrackersHospitality"
                         }
                     ],
                     "destination": "out.c-reviewTrackersHospitality.reviewsAttributeRelation"
@@ -63,6 +79,10 @@
                         {
                             "key": "bdm.scaffold.table.tag",
                             "value": "ReviewTrackersHospitality.internal.outReviewsHierarchyRelation"
+                        },
+                        {
+                            "key": "scaffold.id",
+                            "value": "ReviewTrackersHospitality"
                         }
                     ],
                     "destination": "out.c-reviewTrackersHospitality.reviewsHierarchyRelation"
@@ -76,6 +96,10 @@
                         {
                             "key": "bdm.scaffold.table.tag",
                             "value": "ReviewTrackersHospitality.internal.outReviewsSentence"
+                        },
+                        {
+                            "key": "scaffold.id",
+                            "value": "ReviewTrackersHospitality"
                         }
                     ],
                     "destination": "out.c-reviewTrackersHospitality.reviewsSentence"
