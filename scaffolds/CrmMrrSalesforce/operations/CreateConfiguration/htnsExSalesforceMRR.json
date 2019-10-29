@@ -2,6 +2,7 @@
     "componentId": "htns.ex-salesforce",
     "payload": {
         "name": "MRR",
+        "description": "Extract data from Salesforce",
         "configuration": {
             "parameters": {
             }

@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Keboola\ScaffoldApp\Importer\Decorator\ComponentSpecific;
 
 use Keboola\ScaffoldApp\Importer\Decorator\AbstractDecorator;
+use Keboola\ScaffoldApp\Importer\Decorator\DecoratorInterface;
 use Keboola\ScaffoldApp\Importer\OperationImport;
 use Keboola\ScaffoldApp\Importer\OrchestrationImporter;
 
@@ -117,13 +118,16 @@ class ExSalesforceConfigurationRowsDecorator extends AbstractDecorator
             );
             $processors[2]['parameters']['tables'][] = [
                 'table' => sprintf('%s.csv', $tableName),
-                'metadata' =>
+                'metadata' => [
                     [
-                        [
-                            'key' => OrchestrationImporter::SCAFFOLD_TABLE_TAG,
-                            self::USER_ACTION_KEY_PREFIX . 'value' => $metadataValue,
-                        ],
+                        'key' => OrchestrationImporter::SCAFFOLD_TABLE_TAG,
+                        self::USER_ACTION_KEY_PREFIX . 'value' => $metadataValue,
                     ],
+                    [
+                        'key' => DecoratorInterface::SCAFFOLD_ID_TAG,
+                        $operationImport->getScaffoldId(),
+                    ],
+                ],
             ];
         }
 

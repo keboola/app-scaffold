@@ -22,6 +22,9 @@ class CreateOrchestrationOperationConfig implements OperationConfigInterface
     /** @var string */
     private $orchestrationName;
 
+    /** @var string */
+    private $description;
+
     /**
      * @return CreateOrchestrationOperationConfig
      */
@@ -49,6 +52,11 @@ class CreateOrchestrationOperationConfig implements OperationConfigInterface
         }
         $config->tasks = $config->payload['tasks'];
 
+        if (!empty($config->payload['description'])) {
+            $config->description = $config->payload['description'];
+        } else {
+            $config->description = '';
+        }
         return $config;
     }
 
@@ -60,6 +68,11 @@ class CreateOrchestrationOperationConfig implements OperationConfigInterface
     public function getOrchestrationName(): string
     {
         return $this->orchestrationName;
+    }
+
+    public function getDescription(): string
+    {
+        return $this->description;
     }
 
     public function getPayload(): array

@@ -28,7 +28,7 @@ class CreateConfigurationOperationTest extends BaseOperationTestCase
     protected function setUp(): void
     {
         $this->sapiClient = $this->getMockStorageApiClient();
-        $this->sapiClient->method('verifyToken')->willReturn(['owner' => ['id' => 'ownderId']]);
+        $this->sapiClient->method('verifyToken')->willReturn(['owner' => ['id' => 'ownerId']]);
 
         $this->componentsApiClient = $this->getMockComponentsApiClient();
         $this->componentsApiClient->method('addConfiguration')->willReturn(['id' => 'createdConfigurationId']);
@@ -42,7 +42,7 @@ class CreateConfigurationOperationTest extends BaseOperationTestCase
             ],
         ];
 
-        $executionMock = self::getExecutionContext([], $parameters);
+        $executionMock = self::getExecutionContext([], $parameters, 'dummy/scaffold_id');
 
         $apiClientStoreMock = self::getApiClientStore(
             $this->sapiClient,
@@ -57,6 +57,7 @@ class CreateConfigurationOperationTest extends BaseOperationTestCase
             'componentId' => 'keboola.ex.test',
             'payload' => [
                 'name' => 'Test Extractor',
+                'description' => 'Test Description',
                 'configuration' => [
                     'val1' => 'val',
                 ],
@@ -78,6 +79,7 @@ class CreateConfigurationOperationTest extends BaseOperationTestCase
             'val1' => 'val',
             'val2' => 'val',
         ], $created->getConfiguration());
+        self::assertSame('Test Description |ScaffoldId: scaffold_id|', $created->getDescription());
     }
 
     public function testExecuteAuthorizationOAuth(): void

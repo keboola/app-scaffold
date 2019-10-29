@@ -64,6 +64,10 @@ class TransformationConfigurationRowsDecorator extends AbstractDecorator
                     'key' => OrchestrationImporter::SCAFFOLD_TABLE_TAG,
                     'value' => $metadataValue,
                 ];
+                $output['metadata'][] = [
+                    'key' => DecoratorInterface::SCAFFOLD_ID_TAG,
+                    'value' => $operationImport->getScaffoldId(),
+                ];
             }
         }
 

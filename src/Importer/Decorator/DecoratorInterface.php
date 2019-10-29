@@ -10,6 +10,7 @@ use Symfony\Component\Console\Output\OutputInterface;
 interface DecoratorInterface
 {
     public const USER_ACTION_KEY_PREFIX = '__SCAFFOLD_CHECK__';
+    public const SCAFFOLD_ID_TAG = 'scaffold.id';
 
     public function __construct(
         OutputInterface $output

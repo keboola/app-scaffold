@@ -9,5 +9,8 @@ use Keboola\ScaffoldApp\OperationConfig\OperationConfigInterface;
 
 interface OperationInterface
 {
-    public function execute(OperationConfigInterface $operationConfig, ExecutionContext $executionContext): void;
+    public function execute(
+        OperationConfigInterface $operationConfig,
+        ExecutionContext $executionContext
+    ): void;
 }

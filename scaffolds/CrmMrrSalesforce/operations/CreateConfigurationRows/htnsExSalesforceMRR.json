@@ -45,6 +45,10 @@
                                         {
                                             "key": "bdm.scaffold.table.tag",
                                             "value": "CrmMrrSalesforce.internal.inHtnsExSalesforce01Account"
+                                        },
+                                        {
+                                            "key": "scaffold.id",
+                                            "value": "CrmMrrSalesforce"
                                         }
                                     ]
                                 }
@@ -103,6 +107,10 @@
                                         {
                                             "key": "bdm.scaffold.table.tag",
                                             "value": "CrmMrrSalesforce.internal.inHtnsExSalesforce01Opportunity"
+                                        },
+                                        {
+                                            "key": "scaffold.id",
+                                            "value": "CrmMrrSalesforce"
                                         }
                                     ]
                                 }
@@ -161,6 +169,10 @@
                                         {
                                             "key": "bdm.scaffold.table.tag",
                                             "value": "CrmMrrSalesforce.internal.inHtnsExSalesforce01Order"
+                                        },
+                                        {
+                                            "key": "scaffold.id",
+                                            "value": "CrmMrrSalesforce"
                                         }
                                     ]
                                 }
@@ -219,6 +231,10 @@
                                         {
                                             "key": "bdm.scaffold.table.tag",
                                             "value": "CrmMrrSalesforce.internal.inHtnsExSalesforce01Orderitem"
+                                        },
+                                        {
+                                            "key": "scaffold.id",
+                                            "value": "CrmMrrSalesforce"
                                         }
                                     ]
                                 }
@@ -277,6 +293,10 @@
                                         {
                                             "key": "bdm.scaffold.table.tag",
                                             "value": "CrmMrrSalesforce.internal.inHtnsExSalesforce01Product2"
+                                        },
+                                        {
+                                            "key": "scaffold.id",
+                                            "value": "CrmMrrSalesforce"
                                         }
                                     ]
                                 }
@@ -335,6 +355,10 @@
                                         {
                                             "key": "bdm.scaffold.table.tag",
                                             "value": "CrmMrrSalesforce.internal.inHtnsExSalesforce01User"
+                                        },
+                                        {
+                                            "key": "scaffold.id",
+                                            "value": "CrmMrrSalesforce"
                                         }
                                     ]
                                 }
@@ -393,6 +417,10 @@
                                         {
                                             "key": "bdm.scaffold.table.tag",
                                             "value": "CrmMrrSalesforce.internal.inHtnsExSalesforce01Lead"
+                                        },
+                                        {
+                                            "key": "scaffold.id",
+                                            "value": "CrmMrrSalesforce"
                                         }
                                     ]
                                 }
@@ -451,6 +479,10 @@
                                         {
                                             "key": "bdm.scaffold.table.tag",
                                             "value": "CrmMrrSalesforce.internal.inHtnsExSalesforce01Contact"
+                                        },
+                                        {
+                                            "key": "scaffold.id",
+                                            "value": "CrmMrrSalesforce"
                                         }
                                     ]
                                 }
