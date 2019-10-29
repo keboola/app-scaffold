@@ -25,9 +25,7 @@ class CreateOrchestrationOperationTest extends BaseOperationTestCase
         );
 
         /** @var Client|MockObject $componentsClient */
-        $componentsClient = self::getMockBuilder(Components::class)
-            ->disableOriginalConstructor()
-            ->getMock();
+        $componentsClient = $this->getMockComponentsApiClient();
         $componentsClient
             ->expects(self::once())->method('updateConfiguration')
             ->with(
