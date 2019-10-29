@@ -15,6 +15,10 @@
                         {
                             "key": "bdm.scaffold.table.tag",
                             "value": "ReviewTrackersHospitality.internal.outReviewsLocation"
+                        },
+                        {
+                            "key": "scaffold.id",
+                            "value": "ReviewTrackersHospitality"
                         }
                     ],
                     "destination": "out.c-reviewTrackersHospitality.reviewsLocation"
@@ -67,6 +71,10 @@
                         {
                             "key": "bdm.scaffold.table.tag",
                             "value": "ReviewTrackersHospitality.internal.outReviewsPreNlpReview"
+                        },
+                        {
+                            "key": "scaffold.id",
+                            "value": "ReviewTrackersHospitality"
                         }
                     ],
                     "destination": "out.c-reviewTrackersHospitality.reviewsPreNlpReview"

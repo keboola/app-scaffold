@@ -82,6 +82,10 @@
                                         {
                                             "key": "bdm.scaffold.table.tag",
                                             "value": "ReviewTrackersHospitality.internal.GeneeaAnalysisResultEntities"
+                                        },
+                                        {
+                                            "key": "scaffold.id",
+                                            "value": "ReviewTrackersHospitality"
                                         }
                                     ]
                                 },
@@ -91,6 +95,10 @@
                                         {
                                             "key": "bdm.scaffold.table.tag",
                                             "value": "ReviewTrackersHospitality.internal.GeneeaAnalysisResultRelations"
+                                        },
+                                        {
+                                            "key": "scaffold.id",
+                                            "value": "ReviewTrackersHospitality"
                                         }
                                     ]
                                 },
@@ -100,6 +108,10 @@
                                         {
                                             "key": "bdm.scaffold.table.tag",
                                             "value": "ReviewTrackersHospitality.internal.GeneeaAnalysisResultSentences"
+                                        },
+                                        {
+                                            "key": "scaffold.id",
+                                            "value": "ReviewTrackersHospitality"
                                         }
                                     ]
                                 },
@@ -109,6 +121,10 @@
                                         {
                                             "key": "bdm.scaffold.table.tag",
                                             "value": "ReviewTrackersHospitality.internal.GeneeaAnalysisResultDocuments"
+                                        },
+                                        {
+                                            "key": "scaffold.id",
+                                            "value": "ReviewTrackersHospitality"
                                         }
                                     ]
                                 }
