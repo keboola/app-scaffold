@@ -19,13 +19,28 @@ class OrchestrationImporterTest extends FunctionalBaseTestCase
     {
         $this->clearWorkspace();
 
-        $scaffoldId = 'PassThroughTest';
+        $scaffoldId = 'PassThroughTestNoDefinition';
         $inputParameters = [
-            'snowflakeExtractor' => [
-                'val2' => 'val',
+            'connectionWriter' => [
+                'parameters' => [
+                    '#token' => 'xxxxx',
+                ],
             ],
-            'connectionWriter' => [],
-            'main' => [],
+            'snowflakeExtractor' => [
+                'parameters' => [
+                    'db' => [
+                        'host' => 'xxx',
+                        'user' => 'xxx',
+                        '#password' => 'xxx',
+                        'database' => 'xxx',
+                        'schema' => 'xxx',
+                        'warehouse' => 'xxx',
+                    ],
+                ],
+            ],
+            'main' => [
+                'parameters' => [],
+            ],
         ];
 
         $scaffoldFolder = __DIR__ . '/../phpunit/mock/scaffolds/' . $scaffoldId;

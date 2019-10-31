@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Keboola\Scaffolds\PassThroughTest;
+namespace Keboola\ScaffoldApp\Tests\mock\scaffolds\PassThroughTest;
 
 use Keboola\ScaffoldApp\ScaffoldInputDefinitionInterface;
 use Symfony\Component\Config\Definition\Builder\ArrayNodeDefinition;

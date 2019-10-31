@@ -13,16 +13,29 @@ class ExecutionContextLoaderTest extends TestCase
     {
         $inputs = [
             'connectionWriter' => [
-                'parameters' => [],
+                'parameters' => [
+                    '#token' => 'dummy',
+                ],
             ],
             'snowflakeExtractor' => [
-                'parameters' => [],
+                'parameters' => [
+                    'db' => [
+                        'host' => 'dummy',
+                        'user' => 'dummy',
+                        '#password' => 'dummy',
+                        'schema' => 'dummy',
+                        'database' => 'dummy',
+                        'warehouse' => 'dummy',
+                    ],
+                ],
             ],
             'main' => [
-                'parameters' => [],
+                'parameters' => [
+                    'values' => null,
+                ],
             ],
         ];
-        $loader = new ExecutionContextLoader($inputs, __DIR__ . '/../../mock/scaffolds/PassThroughTest');
+        $loader = new ExecutionContextLoader($inputs, __DIR__ . '/../../mock/scaffolds/PassThroughTestNoDefinition');
         $context = $loader->getExecutionContext();
 
         self::assertArrayHasKey('CreateConfiguration', $context->getOperationsQueue()->getOperationsQueue());
