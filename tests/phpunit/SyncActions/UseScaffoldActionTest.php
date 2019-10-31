@@ -15,13 +15,30 @@ class UseScaffoldActionTest extends BaseOperationTestCase
     {
         $loader = new ExecutionContextLoader(
             [
-                'snowflakeExtractor' => [
-                    'val2' => 'val',
+                'connectionWriter' => [
+                    'parameters' => [
+                        '#token' => 'dummy',
+                    ],
                 ],
-                'connectionWriter' => [],
-                'main' => [],
+                'snowflakeExtractor' => [
+                    'parameters' => [
+                        'db' => [
+                            'host' => 'dummy',
+                            'user' => 'dummy',
+                            '#password' => 'dummy',
+                            'schema' => 'dummy',
+                            'database' => 'dummy',
+                            'warehouse' => 'dummy',
+                        ],
+                    ],
+                ],
+                'main' => [
+                    'parameters' => [
+                        'values' => null,
+                    ],
+                ],
             ],
-            __DIR__ . '/../mock/scaffolds/PassThroughTest'
+            __DIR__ . '/../mock/scaffolds/PassThroughTestNoDefinition'
         );
         $action = new UseScaffoldAction($loader->getExecutionContext(), $this->getApiClientStore(), new NullLogger());
         $response = $action->run();

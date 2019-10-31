@@ -25,19 +25,23 @@ class ComponentTest extends AbstractDatadirTestCase
         $data = [
             'action' => 'useScaffold',
             'parameters' => [
-                'id' => 'PassThroughTest',
+                'id' => 'CrmMrrSalesforce',
                 'inputs' => [
                     [
-                        'id'=>'connectionWriter',
-                        'values'=>null,
+                        'id' => 'htnsExSalesforceMRR',
+                        'values' => null,
                     ],
                     [
-                        'id'=>'snowflakeExtractor',
-                        'values'=>null,
+                        'id' => 'keboolaWrDbSnowflakeLooker',
+                        'values' => null,
                     ],
                     [
-                        'id'=>'main',
-                        'values'=>null,
+                        'id' => 'transformationSalesforceCRM&MRR',
+                        'values' => null,
+                    ],
+                    [
+                        'id' => 'orchestrationMRR',
+                        'values' => null,
                     ],
                 ],
             ],
