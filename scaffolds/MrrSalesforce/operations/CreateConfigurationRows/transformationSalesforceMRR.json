@@ -1,0 +1,665 @@
+[
+    {
+        "configuration": {
+            "output": [
+                {
+                    "primaryKey": [
+                        "company_id"
+                    ],
+                    "incremental": true,
+                    "deleteWhereColumn": "",
+                    "deleteWhereOperator": "eq",
+                    "deleteWhereValues": [],
+                    "source": "out_company",
+                    "metadata": [
+                        {
+                            "key": "bdm.scaffold.table.tag",
+                            "value": "MrrSalesforce.internal.outCrmCompany"
+                        },
+                        {
+                            "key": "scaffold.id",
+                            "value": "MrrSalesforce"
+                        }
+                    ],
+                    "destination": "out.c-mrrSalesforce.crmCompany",
+                    "__SCAFFOLD_CHECK__original_destination": "out.c-crm.company"
+                }
+            ],
+            "queries": [
+                "--create output table with companies\n--cast timestamp to date\nCREATE TABLE \"out_company\"\nAS\n  SELECT DISTINCT\n    \"Id\"                                  AS \"company_id\",\n    \"Name\"                                AS \"company\",\n    \"Website\"                             AS \"website\",\n    to_date(\"CreatedDate\") :: VARCHAR(10) AS \"date_created\"\n  FROM \"account\"\n  WHERE \"IsDeleted\" = 'false';",
+                "--fake row to keep referential integrity if child tables are missing existing company ids\nINSERT INTO \"out_company\"\n  (\"company_id\", \"company\", \"website\", \"date_created\")\nVALUES\n  ('0', 'Unknown', '', '');"
+            ],
+            "input": [
+                {
+                    "destination": "account",
+                    "datatypes": [],
+                    "whereColumn": "",
+                    "whereValues": [],
+                    "whereOperator": "eq",
+                    "columns": [],
+                    "loadType": "clone",
+                    "source_search": {
+                        "key": "bdm.scaffold.table.tag",
+                        "__SCAFFOLD_CHECK__.value": "MrrSalesforce.internal.inSalesforceAccount"
+                    },
+                    "__SCAFFOLD_CHECK__.source": "in.c-mrrSalesforce.salesforceAccount",
+                    "__SCAFFOLD_CHECK__.original_source": "in.c-salesforce.account"
+                }
+            ],
+            "name": "Company",
+            "packages": [],
+            "requires": [],
+            "backend": "snowflake",
+            "type": "simple",
+            "id": "491848383",
+            "phase": "2",
+            "disabled": false,
+            "description": ""
+        },
+        "description": "",
+        "name": "Company"
+    },
+    {
+        "configuration": {
+            "output": [
+                {
+                    "source": "out_product",
+                    "primaryKey": [
+                        "product_id"
+                    ],
+                    "metadata": [
+                        {
+                            "key": "bdm.scaffold.table.tag",
+                            "value": "MrrSalesforce.internal.outCrmProduct"
+                        },
+                        {
+                            "key": "scaffold.id",
+                            "value": "MrrSalesforce"
+                        }
+                    ],
+                    "destination": "out.c-mrrSalesforce.crmProduct",
+                    "__SCAFFOLD_CHECK__original_destination": "out.c-crm.product"
+                }
+            ],
+            "queries": [
+                "--create output table with products\nCREATE TABLE \"out_product\"\nAS\n  SELECT\n    \"Id\"     AS \"product_id\",\n    \"Name\"   AS \"product\",\n    \"Family\" AS \"product_family\"\n  FROM \"product\";"
+            ],
+            "input": [
+                {
+                    "destination": "product",
+                    "datatypes": [],
+                    "whereColumn": "",
+                    "whereValues": [],
+                    "whereOperator": "eq",
+                    "columns": [],
+                    "loadType": "clone",
+                    "source_search": {
+                        "key": "bdm.scaffold.table.tag",
+                        "__SCAFFOLD_CHECK__.value": "MrrSalesforce.internal.inSalesforceProduct2"
+                    },
+                    "__SCAFFOLD_CHECK__.source": "in.c-mrrSalesforce.salesforceProduct2",
+                    "__SCAFFOLD_CHECK__.original_source": "in.c-salesforce.product2"
+                }
+            ],
+            "name": "Product",
+            "packages": [],
+            "requires": [],
+            "backend": "snowflake",
+            "type": "simple",
+            "id": "491848770",
+            "phase": "2",
+            "disabled": false,
+            "description": ""
+        },
+        "description": "",
+        "name": "Product"
+    },
+    {
+        "configuration": {
+            "output": [
+                {
+                    "source": "out_contract",
+                    "primaryKey": [
+                        "contract_id"
+                    ],
+                    "metadata": [
+                        {
+                            "key": "bdm.scaffold.table.tag",
+                            "value": "MrrSalesforce.internal.outCrmContract"
+                        },
+                        {
+                            "key": "scaffold.id",
+                            "value": "MrrSalesforce"
+                        }
+                    ],
+                    "destination": "out.c-mrrSalesforce.crmContract",
+                    "__SCAFFOLD_CHECK__original_destination": "out.c-crm.contract"
+                },
+                {
+                    "source": "out_contract_line",
+                    "primaryKey": [
+                        "contract_line_id"
+                    ],
+                    "metadata": [
+                        {
+                            "key": "bdm.scaffold.table.tag",
+                            "value": "MrrSalesforce.internal.outCrmContractLine"
+                        },
+                        {
+                            "key": "scaffold.id",
+                            "value": "MrrSalesforce"
+                        }
+                    ],
+                    "destination": "out.c-mrrSalesforce.crmContractLine",
+                    "__SCAFFOLD_CHECK__original_destination": "out.c-crm.contract_line"
+                }
+            ],
+            "queries": [
+                "--contract table\nCREATE TABLE \"out_contract\"\nAS\n    SELECT\n        \"o\".\"Id\"            \t\t\tAS \"contract_id\",\n        \"o\".\"AccountId\"     \t\t\tAS \"company_id\",\n        ifnull(\"e\".\"employee_id\", '0')\tAS \"employee_id\",\n        \"o\".\"Name\"          \t\t\tAS \"contract\",\n        \"o\".\"OrderNumber\"   \t\t\tAS \"contract_number\",\n        \"o\".\"EffectiveDate\" \t\t\tAS \"contract_start_date\",\n        \"o\".\"EndDate\"       \t\t\tAS \"contract_end_date\",\n        \"o\".\"Status\"\t\t\t\t\tAS \"status\"\n    FROM \"order\" \"o\"\n             LEFT JOIN \"employee\" \"e\"\n                       ON \"o\".\"OwnerId\" = \"e\".\"employee_id\"\n    WHERE \"o\".\"IsDeleted\" = 'false';",
+                "--contract lines table\nCREATE TABLE \"out_contract_line\"\nAS\n    SELECT\n        \"i\".\"Id\"                                                             AS \"contract_line_id\",\n        \"o\".\"Id\"                                                             AS \"contract_id\",\n        \"i\".\"Product2Id\"                                                     AS \"product_id\",\n        IFF(\"i\".\"ServiceDate\" <> '', \"i\".\"ServiceDate\", \"o\".\"EffectiveDate\") AS \"contract_line_start_date\",\n        IFF(\"i\".\"EndDate\" <> '', \"i\".\"EndDate\", \"o\".\"EndDate\")               AS \"contract_line_end_date\",\n        \"i\".\"Quantity\"                                                       AS \"contract_line_quantity\",\n        \"i\".\"UnitPrice\"\/8.76                                                 AS \"contract_line_unit_price\",\n        \"i\".\"CurrencyIsoCode\"                                                AS \"contract_line_currency\"\n    FROM \"order\" \"o\"\n             INNER JOIN \"order_item\" \"i\"\n                  \t\tON \"o\".\"Id\" = \"i\".\"OrderId\"\n    WHERE \"o\".\"IsDeleted\" = 'false';"
+            ],
+            "input": [
+                {
+                    "destination": "order",
+                    "datatypes": [],
+                    "whereColumn": "",
+                    "whereValues": [],
+                    "whereOperator": "eq",
+                    "columns": [],
+                    "loadType": "clone",
+                    "source_search": {
+                        "key": "bdm.scaffold.table.tag",
+                        "__SCAFFOLD_CHECK__.value": "MrrSalesforce.internal.inSalesforceOrder"
+                    },
+                    "__SCAFFOLD_CHECK__.source": "in.c-mrrSalesforce.salesforceOrder",
+                    "__SCAFFOLD_CHECK__.original_source": "in.c-salesforce.order"
+                },
+                {
+                    "destination": "order_item",
+                    "datatypes": [],
+                    "whereColumn": "",
+                    "whereValues": [],
+                    "whereOperator": "eq",
+                    "columns": [],
+                    "loadType": "clone",
+                    "source_search": {
+                        "key": "bdm.scaffold.table.tag",
+                        "__SCAFFOLD_CHECK__.value": "MrrSalesforce.internal.inSalesforceOrderitem"
+                    },
+                    "__SCAFFOLD_CHECK__.source": "in.c-mrrSalesforce.salesforceOrderitem",
+                    "__SCAFFOLD_CHECK__.original_source": "in.c-salesforce.orderitem"
+                },
+                {
+                    "destination": "product",
+                    "datatypes": [],
+                    "whereColumn": "",
+                    "whereValues": [],
+                    "whereOperator": "eq",
+                    "columns": [],
+                    "loadType": "clone",
+                    "source_search": {
+                        "key": "bdm.scaffold.table.tag",
+                        "__SCAFFOLD_CHECK__.value": "MrrSalesforce.internal.outCrmProduct"
+                    },
+                    "__SCAFFOLD_CHECK__.source": "out.c-mrrSalesforce.crmProduct",
+                    "__SCAFFOLD_CHECK__.original_source": "out.c-crm.product"
+                },
+                {
+                    "destination": "company",
+                    "datatypes": [],
+                    "whereColumn": "",
+                    "whereValues": [],
+                    "whereOperator": "eq",
+                    "columns": [],
+                    "loadType": "clone",
+                    "source_search": {
+                        "key": "bdm.scaffold.table.tag",
+                        "__SCAFFOLD_CHECK__.value": "MrrSalesforce.internal.outCrmCompany"
+                    },
+                    "__SCAFFOLD_CHECK__.source": "out.c-mrrSalesforce.crmCompany",
+                    "__SCAFFOLD_CHECK__.original_source": "out.c-crm.company"
+                },
+                {
+                    "destination": "employee",
+                    "datatypes": [],
+                    "whereColumn": "",
+                    "whereValues": [],
+                    "whereOperator": "eq",
+                    "columns": [],
+                    "loadType": "clone",
+                    "source_search": {
+                        "key": "bdm.scaffold.table.tag",
+                        "__SCAFFOLD_CHECK__.value": "MrrSalesforce.internal.outCrmEmployee"
+                    },
+                    "__SCAFFOLD_CHECK__.source": "out.c-mrrSalesforce.crmEmployee",
+                    "__SCAFFOLD_CHECK__.original_source": "out.c-crm.employee"
+                }
+            ],
+            "name": "Contracts",
+            "packages": [],
+            "requires": [],
+            "backend": "snowflake",
+            "type": "simple",
+            "id": "491849201",
+            "phase": "3",
+            "disabled": false,
+            "description": ""
+        },
+        "description": "",
+        "name": "Contracts"
+    },
+    {
+        "configuration": {
+            "output": [
+                {
+                    "source": "out_employee",
+                    "primaryKey": [
+                        "employee_id"
+                    ],
+                    "metadata": [
+                        {
+                            "key": "bdm.scaffold.table.tag",
+                            "value": "MrrSalesforce.internal.outCrmEmployee"
+                        },
+                        {
+                            "key": "scaffold.id",
+                            "value": "MrrSalesforce"
+                        }
+                    ],
+                    "destination": "out.c-mrrSalesforce.crmEmployee",
+                    "__SCAFFOLD_CHECK__original_destination": "out.c-crm.employee"
+                }
+            ],
+            "queries": [
+                "--create output table with employees\nCREATE TABLE \"out_employee\"\nAS\n  SELECT\n    \"Id\"    AS \"employee_id\",\n    \"Name\"  AS \"employee\",\n    \"Email\" AS \"email\",\n    \"Title\" AS \"position\"\n  FROM \"user\";",
+                "--fake row to keep referential integrity if child tables are missing existing employee ids\nINSERT INTO \"out_employee\"\n  (\"employee_id\", \"employee\", \"email\", \"position\")\nVALUES\n  ('0', 'Unknown', '', '');"
+            ],
+            "input": [
+                {
+                    "destination": "user",
+                    "datatypes": [],
+                    "whereColumn": "",
+                    "whereValues": [],
+                    "whereOperator": "eq",
+                    "columns": [],
+                    "loadType": "clone",
+                    "source_search": {
+                        "key": "bdm.scaffold.table.tag",
+                        "__SCAFFOLD_CHECK__.value": "MrrSalesforce.internal.inSalesforceUser"
+                    },
+                    "__SCAFFOLD_CHECK__.source": "in.c-mrrSalesforce.salesforceUser",
+                    "__SCAFFOLD_CHECK__.original_source": "in.c-salesforce.user"
+                }
+            ],
+            "name": "Employee",
+            "packages": [],
+            "requires": [],
+            "backend": "snowflake",
+            "type": "simple",
+            "id": "492063220",
+            "phase": "2",
+            "disabled": false,
+            "description": ""
+        },
+        "description": "",
+        "name": "Employee"
+    },
+    {
+        "configuration": {
+            "output": [
+                {
+                    "source": "out_mrr_aggregated",
+                    "primaryKey": [
+                        "mrr_aggregated_id"
+                    ],
+                    "metadata": [
+                        {
+                            "key": "bdm.scaffold.table.tag",
+                            "value": "MrrSalesforce.internal.outMrrMrrAggregated"
+                        },
+                        {
+                            "key": "scaffold.id",
+                            "value": "MrrSalesforce"
+                        }
+                    ],
+                    "destination": "out.c-mrrSalesforce.mrrMrrAggregated",
+                    "__SCAFFOLD_CHECK__original_destination": "out.c-mrr.mrr_aggregated"
+                }
+            ],
+            "queries": [
+                "-- Aggregation\nCREATE TABLE \"tmp_mrr_aggregated\"\nAS\n    SELECT\n        \"c\".\"company_id\",\n        \"m\".\"date\",\n        \"m\".\"contract_line_currency\",\n        SUM(\"m\".\"contract_line_quantity\" * \"m\".\"contract_line_unit_price\")                   AS \"gross_mrr\",\n        SUM(\"m\".\"previous_contract_line_quantity\" * \"m\".\"previous_contract_line_unit_price\") AS \"previous_gross_mrr\"\n    FROM \"mrr\" \"m\"\n             LEFT JOIN \"contract_line\" \"l\"\n                       ON \"m\".\"contract_line_id\" = \"l\".\"contract_line_id\"\n             LEFT JOIN \"contract\" \"c\"\n                       ON \"l\".\"contract_id\" = \"c\".\"contract_id\"\n    GROUP BY 1, 2, 3;",
+                "-- Add changes and flags\nCREATE TABLE \"out_mrr_aggregated\"\nAS\n    SELECT\n        \"company_id\" || '_' || \"date\"      AS \"mrr_aggregated_id\",\n        *,\n        \"gross_mrr\" - \"previous_gross_mrr\" AS \"gross_mrr_change\",\n        (CASE\n             WHEN \"gross_mrr\" = 0 AND \"previous_gross_mrr\" > 0\n                 THEN 'Churn'\n             WHEN \"gross_mrr\" > 0 AND \"previous_gross_mrr\" = 0\n                 THEN 'Net New'\n             WHEN \"gross_mrr\" > \"previous_gross_mrr\"\n                 THEN 'Upgrade'\n             WHEN \"gross_mrr\" < \"previous_gross_mrr\"\n                 THEN 'Downgrade'\n             ELSE 'No Change'\n         END)                              AS \"gross_action\",\n        (CASE\n             WHEN \"gross_mrr\" = 0 AND \"previous_gross_mrr\" > 0\n                 THEN -1\n             WHEN \"gross_mrr\" > 0 AND \"previous_gross_mrr\" = 0\n                 THEN 1\n             ELSE 0\n         END)                              AS \"count_change\"\n    FROM \"tmp_mrr_aggregated\";"
+            ],
+            "input": [
+                {
+                    "destination": "mrr",
+                    "datatypes": [],
+                    "whereColumn": "",
+                    "whereValues": [],
+                    "whereOperator": "eq",
+                    "columns": [],
+                    "loadType": "clone",
+                    "source_search": {
+                        "key": "bdm.scaffold.table.tag",
+                        "__SCAFFOLD_CHECK__.value": "MrrSalesforce.internal.outMrrMrr"
+                    },
+                    "__SCAFFOLD_CHECK__.source": "out.c-mrrSalesforce.mrrMrr",
+                    "__SCAFFOLD_CHECK__.original_source": "out.c-mrr.mrr"
+                },
+                {
+                    "destination": "contract_line",
+                    "datatypes": [],
+                    "whereColumn": "",
+                    "whereValues": [],
+                    "whereOperator": "eq",
+                    "columns": [],
+                    "loadType": "clone",
+                    "source_search": {
+                        "key": "bdm.scaffold.table.tag",
+                        "__SCAFFOLD_CHECK__.value": "MrrSalesforce.internal.outCrmContractLine"
+                    },
+                    "__SCAFFOLD_CHECK__.source": "out.c-mrrSalesforce.crmContractLine",
+                    "__SCAFFOLD_CHECK__.original_source": "out.c-crm.contract_line"
+                },
+                {
+                    "destination": "contract",
+                    "datatypes": [],
+                    "whereColumn": "",
+                    "whereValues": [],
+                    "whereOperator": "eq",
+                    "columns": [],
+                    "loadType": "clone",
+                    "source_search": {
+                        "key": "bdm.scaffold.table.tag",
+                        "__SCAFFOLD_CHECK__.value": "MrrSalesforce.internal.outCrmContract"
+                    },
+                    "__SCAFFOLD_CHECK__.source": "out.c-mrrSalesforce.crmContract",
+                    "__SCAFFOLD_CHECK__.original_source": "out.c-crm.contract"
+                }
+            ],
+            "name": "MRR - Aggregation",
+            "packages": [],
+            "requires": [],
+            "backend": "snowflake",
+            "type": "simple",
+            "id": "506913584",
+            "phase": "5",
+            "disabled": false,
+            "description": ""
+        },
+        "description": "",
+        "name": "MRR - Aggregation"
+    },
+    {
+        "configuration": {
+            "output": [
+                {
+                    "primaryKey": [
+                        "Id"
+                    ],
+                    "source": "out_account",
+                    "metadata": [
+                        {
+                            "key": "bdm.scaffold.table.tag",
+                            "value": "MrrSalesforce.internal.inSalesforceAccount"
+                        },
+                        {
+                            "key": "scaffold.id",
+                            "value": "MrrSalesforce"
+                        }
+                    ],
+                    "destination": "in.c-mrrSalesforce.salesforceAccount",
+                    "__SCAFFOLD_CHECK__original_destination": "in.c-salesforce.account"
+                },
+                {
+                    "primaryKey": [
+                        "Id"
+                    ],
+                    "source": "out_user",
+                    "metadata": [
+                        {
+                            "key": "bdm.scaffold.table.tag",
+                            "value": "MrrSalesforce.internal.inSalesforceUser"
+                        },
+                        {
+                            "key": "scaffold.id",
+                            "value": "MrrSalesforce"
+                        }
+                    ],
+                    "destination": "in.c-mrrSalesforce.salesforceUser",
+                    "__SCAFFOLD_CHECK__original_destination": "in.c-salesforce.user"
+                },
+                {
+                    "source": "out_order",
+                    "primaryKey": [
+                        "Id"
+                    ],
+                    "metadata": [
+                        {
+                            "key": "bdm.scaffold.table.tag",
+                            "value": "MrrSalesforce.internal.inSalesforceOrder"
+                        },
+                        {
+                            "key": "scaffold.id",
+                            "value": "MrrSalesforce"
+                        }
+                    ],
+                    "destination": "in.c-mrrSalesforce.salesforceOrder",
+                    "__SCAFFOLD_CHECK__original_destination": "in.c-salesforce.order"
+                },
+                {
+                    "primaryKey": [
+                        "Id"
+                    ],
+                    "source": "out_orderitem",
+                    "metadata": [
+                        {
+                            "key": "bdm.scaffold.table.tag",
+                            "value": "MrrSalesforce.internal.inSalesforceOrderitem"
+                        },
+                        {
+                            "key": "scaffold.id",
+                            "value": "MrrSalesforce"
+                        }
+                    ],
+                    "destination": "in.c-mrrSalesforce.salesforceOrderitem",
+                    "__SCAFFOLD_CHECK__original_destination": "in.c-salesforce.orderitem"
+                },
+                {
+                    "primaryKey": [
+                        "Id"
+                    ],
+                    "source": "out_product2",
+                    "metadata": [
+                        {
+                            "key": "bdm.scaffold.table.tag",
+                            "value": "MrrSalesforce.internal.inSalesforceProduct2"
+                        },
+                        {
+                            "key": "scaffold.id",
+                            "value": "MrrSalesforce"
+                        }
+                    ],
+                    "destination": "in.c-mrrSalesforce.salesforceProduct2",
+                    "__SCAFFOLD_CHECK__original_destination": "in.c-salesforce.product2"
+                }
+            ],
+            "queries": [
+                "--account table\nCREATE TABLE \"account_tmp\"\nAS\n    SELECT\n        OBJECT_CONSTRUCT(*) AS \"obj\"\n    FROM \"account\";",
+                "CREATE TABLE \"out_account\"\nAS\n    SELECT\n        trim(\"obj\":\"Id\", '\"')          AS \"Id\",\n        trim(\"obj\":\"IsDeleted\", '\"')   AS \"IsDeleted\",\n        trim(\"obj\":\"Name\", '\"')        AS \"Name\",\n        trim(\"obj\":\"Website\", '\"')     AS \"Website\",\n        trim(\"obj\":\"CreatedDate\", '\"') AS \"CreatedDate\"\n    FROM \"account_tmp\";",
+                "--user table\nCREATE TABLE \"user_tmp\"\nAS\n    SELECT\n        OBJECT_CONSTRUCT(*) AS \"obj\"\n    FROM \"user\";",
+                "CREATE TABLE \"out_user\"\nAS\n    SELECT\n        trim(\"obj\":\"Id\", '\"')    AS \"Id\",\n        trim(\"obj\":\"Name\", '\"')  AS \"Name\",\n        trim(\"obj\":\"Email\", '\"') AS \"Email\",\n        trim(\"obj\":\"Title\", '\"') AS \"Title\"\n    FROM \"user_tmp\";",
+                "--order table\nCREATE TABLE \"order_tmp\"\nAS\n    SELECT\n        OBJECT_CONSTRUCT(*) AS \"obj\"\n    FROM \"order\";",
+                "CREATE TABLE \"out_order\"\nAS\n    SELECT\n        trim(\"obj\":\"Id\", '\"')            AS \"Id\",\n        trim(\"obj\":\"IsDeleted\", '\"')     AS \"IsDeleted\",\n        trim(\"obj\":\"AccountId\", '\"')     AS \"AccountId\",\n        trim(\"obj\":\"OwnerId\", '\"')       AS \"OwnerId\",\n        trim(\"obj\":\"OpportunityId\", '\"') AS \"OpportunityId\",\n        trim(\"obj\":\"Name\", '\"')          AS \"Name\",\n        trim(\"obj\":\"OrderNumber\", '\"')   AS \"OrderNumber\",\n        trim(\"obj\":\"EffectiveDate\", '\"') AS \"EffectiveDate\",\n        trim(\"obj\":\"EndDate\", '\"')       AS \"EndDate\",\n        trim(\"obj\":\"Status\", '\"')        AS \"Status\"\n    FROM \"order_tmp\";",
+                "--order table\nCREATE TABLE \"orderitem_tmp\"\nAS\n    SELECT\n        OBJECT_CONSTRUCT(*) AS \"obj\"\n    FROM \"orderitem\";",
+                "CREATE TABLE \"out_orderitem\"\nAS\n    SELECT\n        trim(\"obj\":\"Id\", '\"')              AS \"Id\",\n        trim(\"obj\":\"IsDeleted\", '\"')       AS \"IsDeleted\",\n        trim(\"obj\":\"Product2Id\", '\"')      AS \"Product2Id\",\n        trim(\"obj\":\"OrderId\", '\"')         AS \"OrderId\",\n        trim(\"obj\":\"ServiceDate\", '\"')     AS \"ServiceDate\",\n        trim(\"obj\":\"EndDate\", '\"')         AS \"EndDate\",\n        trim(\"obj\":\"Quantity\", '\"')        AS \"Quantity\",\n        trim(\"obj\":\"UnitPrice\", '\"')       AS \"UnitPrice\",\n        trim(\"obj\":\"CurrencyIsoCode\", '\"') AS \"CurrencyIsoCode\"\n    FROM \"orderitem_tmp\";",
+                "--order table\nCREATE TABLE \"product2_tmp\"\nAS\n    SELECT\n        OBJECT_CONSTRUCT(*) AS \"obj\"\n    FROM \"product2\";",
+                "CREATE TABLE \"out_product2\"\nAS\n    SELECT\n        trim(\"obj\":\"Id\", '\"')     AS \"Id\",\n        trim(\"obj\":\"Name\", '\"')   AS \"Name\",\n        trim(\"obj\":\"Family\", '\"') AS \"Family\"\n    FROM \"product2_tmp\";"
+            ],
+            "input": [
+                {
+                    "destination": "account",
+                    "datatypes": [],
+                    "whereColumn": "",
+                    "whereValues": [],
+                    "whereOperator": "eq",
+                    "columns": [],
+                    "loadType": "clone",
+                    "source_search": {
+                        "key": "bdm.scaffold.table.tag",
+                        "__SCAFFOLD_CHECK__.value": "MrrSalesforce.internal.inHtnsExSalesforce491845103Account"
+                    },
+                    "__SCAFFOLD_CHECK__.source": "in.c-mrrSalesforce.htnsExSalesforce491845103Account",
+                    "__SCAFFOLD_CHECK__.original_source": "in.c-htns-ex-salesforce-491845103.account"
+                },
+                {
+                    "destination": "order",
+                    "datatypes": [],
+                    "whereColumn": "",
+                    "whereValues": [],
+                    "whereOperator": "eq",
+                    "columns": [],
+                    "loadType": "clone",
+                    "source_search": {
+                        "key": "bdm.scaffold.table.tag",
+                        "__SCAFFOLD_CHECK__.value": "MrrSalesforce.internal.inHtnsExSalesforce491845103Order"
+                    },
+                    "__SCAFFOLD_CHECK__.source": "in.c-mrrSalesforce.htnsExSalesforce491845103Order",
+                    "__SCAFFOLD_CHECK__.original_source": "in.c-htns-ex-salesforce-491845103.order"
+                },
+                {
+                    "destination": "orderitem",
+                    "datatypes": [],
+                    "whereColumn": "",
+                    "whereValues": [],
+                    "whereOperator": "eq",
+                    "columns": [],
+                    "loadType": "clone",
+                    "source_search": {
+                        "key": "bdm.scaffold.table.tag",
+                        "__SCAFFOLD_CHECK__.value": "MrrSalesforce.internal.inHtnsExSalesforce491845103Orderitem"
+                    },
+                    "__SCAFFOLD_CHECK__.source": "in.c-mrrSalesforce.htnsExSalesforce491845103Orderitem",
+                    "__SCAFFOLD_CHECK__.original_source": "in.c-htns-ex-salesforce-491845103.orderitem"
+                },
+                {
+                    "destination": "product2",
+                    "datatypes": [],
+                    "whereColumn": "",
+                    "whereValues": [],
+                    "whereOperator": "eq",
+                    "columns": [],
+                    "loadType": "clone",
+                    "source_search": {
+                        "key": "bdm.scaffold.table.tag",
+                        "__SCAFFOLD_CHECK__.value": "MrrSalesforce.internal.inHtnsExSalesforce491845103Product2"
+                    },
+                    "__SCAFFOLD_CHECK__.source": "in.c-mrrSalesforce.htnsExSalesforce491845103Product2",
+                    "__SCAFFOLD_CHECK__.original_source": "in.c-htns-ex-salesforce-491845103.product2"
+                },
+                {
+                    "destination": "user",
+                    "datatypes": [],
+                    "whereColumn": "",
+                    "whereValues": [],
+                    "whereOperator": "eq",
+                    "columns": [],
+                    "loadType": "clone",
+                    "source_search": {
+                        "key": "bdm.scaffold.table.tag",
+                        "__SCAFFOLD_CHECK__.value": "MrrSalesforce.internal.inHtnsExSalesforce491845103User"
+                    },
+                    "__SCAFFOLD_CHECK__.source": "in.c-mrrSalesforce.htnsExSalesforce491845103User",
+                    "__SCAFFOLD_CHECK__.original_source": "in.c-htns-ex-salesforce-491845103.user"
+                }
+            ],
+            "name": "Input Tables Creation",
+            "packages": [],
+            "requires": [],
+            "backend": "snowflake",
+            "type": "simple",
+            "id": "530541044",
+            "phase": 1,
+            "disabled": false,
+            "description": ""
+        },
+        "description": "This Transformation checks for missing columns needed in the following Transformations, adding them to the output tables a populating them with NULL values if missing.",
+        "name": "Input Tables Creation"
+    },
+    {
+        "configuration": {
+            "output": [
+                {
+                    "primaryKey": [
+                        "mrr_id"
+                    ],
+                    "source": "out_mrr",
+                    "metadata": [
+                        {
+                            "key": "bdm.scaffold.table.tag",
+                            "value": "MrrSalesforce.internal.outMrrMrr"
+                        },
+                        {
+                            "key": "scaffold.id",
+                            "value": "MrrSalesforce"
+                        }
+                    ],
+                    "destination": "out.c-mrrSalesforce.mrrMrr",
+                    "__SCAFFOLD_CHECK__original_destination": "out.c-mrr.mrr"
+                }
+            ],
+            "queries": [
+                "--Generate list of 10000 consecutive dates (to the FUTURE), beginning by fixed date (2010-01-01)\n--It's used for generating MRR rows\nCREATE TABLE \"dates\"\nAS\n    SELECT\n        DATEADD(\n                DAY, \/* simple DATE math *\/\n                \"seq\".\"seq\", \/* adding generated numbers from fixed date *\/\n                \"oldday\"\n            ) :: DATE AS \"date\"\n    FROM (\n             SELECT\n                 '2010-01-01' AS \"oldday\" \/* FIXED DATE *\/\n         ) \"t1\"\n             LEFT JOIN (\n        SELECT\n            seq2() AS \"seq\" \/* SUBQUERY #1 *\/\n        FROM TABLE (generator(ROWCOUNT => 10000)) \/* - produce 10000 rows table with {0:9999} numbers *\/\n    ) \"seq\"\n    ORDER BY 1;",
+                "\/*\n--This can be used to remove rows of products which you don't want to include in MRR. You need to define such field in previous Transformations though.\n--remove non-MRR rows\nDELETE\nFROM \"contract_line\"\nWHERE \"product_type\" <> 'MRR';\n*\/\n\n--fill missing end date values\nUPDATE \"contract_line\"\nSET \"contract_line_end_date\"=year(current_date) || '-12-31'\nWHERE \"contract_line_end_date\" = '';",
+                "UPDATE \"contract\"\nSET \"contract_end_date\"=year(current_date) || '-12-31'\nWHERE \"contract_end_date\" = '';",
+                "\/*\n--If you have costs in your data as well, you can include them in this transformation\nUPDATE \"contract_line\"\nSET \"contract_line_cost\"='0'\nWHERE \"contract_line_cost\" = '';\n*\/\n\n--prepare tmp table with marked max end date of single product in contract_line table, so we know for which row to create prediction if there is single product more than once\n--that might happen when you're upselling\/downgrading in the middle of the month.\nCREATE TABLE \"contract_line_tmp\"\nAS\n    SELECT\n        \"l\".*,\n        \"max_end\".\"max_end_date\"\n    FROM \"contract_line\" \"l\"\n             LEFT JOIN (SELECT\n                            \"contract_id\",\n                            \"product_id\",\n                            max(\"contract_line_end_date\") AS \"max_end_date\"\n                        FROM \"contract_line\"\n                        GROUP BY 1, 2) AS \"max_end\"\n                       ON \"l\".\"contract_id\" = \"max_end\".\"contract_id\"\n                           AND \"l\".\"product_id\" = \"max_end\".\"product_id\"\n                           AND \"l\".\"contract_line_end_date\" = \"max_end\".\"max_end_date\";",
+                "--creating PK\n--add extra month per contract line and fill with zeroes, so we're abel to detect churn\n--don't do that for products switching during single month - just end the ending one in that particular month\n--use only (finished and) activated contracts for MRR calculation\n--add fake months till end of the next year of future revenue for activated contracts\n--if line is ending in december, alter join to end it in december next year\n--if line of activated contract ended up in the past, don't predict it\nCREATE TABLE \"mrr_tmp\"\nAS\n    SELECT DISTINCT\n        \"l\".\"contract_line_id\" || '|' || left(\"d\".\"date\", 7) || '-01' AS \"mrr_id\",\n        \"l\".\"contract_line_id\",\n        \"l\".\"contract_id\",\n        \"l\".\"product_id\",\n        \"l\".\"contract_line_currency\",\n        \"l\".\"contract_line_start_date\",\n        \"l\".\"contract_line_end_date\",\n        left(\"d\".\"date\", 7) || '-01'                                  AS \"date\",\n        (CASE\n            \/*WHEN \"date\" > \"l\".\"contract_line_end_date\"\n                AND (\"c\".\"status\" = 'Finished' OR \"l\".\"max_end_date\" IS NULL)\n                THEN 0*\/ --related to adding another status to the MRR, like status marking finished orders to calculate MRR in the past and cut the prediction when there is churn\n             WHEN \"date\" > \"l\".\"contract_line_end_date\"\n                 AND \"c\".\"status\" = 'Activated'\n                 AND \"l\".\"contract_line_end_date\" < current_date\n                 THEN 0\n             WHEN last_day(\"date\"::DATE) = iff(\"l\".\"contract_line_end_date\" LIKE '%-12-31',\n                                               dateadd(YEAR, 1, \"l\".\"contract_line_end_date\"),\n                                               YEAR(\"l\".\"contract_line_end_date\"::DATE) + 1 || '-12-31')\n                 AND \"status\" = 'Activated'\n                 AND \"l\".\"max_end_date\" IS NOT NULL\n                 THEN 0\n             ELSE \"l\".\"contract_line_quantity\"\n         END)                                                         AS \"contract_line_quantity\",\n        (CASE\n            \/*WHEN \"date\" > \"l\".\"contract_line_end_date\"\n                AND (\"c\".\"status\" = 'Finished' OR \"l\".\"max_end_date\" IS NULL)\n                THEN 0*\/ --related to adding another status to the MRR, like status marking finished orders to calculate MRR in the past and cut the prediction when there is churn\n             WHEN \"date\" > \"l\".\"contract_line_end_date\"\n                 AND \"c\".\"status\" = 'Activated'\n                 AND \"l\".\"contract_line_end_date\" < current_date\n                 THEN 0\n             WHEN last_day(\"date\"::DATE) = iff(\"l\".\"contract_line_end_date\" LIKE '%-12-31',\n                                               dateadd(YEAR, 1, \"l\".\"contract_line_end_date\"),\n                                               YEAR(\"l\".\"contract_line_end_date\"::DATE) + 1 || '-12-31')\n                 AND \"status\" = 'Activated'\n                 AND \"l\".\"max_end_date\" IS NOT NULL\n                 THEN 0\n             ELSE \"l\".\"contract_line_unit_price\"\n         END)                                                         AS \"contract_line_unit_price\"\/*,\n        --you can use this if you have costs in your data\n        (CASE\n             WHEN \"date\" > \"l\".\"contract_line_end_date\"\n                 AND (\"c\".\"status\" = 'Finished' OR \"l\".\"max_end_date\" IS NULL)\n                 THEN 0\n             WHEN \"date\" > \"l\".\"contract_line_end_date\"\n                 AND \"c\".\"status\" = 'Activated'\n                 AND \"l\".\"contract_line_end_date\" < current_date\n                 THEN 0\n             WHEN last_day(\"date\"::DATE) = iff(\"l\".\"contract_line_end_date\" LIKE '%-12-31',\n                                               dateadd(YEAR, 1, \"l\".\"contract_line_end_date\"),\n                                               YEAR(\"l\".\"contract_line_end_date\"::DATE) + 1 || '-12-31')\n                 AND \"status\" = 'Activated'\n                 AND \"l\".\"max_end_date\" IS NOT NULL\n                 THEN 0\n             ELSE \"l\".\"contract_line_cost\"\n         END)                                                         AS \"contract_line_cost\"*\/\n    FROM \"dates\" \"d\"\n             LEFT JOIN \"contract_line_tmp\" \"l\"\n                       ON \"d\".\"date\" BETWEEN \"l\".\"contract_line_start_date\" AND\n                           (CASE\n                                WHEN \"l\".\"contract_line_end_date\" LIKE '%-12-31'\n                                    AND \"l\".\"max_end_date\" IS NOT NULL\n                                    AND \"l\".\"contract_line_end_date\" >= current_date\n                                    THEN dateadd(YEAR, 1, \"l\".\"contract_line_end_date\")\n                                WHEN \"l\".\"max_end_date\" IS NOT NULL\n                                    AND \"l\".\"contract_line_end_date\" >= current_date\n                                    THEN YEAR(\"l\".\"contract_line_end_date\"::DATE) + 1 || '-12-31'\n                                ELSE dateadd(MONTH, 1, \"l\".\"contract_line_end_date\"::DATE)\n                            END)\n             LEFT JOIN \"contract\" \"c\"\n                       ON \"l\".\"contract_id\" = \"c\".\"contract_id\"\n    WHERE \"l\".\"contract_line_quantity\" * \"l\".\"contract_line_unit_price\" > 0\n      AND (left(to_date(dateadd(MONTH, 1, \"c\".\"contract_end_date\")), 7) >= left(\"d\".\"date\", 7) OR\n           \"c\".\"status\" = 'Activated')\n      AND \"c\".\"status\" IN ('Activated'\/*, 'Finished'*\/) --you can add another status to be included in MRR calculation\n;",
+                "--divide quantity when some lines start or end in the middle of the month\n--mark prediction for future MRR\nCREATE TABLE \"mrr_tmp2\"\nAS\n    SELECT\n        \"l\".\"mrr_id\",\n        \"l\".\"contract_line_id\",\n        \"l\".\"contract_id\",\n        \"l\".\"product_id\",\n        \"l\".\"contract_line_currency\",\n        \"l\".\"contract_line_start_date\",\n        \"l\".\"contract_line_end_date\",\n        \"l\".\"date\",\n        iff(left(\"l\".\"date\", 7) > left(\"l\".\"contract_line_end_date\", 7) AND \"c\".\"status\" = 'Activated', 'true',\n            'false')                         AS \"mrr_prediction\",\n        \"l\".\"contract_line_quantity\" \/ (CASE\n                                            WHEN left(\"l\".\"contract_line_start_date\", 7) = left(\"l\".\"date\", 7)\n                                                AND \"l\".\"contract_line_start_date\" > \"l\".\"date\"\n                                                THEN (datediff(DAY, \"l\".\"date\", last_day(\"l\".\"date\"::DATE)) + 1) \/\n                                                     datediff(DAY, \"l\".\"date\", \"l\".\"contract_line_start_date\")\n                                            WHEN left(\"l\".\"contract_line_end_date\", 7) = left(\"l\".\"date\", 7)\n                                                AND \"l\".\"contract_line_end_date\" < last_day(\"l\".\"date\"::DATE)\n                                                THEN (datediff(DAY, \"l\".\"date\", last_day(\"l\".\"date\"::DATE)) + 1) \/\n                                                     datediff(DAY, \"l\".\"contract_line_end_date\",\n                                                              last_day(\"l\".\"date\"::DATE))\n                                            ELSE 1\n                                        END) AS \"contract_line_quantity\",\n        \"l\".\"contract_line_unit_price\"\/*,\n        \"l\".\"contract_line_cost\"*\/\n    FROM \"mrr_tmp\" \"l\"\n             LEFT JOIN \"contract\" \"c\"\n                       ON \"l\".\"contract_id\" = \"c\".\"contract_id\";",
+                "--output table\n--caulculate previous values and fill zeroes for null results\nCREATE TABLE \"out_mrr\"\nAS\n    SELECT\n        \"r\".*,\n        ifnull(lag(\"r\".\"contract_line_quantity\")\n                   OVER (PARTITION BY \"r\".\"contract_line_id\" ORDER BY \"r\".\"date\"),\n               0) AS \"previous_contract_line_quantity\",\n        ifnull(lag(\"r\".\"contract_line_unit_price\")\n                   OVER (PARTITION BY \"r\".\"contract_line_id\" ORDER BY \"r\".\"date\"),\n               0) AS \"previous_contract_line_unit_price\"\/*,\n        ifnull(lag(\"r\".\"contract_line_cost\")\n                   OVER (PARTITION BY \"r\".\"contract_line_id\" ORDER BY \"r\".\"date\"),\n               0) AS \"previous_contract_line_cost\"*\/\n    FROM \"mrr_tmp2\" \"r\";"
+            ],
+            "input": [
+                {
+                    "destination": "contract",
+                    "datatypes": [],
+                    "whereColumn": "",
+                    "whereValues": [],
+                    "whereOperator": "eq",
+                    "columns": [],
+                    "loadType": "clone",
+                    "source_search": {
+                        "key": "bdm.scaffold.table.tag",
+                        "__SCAFFOLD_CHECK__.value": "MrrSalesforce.internal.outCrmContract"
+                    },
+                    "__SCAFFOLD_CHECK__.source": "out.c-mrrSalesforce.crmContract",
+                    "__SCAFFOLD_CHECK__.original_source": "out.c-crm.contract"
+                },
+                {
+                    "destination": "contract_line",
+                    "datatypes": [],
+                    "whereColumn": "",
+                    "whereValues": [],
+                    "whereOperator": "eq",
+                    "columns": [],
+                    "loadType": "clone",
+                    "source_search": {
+                        "key": "bdm.scaffold.table.tag",
+                        "__SCAFFOLD_CHECK__.value": "MrrSalesforce.internal.outCrmContractLine"
+                    },
+                    "__SCAFFOLD_CHECK__.source": "out.c-mrrSalesforce.crmContractLine",
+                    "__SCAFFOLD_CHECK__.original_source": "out.c-crm.contract_line"
+                }
+            ],
+            "name": "MRR - Contract Line",
+            "packages": [],
+            "requires": [],
+            "backend": "snowflake",
+            "type": "simple",
+            "id": "530867745",
+            "phase": "4",
+            "disabled": false,
+            "description": ""
+        },
+        "description": "",
+        "name": "MRR - Contract Line"
+    }
+]

@@ -1,0 +1,35 @@
+{
+    "name": "",
+    "author": "Keboola",
+    "description": "",
+    "inputs": [
+        {
+            "id": "htnsExSalesforceSalesforceMRR",
+            "componentId": "htns.ex-salesforce",
+            "name": "Salesforce MRR",
+            "required": true,
+            "schema": null
+        },
+        {
+            "id": "transformationSalesforceMRR",
+            "componentId": "transformation",
+            "name": "Salesforce MRR",
+            "required": true,
+            "schema": null
+        },
+        {
+            "id": "keboolaWrDbSnowflakeSnowflake",
+            "componentId": "keboola.wr-db-snowflake",
+            "name": "Snowflake",
+            "required": true,
+            "schema": null
+        },
+        {
+            "id": "orchestrationMRR",
+            "componentId": "orchestrator",
+            "name": "MRR",
+            "required": true,
+            "schema": null
+        }
+    ]
+}
