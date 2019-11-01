@@ -1,0 +1,922 @@
+{
+    "componentId": "keboola.wr-db-snowflake",
+    "authorization": "provisionedSnowflake",    
+    "payload": {
+        "name": "Snowflake",
+        "configuration": {
+            "parameters": {
+                "db": {
+                },
+                "tables": [
+                    {
+                        "dbName": "ISSUE",
+                        "export": true,
+                        "tableId": "out.c-bitbucket.issue",
+                        "items": [
+                            {
+                                "name": "issue_id",
+                                "dbName": "ISSUE_ID",
+                                "type": "varchar",
+                                "size": "255",
+                                "nullable": false,
+                                "default": ""
+                            },
+                            {
+                                "name": "repository_id",
+                                "dbName": "REPOSITORY_ID",
+                                "type": "varchar",
+                                "size": "255",
+                                "nullable": false,
+                                "default": ""
+                            },
+                            {
+                                "name": "user_id",
+                                "dbName": "USER_ID",
+                                "type": "varchar",
+                                "size": "255",
+                                "nullable": false,
+                                "default": ""
+                            },
+                            {
+                                "name": "reporter",
+                                "dbName": "REPORTER",
+                                "type": "varchar",
+                                "size": "255",
+                                "nullable": false,
+                                "default": ""
+                            },
+                            {
+                                "name": "number",
+                                "dbName": "NUMBER",
+                                "type": "integer",
+                                "size": "",
+                                "nullable": true,
+                                "default": ""
+                            },
+                            {
+                                "name": "title",
+                                "dbName": "TITLE",
+                                "type": "varchar",
+                                "size": "255",
+                                "nullable": false,
+                                "default": ""
+                            },
+                            {
+                                "name": "description",
+                                "dbName": "DESCRIPTION",
+                                "type": "varchar",
+                                "size": "1024",
+                                "nullable": false,
+                                "default": ""
+                            },
+                            {
+                                "name": "state",
+                                "dbName": "STATE",
+                                "type": "varchar",
+                                "size": "255",
+                                "nullable": false,
+                                "default": ""
+                            },
+                            {
+                                "name": "priority",
+                                "dbName": "PRIORITY",
+                                "type": "varchar",
+                                "size": "255",
+                                "nullable": false,
+                                "default": ""
+                            },
+                            {
+                                "name": "kind",
+                                "dbName": "KIND",
+                                "type": "varchar",
+                                "size": "255",
+                                "nullable": false,
+                                "default": ""
+                            },
+                            {
+                                "name": "created_on",
+                                "dbName": "CREATED_ON",
+                                "type": "timestamp",
+                                "size": "",
+                                "nullable": true,
+                                "default": ""
+                            },
+                            {
+                                "name": "updated_on",
+                                "dbName": "UPDATED_ON",
+                                "type": "timestamp",
+                                "size": "",
+                                "nullable": true,
+                                "default": ""
+                            },
+                            {
+                                "name": "url",
+                                "dbName": "URL",
+                                "type": "varchar",
+                                "size": "1000",
+                                "nullable": false,
+                                "default": ""
+                            }
+                        ],
+                        "primaryKey": [
+                            "ISSUE_ID"
+                        ]
+                    },
+                    {
+                        "dbName": "ISSUE_COMMENT",
+                        "export": true,
+                        "tableId": "out.c-bitbucket.issue_comment",
+                        "items": [
+                            {
+                                "name": "issue_comment_id",
+                                "dbName": "ISSUE_COMMENT_ID",
+                                "type": "varchar",
+                                "size": "255",
+                                "nullable": false,
+                                "default": ""
+                            },
+                            {
+                                "name": "issue_id",
+                                "dbName": "ISSUE_ID",
+                                "type": "varchar",
+                                "size": "255",
+                                "nullable": false,
+                                "default": ""
+                            },
+                            {
+                                "name": "user_id",
+                                "dbName": "USER_ID",
+                                "type": "varchar",
+                                "size": "255",
+                                "nullable": false,
+                                "default": ""
+                            },
+                            {
+                                "name": "user",
+                                "dbName": "USER",
+                                "type": "varchar",
+                                "size": "255",
+                                "nullable": false,
+                                "default": ""
+                            },
+                            {
+                                "name": "description",
+                                "dbName": "DESCRIPTION",
+                                "type": "varchar",
+                                "size": "1024",
+                                "nullable": false,
+                                "default": ""
+                            },
+                            {
+                                "name": "created_on",
+                                "dbName": "CREATED_ON",
+                                "type": "timestamp",
+                                "size": "",
+                                "nullable": true,
+                                "default": ""
+                            },
+                            {
+                                "name": "updated_on",
+                                "dbName": "UPDATED_ON",
+                                "type": "timestamp",
+                                "size": "",
+                                "nullable": true,
+                                "default": ""
+                            },
+                            {
+                                "name": "url",
+                                "dbName": "URL",
+                                "type": "varchar",
+                                "size": "1000",
+                                "nullable": false,
+                                "default": ""
+                            }
+                        ],
+                        "primaryKey": [
+                            "ISSUE_COMMENT_ID"
+                        ]
+                    },
+                    {
+                        "dbName": "ORGANIZATION",
+                        "export": true,
+                        "tableId": "out.c-bitbucket.organization",
+                        "items": [
+                            {
+                                "name": "organization_id",
+                                "dbName": "ORGANIZATION_ID",
+                                "type": "varchar",
+                                "size": "255",
+                                "nullable": false,
+                                "default": ""
+                            },
+                            {
+                                "name": "organization",
+                                "dbName": "ORGANIZATION",
+                                "type": "varchar",
+                                "size": "255",
+                                "nullable": false,
+                                "default": ""
+                            }
+                        ],
+                        "primaryKey": [
+                            "ORGANIZATION_ID"
+                        ]
+                    },
+                    {
+                        "dbName": "PULL_REQUEST",
+                        "export": true,
+                        "tableId": "out.c-bitbucket.pull_request",
+                        "items": [
+                            {
+                                "name": "pull_request_id",
+                                "dbName": "PULL_REQUEST_ID",
+                                "type": "varchar",
+                                "size": "255",
+                                "nullable": false,
+                                "default": ""
+                            },
+                            {
+                                "name": "repository_id",
+                                "dbName": "REPOSITORY_ID",
+                                "type": "varchar",
+                                "size": "255",
+                                "nullable": false,
+                                "default": ""
+                            },
+                            {
+                                "name": "user_id",
+                                "dbName": "USER_ID",
+                                "type": "varchar",
+                                "size": "255",
+                                "nullable": false,
+                                "default": ""
+                            },
+                            {
+                                "name": "title",
+                                "dbName": "TITLE",
+                                "type": "varchar",
+                                "size": "255",
+                                "nullable": false,
+                                "default": ""
+                            },
+                            {
+                                "name": "description",
+                                "dbName": "DESCRIPTION",
+                                "type": "varchar",
+                                "size": "1024",
+                                "nullable": false,
+                                "default": ""
+                            },
+                            {
+                                "name": "state",
+                                "dbName": "STATE",
+                                "type": "varchar",
+                                "size": "255",
+                                "nullable": false,
+                                "default": ""
+                            },
+                            {
+                                "name": "created_on",
+                                "dbName": "CREATED_ON",
+                                "type": "timestamp",
+                                "size": "",
+                                "nullable": true,
+                                "default": ""
+                            },
+                            {
+                                "name": "updated_on",
+                                "dbName": "UPDATED_ON",
+                                "type": "timestamp",
+                                "size": "",
+                                "nullable": true,
+                                "default": ""
+                            },
+                            {
+                                "name": "url",
+                                "dbName": "URL",
+                                "type": "varchar",
+                                "size": "1000",
+                                "nullable": false,
+                                "default": ""
+                            }
+                        ],
+                        "primaryKey": [
+                            "PULL_REQUEST_ID"
+                        ]
+                    },
+                    {
+                        "dbName": "PULL_REQUEST_ACTIVITY",
+                        "export": true,
+                        "tableId": "out.c-bitbucket.pull_request_activity",
+                        "items": [
+                            {
+                                "name": "pull_request_activity_id",
+                                "dbName": "PULL_REQUEST_ACTIVITY_ID",
+                                "type": "varchar",
+                                "size": "255",
+                                "nullable": false,
+                                "default": ""
+                            },
+                            {
+                                "name": "pull_request_id",
+                                "dbName": "PULL_REQUEST_ID",
+                                "type": "varchar",
+                                "size": "255",
+                                "nullable": false,
+                                "default": ""
+                            },
+                            {
+                                "name": "user_id",
+                                "dbName": "USER_ID",
+                                "type": "varchar",
+                                "size": "255",
+                                "nullable": false,
+                                "default": ""
+                            },
+                            {
+                                "name": "user",
+                                "dbName": "USER",
+                                "type": "varchar",
+                                "size": "255",
+                                "nullable": false,
+                                "default": ""
+                            },
+                            {
+                                "name": "date",
+                                "dbName": "DATE",
+                                "type": "timestamp",
+                                "size": "",
+                                "nullable": true,
+                                "default": ""
+                            },
+                            {
+                                "name": "state",
+                                "dbName": "STATE",
+                                "type": "varchar",
+                                "size": "255",
+                                "nullable": false,
+                                "default": ""
+                            },
+                            {
+                                "name": "title",
+                                "dbName": "TITLE",
+                                "type": "varchar",
+                                "size": "255",
+                                "nullable": false,
+                                "default": ""
+                            },
+                            {
+                                "name": "description",
+                                "dbName": "DESCRIPTION",
+                                "type": "varchar",
+                                "size": "1024",
+                                "nullable": false,
+                                "default": ""
+                            },
+                            {
+                                "name": "reason",
+                                "dbName": "REASON",
+                                "type": "varchar",
+                                "size": "255",
+                                "nullable": false,
+                                "default": ""
+                            }
+                        ],
+                        "primaryKey": [
+                            "PULL_REQUEST_ACTIVITY_ID"
+                        ]
+                    },
+                    {
+                        "dbName": "REPOSITORY",
+                        "export": true,
+                        "tableId": "out.c-bitbucket.repository",
+                        "items": [
+                            {
+                                "name": "repository_id",
+                                "dbName": "REPOSITORY_ID",
+                                "type": "varchar",
+                                "size": "255",
+                                "nullable": false,
+                                "default": ""
+                            },
+                            {
+                                "name": "repository",
+                                "dbName": "REPOSITORY",
+                                "type": "varchar",
+                                "size": "255",
+                                "nullable": false,
+                                "default": ""
+                            },
+                            {
+                                "name": "project",
+                                "dbName": "PROJECT",
+                                "type": "varchar",
+                                "size": "255",
+                                "nullable": false,
+                                "default": ""
+                            },
+                            {
+                                "name": "description",
+                                "dbName": "DESCRIPTION",
+                                "type": "varchar",
+                                "size": "1024",
+                                "nullable": false,
+                                "default": ""
+                            },
+                            {
+                                "name": "language",
+                                "dbName": "LANGUAGE",
+                                "type": "varchar",
+                                "size": "255",
+                                "nullable": false,
+                                "default": ""
+                            },
+                            {
+                                "name": "has_wiki",
+                                "dbName": "HAS_WIKI",
+                                "type": "varchar",
+                                "size": "255",
+                                "nullable": false,
+                                "default": ""
+                            },
+                            {
+                                "name": "has_issues",
+                                "dbName": "HAS_ISSUES",
+                                "type": "varchar",
+                                "size": "255",
+                                "nullable": false,
+                                "default": ""
+                            },
+                            {
+                                "name": "is_private",
+                                "dbName": "IS_PRIVATE",
+                                "type": "varchar",
+                                "size": "255",
+                                "nullable": false,
+                                "default": ""
+                            },
+                            {
+                                "name": "is_looker",
+                                "dbName": "IS_LOOKER",
+                                "type": "varchar",
+                                "size": "255",
+                                "nullable": false,
+                                "default": ""
+                            },
+                            {
+                                "name": "created_on",
+                                "dbName": "CREATED_ON",
+                                "type": "timestamp",
+                                "size": "",
+                                "nullable": true,
+                                "default": ""
+                            },
+                            {
+                                "name": "url",
+                                "dbName": "URL",
+                                "type": "varchar",
+                                "size": "1000",
+                                "nullable": false,
+                                "default": ""
+                            }
+                        ],
+                        "primaryKey": [
+                            "REPOSITORY_ID"
+                        ]
+                    },
+                    {
+                        "dbName": "REPOSITORY_COMMIT",
+                        "export": true,
+                        "tableId": "out.c-bitbucket.repository_commit",
+                        "items": [
+                            {
+                                "name": "repository_commit_id",
+                                "dbName": "REPOSITORY_COMMIT_ID",
+                                "type": "varchar",
+                                "size": "255",
+                                "nullable": false,
+                                "default": ""
+                            },
+                            {
+                                "name": "repository_id",
+                                "dbName": "REPOSITORY_ID",
+                                "type": "varchar",
+                                "size": "255",
+                                "nullable": false,
+                                "default": ""
+                            },
+                            {
+                                "name": "user_id",
+                                "dbName": "USER_ID",
+                                "type": "varchar",
+                                "size": "255",
+                                "nullable": false,
+                                "default": ""
+                            },
+                            {
+                                "name": "date",
+                                "dbName": "DATE",
+                                "type": "timestamp",
+                                "size": "",
+                                "nullable": true,
+                                "default": ""
+                            },
+                            {
+                                "name": "url",
+                                "dbName": "URL",
+                                "type": "varchar",
+                                "size": "1000",
+                                "nullable": false,
+                                "default": ""
+                            },
+                            {
+                                "name": "message",
+                                "dbName": "MESSAGE",
+                                "type": "varchar",
+                                "size": "1024",
+                                "nullable": false,
+                                "default": ""
+                            }
+                        ],
+                        "primaryKey": [
+                            "REPOSITORY_COMMIT_ID"
+                        ]
+                    },
+                    {
+                        "dbName": "REPOSITORY_COMMIT_CHANGE",
+                        "export": true,
+                        "tableId": "out.c-bitbucket.repository_commit_change",
+                        "items": [
+                            {
+                                "name": "repository_commit_change_id",
+                                "dbName": "REPOSITORY_COMMIT_CHANGE_ID",
+                                "type": "varchar",
+                                "size": "255",
+                                "nullable": false,
+                                "default": ""
+                            },
+                            {
+                                "name": "repository_commit_id",
+                                "dbName": "REPOSITORY_COMMIT_ID",
+                                "type": "varchar",
+                                "size": "255",
+                                "nullable": false,
+                                "default": ""
+                            },
+                            {
+                                "name": "status",
+                                "dbName": "STATUS",
+                                "type": "varchar",
+                                "size": "255",
+                                "nullable": false,
+                                "default": ""
+                            },
+                            {
+                                "name": "new_path",
+                                "dbName": "NEW_PATH",
+                                "type": "varchar",
+                                "size": "1000",
+                                "nullable": false,
+                                "default": ""
+                            },
+                            {
+                                "name": "file_type",
+                                "dbName": "FILE_TYPE",
+                                "type": "varchar",
+                                "size": "255",
+                                "nullable": false,
+                                "default": ""
+                            },
+                            {
+                                "name": "old_path",
+                                "dbName": "OLD_PATH",
+                                "type": "varchar",
+                                "size": "1000",
+                                "nullable": false,
+                                "default": ""
+                            },
+                            {
+                                "name": "lines_added",
+                                "dbName": "LINES_ADDED",
+                                "type": "integer",
+                                "size": "",
+                                "nullable": true,
+                                "default": ""
+                            },
+                            {
+                                "name": "lines_removed",
+                                "dbName": "LINES_REMOVED",
+                                "type": "integer",
+                                "size": "",
+                                "nullable": true,
+                                "default": ""
+                            }
+                        ],
+                        "primaryKey": [
+                            "REPOSITORY_COMMIT_CHANGE_ID"
+                        ]
+                    },
+                    {
+                        "dbName": "USER",
+                        "export": true,
+                        "tableId": "out.c-bitbucket.user",
+                        "items": [
+                            {
+                                "name": "user_id",
+                                "dbName": "USER_ID",
+                                "type": "varchar",
+                                "size": "255",
+                                "nullable": false,
+                                "default": ""
+                            },
+                            {
+                                "name": "organization_id",
+                                "dbName": "ORGANIZATION_ID",
+                                "type": "varchar",
+                                "size": "255",
+                                "nullable": false,
+                                "default": ""
+                            },
+                            {
+                                "name": "user",
+                                "dbName": "USER",
+                                "type": "varchar",
+                                "size": "255",
+                                "nullable": false,
+                                "default": ""
+                            },
+                            {
+                                "name": "created_on",
+                                "dbName": "CREATED_ON",
+                                "type": "timestamp",
+                                "size": "",
+                                "nullable": true,
+                                "default": ""
+                            },
+                            {
+                                "name": "type",
+                                "dbName": "TYPE",
+                                "type": "varchar",
+                                "size": "255",
+                                "nullable": false,
+                                "default": ""
+                            },
+                            {
+                                "name": "is_active",
+                                "dbName": "IS_ACTIVE",
+                                "type": "varchar",
+                                "size": "255",
+                                "nullable": false,
+                                "default": ""
+                            },
+                            {
+                                "name": "is_member",
+                                "dbName": "IS_MEMBER",
+                                "type": "varchar",
+                                "size": "255",
+                                "nullable": false,
+                                "default": ""
+                            }
+                        ],
+                        "primaryKey": [
+                            "USER_ID"
+                        ]
+                    },
+                    {
+                        "dbName": "EVENT",
+                        "export": true,
+                        "tableId": "out.c-bitbucket.event",
+                        "items": [
+                            {
+                                "name": "event_id",
+                                "dbName": "EVENT_ID",
+                                "type": "varchar",
+                                "size": "255",
+                                "nullable": false,
+                                "default": ""
+                            },
+                            {
+                                "name": "repository_id",
+                                "dbName": "REPOSITORY_ID",
+                                "type": "varchar",
+                                "size": "255",
+                                "nullable": false,
+                                "default": ""
+                            },
+                            {
+                                "name": "user_id",
+                                "dbName": "USER_ID",
+                                "type": "varchar",
+                                "size": "255",
+                                "nullable": false,
+                                "default": ""
+                            },
+                            {
+                                "name": "event",
+                                "dbName": "EVENT",
+                                "type": "varchar",
+                                "size": "255",
+                                "nullable": false,
+                                "default": ""
+                            },
+                            {
+                                "name": "date",
+                                "dbName": "DATE",
+                                "type": "timestamp",
+                                "size": "",
+                                "nullable": true,
+                                "default": ""
+                            },
+                            {
+                                "name": "url",
+                                "dbName": "URL",
+                                "type": "varchar",
+                                "size": "1000",
+                                "nullable": false,
+                                "default": ""
+                            }
+                        ],
+                        "primaryKey": [
+                            "EVENT_ID"
+                        ]
+                    }
+                ]
+            },
+            "storage": {
+                "input": {
+                    "tables": [
+                        {
+                            "destination": "out.c-bitbucket.issue.csv",
+                            "columns": [
+                                "issue_id",
+                                "repository_id",
+                                "user_id",
+                                "reporter",
+                                "number",
+                                "title",
+                                "description",
+                                "state",
+                                "priority",
+                                "kind",
+                                "created_on",
+                                "updated_on",
+                                "url"
+                            ],
+                            "source_search": {
+                                "key": "bdm.scaffold.table.tag",
+                                "value": "BitbucketDevops.internal.outBitbucketIssue"
+                            }
+                        },
+                        {
+                            "destination": "out.c-bitbucket.issue_comment.csv",
+                            "columns": [
+                                "issue_comment_id",
+                                "issue_id",
+                                "user_id",
+                                "user",
+                                "description",
+                                "created_on",
+                                "updated_on",
+                                "url"
+                            ],
+                            "source_search": {
+                                "key": "bdm.scaffold.table.tag",
+                                "value": "BitbucketDevops.internal.outBitbucketIssueComment"
+                            }
+                        },
+                        {
+                            "destination": "out.c-bitbucket.organization.csv",
+                            "columns": [
+                                "organization_id",
+                                "organization"
+                            ],
+                            "source_search": {
+                                "key": "bdm.scaffold.table.tag",
+                                "value": "BitbucketDevops.internal.outBitbucketOrganization"
+                            }
+                        },
+                        {
+                            "destination": "out.c-bitbucket.pull_request.csv",
+                            "columns": [
+                                "pull_request_id",
+                                "repository_id",
+                                "user_id",
+                                "title",
+                                "description",
+                                "state",
+                                "created_on",
+                                "updated_on",
+                                "url"
+                            ],
+                            "source_search": {
+                                "key": "bdm.scaffold.table.tag",
+                                "value": "BitbucketDevops.internal.outBitbucketPullRequest"
+                            }
+                        },
+                        {
+                            "destination": "out.c-bitbucket.pull_request_activity.csv",
+                            "columns": [
+                                "pull_request_activity_id",
+                                "pull_request_id",
+                                "user_id",
+                                "user",
+                                "date",
+                                "state",
+                                "title",
+                                "description",
+                                "reason"
+                            ],
+                            "source_search": {
+                                "key": "bdm.scaffold.table.tag",
+                                "value": "BitbucketDevops.internal.outBitbucketPullRequestActivity"
+                            }
+                        },
+                        {
+                            "destination": "out.c-bitbucket.repository.csv",
+                            "columns": [
+                                "repository_id",
+                                "repository",
+                                "project",
+                                "description",
+                                "language",
+                                "has_wiki",
+                                "has_issues",
+                                "is_private",
+                                "is_looker",
+                                "created_on",
+                                "url"
+                            ],
+                            "source_search": {
+                                "key": "bdm.scaffold.table.tag",
+                                "value": "BitbucketDevops.internal.outBitbucketRepository"
+                            }
+                        },
+                        {
+                            "destination": "out.c-bitbucket.repository_commit.csv",
+                            "columns": [
+                                "repository_commit_id",
+                                "repository_id",
+                                "user_id",
+                                "date",
+                                "url",
+                                "message"
+                            ],
+                            "source_search": {
+                                "key": "bdm.scaffold.table.tag",
+                                "value": "BitbucketDevops.internal.outBitbucketRepositoryCommit"
+                            }
+                        },
+                        {
+                            "destination": "out.c-bitbucket.repository_commit_change.csv",
+                            "columns": [
+                                "repository_commit_change_id",
+                                "repository_commit_id",
+                                "status",
+                                "new_path",
+                                "file_type",
+                                "old_path",
+                                "lines_added",
+                                "lines_removed"
+                            ],
+                            "source_search": {
+                                "key": "bdm.scaffold.table.tag",
+                                "value": "BitbucketDevops.internal.outBitbucketRepositoryCommitChange"
+                            }
+                        },
+                        {
+                            "destination": "out.c-bitbucket.user.csv",
+                            "columns": [
+                                "user_id",
+                                "organization_id",
+                                "user",
+                                "created_on",
+                                "type",
+                                "is_active",
+                                "is_member"
+                            ],
+                            "source_search": {
+                                "key": "bdm.scaffold.table.tag",
+                                "value": "BitbucketDevops.internal.outBitbucketUser"
+                            }
+                        },
+                        {
+                            "destination": "out.c-bitbucket.event.csv",
+                            "columns": [
+                                "event_id",
+                                "repository_id",
+                                "user_id",
+                                "event",
+                                "date",
+                                "url"
+                            ],
+                            "source_search": {
+                                "key": "bdm.scaffold.table.tag",
+                                "value": "BitbucketDevops.internal.outBitbucketEvent"
+                            }
+                        }
+                    ]
+                }
+            }
+        }
+    }
+}
