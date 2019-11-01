@@ -1,0 +1,7 @@
+{
+    "componentId": "transformation",
+    "payload": {
+        "name": "Salesforce MRR",
+        "configuration": []
+    }
+}

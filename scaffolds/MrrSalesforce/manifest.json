@@ -1,0 +1,58 @@
+{
+    "name": "Salesforce MRR to Snowflake",
+    "author": "Keboola",
+    "description": "Recurring Revenue analysis on Salesforce orders (requires use of orders and order items with from-to dates). Generates an \"MRR caledar\" type structure that is easy to analyse with any BI tool. Includes output to Snowflake DWH.",
+    "inputs": [
+        {
+            "id": "htnsExSalesforceSalesforceMRR",
+            "componentId": "htns.ex-salesforce",
+            "name": "Salesforce MRR",
+            "required": true,
+            "schema": {
+                "type": "object",
+                "required": [
+                    "loginname",
+                    "#password",
+                    "#securitytoken"
+                ],
+                "properties": {
+                    "loginname": {
+                        "title": "Login Name",
+                        "type": "string"
+                    },
+                    "#password": {
+                        "title": "Password",
+                        "type": "string",
+                        "format": "password"
+                    },
+                    "#securitytoken": {
+                        "title": "Security Token",
+                        "type": "string",
+                        "format": "password"
+                    }
+                }
+            }
+        },
+        {
+            "id": "transformationSalesforceMRR",
+            "componentId": "transformation",
+            "name": "Salesforce MRR",
+            "required": true,
+            "schema": null
+        },
+        {
+            "id": "keboolaWrDbSnowflakeSnowflake",
+            "componentId": "keboola.wr-db-snowflake",
+            "name": "Snowflake",
+            "required": true,
+            "schema": null
+        },
+        {
+            "id": "orchestrationMRR",
+            "componentId": "orchestrator",
+            "name": "MRR",
+            "required": true,
+            "schema": null
+        }
+    ]
+}
