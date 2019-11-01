@@ -4,6 +4,7 @@
         "name": "Salesforce MRR",
         "configuration": {
             "parameters": {
+            	"sandbox": false
             }
         }
     }
