@@ -1,0 +1,441 @@
+{
+    "componentId": "keboola.wr-db-snowflake",
+    "payload": {
+        "name": "Snowflake",
+        "configuration": {
+            "parameters": {
+                "db": {
+                },
+                "tables": [
+                    {
+                        "dbName": "ACCOUNT",
+                        "export": true,
+                        "tableId": "out.c-xero.account",
+                        "items": [
+                            {
+                                "name": "account_id",
+                                "dbName": "ACCOUNT_ID",
+                                "type": "varchar",
+                                "size": "255",
+                                "nullable": false,
+                                "default": ""
+                            },
+                            {
+                                "name": "account",
+                                "dbName": "ACCOUNT",
+                                "type": "varchar",
+                                "size": "255",
+                                "nullable": false,
+                                "default": ""
+                            },
+                            {
+                                "name": "account_number",
+                                "dbName": "ACCOUNT_NUMBER",
+                                "type": "varchar",
+                                "size": "255",
+                                "nullable": false,
+                                "default": ""
+                            },
+                            {
+                                "name": "account_status",
+                                "dbName": "ACCOUNT_STATUS",
+                                "type": "varchar",
+                                "size": "255",
+                                "nullable": false,
+                                "default": ""
+                            },
+                            {
+                                "name": "account_type",
+                                "dbName": "ACCOUNT_TYPE",
+                                "type": "varchar",
+                                "size": "255",
+                                "nullable": false,
+                                "default": ""
+                            },
+                            {
+                                "name": "account_currency",
+                                "dbName": "ACCOUNT_CURRENCY",
+                                "type": "varchar",
+                                "size": "255",
+                                "nullable": false,
+                                "default": ""
+                            }
+                        ],
+                        "primaryKey": [
+                            "ACCOUNT_ID"
+                        ]
+                    },
+                    {
+                        "dbName": "ACCOUNT_BALANCE",
+                        "export": true,
+                        "tableId": "out.c-xero.account_balance",
+                        "items": [
+                            {
+                                "name": "account_balance_id",
+                                "dbName": "ACCOUNT_BALANCE_ID",
+                                "type": "varchar",
+                                "size": "255",
+                                "nullable": false,
+                                "default": ""
+                            },
+                            {
+                                "name": "account_id",
+                                "dbName": "ACCOUNT_ID",
+                                "type": "varchar",
+                                "size": "255",
+                                "nullable": false,
+                                "default": ""
+                            },
+                            {
+                                "name": "date",
+                                "dbName": "DATE",
+                                "type": "date",
+                                "size": "",
+                                "nullable": true,
+                                "default": ""
+                            },
+                            {
+                                "name": "last_day_of_month",
+                                "dbName": "LAST_DAY_OF_MONTH",
+                                "type": "varchar",
+                                "size": "255",
+                                "nullable": false,
+                                "default": ""
+                            },
+                            {
+                                "name": "account_currency",
+                                "dbName": "ACCOUNT_CURRENCY",
+                                "type": "varchar",
+                                "size": "255",
+                                "nullable": false,
+                                "default": ""
+                            },
+                            {
+                                "name": "balance_original",
+                                "dbName": "BALANCE_ORIGINAL",
+                                "type": "number",
+                                "size": "15,6",
+                                "nullable": false,
+                                "default": ""
+                            }
+                        ],
+                        "primaryKey": [
+                            "ACCOUNT_BALANCE_ID"
+                        ]
+                    },
+                    {
+                        "dbName": "CONTACT",
+                        "export": true,
+                        "tableId": "out.c-xero.contact",
+                        "items": [
+                            {
+                                "name": "contact_id",
+                                "dbName": "CONTACT_ID",
+                                "type": "varchar",
+                                "size": "255",
+                                "nullable": false,
+                                "default": ""
+                            },
+                            {
+                                "name": "contact",
+                                "dbName": "CONTACT",
+                                "type": "varchar",
+                                "size": "255",
+                                "nullable": false,
+                                "default": ""
+                            },
+                            {
+                                "name": "contact_status",
+                                "dbName": "CONTACT_STATUS",
+                                "type": "varchar",
+                                "size": "255",
+                                "nullable": false,
+                                "default": ""
+                            },
+                            {
+                                "name": "email",
+                                "dbName": "EMAIL",
+                                "type": "varchar",
+                                "size": "255",
+                                "nullable": false,
+                                "default": ""
+                            }
+                        ],
+                        "primaryKey": [
+                            "CONTACT_ID"
+                        ]
+                    },
+                    {
+                        "dbName": "INVOICE",
+                        "export": true,
+                        "tableId": "out.c-xero.invoice",
+                        "items": [
+                            {
+                                "name": "invoice_id",
+                                "dbName": "INVOICE_ID",
+                                "type": "varchar",
+                                "size": "255",
+                                "nullable": false,
+                                "default": ""
+                            },
+                            {
+                                "name": "contact_id",
+                                "dbName": "CONTACT_ID",
+                                "type": "varchar",
+                                "size": "255",
+                                "nullable": false,
+                                "default": ""
+                            },
+                            {
+                                "name": "invoice_number",
+                                "dbName": "INVOICE_NUMBER",
+                                "type": "varchar",
+                                "size": "255",
+                                "nullable": false,
+                                "default": ""
+                            },
+                            {
+                                "name": "invoice_type",
+                                "dbName": "INVOICE_TYPE",
+                                "type": "varchar",
+                                "size": "255",
+                                "nullable": false,
+                                "default": ""
+                            },
+                            {
+                                "name": "created_date",
+                                "dbName": "CREATED_DATE",
+                                "type": "date",
+                                "size": "",
+                                "nullable": true,
+                                "default": ""
+                            },
+                            {
+                                "name": "due_date",
+                                "dbName": "DUE_DATE",
+                                "type": "date",
+                                "size": "",
+                                "nullable": true,
+                                "default": ""
+                            },
+                            {
+                                "name": "paid_on",
+                                "dbName": "PAID_ON",
+                                "type": "date",
+                                "size": "",
+                                "nullable": true,
+                                "default": ""
+                            },
+                            {
+                                "name": "invoice_status",
+                                "dbName": "INVOICE_STATUS",
+                                "type": "varchar",
+                                "size": "255",
+                                "nullable": false,
+                                "default": ""
+                            },
+                            {
+                                "name": "is_paid",
+                                "dbName": "IS_PAID",
+                                "type": "boolean",
+                                "size": "",
+                                "nullable": false,
+                                "default": ""
+                            },
+                            {
+                                "name": "currency",
+                                "dbName": "CURRENCY",
+                                "type": "varchar",
+                                "size": "255",
+                                "nullable": false,
+                                "default": ""
+                            },
+                            {
+                                "name": "total_amount_original",
+                                "dbName": "TOTAL_AMOUNT_ORIGINAL",
+                                "type": "number",
+                                "size": "15,6",
+                                "nullable": true,
+                                "default": ""
+                            },
+                            {
+                                "name": "total_amount_with_vat_original",
+                                "dbName": "TOTAL_AMOUNT_WITH_VAT_ORIGINAL",
+                                "type": "number",
+                                "size": "15,6",
+                                "nullable": true,
+                                "default": ""
+                            },
+                            {
+                                "name": "days_overdue",
+                                "dbName": "DAYS_OVERDUE",
+                                "type": "integer",
+                                "size": "",
+                                "nullable": true,
+                                "default": ""
+                            }
+                        ],
+                        "primaryKey": [
+                            "INVOICE_ID"
+                        ]
+                    },
+                    {
+                        "dbName": "INVOICE_ITEM",
+                        "export": false,
+                        "tableId": "out.c-xero.invoice_item",
+                        "items": [
+                            {
+                                "name": "invoice_item_id",
+                                "dbName": "INVOICE_ITEM_ID",
+                                "type": "varchar",
+                                "size": "255",
+                                "nullable": false,
+                                "default": ""
+                            },
+                            {
+                                "name": "invoice_id",
+                                "dbName": "INVOICE_ID",
+                                "type": "varchar",
+                                "size": "255",
+                                "nullable": false,
+                                "default": ""
+                            },
+                            {
+                                "name": "item_description",
+                                "dbName": "ITEM_DESCRIPTION",
+                                "type": "varchar",
+                                "size": "255",
+                                "nullable": false,
+                                "default": ""
+                            },
+                            {
+                                "name": "quantity",
+                                "dbName": "QUANTITY",
+                                "type": "integer",
+                                "size": "",
+                                "nullable": true,
+                                "default": ""
+                            },
+                            {
+                                "name": "unit_amount_original",
+                                "dbName": "UNIT_AMOUNT_ORIGINAL",
+                                "type": "number",
+                                "size": "15,6",
+                                "nullable": true,
+                                "default": ""
+                            },
+                            {
+                                "name": "line_amount_original",
+                                "dbName": "LINE_AMOUNT_ORIGINAL",
+                                "type": "number",
+                                "size": "15,6",
+                                "nullable": true,
+                                "default": ""
+                            }
+                        ],
+                        "primaryKey": [
+                            "INVOICE_ITEM_ID"
+                        ]
+                    }
+                ]
+            },
+            "storage": {
+                "input": {
+                    "tables": [
+                        {
+                            "destination": "out.c-xero.account.csv",
+                            "columns": [
+                                "account_id",
+                                "account",
+                                "account_number",
+                                "account_status",
+                                "account_type",
+                                "account_currency"
+                            ],
+                            "source_search": {
+                                "key": "bdm.scaffold.table.tag",
+                                "__SCAFFOLD_CHECK__.value": "XeroFinance.internal.outXeroAccount"
+                            },
+                            "__SCAFFOLD_CHECK__.original_source": "out.c-xero.account"
+                        },
+                        {
+                            "destination": "out.c-xero.account_balance.csv",
+                            "columns": [
+                                "account_balance_id",
+                                "account_id",
+                                "date",
+                                "last_day_of_month",
+                                "account_currency",
+                                "balance_original"
+                            ],
+                            "source_search": {
+                                "key": "bdm.scaffold.table.tag",
+                                "__SCAFFOLD_CHECK__.value": "XeroFinance.internal.outXeroAccountBalance"
+                            },
+                            "__SCAFFOLD_CHECK__.original_source": "out.c-xero.account_balance"
+                        },
+                        {
+                            "destination": "out.c-xero.contact.csv",
+                            "columns": [
+                                "contact_id",
+                                "contact",
+                                "contact_status",
+                                "email"
+                            ],
+                            "source_search": {
+                                "key": "bdm.scaffold.table.tag",
+                                "__SCAFFOLD_CHECK__.value": "XeroFinance.internal.outXeroContact"
+                            },
+                            "__SCAFFOLD_CHECK__.original_source": "out.c-xero.contact"
+                        },
+                        {
+                            "destination": "out.c-xero.invoice.csv",
+                            "columns": [
+                                "invoice_id",
+                                "contact_id",
+                                "invoice_number",
+                                "invoice_type",
+                                "created_date",
+                                "due_date",
+                                "paid_on",
+                                "invoice_status",
+                                "is_paid",
+                                "currency",
+                                "total_amount_original",
+                                "total_amount_with_vat_original",
+                                "days_overdue"
+                            ],
+                            "where_column": "invoice_status",
+                            "where_operator": "ne",
+                            "where_values": [
+                                "VOIDED"
+                            ],
+                            "source_search": {
+                                "key": "bdm.scaffold.table.tag",
+                                "__SCAFFOLD_CHECK__.value": "XeroFinance.internal.outXeroInvoice"
+                            },
+                            "__SCAFFOLD_CHECK__.original_source": "out.c-xero.invoice"
+                        },
+                        {
+                            "destination": "out.c-xero.invoice_item.csv",
+                            "columns": [
+                                "invoice_item_id",
+                                "invoice_id",
+                                "item_description",
+                                "quantity",
+                                "unit_amount_original",
+                                "line_amount_original"
+                            ],
+                            "limit": 1,
+                            "source_search": {
+                                "key": "bdm.scaffold.table.tag",
+                                "__SCAFFOLD_CHECK__.value": "XeroFinance.internal.outXeroInvoiceItem"
+                            },
+                            "__SCAFFOLD_CHECK__.original_source": "out.c-xero.invoice_item"
+                        }
+                    ]
+                }
+            }
+        }
+    }
+}

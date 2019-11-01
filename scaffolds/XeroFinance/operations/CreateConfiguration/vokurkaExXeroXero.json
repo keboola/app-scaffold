@@ -1,0 +1,31 @@
+{
+    "componentId": "vokurka.ex-xero",
+    "payload": {
+        "name": "Xero",
+        "configuration": {
+            "parameters": {
+                "consumer_key": "",
+                "#consumer_secret": "__SCAFFOLD_CHECK__",
+                "#private_key": "__SCAFFOLD_CHECK__",
+                "public_key": "-----BEGIN CERTIFICATE-----{INSERT-PUBLIC-KEY-HERE}\n-----END CERTIFICATE-----",
+                "parameters": {
+                    "fromDate": "2016-01-01",
+                    "toDate": "today"
+                },
+                "endpoint": [
+                    "Invoices",
+                    "Payments",
+                    "BankTransactions",
+                    "Accounts",
+                    {
+                        "Contacts": [
+                            {
+                                "includeArchived": "true"
+                            }
+                        ]
+                    }
+                ]
+            }
+        }
+    }
+}

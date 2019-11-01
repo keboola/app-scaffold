@@ -1,0 +1,35 @@
+{
+    "name": "",
+    "author": "Keboola",
+    "description": "",
+    "inputs": [
+        {
+            "id": "vokurkaExXeroXero",
+            "componentId": "vokurka.ex-xero",
+            "name": "Xero",
+            "required": true,
+            "schema": null
+        },
+        {
+            "id": "transformationXero",
+            "componentId": "transformation",
+            "name": "Xero",
+            "required": true,
+            "schema": null
+        },
+        {
+            "id": "keboolaWrDbSnowflakeSnowflake",
+            "componentId": "keboola.wr-db-snowflake",
+            "name": "Snowflake",
+            "required": true,
+            "schema": null
+        },
+        {
+            "id": "orchestrationFinance",
+            "componentId": "orchestrator",
+            "name": "Finance",
+            "required": true,
+            "schema": null
+        }
+    ]
+}

@@ -1,0 +1,312 @@
+[
+    {
+        "configuration": {
+            "output": [
+                {
+                    "source": "out_account",
+                    "primaryKey": [
+                        "account_id"
+                    ],
+                    "metadata": [
+                        {
+                            "key": "bdm.scaffold.table.tag",
+                            "value": "XeroFinance.internal.outXeroAccount"
+                        },
+                        {
+                            "key": "scaffold.id",
+                            "value": "XeroFinance"
+                        }
+                    ],
+                    "destination": "out.c-xeroFinance.xeroAccount",
+                    "__SCAFFOLD_CHECK__original_destination": "out.c-xero.account"
+                }
+            ],
+            "queries": [
+                "--create output account table\n--you can filter some accounts, which will alter the output of the following transformations as well\nCREATE TABLE \"out_account\"\nAS\n    SELECT\n        \"AccountID\"    \t\tAS \"account_id\",\n        \"Name\"         \t\tAS \"account\",\n        \"BankAccountNumber\" AS \"account_number\",\n        \"Status\"       \t\tAS \"account_status\",\n        \"Type\"         \t\tAS \"account_type\",\n        \"CurrencyCode\" \t\tAS \"account_currency\"\n    FROM \"accounts\"\n    --WHERE \"BankAccountNumber\" IN ('7306902', '4641052')\n;"
+            ],
+            "input": [
+                {
+                    "destination": "accounts",
+                    "datatypes": [],
+                    "whereColumn": "",
+                    "whereValues": [],
+                    "whereOperator": "eq",
+                    "columns": [],
+                    "loadType": "clone",
+                    "source_search": {
+                        "key": "bdm.scaffold.table.tag",
+                        "__SCAFFOLD_CHECK__.value": "XeroFinance.internal.inVokurkaExXero542515348AccountsAccounts"
+                    },
+                    "__SCAFFOLD_CHECK__.source": "in.c-xeroFinance.vokurkaExXero542515348AccountsAccounts",
+                    "__SCAFFOLD_CHECK__.original_source": "in.c-vokurka-ex-xero-542515348.Accounts_Accounts"
+                }
+            ],
+            "name": "Accounts",
+            "packages": [],
+            "requires": [],
+            "backend": "snowflake",
+            "type": "simple",
+            "id": "543625621",
+            "phase": 1,
+            "disabled": false,
+            "description": ""
+        },
+        "description": "",
+        "name": "Accounts"
+    },
+    {
+        "configuration": {
+            "output": [
+                {
+                    "source": "out_contact",
+                    "primaryKey": [
+                        "contact_id"
+                    ],
+                    "metadata": [
+                        {
+                            "key": "bdm.scaffold.table.tag",
+                            "value": "XeroFinance.internal.outXeroContact"
+                        },
+                        {
+                            "key": "scaffold.id",
+                            "value": "XeroFinance"
+                        }
+                    ],
+                    "destination": "out.c-xeroFinance.xeroContact",
+                    "__SCAFFOLD_CHECK__original_destination": "out.c-xero.contact"
+                }
+            ],
+            "queries": [
+                "--create output contacts table\nCREATE TABLE \"out_contact\"\nAS\n    SELECT\n        \"ContactID\"      AS \"contact_id\",\n        \"Name\"\t\t\t AS \"contact\",\n        \"ContactStatus\"  AS \"contact_status\",\n        \"EmailAddress\"   AS \"email\"\n    FROM \"contacts\"\n;",
+                "--add fake row for referential integrity (i.e. invoices without contact)\nINSERT INTO \"out_contact\"\n    (\"contact_id\", \"contact\", \"contact_status\")\nVALUES\n    ('0', 'Unknown', 'ACTIVE');"
+            ],
+            "input": [
+                {
+                    "destination": "contacts",
+                    "datatypes": [],
+                    "whereColumn": "",
+                    "whereValues": [],
+                    "whereOperator": "eq",
+                    "columns": [],
+                    "loadType": "clone",
+                    "source_search": {
+                        "key": "bdm.scaffold.table.tag",
+                        "__SCAFFOLD_CHECK__.value": "XeroFinance.internal.inVokurkaExXero542515348Contacts"
+                    },
+                    "__SCAFFOLD_CHECK__.source": "in.c-xeroFinance.vokurkaExXero542515348Contacts",
+                    "__SCAFFOLD_CHECK__.original_source": "in.c-vokurka-ex-xero-542515348.Contacts"
+                }
+            ],
+            "name": "Contacts",
+            "packages": [],
+            "requires": [],
+            "backend": "snowflake",
+            "type": "simple",
+            "id": "543628224",
+            "phase": 1,
+            "disabled": false,
+            "description": ""
+        },
+        "description": "",
+        "name": "Contacts"
+    },
+    {
+        "configuration": {
+            "output": [
+                {
+                    "source": "out_account_balance",
+                    "primaryKey": [
+                        "account_balance_id"
+                    ],
+                    "metadata": [
+                        {
+                            "key": "bdm.scaffold.table.tag",
+                            "value": "XeroFinance.internal.outXeroAccountBalance"
+                        },
+                        {
+                            "key": "scaffold.id",
+                            "value": "XeroFinance"
+                        }
+                    ],
+                    "destination": "out.c-xeroFinance.xeroAccountBalance",
+                    "__SCAFFOLD_CHECK__original_destination": "out.c-xero.account_balance"
+                }
+            ],
+            "queries": [
+                "--generate dates table which helps us with creation of daily balances\n--it generates dates between now - 5 years and next 10k days\nCREATE TABLE \"dates\"\nAS\n    SELECT\n        DATEADD(\n                \"DAY\", \/* simple DATE math *\/\n                \"seq\".\"seq\", \/* adding generated numbers from fixed date *\/\n                \"oldday\"\n            ) :: DATE AS \"date\"\n    FROM (\n             SELECT\n                 dateadd(YEAR, -5, current_date) AS \"oldday\" \/* Start date as todays -5 years *\/\n         ) \"t1\"\n             LEFT JOIN (\n        SELECT\n            seq2() AS \"seq\" \/* SUBQUERY #1 *\/\n        FROM TABLE (generator(ROWCOUNT => 10000)) \/* - produce 100 rows table with {0:99} numbers *\/\n    ) \"seq\"\n    ORDER BY 1;",
+                "--convert spends to negatove number for easier calculation\nUPDATE \"bank_transactions\"\nSET \"Total\"=\"Total\" :: FLOAT * -1\nWHERE LEFT(\"Type\", 5) = 'SPEND';",
+                "--update transactions with payments\nUPDATE \"payments\"\nSET \"Amount\"=\"Amount\" :: FLOAT * -1\nWHERE \"PaymentType\" IN ('ACCPAYPAYMENT', 'ARCREDITPAYMENT', 'AROVERPAYMENTPAYMENT', 'ARPREPAYMENTPAYMENT');",
+                "INSERT INTO \"bank_transactions\"\n    (\"BankAccount_AccountID\", \"Total\", \"Status\", \"DateString\")\nSELECT\n    \"Account_AccountID\",\n    \"Amount\",\n    \"Status\",\n    TO_DATE(SUBSTRING(\"Date\", 7, 13))\nFROM \"payments\";",
+                "-- moved here for clarity and to include payments\nDELETE\nFROM \"bank_transactions\"\nWHERE \"Status\" = 'DELETED';",
+                "--preparing daily aggregated table with available transactions\nCREATE TABLE \"account_balance_tmp\"\nAS\n    SELECT\n        \"a\".\"account_id\",\n        \"a\".\"account_currency\",\n        left(\"t\".\"DateString\", 10) AS \"date\",\n        sum(\"t\".\"Total\")           AS \"total\"\n    FROM \"account\" \"a\"\n             INNER JOIN \"bank_transactions\" \"t\"\n                        ON \"a\".\"account_id\" = \"t\".\"BankAccount_AccountID\"\n    GROUP BY 1, 2, 3;",
+                "--fill in missing dates per every account_id\n--leave \"total\" only for date there really was some transactions, so it won't mess up with the following runsum\n--current date + 1: we want to have balance till today, but also don't want to join rows twice\n--for any other date range, we're joining on next \"transaction date\" - 1 to avoid duplicates\n--current date needs additional day, so we don't have last day of balance as yesterday\nCREATE TABLE \"account_balance_tmp2\"\nAS\n    SELECT\n        \"t\".\"account_id\",\n        \"t\".\"account_currency\",\n        --\"t\".\"date\" AS \"original_date\",\n        --\"t\".\"next_date\",\n        \"d\".\"date\",\n        iff(\"d\".\"date\" = \"t\".\"date\", \"t\".\"total\", 0) AS \"total\"\n    FROM (SELECT\n              \"account_id\",\n              \"account_currency\",\n              \"total\",\n              \"date\",\n              ifnull(LEAD(\"date\") OVER (PARTITION BY \"account_id\" ORDER BY \"date\"), current_date + 1) AS \"next_date\"\n          FROM \"account_balance_tmp\") \"t\"\n             LEFT JOIN \"dates\" \"d\"\n                       ON \"d\".\"date\" BETWEEN \"t\".\"date\" AND \"next_date\" - 1;",
+                "\/*Maybe you don't have all transactions in Xero and you need to set up some initial balance.\n  Just find your first day of transactions per account and add the appropriate amount.\n  Don't forget to do that per every account.\n  In our example, we have first transactions on 2019-04-01 in the account with ID 'xyz'*\/\n\/*--add basic balance to the first record\nUPDATE \"account_balance_tmp2\"\nSET \"total\"=\"total\" - 90337.32\nWHERE \"date\" = '2019-04-01'\nAND account_id = 'xyz';\n*\/\n\n--create output table with accounts' daily balance\n--mark last day of month for easier reporting\n--in current month, last day of month is the current date\nCREATE TABLE \"out_account_balance\"\nAS\n    SELECT\n        \"b\".\"account_id\" || '-' || \"b\".\"date\"        AS \"account_balance_id\",\n        \"b\".\"account_id\",\n        \"b\".\"date\",\n        iff(\"m\".\"max_date\" IS NULL, 'false', 'true') AS \"last_day_of_month\",\n        \"b\".\"account_currency\",\n        sum(\"b\".\"total\") OVER (PARTITION BY \"b\".\"account_id\" ORDER BY \"b\".\"date\")  AS \"balance_original\"\/*,\n    round(\"balance_original\":: FLOAT \/ \"r\".\"rate\" :: FLOAT, 6) AS \"balance_usd\"\n    --in case you have accounts in multiple currencies, create table with exchange rates and use it to convert values to unified currency *\/\n    FROM \"account_balance_tmp2\" \"b\"\n             LEFT JOIN (SELECT\n                            \"account_id\",\n                            left(\"date\", 7) AS \"month\",\n                            max(\"date\")     AS \"max_date\"\n                        FROM \"account_balance_tmp2\"\n                        GROUP BY 1, 2) AS \"m\"\n                       ON \"b\".\"account_id\" = \"m\".\"account_id\"\n                           AND \"b\".\"date\" = \"m\".\"max_date\"\n\/*LEFT JOIN \"rates\" \"r\"\n          ON \"b\".\"date\" = \"r\".\"date\"\n              AND \"b\".\"account_currency\" = \"r\".\"target_currency\"*\/\n;"
+            ],
+            "input": [
+                {
+                    "destination": "account",
+                    "datatypes": [],
+                    "whereColumn": "",
+                    "whereValues": [],
+                    "whereOperator": "eq",
+                    "columns": [],
+                    "loadType": "clone",
+                    "source_search": {
+                        "key": "bdm.scaffold.table.tag",
+                        "__SCAFFOLD_CHECK__.value": "XeroFinance.internal.outXeroAccount"
+                    },
+                    "__SCAFFOLD_CHECK__.source": "out.c-xeroFinance.xeroAccount",
+                    "__SCAFFOLD_CHECK__.original_source": "out.c-xero.account"
+                },
+                {
+                    "destination": "bank_transactions",
+                    "datatypes": [],
+                    "whereColumn": "",
+                    "whereValues": [],
+                    "whereOperator": "eq",
+                    "columns": [],
+                    "loadType": "clone",
+                    "source_search": {
+                        "key": "bdm.scaffold.table.tag",
+                        "__SCAFFOLD_CHECK__.value": "XeroFinance.internal.inVokurkaExXero542515348BankTransactions"
+                    },
+                    "__SCAFFOLD_CHECK__.source": "in.c-xeroFinance.vokurkaExXero542515348BankTransactions",
+                    "__SCAFFOLD_CHECK__.original_source": "in.c-vokurka-ex-xero-542515348.BankTransactions"
+                },
+                {
+                    "destination": "payments",
+                    "datatypes": [],
+                    "whereColumn": "",
+                    "whereValues": [],
+                    "whereOperator": "eq",
+                    "columns": [],
+                    "loadType": "clone",
+                    "source_search": {
+                        "key": "bdm.scaffold.table.tag",
+                        "__SCAFFOLD_CHECK__.value": "XeroFinance.internal.inVokurkaExXero542515348PaymentsPayments"
+                    },
+                    "__SCAFFOLD_CHECK__.source": "in.c-xeroFinance.vokurkaExXero542515348PaymentsPayments",
+                    "__SCAFFOLD_CHECK__.original_source": "in.c-vokurka-ex-xero-542515348.Payments_Payments"
+                }
+            ],
+            "name": "Accounts Balance",
+            "packages": [],
+            "requires": [],
+            "backend": "snowflake",
+            "type": "simple",
+            "id": "543633347",
+            "phase": "2",
+            "disabled": false,
+            "description": ""
+        },
+        "description": "",
+        "name": "Accounts Balance"
+    },
+    {
+        "configuration": {
+            "output": [
+                {
+                    "source": "out_invoice",
+                    "primaryKey": [
+                        "invoice_id"
+                    ],
+                    "metadata": [
+                        {
+                            "key": "bdm.scaffold.table.tag",
+                            "value": "XeroFinance.internal.outXeroInvoice"
+                        },
+                        {
+                            "key": "scaffold.id",
+                            "value": "XeroFinance"
+                        }
+                    ],
+                    "destination": "out.c-xeroFinance.xeroInvoice",
+                    "__SCAFFOLD_CHECK__original_destination": "out.c-xero.invoice"
+                },
+                {
+                    "source": "out_invoice_item",
+                    "primaryKey": [
+                        "invoice_item_id"
+                    ],
+                    "metadata": [
+                        {
+                            "key": "bdm.scaffold.table.tag",
+                            "value": "XeroFinance.internal.outXeroInvoiceItem"
+                        },
+                        {
+                            "key": "scaffold.id",
+                            "value": "XeroFinance"
+                        }
+                    ],
+                    "destination": "out.c-xeroFinance.xeroInvoiceItem",
+                    "__SCAFFOLD_CHECK__original_destination": "out.c-xero.invoice_item"
+                }
+            ],
+            "queries": [
+                "--create invoice output table\n--set paid flag\n--define invoice direction\n--convert dates to basic format\n--exclude deleted invoices\nCREATE TABLE \"out_invoice\"\nAS\n    SELECT\n        \"f\".\"InvoiceID\"                                                                             AS \"invoice_id\",\n        ifnull(\"c\".\"contact_id\", '0')                                                               AS \"contact_id\",\n        \"f\".\"InvoiceNumber\"                                                                         AS \"invoice_number\",\n        iff(\"f\".\"Type\" = 'ACCPAY', 'received', 'issued')                                            AS \"invoice_type\",\n        left(\"f\".\"DateString\", 10)                                                                  AS \"created_date\",\n        left(\"f\".\"DueDateString\", 10)                                                               AS \"due_date\",\n        to_char(to_date(nullif(split_part(split_part(\"f\".\"FullyPaidOnDate\", '(', 2), '+', 1), ''))) AS \"paid_on\",\n        \"f\".\"Status\"                                                                                AS \"invoice_status\",\n        iff(\"f\".\"Status\" = 'PAID', 'TRUE', 'FALSE')                                                 AS \"is_paid\",\n        \"f\".\"CurrencyCode\"                                                                          AS \"currency\",\n        \"f\".\"SubTotal\"                                                                             AS \"total_amount_original\",\n        \"f\".\"Total\"                                                                                 AS \"total_amount_with_vat_original\"\/*,\n    round(\"f\".\"Total\":: FLOAT \/ \"r\".\"rate\" :: FLOAT, 6) AS \"total_invoice_amount_USD\"\n    --in case you have accounts in multiple currencies, create table with exchange rates and use it to convert values to unified currency *\/\n    FROM \"invoices\" \"f\"\n             \/*LEFT JOIN \"rates\" \"r\"\n              ON left(\"f\".\"DateString\", 10) = \"r\".\"date\"\n                  AND \"f\".\"CurrencyCode\" = \"r\".\"target_currency\"*\/\n             LEFT JOIN \"contact\" \"c\"\n                       ON \"f\".\"Contact_ContactID\" = \"c\".\"contact_id\"\n    WHERE \"f\".\"Status\" <> 'DELETED';",
+                "--add 14 days due to invoices without due date\nUPDATE \"out_invoice\"\nSET \"due_date\" = dateadd(DAY, 14, \"created_date\" :: DATE)\nWHERE \"due_date\" = '';",
+                "--add number of days overdue\nALTER TABLE \"out_invoice\"\n    ADD COLUMN \"days_overdue\" INT;",
+                "--set number of days overdue\n--if the invoice is already fully paid, use paid_on date for calculation, otherwise use current_date\nUPDATE \"out_invoice\"\nSET \"days_overdue\"= datediff(DAY, \"due_date\"::DATE, ifnull(\"paid_on\", current_date));",
+                "--create invoice item output table\n--only lines with existing invoice are populated\n--you can use similar approach as designed in the invoices to calculate unified currency value if necessary\nCREATE TABLE \"out_invoice_item\"\nAS\n    SELECT\n        \"l\".\"LineItemID\"  AS \"invoice_item_id\",\n        \"i\".\"invoice_id\"  AS \"invoice_id\",\n        sha2(\"l\".\"Description\") AS \"item_description\",\n        \"l\".\"Quantity\"    AS \"quantity\",\n        \"l\".\"UnitAmount\"  AS \"unit_amount_original\",\n        \"l\".\"LineAmount\"  AS \"line_amount_original\"\n    FROM \"out_invoice\" \"i\"\n             LEFT JOIN \"invoices_lines\" \"l\";"
+            ],
+            "input": [
+                {
+                    "destination": "invoices",
+                    "datatypes": [],
+                    "whereColumn": "",
+                    "whereValues": [],
+                    "whereOperator": "eq",
+                    "columns": [],
+                    "loadType": "clone",
+                    "source_search": {
+                        "key": "bdm.scaffold.table.tag",
+                        "__SCAFFOLD_CHECK__.value": "XeroFinance.internal.inVokurkaExXero542515348Invoices"
+                    },
+                    "__SCAFFOLD_CHECK__.source": "in.c-xeroFinance.vokurkaExXero542515348Invoices",
+                    "__SCAFFOLD_CHECK__.original_source": "in.c-vokurka-ex-xero-542515348.Invoices"
+                },
+                {
+                    "destination": "invoices_lines",
+                    "datatypes": [],
+                    "whereColumn": "",
+                    "whereValues": [],
+                    "whereOperator": "eq",
+                    "columns": [],
+                    "loadType": "clone",
+                    "source_search": {
+                        "key": "bdm.scaffold.table.tag",
+                        "__SCAFFOLD_CHECK__.value": "XeroFinance.internal.inVokurkaExXero542515348InvoicesLineItems"
+                    },
+                    "__SCAFFOLD_CHECK__.source": "in.c-xeroFinance.vokurkaExXero542515348InvoicesLineItems",
+                    "__SCAFFOLD_CHECK__.original_source": "in.c-vokurka-ex-xero-542515348.Invoices_LineItems"
+                },
+                {
+                    "destination": "contact",
+                    "datatypes": [],
+                    "whereColumn": "",
+                    "whereValues": [],
+                    "whereOperator": "eq",
+                    "columns": [],
+                    "loadType": "clone",
+                    "source_search": {
+                        "key": "bdm.scaffold.table.tag",
+                        "__SCAFFOLD_CHECK__.value": "XeroFinance.internal.outXeroContact"
+                    },
+                    "__SCAFFOLD_CHECK__.source": "out.c-xeroFinance.xeroContact",
+                    "__SCAFFOLD_CHECK__.original_source": "out.c-xero.contact"
+                }
+            ],
+            "name": "Invoices",
+            "packages": [],
+            "requires": [],
+            "backend": "snowflake",
+            "type": "simple",
+            "id": "543793220",
+            "phase": "2",
+            "disabled": false,
+            "description": ""
+        },
+        "description": "",
+        "name": "Invoices"
+    }
+]
