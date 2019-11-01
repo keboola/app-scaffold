@@ -8,7 +8,32 @@
             "componentId": "keboola.ex-pipedrive",
             "name": "Pipedrive",
             "required": true,
-            "schema": null
+            "schema": {
+                "type": "object",
+                "required": [
+                    "config"
+                ],
+                "properties": {
+                    "config": {
+                        "type": "object",
+                        "required": [
+                            "#apiToken",
+                            "companyDomain"
+                        ],
+                        "properties": {
+                            "#apiToken": {
+                                "title": "API Token",
+                                "type": "string",
+                                "format": "password"
+                            },
+                            "companyDomain": {
+                                "title": "Company domain",
+                                "type": "string"
+                            }
+                        }
+                    }
+                }
+            }
         },
         {
             "id": "transformationPipedriveCRM",

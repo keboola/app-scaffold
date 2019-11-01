@@ -17,8 +17,7 @@
                             "value": "CrmPipedrive"
                         }
                     ],
-                    "destination": "in.c-crmPipedrive.pipedriveCrmActivities",
-                    "__SCAFFOLD_CHECK__original_destination": "in.c-pipedrive-crm.activities"
+                    "destination": "in.c-crmPipedrive.pipedriveCrmActivities"
                 },
                 {
                     "source": "out_deals",
@@ -35,8 +34,7 @@
                             "value": "CrmPipedrive"
                         }
                     ],
-                    "destination": "in.c-crmPipedrive.pipedriveCrmDeals",
-                    "__SCAFFOLD_CHECK__original_destination": "in.c-pipedrive-crm.deals"
+                    "destination": "in.c-crmPipedrive.pipedriveCrmDeals"
                 },
                 {
                     "source": "out_organizations",
@@ -53,8 +51,7 @@
                             "value": "CrmPipedrive"
                         }
                     ],
-                    "destination": "in.c-crmPipedrive.pipedriveCrmOrganizations",
-                    "__SCAFFOLD_CHECK__original_destination": "in.c-pipedrive-crm.organizations"
+                    "destination": "in.c-crmPipedrive.pipedriveCrmOrganizations"
                 },
                 {
                     "source": "out_persons",
@@ -71,8 +68,7 @@
                             "value": "CrmPipedrive"
                         }
                     ],
-                    "destination": "in.c-crmPipedrive.pipedriveCrmPersons",
-                    "__SCAFFOLD_CHECK__original_destination": "in.c-pipedrive-crm.persons"
+                    "destination": "in.c-crmPipedrive.pipedriveCrmPersons"
                 },
                 {
                     "source": "out_pipelines",
@@ -89,8 +85,7 @@
                             "value": "CrmPipedrive"
                         }
                     ],
-                    "destination": "in.c-crmPipedrive.pipedriveCrmPipelines",
-                    "__SCAFFOLD_CHECK__original_destination": "in.c-pipedrive-crm.pipelines"
+                    "destination": "in.c-crmPipedrive.pipedriveCrmPipelines"
                 },
                 {
                     "source": "out_stages",
@@ -107,8 +102,7 @@
                             "value": "CrmPipedrive"
                         }
                     ],
-                    "destination": "in.c-crmPipedrive.pipedriveCrmStages",
-                    "__SCAFFOLD_CHECK__original_destination": "in.c-pipedrive-crm.stages"
+                    "destination": "in.c-crmPipedrive.pipedriveCrmStages"
                 },
                 {
                     "source": "out_users",
@@ -125,8 +119,7 @@
                             "value": "CrmPipedrive"
                         }
                     ],
-                    "destination": "in.c-crmPipedrive.pipedriveCrmUsers",
-                    "__SCAFFOLD_CHECK__original_destination": "in.c-pipedrive-crm.users"
+                    "destination": "in.c-crmPipedrive.pipedriveCrmUsers"
                 },
                 {
                     "source": "out_person_emails",
@@ -144,8 +137,7 @@
                             "value": "CrmPipedrive"
                         }
                     ],
-                    "destination": "in.c-crmPipedrive.pipedriveCrmPersonEmails",
-                    "__SCAFFOLD_CHECK__original_destination": "in.c-pipedrive-crm.person_emails"
+                    "destination": "in.c-crmPipedrive.pipedriveCrmPersonEmails"
                 }
             ],
             "queries": [
@@ -177,10 +169,8 @@
                     "loadType": "clone",
                     "source_search": {
                         "key": "bdm.scaffold.table.tag",
-                        "__SCAFFOLD_CHECK__.value": "CrmPipedrive.internal.inKeboolaExPipedrive547397172Activities"
-                    },
-                    "__SCAFFOLD_CHECK__.source": "in.c-crmPipedrive.keboolaExPipedrive547397172Activities",
-                    "__SCAFFOLD_CHECK__.original_source": "in.c-keboola-ex-pipedrive-547397172.activities"
+                        "value": "CrmPipedrive.internal.inKeboolaExPipedriveActivities"
+                    }
                 },
                 {
                     "destination": "deals",
@@ -192,10 +182,8 @@
                     "loadType": "clone",
                     "source_search": {
                         "key": "bdm.scaffold.table.tag",
-                        "__SCAFFOLD_CHECK__.value": "CrmPipedrive.internal.inKeboolaExPipedrive547397172Deals"
-                    },
-                    "__SCAFFOLD_CHECK__.source": "in.c-crmPipedrive.keboolaExPipedrive547397172Deals",
-                    "__SCAFFOLD_CHECK__.original_source": "in.c-keboola-ex-pipedrive-547397172.deals"
+                        "value": "CrmPipedrive.internal.inKeboolaExPipedriveDeals"
+                    }
                 },
                 {
                     "destination": "organizations",
@@ -207,10 +195,8 @@
                     "loadType": "clone",
                     "source_search": {
                         "key": "bdm.scaffold.table.tag",
-                        "__SCAFFOLD_CHECK__.value": "CrmPipedrive.internal.inKeboolaExPipedrive547397172Organizations"
-                    },
-                    "__SCAFFOLD_CHECK__.source": "in.c-crmPipedrive.keboolaExPipedrive547397172Organizations",
-                    "__SCAFFOLD_CHECK__.original_source": "in.c-keboola-ex-pipedrive-547397172.organizations"
+                        "value": "CrmPipedrive.internal.inKeboolaExPipedriveOrganizations"
+                    }
                 },
                 {
                     "destination": "persons",
@@ -222,10 +208,8 @@
                     "loadType": "clone",
                     "source_search": {
                         "key": "bdm.scaffold.table.tag",
-                        "__SCAFFOLD_CHECK__.value": "CrmPipedrive.internal.inKeboolaExPipedrive547397172Persons"
-                    },
-                    "__SCAFFOLD_CHECK__.source": "in.c-crmPipedrive.keboolaExPipedrive547397172Persons",
-                    "__SCAFFOLD_CHECK__.original_source": "in.c-keboola-ex-pipedrive-547397172.persons"
+                        "value": "CrmPipedrive.internal.inKeboolaExPipedrivePersons"
+                    }
                 },
                 {
                     "destination": "pipelines",
@@ -237,10 +221,8 @@
                     "loadType": "clone",
                     "source_search": {
                         "key": "bdm.scaffold.table.tag",
-                        "__SCAFFOLD_CHECK__.value": "CrmPipedrive.internal.inKeboolaExPipedrive547397172Pipelines"
-                    },
-                    "__SCAFFOLD_CHECK__.source": "in.c-crmPipedrive.keboolaExPipedrive547397172Pipelines",
-                    "__SCAFFOLD_CHECK__.original_source": "in.c-keboola-ex-pipedrive-547397172.pipelines"
+                        "value": "CrmPipedrive.internal.inKeboolaExPipedrivePipelines"
+                    }
                 },
                 {
                     "destination": "stages",
@@ -252,10 +234,8 @@
                     "loadType": "clone",
                     "source_search": {
                         "key": "bdm.scaffold.table.tag",
-                        "__SCAFFOLD_CHECK__.value": "CrmPipedrive.internal.inKeboolaExPipedrive547397172Stages"
-                    },
-                    "__SCAFFOLD_CHECK__.source": "in.c-crmPipedrive.keboolaExPipedrive547397172Stages",
-                    "__SCAFFOLD_CHECK__.original_source": "in.c-keboola-ex-pipedrive-547397172.stages"
+                        "value": "CrmPipedrive.internal.inKeboolaExPipedriveStages"
+                    }
                 },
                 {
                     "destination": "users",
@@ -267,10 +247,8 @@
                     "loadType": "clone",
                     "source_search": {
                         "key": "bdm.scaffold.table.tag",
-                        "__SCAFFOLD_CHECK__.value": "CrmPipedrive.internal.inKeboolaExPipedrive547397172Users"
-                    },
-                    "__SCAFFOLD_CHECK__.source": "in.c-crmPipedrive.keboolaExPipedrive547397172Users",
-                    "__SCAFFOLD_CHECK__.original_source": "in.c-keboola-ex-pipedrive-547397172.users"
+                        "value": "CrmPipedrive.internal.inKeboolaExPipedriveUsers"
+                    }
                 },
                 {
                     "destination": "person_emails",
@@ -282,10 +260,8 @@
                     "loadType": "clone",
                     "source_search": {
                         "key": "bdm.scaffold.table.tag",
-                        "__SCAFFOLD_CHECK__.value": "CrmPipedrive.internal.inKeboolaExPipedrive547397172PersonEmails"
-                    },
-                    "__SCAFFOLD_CHECK__.source": "in.c-crmPipedrive.keboolaExPipedrive547397172PersonEmails",
-                    "__SCAFFOLD_CHECK__.original_source": "in.c-keboola-ex-pipedrive-547397172.person_emails"
+                        "value": "CrmPipedrive.internal.inKeboolaExPipedrivePersonEmails"
+                    }
                 }
             ],
             "name": "Input Tables Creation",
@@ -319,8 +295,7 @@
                             "value": "CrmPipedrive"
                         }
                     ],
-                    "destination": "out.c-crmPipedrive.pipedriveCrmActivity",
-                    "__SCAFFOLD_CHECK__original_destination": "out.c-pipedrive-crm.activity"
+                    "destination": "out.c-crmPipedrive.pipedriveCrmActivity"
                 }
             ],
             "queries": [
@@ -335,12 +310,7 @@
                     "whereOperator": "eq",
                     "columns": [],
                     "loadType": "clone",
-                    "source_search": {
-                        "key": "bdm.scaffold.table.tag",
-                        "__SCAFFOLD_CHECK__.value": "CrmPipedrive.internal.inPipedriveCrmActivities"
-                    },
-                    "__SCAFFOLD_CHECK__.source": "in.c-crmPipedrive.pipedriveCrmActivities",
-                    "__SCAFFOLD_CHECK__.original_source": "in.c-pipedrive-crm.activities"
+                    "source": "in.c-crmPipedrive.pipedriveCrmActivities"
                 },
                 {
                     "destination": "opportunity",
@@ -350,12 +320,7 @@
                     "whereOperator": "eq",
                     "columns": [],
                     "loadType": "clone",
-                    "source_search": {
-                        "key": "bdm.scaffold.table.tag",
-                        "__SCAFFOLD_CHECK__.value": "CrmPipedrive.internal.outPipedriveCrmOpportunity"
-                    },
-                    "__SCAFFOLD_CHECK__.source": "out.c-crmPipedrive.pipedriveCrmOpportunity",
-                    "__SCAFFOLD_CHECK__.original_source": "out.c-pipedrive-crm.opportunity"
+                    "source": "out.c-crmPipedrive.pipedriveCrmOpportunity"
                 },
                 {
                     "destination": "contact",
@@ -365,12 +330,7 @@
                     "whereOperator": "eq",
                     "columns": [],
                     "loadType": "clone",
-                    "source_search": {
-                        "key": "bdm.scaffold.table.tag",
-                        "__SCAFFOLD_CHECK__.value": "CrmPipedrive.internal.outPipedriveCrmContact"
-                    },
-                    "__SCAFFOLD_CHECK__.source": "out.c-crmPipedrive.pipedriveCrmContact",
-                    "__SCAFFOLD_CHECK__.original_source": "out.c-pipedrive-crm.contact"
+                    "source": "out.c-crmPipedrive.pipedriveCrmContact"
                 },
                 {
                     "destination": "employee",
@@ -380,12 +340,7 @@
                     "whereOperator": "eq",
                     "columns": [],
                     "loadType": "clone",
-                    "source_search": {
-                        "key": "bdm.scaffold.table.tag",
-                        "__SCAFFOLD_CHECK__.value": "CrmPipedrive.internal.outPipedriveCrmEmployee"
-                    },
-                    "__SCAFFOLD_CHECK__.source": "out.c-crmPipedrive.pipedriveCrmEmployee",
-                    "__SCAFFOLD_CHECK__.original_source": "out.c-pipedrive-crm.employee"
+                    "source": "out.c-crmPipedrive.pipedriveCrmEmployee"
                 }
             ],
             "name": "Activities",
@@ -419,8 +374,7 @@
                             "value": "CrmPipedrive"
                         }
                     ],
-                    "destination": "out.c-crmPipedrive.pipedriveCrmCompany",
-                    "__SCAFFOLD_CHECK__original_destination": "out.c-pipedrive-crm.company"
+                    "destination": "out.c-crmPipedrive.pipedriveCrmCompany"
                 }
             ],
             "queries": [
@@ -436,12 +390,7 @@
                     "whereOperator": "eq",
                     "columns": [],
                     "loadType": "clone",
-                    "source_search": {
-                        "key": "bdm.scaffold.table.tag",
-                        "__SCAFFOLD_CHECK__.value": "CrmPipedrive.internal.inPipedriveCrmOrganizations"
-                    },
-                    "__SCAFFOLD_CHECK__.source": "in.c-crmPipedrive.pipedriveCrmOrganizations",
-                    "__SCAFFOLD_CHECK__.original_source": "in.c-pipedrive-crm.organizations"
+                    "source": "in.c-crmPipedrive.pipedriveCrmOrganizations"
                 }
             ],
             "name": "Company",
@@ -475,8 +424,7 @@
                             "value": "CrmPipedrive"
                         }
                     ],
-                    "destination": "out.c-crmPipedrive.pipedriveCrmContact",
-                    "__SCAFFOLD_CHECK__original_destination": "out.c-pipedrive-crm.contact"
+                    "destination": "out.c-crmPipedrive.pipedriveCrmContact"
                 }
             ],
             "queries": [
@@ -492,12 +440,7 @@
                     "whereOperator": "eq",
                     "columns": [],
                     "loadType": "clone",
-                    "source_search": {
-                        "key": "bdm.scaffold.table.tag",
-                        "__SCAFFOLD_CHECK__.value": "CrmPipedrive.internal.inPipedriveCrmPersons"
-                    },
-                    "__SCAFFOLD_CHECK__.source": "in.c-crmPipedrive.pipedriveCrmPersons",
-                    "__SCAFFOLD_CHECK__.original_source": "in.c-pipedrive-crm.persons"
+                    "source": "in.c-crmPipedrive.pipedriveCrmPersons"
                 },
                 {
                     "destination": "person_emails",
@@ -507,12 +450,7 @@
                     "whereOperator": "eq",
                     "columns": [],
                     "loadType": "clone",
-                    "source_search": {
-                        "key": "bdm.scaffold.table.tag",
-                        "__SCAFFOLD_CHECK__.value": "CrmPipedrive.internal.inPipedriveCrmPersonEmails"
-                    },
-                    "__SCAFFOLD_CHECK__.source": "in.c-crmPipedrive.pipedriveCrmPersonEmails",
-                    "__SCAFFOLD_CHECK__.original_source": "in.c-pipedrive-crm.person_emails"
+                    "source": "in.c-crmPipedrive.pipedriveCrmPersonEmails"
                 }
             ],
             "name": "Contact",
@@ -546,8 +484,7 @@
                             "value": "CrmPipedrive"
                         }
                     ],
-                    "destination": "out.c-crmPipedrive.pipedriveCrmEmployee",
-                    "__SCAFFOLD_CHECK__original_destination": "out.c-pipedrive-crm.employee"
+                    "destination": "out.c-crmPipedrive.pipedriveCrmEmployee"
                 }
             ],
             "queries": [
@@ -563,12 +500,7 @@
                     "whereOperator": "eq",
                     "columns": [],
                     "loadType": "clone",
-                    "source_search": {
-                        "key": "bdm.scaffold.table.tag",
-                        "__SCAFFOLD_CHECK__.value": "CrmPipedrive.internal.inPipedriveCrmUsers"
-                    },
-                    "__SCAFFOLD_CHECK__.source": "in.c-crmPipedrive.pipedriveCrmUsers",
-                    "__SCAFFOLD_CHECK__.original_source": "in.c-pipedrive-crm.users"
+                    "source": "in.c-crmPipedrive.pipedriveCrmUsers"
                 }
             ],
             "name": "Employee",
@@ -602,8 +534,7 @@
                             "value": "CrmPipedrive"
                         }
                     ],
-                    "destination": "out.c-crmPipedrive.pipedriveCrmOpportunity",
-                    "__SCAFFOLD_CHECK__original_destination": "out.c-pipedrive-crm.opportunity"
+                    "destination": "out.c-crmPipedrive.pipedriveCrmOpportunity"
                 },
                 {
                     "source": "out_opportunity_snapshot",
@@ -625,8 +556,7 @@
                             "value": "CrmPipedrive"
                         }
                     ],
-                    "destination": "out.c-crmPipedrive.pipedriveCrmAuxiliaryTablesOpportunitySnapshot",
-                    "__SCAFFOLD_CHECK__original_destination": "out.c-pipedrive-crm-auxiliary-tables.opportunity_snapshot"
+                    "destination": "out.c-crmPipedrive.pipedriveCrmAuxiliaryTablesOpportunitySnapshot"
                 }
             ],
             "queries": [
@@ -644,12 +574,7 @@
                     "whereOperator": "eq",
                     "columns": [],
                     "loadType": "clone",
-                    "source_search": {
-                        "key": "bdm.scaffold.table.tag",
-                        "__SCAFFOLD_CHECK__.value": "CrmPipedrive.internal.inPipedriveCrmDeals"
-                    },
-                    "__SCAFFOLD_CHECK__.source": "in.c-crmPipedrive.pipedriveCrmDeals",
-                    "__SCAFFOLD_CHECK__.original_source": "in.c-pipedrive-crm.deals"
+                    "source": "in.c-crmPipedrive.pipedriveCrmDeals"
                 },
                 {
                     "destination": "contact",
@@ -659,12 +584,7 @@
                     "whereOperator": "eq",
                     "columns": [],
                     "loadType": "clone",
-                    "source_search": {
-                        "key": "bdm.scaffold.table.tag",
-                        "__SCAFFOLD_CHECK__.value": "CrmPipedrive.internal.outPipedriveCrmContact"
-                    },
-                    "__SCAFFOLD_CHECK__.source": "out.c-crmPipedrive.pipedriveCrmContact",
-                    "__SCAFFOLD_CHECK__.original_source": "out.c-pipedrive-crm.contact"
+                    "source": "out.c-crmPipedrive.pipedriveCrmContact"
                 },
                 {
                     "destination": "company",
@@ -674,12 +594,7 @@
                     "whereOperator": "eq",
                     "columns": [],
                     "loadType": "clone",
-                    "source_search": {
-                        "key": "bdm.scaffold.table.tag",
-                        "__SCAFFOLD_CHECK__.value": "CrmPipedrive.internal.outPipedriveCrmCompany"
-                    },
-                    "__SCAFFOLD_CHECK__.source": "out.c-crmPipedrive.pipedriveCrmCompany",
-                    "__SCAFFOLD_CHECK__.original_source": "out.c-pipedrive-crm.company"
+                    "source": "out.c-crmPipedrive.pipedriveCrmCompany"
                 },
                 {
                     "destination": "employee",
@@ -689,12 +604,7 @@
                     "whereOperator": "eq",
                     "columns": [],
                     "loadType": "clone",
-                    "source_search": {
-                        "key": "bdm.scaffold.table.tag",
-                        "__SCAFFOLD_CHECK__.value": "CrmPipedrive.internal.outPipedriveCrmEmployee"
-                    },
-                    "__SCAFFOLD_CHECK__.source": "out.c-crmPipedrive.pipedriveCrmEmployee",
-                    "__SCAFFOLD_CHECK__.original_source": "out.c-pipedrive-crm.employee"
+                    "source": "out.c-crmPipedrive.pipedriveCrmEmployee"
                 },
                 {
                     "destination": "pipelines",
@@ -704,12 +614,7 @@
                     "whereOperator": "eq",
                     "columns": [],
                     "loadType": "clone",
-                    "source_search": {
-                        "key": "bdm.scaffold.table.tag",
-                        "__SCAFFOLD_CHECK__.value": "CrmPipedrive.internal.inPipedriveCrmPipelines"
-                    },
-                    "__SCAFFOLD_CHECK__.source": "in.c-crmPipedrive.pipedriveCrmPipelines",
-                    "__SCAFFOLD_CHECK__.original_source": "in.c-pipedrive-crm.pipelines"
+                    "source": "in.c-crmPipedrive.pipedriveCrmPipelines"
                 },
                 {
                     "destination": "stages",
@@ -719,12 +624,7 @@
                     "whereOperator": "eq",
                     "columns": [],
                     "loadType": "clone",
-                    "source_search": {
-                        "key": "bdm.scaffold.table.tag",
-                        "__SCAFFOLD_CHECK__.value": "CrmPipedrive.internal.inPipedriveCrmStages"
-                    },
-                    "__SCAFFOLD_CHECK__.source": "in.c-crmPipedrive.pipedriveCrmStages",
-                    "__SCAFFOLD_CHECK__.original_source": "in.c-pipedrive-crm.stages"
+                    "source": "in.c-crmPipedrive.pipedriveCrmStages"
                 }
             ],
             "name": "Opportunity & auxiliary snapshot",
@@ -758,8 +658,7 @@
                             "value": "CrmPipedrive"
                         }
                     ],
-                    "destination": "out.c-crmPipedrive.pipedriveCrmOpportunityContact",
-                    "__SCAFFOLD_CHECK__original_destination": "out.c-pipedrive-crm.opportunity_contact"
+                    "destination": "out.c-crmPipedrive.pipedriveCrmOpportunityContact"
                 }
             ],
             "queries": [
@@ -774,12 +673,7 @@
                     "whereOperator": "eq",
                     "columns": [],
                     "loadType": "clone",
-                    "source_search": {
-                        "key": "bdm.scaffold.table.tag",
-                        "__SCAFFOLD_CHECK__.value": "CrmPipedrive.internal.outPipedriveCrmContact"
-                    },
-                    "__SCAFFOLD_CHECK__.source": "out.c-crmPipedrive.pipedriveCrmContact",
-                    "__SCAFFOLD_CHECK__.original_source": "out.c-pipedrive-crm.contact"
+                    "source": "out.c-crmPipedrive.pipedriveCrmContact"
                 },
                 {
                     "destination": "opportunity_ri",
@@ -789,12 +683,7 @@
                     "whereOperator": "eq",
                     "columns": [],
                     "loadType": "clone",
-                    "source_search": {
-                        "key": "bdm.scaffold.table.tag",
-                        "__SCAFFOLD_CHECK__.value": "CrmPipedrive.internal.outPipedriveCrmOpportunity"
-                    },
-                    "__SCAFFOLD_CHECK__.source": "out.c-crmPipedrive.pipedriveCrmOpportunity",
-                    "__SCAFFOLD_CHECK__.original_source": "out.c-pipedrive-crm.opportunity"
+                    "source": "out.c-crmPipedrive.pipedriveCrmOpportunity"
                 },
                 {
                     "destination": "deals",
@@ -804,12 +693,7 @@
                     "whereOperator": "eq",
                     "columns": [],
                     "loadType": "clone",
-                    "source_search": {
-                        "key": "bdm.scaffold.table.tag",
-                        "__SCAFFOLD_CHECK__.value": "CrmPipedrive.internal.inPipedriveCrmDeals"
-                    },
-                    "__SCAFFOLD_CHECK__.source": "in.c-crmPipedrive.pipedriveCrmDeals",
-                    "__SCAFFOLD_CHECK__.original_source": "in.c-pipedrive-crm.deals"
+                    "source": "in.c-crmPipedrive.pipedriveCrmDeals"
                 }
             ],
             "name": "Opportunity Contact",
@@ -844,8 +728,7 @@
                             "value": "CrmPipedrive"
                         }
                     ],
-                    "destination": "out.c-crmPipedrive.pipedriveCrmOpportunitySnapshot",
-                    "__SCAFFOLD_CHECK__original_destination": "out.c-pipedrive-crm.opportunity_snapshot"
+                    "destination": "out.c-crmPipedrive.pipedriveCrmOpportunitySnapshot"
                 }
             ],
             "queries": [
@@ -861,12 +744,7 @@
                     "whereOperator": "eq",
                     "columns": [],
                     "loadType": "clone",
-                    "source_search": {
-                        "key": "bdm.scaffold.table.tag",
-                        "__SCAFFOLD_CHECK__.value": "CrmPipedrive.internal.outPipedriveCrmAuxiliaryTablesOpportunitySnapshot"
-                    },
-                    "__SCAFFOLD_CHECK__.source": "out.c-crmPipedrive.pipedriveCrmAuxiliaryTablesOpportunitySnapshot",
-                    "__SCAFFOLD_CHECK__.original_source": "out.c-pipedrive-crm-auxiliary-tables.opportunity_snapshot"
+                    "source": "out.c-crmPipedrive.pipedriveCrmAuxiliaryTablesOpportunitySnapshot"
                 }
             ],
             "name": "Opportunity Snapshot",

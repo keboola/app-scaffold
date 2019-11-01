@@ -1,5 +1,6 @@
 {
     "componentId": "keboola.wr-db-snowflake",
+    "authorization": "provisionedSnowflake",
     "payload": {
         "name": "Snowflake",
         "configuration": {
@@ -592,9 +593,8 @@
                             ],
                             "source_search": {
                                 "key": "bdm.scaffold.table.tag",
-                                "__SCAFFOLD_CHECK__.value": "CrmPipedrive.internal.outPipedriveCrmActivity"
-                            },
-                            "__SCAFFOLD_CHECK__.original_source": "out.c-pipedrive-crm.activity"
+                                "value": "CrmPipedrive.internal.outPipedriveCrmActivity"
+                            }
                         },
                         {
                             "destination": "out.c-pipedrive-crm.company.csv",
@@ -606,9 +606,8 @@
                             ],
                             "source_search": {
                                 "key": "bdm.scaffold.table.tag",
-                                "__SCAFFOLD_CHECK__.value": "CrmPipedrive.internal.outPipedriveCrmCompany"
-                            },
-                            "__SCAFFOLD_CHECK__.original_source": "out.c-pipedrive-crm.company"
+                                "value": "CrmPipedrive.internal.outPipedriveCrmCompany"
+                            }
                         },
                         {
                             "destination": "out.c-pipedrive-crm.contact.csv",
@@ -623,9 +622,8 @@
                             ],
                             "source_search": {
                                 "key": "bdm.scaffold.table.tag",
-                                "__SCAFFOLD_CHECK__.value": "CrmPipedrive.internal.outPipedriveCrmContact"
-                            },
-                            "__SCAFFOLD_CHECK__.original_source": "out.c-pipedrive-crm.contact"
+                                "value": "CrmPipedrive.internal.outPipedriveCrmContact"
+                            }
                         },
                         {
                             "destination": "out.c-pipedrive-crm.employee.csv",
@@ -637,9 +635,8 @@
                             ],
                             "source_search": {
                                 "key": "bdm.scaffold.table.tag",
-                                "__SCAFFOLD_CHECK__.value": "CrmPipedrive.internal.outPipedriveCrmEmployee"
-                            },
-                            "__SCAFFOLD_CHECK__.original_source": "out.c-pipedrive-crm.employee"
+                                "value": "CrmPipedrive.internal.outPipedriveCrmEmployee"
+                            }
                         },
                         {
                             "destination": "out.c-pipedrive-crm.opportunity.csv",
@@ -663,9 +660,8 @@
                             ],
                             "source_search": {
                                 "key": "bdm.scaffold.table.tag",
-                                "__SCAFFOLD_CHECK__.value": "CrmPipedrive.internal.outPipedriveCrmOpportunity"
-                            },
-                            "__SCAFFOLD_CHECK__.original_source": "out.c-pipedrive-crm.opportunity"
+                                "value": "CrmPipedrive.internal.outPipedriveCrmOpportunity"
+                            }
                         },
                         {
                             "destination": "out.c-pipedrive-crm.opportunity_snapshot.csv",
@@ -692,9 +688,8 @@
                             ],
                             "source_search": {
                                 "key": "bdm.scaffold.table.tag",
-                                "__SCAFFOLD_CHECK__.value": "CrmPipedrive.internal.outPipedriveCrmOpportunitySnapshot"
-                            },
-                            "__SCAFFOLD_CHECK__.original_source": "out.c-pipedrive-crm.opportunity_snapshot"
+                                "value": "CrmPipedrive.internal.outPipedriveCrmOpportunitySnapshot"
+                            }
                         },
                         {
                             "destination": "out.c-pipedrive-crm.opportunity_contact.csv",
@@ -707,9 +702,8 @@
                             ],
                             "source_search": {
                                 "key": "bdm.scaffold.table.tag",
-                                "__SCAFFOLD_CHECK__.value": "CrmPipedrive.internal.outPipedriveCrmOpportunityContact"
-                            },
-                            "__SCAFFOLD_CHECK__.original_source": "out.c-pipedrive-crm.opportunity_contact"
+                                "value": "CrmPipedrive.internal.outPipedriveCrmOpportunityContact"
+                            }
                         }
                     ]
                 }
