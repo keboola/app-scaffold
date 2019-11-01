@@ -1,14 +1,44 @@
 {
-    "name": "",
+    "name": "Zendesk Support to Snowflake",
     "author": "Keboola",
-    "description": "",
+    "description": "Basic acquisition of Zendesk data with transformation to standard support data model and output to Snowflake.",
     "inputs": [
         {
             "id": "keboolaExZendeskZendeskSupport",
             "componentId": "keboola.ex-zendesk",
             "name": "Zendesk Support",
             "required": true,
-            "schema": null
+            "schema": {
+                "type": "object",
+                "required": [
+                    "config"
+                ],
+                "properties": {
+                    "config": {
+                        "type": "object",
+                        "required": [
+                            "domain",
+                            "usermail",
+                            "#password"
+                        ],
+                        "properties": {
+                            "domain": {
+                                "title": "Your Zendesk domain",
+                                "type": "string"
+                            },
+                            "usermail": {
+                                "title": "User e-mail",
+                                "type": "string"
+                            },
+                            "#password": {
+                                "title": "Token",
+                                "type": "string",
+                                "format": "password"
+                            }
+                        }
+                    }
+                }
+            }
         },
         {
             "id": "transformationZendeskSupport",

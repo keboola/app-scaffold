@@ -21,8 +21,7 @@
                             "value": "ZendeskSupport"
                         }
                     ],
-                    "destination": "out.c-zendeskSupport.supportCompany",
-                    "__SCAFFOLD_CHECK__original_destination": "out.c-support.company"
+                    "destination": "out.c-zendeskSupport.supportCompany"
                 }
             ],
             "queries": [
@@ -40,10 +39,8 @@
                     "loadType": "clone",
                     "source_search": {
                         "key": "bdm.scaffold.table.tag",
-                        "__SCAFFOLD_CHECK__.value": "ZendeskSupport.internal.inKeboolaExZendesk490227519Organizations"
-                    },
-                    "__SCAFFOLD_CHECK__.source": "in.c-zendeskSupport.keboolaExZendesk490227519Organizations",
-                    "__SCAFFOLD_CHECK__.original_source": "in.c-keboola-ex-zendesk-490227519.organizations"
+                        "value": "ZendeskSupport.internal.inKeboolaExZendeskOrganizations"
+                    }
                 },
                 {
                     "destination": "organizations_domain_names",
@@ -55,10 +52,8 @@
                     "loadType": "clone",
                     "source_search": {
                         "key": "bdm.scaffold.table.tag",
-                        "__SCAFFOLD_CHECK__.value": "ZendeskSupport.internal.inKeboolaExZendesk490227519OrganizationsDomainNames"
-                    },
-                    "__SCAFFOLD_CHECK__.source": "in.c-zendeskSupport.keboolaExZendesk490227519OrganizationsDomainNames",
-                    "__SCAFFOLD_CHECK__.original_source": "in.c-keboola-ex-zendesk-490227519.organizations_domain_names"
+                        "value": "ZendeskSupport.internal.inKeboolaExZendeskOrganizationsDomainNames"
+                    }
                 }
             ],
             "name": "Company",
@@ -96,8 +91,7 @@
                             "value": "ZendeskSupport"
                         }
                     ],
-                    "destination": "out.c-zendeskSupport.supportGroup",
-                    "__SCAFFOLD_CHECK__original_destination": "out.c-support.group"
+                    "destination": "out.c-zendeskSupport.supportGroup"
                 }
             ],
             "queries": [
@@ -115,10 +109,8 @@
                     "loadType": "clone",
                     "source_search": {
                         "key": "bdm.scaffold.table.tag",
-                        "__SCAFFOLD_CHECK__.value": "ZendeskSupport.internal.inKeboolaExZendesk490227519Groups"
-                    },
-                    "__SCAFFOLD_CHECK__.source": "in.c-zendeskSupport.keboolaExZendesk490227519Groups",
-                    "__SCAFFOLD_CHECK__.original_source": "in.c-keboola-ex-zendesk-490227519.groups"
+                        "value": "ZendeskSupport.internal.inKeboolaExZendeskGroups"
+                    }
                 }
             ],
             "name": "Group",
@@ -156,8 +148,7 @@
                             "value": "ZendeskSupport"
                         }
                     ],
-                    "destination": "out.c-zendeskSupport.supportEmployee",
-                    "__SCAFFOLD_CHECK__original_destination": "out.c-support.employee"
+                    "destination": "out.c-zendeskSupport.supportEmployee"
                 },
                 {
                     "source": "out_customer",
@@ -178,8 +169,7 @@
                             "value": "ZendeskSupport"
                         }
                     ],
-                    "destination": "out.c-zendeskSupport.supportCustomer",
-                    "__SCAFFOLD_CHECK__original_destination": "out.c-support.customer"
+                    "destination": "out.c-zendeskSupport.supportCustomer"
                 },
                 {
                     "source": "out_employee_group",
@@ -197,8 +187,7 @@
                             "value": "ZendeskSupport"
                         }
                     ],
-                    "destination": "out.c-zendeskSupport.supportEmployeeGroup",
-                    "__SCAFFOLD_CHECK__original_destination": "out.c-support.employee_group"
+                    "destination": "out.c-zendeskSupport.supportEmployeeGroup"
                 }
             ],
             "queries": [
@@ -219,10 +208,8 @@
                     "loadType": "clone",
                     "source_search": {
                         "key": "bdm.scaffold.table.tag",
-                        "__SCAFFOLD_CHECK__.value": "ZendeskSupport.internal.inKeboolaExZendesk490227519Users"
-                    },
-                    "__SCAFFOLD_CHECK__.source": "in.c-zendeskSupport.keboolaExZendesk490227519Users",
-                    "__SCAFFOLD_CHECK__.original_source": "in.c-keboola-ex-zendesk-490227519.users"
+                        "value": "ZendeskSupport.internal.inKeboolaExZendeskUsers"
+                    }
                 },
                 {
                     "destination": "users_groups",
@@ -234,10 +221,8 @@
                     "loadType": "clone",
                     "source_search": {
                         "key": "bdm.scaffold.table.tag",
-                        "__SCAFFOLD_CHECK__.value": "ZendeskSupport.internal.inKeboolaExZendesk490227519UsersGroups"
-                    },
-                    "__SCAFFOLD_CHECK__.source": "in.c-zendeskSupport.keboolaExZendesk490227519UsersGroups",
-                    "__SCAFFOLD_CHECK__.original_source": "in.c-keboola-ex-zendesk-490227519.users_groups"
+                        "value": "ZendeskSupport.internal.inKeboolaExZendeskUsersGroups"
+                    }
                 },
                 {
                     "destination": "company",
@@ -247,12 +232,7 @@
                     "whereOperator": "eq",
                     "columns": [],
                     "loadType": "clone",
-                    "source_search": {
-                        "key": "bdm.scaffold.table.tag",
-                        "__SCAFFOLD_CHECK__.value": "ZendeskSupport.internal.outSupportCompany"
-                    },
-                    "__SCAFFOLD_CHECK__.source": "out.c-zendeskSupport.supportCompany",
-                    "__SCAFFOLD_CHECK__.original_source": "out.c-support.company"
+                    "source": "out.c-zendeskSupport.supportCompany"
                 },
                 {
                     "destination": "group",
@@ -262,12 +242,7 @@
                     "whereOperator": "eq",
                     "columns": [],
                     "loadType": "clone",
-                    "source_search": {
-                        "key": "bdm.scaffold.table.tag",
-                        "__SCAFFOLD_CHECK__.value": "ZendeskSupport.internal.outSupportGroup"
-                    },
-                    "__SCAFFOLD_CHECK__.source": "out.c-zendeskSupport.supportGroup",
-                    "__SCAFFOLD_CHECK__.original_source": "out.c-support.group"
+                    "source": "out.c-zendeskSupport.supportGroup"
                 }
             ],
             "name": "Employee & Customer",
@@ -305,8 +280,7 @@
                             "value": "ZendeskSupport"
                         }
                     ],
-                    "destination": "out.c-zendeskSupport.supportTicketField",
-                    "__SCAFFOLD_CHECK__original_destination": "out.c-support.ticket_field"
+                    "destination": "out.c-zendeskSupport.supportTicketField"
                 },
                 {
                     "source": "out_ticket",
@@ -327,8 +301,7 @@
                             "value": "ZendeskSupport"
                         }
                     ],
-                    "destination": "out.c-zendeskSupport.supportTicket",
-                    "__SCAFFOLD_CHECK__original_destination": "out.c-support.ticket"
+                    "destination": "out.c-zendeskSupport.supportTicket"
                 },
                 {
                     "source": "out_ticket_event",
@@ -350,8 +323,7 @@
                             "value": "ZendeskSupport"
                         }
                     ],
-                    "destination": "out.c-zendeskSupport.supportTicketEvent",
-                    "__SCAFFOLD_CHECK__original_destination": "out.c-support.ticket_event"
+                    "destination": "out.c-zendeskSupport.supportTicketEvent"
                 },
                 {
                     "source": "out_ticket_field_value",
@@ -370,8 +342,7 @@
                             "value": "ZendeskSupport"
                         }
                     ],
-                    "destination": "out.c-zendeskSupport.supportTicketFieldValue",
-                    "__SCAFFOLD_CHECK__original_destination": "out.c-support.ticket_field_value"
+                    "destination": "out.c-zendeskSupport.supportTicketFieldValue"
                 }
             ],
             "queries": [
@@ -391,10 +362,8 @@
                     "loadType": "clone",
                     "source_search": {
                         "key": "bdm.scaffold.table.tag",
-                        "__SCAFFOLD_CHECK__.value": "ZendeskSupport.internal.inKeboolaExZendesk490227519Tickets"
-                    },
-                    "__SCAFFOLD_CHECK__.source": "in.c-zendeskSupport.keboolaExZendesk490227519Tickets",
-                    "__SCAFFOLD_CHECK__.original_source": "in.c-keboola-ex-zendesk-490227519.tickets"
+                        "value": "ZendeskSupport.internal.inKeboolaExZendeskTickets"
+                    }
                 },
                 {
                     "destination": "tickets_fields",
@@ -406,10 +375,8 @@
                     "loadType": "clone",
                     "source_search": {
                         "key": "bdm.scaffold.table.tag",
-                        "__SCAFFOLD_CHECK__.value": "ZendeskSupport.internal.inKeboolaExZendesk490227519TicketsFields"
-                    },
-                    "__SCAFFOLD_CHECK__.source": "in.c-zendeskSupport.keboolaExZendesk490227519TicketsFields",
-                    "__SCAFFOLD_CHECK__.original_source": "in.c-keboola-ex-zendesk-490227519.tickets_fields"
+                        "value": "ZendeskSupport.internal.inKeboolaExZendeskTicketsFields"
+                    }
                 },
                 {
                     "destination": "tickets_fields_values",
@@ -421,10 +388,8 @@
                     "loadType": "clone",
                     "source_search": {
                         "key": "bdm.scaffold.table.tag",
-                        "__SCAFFOLD_CHECK__.value": "ZendeskSupport.internal.inKeboolaExZendesk490227519TicketsFieldsValues"
-                    },
-                    "__SCAFFOLD_CHECK__.source": "in.c-zendeskSupport.keboolaExZendesk490227519TicketsFieldsValues",
-                    "__SCAFFOLD_CHECK__.original_source": "in.c-keboola-ex-zendesk-490227519.tickets_fields_values"
+                        "value": "ZendeskSupport.internal.inKeboolaExZendeskTicketsFieldsValues"
+                    }
                 },
                 {
                     "destination": "customer",
@@ -434,12 +399,7 @@
                     "whereOperator": "eq",
                     "columns": [],
                     "loadType": "clone",
-                    "source_search": {
-                        "key": "bdm.scaffold.table.tag",
-                        "__SCAFFOLD_CHECK__.value": "ZendeskSupport.internal.outSupportCustomer"
-                    },
-                    "__SCAFFOLD_CHECK__.source": "out.c-zendeskSupport.supportCustomer",
-                    "__SCAFFOLD_CHECK__.original_source": "out.c-support.customer"
+                    "source": "out.c-zendeskSupport.supportCustomer"
                 },
                 {
                     "destination": "tickets_metrics",
@@ -451,10 +411,8 @@
                     "loadType": "clone",
                     "source_search": {
                         "key": "bdm.scaffold.table.tag",
-                        "__SCAFFOLD_CHECK__.value": "ZendeskSupport.internal.inKeboolaExZendesk490227519TicketsMetrics"
-                    },
-                    "__SCAFFOLD_CHECK__.source": "in.c-zendeskSupport.keboolaExZendesk490227519TicketsMetrics",
-                    "__SCAFFOLD_CHECK__.original_source": "in.c-keboola-ex-zendesk-490227519.tickets_metrics"
+                        "value": "ZendeskSupport.internal.inKeboolaExZendeskTicketsMetrics"
+                    }
                 },
                 {
                     "destination": "employee",
@@ -464,12 +422,7 @@
                     "whereOperator": "eq",
                     "columns": [],
                     "loadType": "clone",
-                    "source_search": {
-                        "key": "bdm.scaffold.table.tag",
-                        "__SCAFFOLD_CHECK__.value": "ZendeskSupport.internal.outSupportEmployee"
-                    },
-                    "__SCAFFOLD_CHECK__.source": "out.c-zendeskSupport.supportEmployee",
-                    "__SCAFFOLD_CHECK__.original_source": "out.c-support.employee"
+                    "source": "out.c-zendeskSupport.supportEmployee"
                 },
                 {
                     "destination": "tickets_ratings",
@@ -481,10 +434,8 @@
                     "loadType": "clone",
                     "source_search": {
                         "key": "bdm.scaffold.table.tag",
-                        "__SCAFFOLD_CHECK__.value": "ZendeskSupport.internal.inKeboolaExZendesk490227519TicketsRatings"
-                    },
-                    "__SCAFFOLD_CHECK__.source": "in.c-zendeskSupport.keboolaExZendesk490227519TicketsRatings",
-                    "__SCAFFOLD_CHECK__.original_source": "in.c-keboola-ex-zendesk-490227519.tickets_ratings"
+                        "value": "ZendeskSupport.internal.inKeboolaExZendeskTicketsRatings"
+                    }
                 }
             ],
             "name": "Ticket, Metrics & Fields",

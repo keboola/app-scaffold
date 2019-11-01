@@ -28,10 +28,6 @@
                     }
                 },
                 "config": {
-                    "domain": "keboola",
-                    "usermail": "na.support@keboola.com",
-                    "username": "na.support@keboola.com\/token",
-                    "#password": "__SCAFFOLD_CHECK__",
                     "incrementalOutput": true,
                     "jobs": [
                         {
@@ -732,6 +728,201 @@
                         }
                     }
                 }
+            },
+            "processors": {
+                "after": [
+                    {
+                        "definition": {
+                            "component": "keboola.processor-add-metadata"
+                        },
+                        "parameters": {
+                            "tables": [
+                                {
+                                    "table": "tags.csv",
+                                    "metadata": [
+                                        {
+                                            "key": "bdm.scaffold.table.tag",
+                                            "value": "ZendeskSupport.internal.inKeboolaExZendeskTags"
+                                        },
+                                        {
+                                            "key": "scaffold.id",
+                                            "value": "ZendeskSupport"
+                                        }
+                                    ]
+                                },
+                                {
+                                    "table": "organizations.csv",
+                                    "metadata": [
+                                        {
+                                            "key": "bdm.scaffold.table.tag",
+                                            "value": "ZendeskSupport.internal.inKeboolaExZendeskOrganizations"
+                                        },
+                                        {
+                                            "key": "scaffold.id",
+                                            "value": "ZendeskSupport"
+                                        }
+                                    ]
+                                },
+                                {
+                                    "table": "organizations_domain_names.csv",
+                                    "metadata": [
+                                        {
+                                            "key": "bdm.scaffold.table.tag",
+                                            "value": "ZendeskSupport.internal.inKeboolaExZendeskOrganizationsDomainNames"
+                                        },
+                                        {
+                                            "key": "scaffold.id",
+                                            "value": "ZendeskSupport"
+                                        }
+                                    ]
+                                },
+                                {
+                                    "table": "groups.csv",
+                                    "metadata": [
+                                        {
+                                            "key": "bdm.scaffold.table.tag",
+                                            "value": "ZendeskSupport.internal.inKeboolaExZendeskGroups"
+                                        },
+                                        {
+                                            "key": "scaffold.id",
+                                            "value": "ZendeskSupport"
+                                        }
+                                    ]
+                                },
+                                {
+                                    "table": "users.csv",
+                                    "metadata": [
+                                        {
+                                            "key": "bdm.scaffold.table.tag",
+                                            "value": "ZendeskSupport.internal.inKeboolaExZendeskUsers"
+                                        },
+                                        {
+                                            "key": "scaffold.id",
+                                            "value": "ZendeskSupport"
+                                        }
+                                    ]
+                                },
+                                {
+                                    "table": "users_groups.csv",
+                                    "metadata": [
+                                        {
+                                            "key": "bdm.scaffold.table.tag",
+                                            "value": "ZendeskSupport.internal.inKeboolaExZendeskUsersGroups"
+                                        },
+                                        {
+                                            "key": "scaffold.id",
+                                            "value": "ZendeskSupport"
+                                        }
+                                    ]
+                                },
+                                {
+                                    "table": "users_photos.csv",
+                                    "metadata": [
+                                        {
+                                            "key": "bdm.scaffold.table.tag",
+                                            "value": "ZendeskSupport.internal.inKeboolaExZendeskUsersPhotos"
+                                        },
+                                        {
+                                            "key": "scaffold.id",
+                                            "value": "ZendeskSupport"
+                                        }
+                                    ]
+                                },
+                                {
+                                    "table": "tickets.csv",
+                                    "metadata": [
+                                        {
+                                            "key": "bdm.scaffold.table.tag",
+                                            "value": "ZendeskSupport.internal.inKeboolaExZendeskTickets"
+                                        },
+                                        {
+                                            "key": "scaffold.id",
+                                            "value": "ZendeskSupport"
+                                        }
+                                    ]
+                                },
+                                {
+                                    "table": "tickets_fields.csv",
+                                    "metadata": [
+                                        {
+                                            "key": "bdm.scaffold.table.tag",
+                                            "value": "ZendeskSupport.internal.inKeboolaExZendeskTicketsFields"
+                                        },
+                                        {
+                                            "key": "scaffold.id",
+                                            "value": "ZendeskSupport"
+                                        }
+                                    ]
+                                },
+                                {
+                                    "table": "tickets_fields_values.csv",
+                                    "metadata": [
+                                        {
+                                            "key": "bdm.scaffold.table.tag",
+                                            "value": "ZendeskSupport.internal.inKeboolaExZendeskTicketsFieldsValues"
+                                        },
+                                        {
+                                            "key": "scaffold.id",
+                                            "value": "ZendeskSupport"
+                                        }
+                                    ]
+                                },
+                                {
+                                    "table": "tickets_metrics.csv",
+                                    "metadata": [
+                                        {
+                                            "key": "bdm.scaffold.table.tag",
+                                            "value": "ZendeskSupport.internal.inKeboolaExZendeskTicketsMetrics"
+                                        },
+                                        {
+                                            "key": "scaffold.id",
+                                            "value": "ZendeskSupport"
+                                        }
+                                    ]
+                                },
+                                {
+                                    "table": "tickets_ratings.csv",
+                                    "metadata": [
+                                        {
+                                            "key": "bdm.scaffold.table.tag",
+                                            "value": "ZendeskSupport.internal.inKeboolaExZendeskTicketsRatings"
+                                        },
+                                        {
+                                            "key": "scaffold.id",
+                                            "value": "ZendeskSupport"
+                                        }
+                                    ]
+                                },
+                                {
+                                    "table": "tickets_fields_custom_field_options.csv",
+                                    "metadata": [
+                                        {
+                                            "key": "bdm.scaffold.table.tag",
+                                            "value": "ZendeskSupport.internal.inKeboolaExZendeskTicketsFieldsCustomFieldOptions"
+                                        },
+                                        {
+                                            "key": "scaffold.id",
+                                            "value": "ZendeskSupport"
+                                        }
+                                    ]
+                                },
+                                {
+                                    "table": "tickets_fields_system_field_options.csv",
+                                    "metadata": [
+                                        {
+                                            "key": "bdm.scaffold.table.tag",
+                                            "value": "ZendeskSupport.internal.inKeboolaExZendeskTicketsFieldsSystemFieldOptions"
+                                        },
+                                        {
+                                            "key": "scaffold.id",
+                                            "value": "ZendeskSupport"
+                                        }
+                                    ]
+                                }
+                            ]
+                        }
+                    }
+                ]
             }
         }
     }
