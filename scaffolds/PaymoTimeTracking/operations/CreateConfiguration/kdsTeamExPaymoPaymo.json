@@ -307,7 +307,7 @@
                                     "table": "client_contact",
                                     "metadata": [
                                         {
-                                            "key": "",
+                                            "key": "bdm.scaffold.table.tag",
                                             "value": "PaymoTimeTracking.internal.inKdsTeamExPaymo01ClientContact"
                                         },
                                         {
@@ -320,7 +320,7 @@
                                     "table": "entry",
                                     "metadata": [
                                         {
-                                            "key": "",
+                                            "key": "bdm.scaffold.table.tag",
                                             "value": "PaymoTimeTracking.internal.inKdsTeamExPaymo01Entry"
                                         },
                                         {
@@ -333,7 +333,7 @@
                                     "table": "project",
                                     "metadata": [
                                         {
-                                            "key": "",
+                                            "key": "bdm.scaffold.table.tag",
                                             "value": "PaymoTimeTracking.internal.inKdsTeamExPaymo01Project"
                                         },
                                         {
@@ -346,7 +346,7 @@
                                     "table": "task",
                                     "metadata": [
                                         {
-                                            "key": "",
+                                            "key": "bdm.scaffold.table.tag",
                                             "value": "PaymoTimeTracking.internal.inKdsTeamExPaymo01Task"
                                         },
                                         {
@@ -359,7 +359,7 @@
                                     "table": "tasklist",
                                     "metadata": [
                                         {
-                                            "key": "",
+                                            "key": "bdm.scaffold.table.tag",
                                             "value": "PaymoTimeTracking.internal.inKdsTeamExPaymo01Tasklist"
                                         },
                                         {
@@ -372,7 +372,7 @@
                                     "table": "user",
                                     "metadata": [
                                         {
-                                            "key": "",
+                                            "key": "bdm.scaffold.table.tag",
                                             "value": "PaymoTimeTracking.internal.inKdsTeamExPaymo01User"
                                         },
                                         {
@@ -385,7 +385,7 @@
                                     "table": "user_task",
                                     "metadata": [
                                         {
-                                            "key": "",
+                                            "key": "bdm.scaffold.table.tag",
                                             "value": "PaymoTimeTracking.internal.inKdsTeamExPaymo01UserTask"
                                         },
                                         {
