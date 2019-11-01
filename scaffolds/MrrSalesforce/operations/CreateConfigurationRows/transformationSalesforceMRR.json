@@ -21,8 +21,7 @@
                             "value": "MrrSalesforce"
                         }
                     ],
-                    "destination": "out.c-mrrSalesforce.crmCompany",
-                    "__SCAFFOLD_CHECK__original_destination": "out.c-crm.company"
+                    "destination": "out.c-mrrSalesforce.crmCompany"
                 }
             ],
             "queries": [
@@ -38,12 +37,7 @@
                     "whereOperator": "eq",
                     "columns": [],
                     "loadType": "clone",
-                    "source_search": {
-                        "key": "bdm.scaffold.table.tag",
-                        "__SCAFFOLD_CHECK__.value": "MrrSalesforce.internal.inSalesforceAccount"
-                    },
-                    "__SCAFFOLD_CHECK__.source": "in.c-mrrSalesforce.salesforceAccount",
-                    "__SCAFFOLD_CHECK__.original_source": "in.c-salesforce.account"
+                    "source": "in.c-mrrSalesforce.salesforceAccount"
                 }
             ],
             "name": "Company",
@@ -77,8 +71,7 @@
                             "value": "MrrSalesforce"
                         }
                     ],
-                    "destination": "out.c-mrrSalesforce.crmProduct",
-                    "__SCAFFOLD_CHECK__original_destination": "out.c-crm.product"
+                    "destination": "out.c-mrrSalesforce.crmProduct"
                 }
             ],
             "queries": [
@@ -93,12 +86,7 @@
                     "whereOperator": "eq",
                     "columns": [],
                     "loadType": "clone",
-                    "source_search": {
-                        "key": "bdm.scaffold.table.tag",
-                        "__SCAFFOLD_CHECK__.value": "MrrSalesforce.internal.inSalesforceProduct2"
-                    },
-                    "__SCAFFOLD_CHECK__.source": "in.c-mrrSalesforce.salesforceProduct2",
-                    "__SCAFFOLD_CHECK__.original_source": "in.c-salesforce.product2"
+                    "source": "in.c-mrrSalesforce.salesforceProduct2"
                 }
             ],
             "name": "Product",
@@ -132,8 +120,7 @@
                             "value": "MrrSalesforce"
                         }
                     ],
-                    "destination": "out.c-mrrSalesforce.crmContract",
-                    "__SCAFFOLD_CHECK__original_destination": "out.c-crm.contract"
+                    "destination": "out.c-mrrSalesforce.crmContract"
                 },
                 {
                     "source": "out_contract_line",
@@ -150,8 +137,7 @@
                             "value": "MrrSalesforce"
                         }
                     ],
-                    "destination": "out.c-mrrSalesforce.crmContractLine",
-                    "__SCAFFOLD_CHECK__original_destination": "out.c-crm.contract_line"
+                    "destination": "out.c-mrrSalesforce.crmContractLine"
                 }
             ],
             "queries": [
@@ -167,12 +153,7 @@
                     "whereOperator": "eq",
                     "columns": [],
                     "loadType": "clone",
-                    "source_search": {
-                        "key": "bdm.scaffold.table.tag",
-                        "__SCAFFOLD_CHECK__.value": "MrrSalesforce.internal.inSalesforceOrder"
-                    },
-                    "__SCAFFOLD_CHECK__.source": "in.c-mrrSalesforce.salesforceOrder",
-                    "__SCAFFOLD_CHECK__.original_source": "in.c-salesforce.order"
+                    "source": "in.c-mrrSalesforce.salesforceOrder"
                 },
                 {
                     "destination": "order_item",
@@ -182,12 +163,7 @@
                     "whereOperator": "eq",
                     "columns": [],
                     "loadType": "clone",
-                    "source_search": {
-                        "key": "bdm.scaffold.table.tag",
-                        "__SCAFFOLD_CHECK__.value": "MrrSalesforce.internal.inSalesforceOrderitem"
-                    },
-                    "__SCAFFOLD_CHECK__.source": "in.c-mrrSalesforce.salesforceOrderitem",
-                    "__SCAFFOLD_CHECK__.original_source": "in.c-salesforce.orderitem"
+                    "source": "in.c-mrrSalesforce.salesforceOrderitem"
                 },
                 {
                     "destination": "product",
@@ -197,12 +173,7 @@
                     "whereOperator": "eq",
                     "columns": [],
                     "loadType": "clone",
-                    "source_search": {
-                        "key": "bdm.scaffold.table.tag",
-                        "__SCAFFOLD_CHECK__.value": "MrrSalesforce.internal.outCrmProduct"
-                    },
-                    "__SCAFFOLD_CHECK__.source": "out.c-mrrSalesforce.crmProduct",
-                    "__SCAFFOLD_CHECK__.original_source": "out.c-crm.product"
+                    "source": "out.c-mrrSalesforce.crmProduct"
                 },
                 {
                     "destination": "company",
@@ -212,12 +183,7 @@
                     "whereOperator": "eq",
                     "columns": [],
                     "loadType": "clone",
-                    "source_search": {
-                        "key": "bdm.scaffold.table.tag",
-                        "__SCAFFOLD_CHECK__.value": "MrrSalesforce.internal.outCrmCompany"
-                    },
-                    "__SCAFFOLD_CHECK__.source": "out.c-mrrSalesforce.crmCompany",
-                    "__SCAFFOLD_CHECK__.original_source": "out.c-crm.company"
+                    "source": "out.c-mrrSalesforce.crmCompany"
                 },
                 {
                     "destination": "employee",
@@ -227,12 +193,7 @@
                     "whereOperator": "eq",
                     "columns": [],
                     "loadType": "clone",
-                    "source_search": {
-                        "key": "bdm.scaffold.table.tag",
-                        "__SCAFFOLD_CHECK__.value": "MrrSalesforce.internal.outCrmEmployee"
-                    },
-                    "__SCAFFOLD_CHECK__.source": "out.c-mrrSalesforce.crmEmployee",
-                    "__SCAFFOLD_CHECK__.original_source": "out.c-crm.employee"
+                    "source": "out.c-mrrSalesforce.crmEmployee"
                 }
             ],
             "name": "Contracts",
@@ -266,8 +227,7 @@
                             "value": "MrrSalesforce"
                         }
                     ],
-                    "destination": "out.c-mrrSalesforce.crmEmployee",
-                    "__SCAFFOLD_CHECK__original_destination": "out.c-crm.employee"
+                    "destination": "out.c-mrrSalesforce.crmEmployee"
                 }
             ],
             "queries": [
@@ -283,12 +243,7 @@
                     "whereOperator": "eq",
                     "columns": [],
                     "loadType": "clone",
-                    "source_search": {
-                        "key": "bdm.scaffold.table.tag",
-                        "__SCAFFOLD_CHECK__.value": "MrrSalesforce.internal.inSalesforceUser"
-                    },
-                    "__SCAFFOLD_CHECK__.source": "in.c-mrrSalesforce.salesforceUser",
-                    "__SCAFFOLD_CHECK__.original_source": "in.c-salesforce.user"
+                    "source": "in.c-mrrSalesforce.salesforceUser"
                 }
             ],
             "name": "Employee",
@@ -322,8 +277,7 @@
                             "value": "MrrSalesforce"
                         }
                     ],
-                    "destination": "out.c-mrrSalesforce.mrrMrrAggregated",
-                    "__SCAFFOLD_CHECK__original_destination": "out.c-mrr.mrr_aggregated"
+                    "destination": "out.c-mrrSalesforce.mrrMrrAggregated"
                 }
             ],
             "queries": [
@@ -339,12 +293,7 @@
                     "whereOperator": "eq",
                     "columns": [],
                     "loadType": "clone",
-                    "source_search": {
-                        "key": "bdm.scaffold.table.tag",
-                        "__SCAFFOLD_CHECK__.value": "MrrSalesforce.internal.outMrrMrr"
-                    },
-                    "__SCAFFOLD_CHECK__.source": "out.c-mrrSalesforce.mrrMrr",
-                    "__SCAFFOLD_CHECK__.original_source": "out.c-mrr.mrr"
+                    "source": "out.c-mrrSalesforce.mrrMrr"
                 },
                 {
                     "destination": "contract_line",
@@ -354,12 +303,7 @@
                     "whereOperator": "eq",
                     "columns": [],
                     "loadType": "clone",
-                    "source_search": {
-                        "key": "bdm.scaffold.table.tag",
-                        "__SCAFFOLD_CHECK__.value": "MrrSalesforce.internal.outCrmContractLine"
-                    },
-                    "__SCAFFOLD_CHECK__.source": "out.c-mrrSalesforce.crmContractLine",
-                    "__SCAFFOLD_CHECK__.original_source": "out.c-crm.contract_line"
+                    "source": "out.c-mrrSalesforce.crmContractLine"
                 },
                 {
                     "destination": "contract",
@@ -369,12 +313,7 @@
                     "whereOperator": "eq",
                     "columns": [],
                     "loadType": "clone",
-                    "source_search": {
-                        "key": "bdm.scaffold.table.tag",
-                        "__SCAFFOLD_CHECK__.value": "MrrSalesforce.internal.outCrmContract"
-                    },
-                    "__SCAFFOLD_CHECK__.source": "out.c-mrrSalesforce.crmContract",
-                    "__SCAFFOLD_CHECK__.original_source": "out.c-crm.contract"
+                    "source": "out.c-mrrSalesforce.crmContract"
                 }
             ],
             "name": "MRR - Aggregation",
@@ -408,8 +347,7 @@
                             "value": "MrrSalesforce"
                         }
                     ],
-                    "destination": "in.c-mrrSalesforce.salesforceAccount",
-                    "__SCAFFOLD_CHECK__original_destination": "in.c-salesforce.account"
+                    "destination": "in.c-mrrSalesforce.salesforceAccount"
                 },
                 {
                     "primaryKey": [
@@ -426,8 +364,7 @@
                             "value": "MrrSalesforce"
                         }
                     ],
-                    "destination": "in.c-mrrSalesforce.salesforceUser",
-                    "__SCAFFOLD_CHECK__original_destination": "in.c-salesforce.user"
+                    "destination": "in.c-mrrSalesforce.salesforceUser"
                 },
                 {
                     "source": "out_order",
@@ -444,8 +381,7 @@
                             "value": "MrrSalesforce"
                         }
                     ],
-                    "destination": "in.c-mrrSalesforce.salesforceOrder",
-                    "__SCAFFOLD_CHECK__original_destination": "in.c-salesforce.order"
+                    "destination": "in.c-mrrSalesforce.salesforceOrder"
                 },
                 {
                     "primaryKey": [
@@ -462,8 +398,7 @@
                             "value": "MrrSalesforce"
                         }
                     ],
-                    "destination": "in.c-mrrSalesforce.salesforceOrderitem",
-                    "__SCAFFOLD_CHECK__original_destination": "in.c-salesforce.orderitem"
+                    "destination": "in.c-mrrSalesforce.salesforceOrderitem"
                 },
                 {
                     "primaryKey": [
@@ -480,8 +415,7 @@
                             "value": "MrrSalesforce"
                         }
                     ],
-                    "destination": "in.c-mrrSalesforce.salesforceProduct2",
-                    "__SCAFFOLD_CHECK__original_destination": "in.c-salesforce.product2"
+                    "destination": "in.c-mrrSalesforce.salesforceProduct2"
                 }
             ],
             "queries": [
@@ -507,10 +441,8 @@
                     "loadType": "clone",
                     "source_search": {
                         "key": "bdm.scaffold.table.tag",
-                        "__SCAFFOLD_CHECK__.value": "MrrSalesforce.internal.inHtnsExSalesforce491845103Account"
-                    },
-                    "__SCAFFOLD_CHECK__.source": "in.c-mrrSalesforce.htnsExSalesforce491845103Account",
-                    "__SCAFFOLD_CHECK__.original_source": "in.c-htns-ex-salesforce-491845103.account"
+                        "value": "MrrSalesforce.internal.inHtnsExSalesforceAccount"
+                    }
                 },
                 {
                     "destination": "order",
@@ -522,10 +454,8 @@
                     "loadType": "clone",
                     "source_search": {
                         "key": "bdm.scaffold.table.tag",
-                        "__SCAFFOLD_CHECK__.value": "MrrSalesforce.internal.inHtnsExSalesforce491845103Order"
-                    },
-                    "__SCAFFOLD_CHECK__.source": "in.c-mrrSalesforce.htnsExSalesforce491845103Order",
-                    "__SCAFFOLD_CHECK__.original_source": "in.c-htns-ex-salesforce-491845103.order"
+                        "value": "MrrSalesforce.internal.inHtnsExSalesforceOrder"
+                    }
                 },
                 {
                     "destination": "orderitem",
@@ -537,10 +467,8 @@
                     "loadType": "clone",
                     "source_search": {
                         "key": "bdm.scaffold.table.tag",
-                        "__SCAFFOLD_CHECK__.value": "MrrSalesforce.internal.inHtnsExSalesforce491845103Orderitem"
-                    },
-                    "__SCAFFOLD_CHECK__.source": "in.c-mrrSalesforce.htnsExSalesforce491845103Orderitem",
-                    "__SCAFFOLD_CHECK__.original_source": "in.c-htns-ex-salesforce-491845103.orderitem"
+                        "value": "MrrSalesforce.internal.inHtnsExSalesforceOrderitem"
+                    }
                 },
                 {
                     "destination": "product2",
@@ -552,10 +480,8 @@
                     "loadType": "clone",
                     "source_search": {
                         "key": "bdm.scaffold.table.tag",
-                        "__SCAFFOLD_CHECK__.value": "MrrSalesforce.internal.inHtnsExSalesforce491845103Product2"
-                    },
-                    "__SCAFFOLD_CHECK__.source": "in.c-mrrSalesforce.htnsExSalesforce491845103Product2",
-                    "__SCAFFOLD_CHECK__.original_source": "in.c-htns-ex-salesforce-491845103.product2"
+                        "value": "MrrSalesforce.internal.inHtnsExSalesforceProduct2"
+                    }
                 },
                 {
                     "destination": "user",
@@ -567,10 +493,8 @@
                     "loadType": "clone",
                     "source_search": {
                         "key": "bdm.scaffold.table.tag",
-                        "__SCAFFOLD_CHECK__.value": "MrrSalesforce.internal.inHtnsExSalesforce491845103User"
-                    },
-                    "__SCAFFOLD_CHECK__.source": "in.c-mrrSalesforce.htnsExSalesforce491845103User",
-                    "__SCAFFOLD_CHECK__.original_source": "in.c-htns-ex-salesforce-491845103.user"
+                        "value": "MrrSalesforce.internal.inHtnsExSalesforceUser"
+                    }
                 }
             ],
             "name": "Input Tables Creation",
@@ -604,8 +528,7 @@
                             "value": "MrrSalesforce"
                         }
                     ],
-                    "destination": "out.c-mrrSalesforce.mrrMrr",
-                    "__SCAFFOLD_CHECK__original_destination": "out.c-mrr.mrr"
+                    "destination": "out.c-mrrSalesforce.mrrMrr"
                 }
             ],
             "queries": [
@@ -626,12 +549,7 @@
                     "whereOperator": "eq",
                     "columns": [],
                     "loadType": "clone",
-                    "source_search": {
-                        "key": "bdm.scaffold.table.tag",
-                        "__SCAFFOLD_CHECK__.value": "MrrSalesforce.internal.outCrmContract"
-                    },
-                    "__SCAFFOLD_CHECK__.source": "out.c-mrrSalesforce.crmContract",
-                    "__SCAFFOLD_CHECK__.original_source": "out.c-crm.contract"
+                    "source": "out.c-mrrSalesforce.crmContract"
                 },
                 {
                     "destination": "contract_line",
@@ -641,12 +559,7 @@
                     "whereOperator": "eq",
                     "columns": [],
                     "loadType": "clone",
-                    "source_search": {
-                        "key": "bdm.scaffold.table.tag",
-                        "__SCAFFOLD_CHECK__.value": "MrrSalesforce.internal.outCrmContractLine"
-                    },
-                    "__SCAFFOLD_CHECK__.source": "out.c-mrrSalesforce.crmContractLine",
-                    "__SCAFFOLD_CHECK__.original_source": "out.c-crm.contract_line"
+                    "source": "out.c-mrrSalesforce.crmContractLine"
                 }
             ],
             "name": "MRR - Contract Line",

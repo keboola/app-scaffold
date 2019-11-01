@@ -1,5 +1,6 @@
 {
     "componentId": "keboola.wr-db-snowflake",
+    "authorization": "provisionedSnowflake",
     "payload": {
         "name": "Snowflake",
         "configuration": {
@@ -452,9 +453,8 @@
                             ],
                             "source_search": {
                                 "key": "bdm.scaffold.table.tag",
-                                "__SCAFFOLD_CHECK__.value": "MrrSalesforce.internal.outCrmCompany"
-                            },
-                            "__SCAFFOLD_CHECK__.original_source": "out.c-crm.company"
+                                "value": "MrrSalesforce.internal.outCrmCompany"
+                            }
                         },
                         {
                             "destination": "out.c-crm.contract.csv",
@@ -470,9 +470,8 @@
                             ],
                             "source_search": {
                                 "key": "bdm.scaffold.table.tag",
-                                "__SCAFFOLD_CHECK__.value": "MrrSalesforce.internal.outCrmContract"
-                            },
-                            "__SCAFFOLD_CHECK__.original_source": "out.c-crm.contract"
+                                "value": "MrrSalesforce.internal.outCrmContract"
+                            }
                         },
                         {
                             "destination": "out.c-crm.contract_line.csv",
@@ -488,9 +487,8 @@
                             ],
                             "source_search": {
                                 "key": "bdm.scaffold.table.tag",
-                                "__SCAFFOLD_CHECK__.value": "MrrSalesforce.internal.outCrmContractLine"
-                            },
-                            "__SCAFFOLD_CHECK__.original_source": "out.c-crm.contract_line"
+                                "value": "MrrSalesforce.internal.outCrmContractLine"
+                            }
                         },
                         {
                             "destination": "out.c-crm.employee.csv",
@@ -502,9 +500,8 @@
                             ],
                             "source_search": {
                                 "key": "bdm.scaffold.table.tag",
-                                "__SCAFFOLD_CHECK__.value": "MrrSalesforce.internal.outCrmEmployee"
-                            },
-                            "__SCAFFOLD_CHECK__.original_source": "out.c-crm.employee"
+                                "value": "MrrSalesforce.internal.outCrmEmployee"
+                            }
                         },
                         {
                             "destination": "out.c-crm.product.csv",
@@ -515,9 +512,8 @@
                             ],
                             "source_search": {
                                 "key": "bdm.scaffold.table.tag",
-                                "__SCAFFOLD_CHECK__.value": "MrrSalesforce.internal.outCrmProduct"
-                            },
-                            "__SCAFFOLD_CHECK__.original_source": "out.c-crm.product"
+                                "value": "MrrSalesforce.internal.outCrmProduct"
+                            }
                         },
                         {
                             "destination": "out.c-mrr.mrr.csv",
@@ -534,9 +530,8 @@
                             ],
                             "source_search": {
                                 "key": "bdm.scaffold.table.tag",
-                                "__SCAFFOLD_CHECK__.value": "MrrSalesforce.internal.outMrrMrr"
-                            },
-                            "__SCAFFOLD_CHECK__.original_source": "out.c-mrr.mrr"
+                                "value": "MrrSalesforce.internal.outMrrMrr"
+                            }
                         },
                         {
                             "destination": "out.c-mrr.mrr_aggregated.csv",
@@ -553,9 +548,8 @@
                             ],
                             "source_search": {
                                 "key": "bdm.scaffold.table.tag",
-                                "__SCAFFOLD_CHECK__.value": "MrrSalesforce.internal.outMrrMrrAggregated"
-                            },
-                            "__SCAFFOLD_CHECK__.original_source": "out.c-mrr.mrr_aggregated"
+                                "value": "MrrSalesforce.internal.outMrrMrrAggregated"
+                            }
                         }
                     ]
                 }
