@@ -1,0 +1,738 @@
+{
+    "componentId": "keboola.ex-zendesk",
+    "payload": {
+        "name": "Zendesk Support",
+        "configuration": {
+            "parameters": {
+                "api": {
+                    "baseUrl": {
+                        "function": "concat",
+                        "args": [
+                            "https:\/\/",
+                            {
+                                "attr": "domain"
+                            },
+                            ".zendesk.com\/api\/v2\/"
+                        ]
+                    },
+                    "authentication": {
+                        "type": "basic"
+                    },
+                    "http": {
+                        "headers": {
+                            "Accept": "application\/json"
+                        }
+                    },
+                    "pagination": {
+                        "method": "zendesk.response.url"
+                    }
+                },
+                "config": {
+                    "domain": "keboola",
+                    "usermail": "na.support@keboola.com",
+                    "username": "na.support@keboola.com\/token",
+                    "#password": "__SCAFFOLD_CHECK__",
+                    "incrementalOutput": true,
+                    "jobs": [
+                        {
+                            "endpoint": "tags.json",
+                            "dataType": "tags"
+                        },
+                        {
+                            "endpoint": "organizations.json",
+                            "dataType": "organizations",
+                            "dataField": "organizations"
+                        },
+                        {
+                            "endpoint": "users.json",
+                            "dataType": "users",
+                            "dataField": "users"
+                        },
+                        {
+                            "endpoint": "ticket_fields.json",
+                            "dataType": "tickets_fields",
+                            "dataField": "ticket_fields"
+                        },
+                        {
+                            "endpoint": "groups.json",
+                            "dataType": "groups",
+                            "dataField": "groups",
+                            "children": [
+                                {
+                                    "endpoint": "groups\/{id}\/users.json",
+                                    "dataType": "users_groups",
+                                    "placeholders": {
+                                        "id": "id"
+                                    }
+                                }
+                            ]
+                        },
+                        {
+                            "endpoint": "incremental\/tickets.json",
+                            "scroller": "zendesk",
+                            "dataType": "tickets",
+                            "dataField": "tickets",
+                            "params": {
+                                "include": "metric_sets,comment_count",
+                                "start_time": {
+                                    "time": "previousStart"
+                                }
+                            }
+                        }
+                    ],
+                    "mappings": {
+                        "tags": {
+                            "name": {
+                                "mapping": {
+                                    "destination": "name"
+                                }
+                            },
+                            "count": {
+                                "mapping": {
+                                    "destination": "count"
+                                }
+                            }
+                        },
+                        "users": {
+                            "id": {
+                                "mapping": {
+                                    "destination": "id",
+                                    "primaryKey": true
+                                }
+                            },
+                            "name": {
+                                "mapping": {
+                                    "destination": "name"
+                                }
+                            },
+                            "email": {
+                                "mapping": {
+                                    "destination": "email"
+                                }
+                            },
+                            "url": {
+                                "mapping": {
+                                    "destination": "url"
+                                }
+                            },
+                            "deleted": {
+                                "mapping": {
+                                    "destination": "deleted"
+                                }
+                            },
+                            "created_at": {
+                                "mapping": {
+                                    "destination": "created_at"
+                                }
+                            },
+                            "updated_at": {
+                                "mapping": {
+                                    "destination": "updated_at"
+                                }
+                            },
+                            "time_zone": {
+                                "mapping": {
+                                    "destination": "time_zone"
+                                }
+                            },
+                            "phone": {
+                                "mapping": {
+                                    "destination": "phone"
+                                }
+                            },
+                            "photo": {
+                                "type": "table",
+                                "destination": "users_photos",
+                                "tableMapping": {
+                                    "id": {
+                                        "mapping": {
+                                            "primaryKey": true,
+                                            "destination": "id"
+                                        }
+                                    },
+                                    "file_name": {
+                                        "mapping": {
+                                            "destination": "file_name"
+                                        }
+                                    },
+                                    "content_url": {
+                                        "mapping": {
+                                            "destination": "content_url"
+                                        }
+                                    },
+                                    "content_type": {
+                                        "mapping": {
+                                            "destination": "content_type"
+                                        }
+                                    },
+                                    "size": {
+                                        "mapping": {
+                                            "destination": "size"
+                                        }
+                                    },
+                                    "width": {
+                                        "mapping": {
+                                            "destination": "width"
+                                        }
+                                    },
+                                    "height": {
+                                        "mapping": {
+                                            "destination": "height"
+                                        }
+                                    },
+                                    "inline": {
+                                        "mapping": {
+                                            "destination": "inline"
+                                        }
+                                    }
+                                }
+                            },
+                            "locale_id": {
+                                "mapping": {
+                                    "destination": "locale_id"
+                                }
+                            },
+                            "locale": {
+                                "mapping": {
+                                    "destination": "locale"
+                                }
+                            },
+                            "organization_id": {
+                                "mapping": {
+                                    "destination": "organizations_pk"
+                                }
+                            },
+                            "role": {
+                                "mapping": {
+                                    "destination": "role"
+                                }
+                            },
+                            "verified": {
+                                "mapping": {
+                                    "destination": "verified"
+                                }
+                            },
+                            "external_id": {
+                                "mapping": {
+                                    "destination": "external_id"
+                                }
+                            },
+                            "alias": {
+                                "mapping": {
+                                    "destination": "alias"
+                                }
+                            },
+                            "active": {
+                                "mapping": {
+                                    "destination": "active"
+                                }
+                            },
+                            "shared": {
+                                "mapping": {
+                                    "destination": "shared"
+                                }
+                            },
+                            "shared_agent": {
+                                "mapping": {
+                                    "destination": "shared_agent"
+                                }
+                            },
+                            "last_login_at": {
+                                "mapping": {
+                                    "destination": "last_login_at"
+                                }
+                            },
+                            "two_factor_auth_enabled": {
+                                "mapping": {
+                                    "destination": "two_factor_auth_enabled"
+                                }
+                            },
+                            "signature": {
+                                "mapping": {
+                                    "destination": "signature"
+                                }
+                            },
+                            "details": {
+                                "mapping": {
+                                    "destination": "details"
+                                }
+                            },
+                            "notes": {
+                                "mapping": {
+                                    "destination": "notes"
+                                }
+                            },
+                            "custom_role_id": {
+                                "mapping": {
+                                    "destination": "custom_role_id"
+                                }
+                            },
+                            "moderator": {
+                                "mapping": {
+                                    "destination": "moderator"
+                                }
+                            },
+                            "ticket_restriction": {
+                                "mapping": {
+                                    "destination": "ticket_restriction"
+                                }
+                            },
+                            "only_private_comments": {
+                                "mapping": {
+                                    "destination": "only_private_comments"
+                                }
+                            },
+                            "restricted_agent": {
+                                "mapping": {
+                                    "destination": "restricted_agent"
+                                }
+                            },
+                            "suspended": {
+                                "mapping": {
+                                    "destination": "suspended"
+                                }
+                            },
+                            "chat_only": {
+                                "mapping": {
+                                    "destination": "chat_only"
+                                }
+                            },
+                            "tags": {
+                                "forceType": "json",
+                                "mapping": {
+                                    "destination": "tags"
+                                }
+                            }
+                        },
+                        "users_groups": {
+                            "id": {
+                                "mapping": {
+                                    "destination": "users_pk"
+                                }
+                            },
+                            "parent_id": {
+                                "type": "user",
+                                "mapping": {
+                                    "destination": "groups_pk"
+                                }
+                            }
+                        },
+                        "groups": {
+                            "id": {
+                                "mapping": {
+                                    "destination": "id",
+                                    "primaryKey": true
+                                }
+                            },
+                            "name": {
+                                "mapping": {
+                                    "destination": "name"
+                                }
+                            },
+                            "url": {
+                                "mapping": {
+                                    "destination": "url"
+                                }
+                            },
+                            "deleted": {
+                                "mapping": {
+                                    "destination": "deleted"
+                                }
+                            },
+                            "created_at": {
+                                "mapping": {
+                                    "destination": "created_at"
+                                }
+                            },
+                            "updated_at": {
+                                "mapping": {
+                                    "destination": "updated_at"
+                                }
+                            }
+                        },
+                        "organizations": {
+                            "id": {
+                                "mapping": {
+                                    "destination": "id",
+                                    "primaryKey": true
+                                }
+                            },
+                            "name": {
+                                "mapping": {
+                                    "destination": "name"
+                                }
+                            },
+                            "url": {
+                                "mapping": {
+                                    "destination": "url"
+                                }
+                            },
+                            "shared_tickets": {
+                                "mapping": {
+                                    "destination": "shared_tickets"
+                                }
+                            },
+                            "shared_comments": {
+                                "mapping": {
+                                    "destination": "shared_comments"
+                                }
+                            },
+                            "external_id": {
+                                "mapping": {
+                                    "destination": "external_id"
+                                }
+                            },
+                            "created_at": {
+                                "mapping": {
+                                    "destination": "created_at"
+                                }
+                            },
+                            "updated_at": {
+                                "mapping": {
+                                    "destination": "updated_at"
+                                }
+                            },
+                            "domain_names": {
+                                "type": "table",
+                                "destination": "organizations_domain_names",
+                                "tableMapping": {
+                                    ".": {
+                                        "mapping": {
+                                            "destination": "domain"
+                                        }
+                                    }
+                                }
+                            },
+                            "details": {
+                                "mapping": {
+                                    "destination": "details"
+                                }
+                            },
+                            "notes": {
+                                "mapping": {
+                                    "destination": "notes"
+                                }
+                            },
+                            "group_id": {
+                                "mapping": {
+                                    "destination": "groups_pk"
+                                }
+                            },
+                            "tags": {
+                                "forceType": "json",
+                                "mapping": {
+                                    "destination": "tags"
+                                }
+                            }
+                        },
+                        "tickets": {
+                            "id": {
+                                "mapping": {
+                                    "primaryKey": true,
+                                    "destination": "id"
+                                }
+                            },
+                            "url": {
+                                "mapping": {
+                                    "destination": "url"
+                                }
+                            },
+                            "external_id": {
+                                "mapping": {
+                                    "destination": "external_id"
+                                }
+                            },
+                            "type": {
+                                "mapping": {
+                                    "destination": "type"
+                                }
+                            },
+                            "subject": {
+                                "mapping": {
+                                    "destination": "subject"
+                                }
+                            },
+                            "priority": {
+                                "mapping": {
+                                    "destination": "priority"
+                                }
+                            },
+                            "status": {
+                                "mapping": {
+                                    "destination": "status"
+                                }
+                            },
+                            "recipient": {
+                                "mapping": {
+                                    "destination": "recipient"
+                                }
+                            },
+                            "requester_id": {
+                                "mapping": {
+                                    "destination": "requester_users_pk"
+                                }
+                            },
+                            "submitter_id": {
+                                "mapping": {
+                                    "destination": "submitter_users_pk"
+                                }
+                            },
+                            "assignee_id": {
+                                "mapping": {
+                                    "destination": "assignee_users_pk"
+                                }
+                            },
+                            "organization_id": {
+                                "mapping": {
+                                    "destination": "organizations_pk"
+                                }
+                            },
+                            "group_id": {
+                                "mapping": {
+                                    "destination": "groups_pk"
+                                }
+                            },
+                            "forum_topic_id": {
+                                "mapping": {
+                                    "destination": "topic_id"
+                                }
+                            },
+                            "problem_id": {
+                                "mapping": {
+                                    "destination": "problem_id"
+                                }
+                            },
+                            "has_incidents": {
+                                "mapping": {
+                                    "destination": "has_incidents"
+                                }
+                            },
+                            "due_at": {
+                                "mapping": {
+                                    "destination": "due_at"
+                                }
+                            },
+                            "via.channel": {
+                                "mapping": {
+                                    "destination": "via_channel"
+                                }
+                            },
+                            "custom_fields": {
+                                "type": "table",
+                                "destination": "tickets_fields_values",
+                                "parentKey": {
+                                    "primaryKey": true
+                                },
+                                "tableMapping": {
+                                    "id": {
+                                        "mapping": {
+                                            "destination": "tickets_fields_pk",
+                                            "primaryKey": true
+                                        }
+                                    },
+                                    "value": {
+                                        "forceType": "json",
+                                        "mapping": {
+                                            "destination": "value",
+                                            "primaryKey": true
+                                        }
+                                    }
+                                }
+                            },
+                            "satisfaction_rating": {
+                                "type": "table",
+                                "destination": "tickets_ratings",
+                                "parentKey": {
+                                    "primaryKey": true
+                                },
+                                "tableMapping": {
+                                    "score": {
+                                        "mapping": {
+                                            "destination": "score"
+                                        }
+                                    },
+                                    "id": {
+                                        "mapping": {
+                                            "destination": "id"
+                                        }
+                                    }
+                                }
+                            },
+                            "ticket_form_id": {
+                                "mapping": {
+                                    "destination": "ticket_form_id"
+                                }
+                            },
+                            "brand_id": {
+                                "mapping": {
+                                    "destination": "brand_pk"
+                                }
+                            },
+                            "created_at": {
+                                "mapping": {
+                                    "destination": "created_at"
+                                }
+                            },
+                            "updated_at": {
+                                "mapping": {
+                                    "destination": "updated_at"
+                                }
+                            },
+                            "tags": {
+                                "forceType": "json",
+                                "mapping": {
+                                    "destination": "tags"
+                                }
+                            },
+                            "metric_set": {
+                                "type": "table",
+                                "destination": "tickets_metrics",
+                                "parentKey": {
+                                    "primaryKey": true
+                                },
+                                "tableMapping": {
+                                    "id": {
+                                        "mapping": {
+                                            "primaryKey": true,
+                                            "destination": "id"
+                                        }
+                                    },
+                                    "ticket_id": {
+                                        "mapping": {
+                                            "destination": "ticket_id"
+                                        }
+                                    },
+                                    "created_at": {
+                                        "mapping": {
+                                            "destination": "created_at"
+                                        }
+                                    },
+                                    "updated_at": {
+                                        "mapping": {
+                                            "destination": "updated_at"
+                                        }
+                                    },
+                                    "group_stations": {
+                                        "mapping": {
+                                            "destination": "group_stations"
+                                        }
+                                    },
+                                    "assignee_stations": {
+                                        "mapping": {
+                                            "destination": "assignee_stations"
+                                        }
+                                    },
+                                    "reopens": {
+                                        "mapping": {
+                                            "destination": "reopens"
+                                        }
+                                    },
+                                    "replies": {
+                                        "mapping": {
+                                            "destination": "replies"
+                                        }
+                                    },
+                                    "assignee_updated_at": {
+                                        "mapping": {
+                                            "destination": "assignee_updated_at"
+                                        }
+                                    },
+                                    "requester_updated_at": {
+                                        "mapping": {
+                                            "destination": "requester_updated_at"
+                                        }
+                                    },
+                                    "status_updated_at": {
+                                        "mapping": {
+                                            "destination": "status_updated_at"
+                                        }
+                                    },
+                                    "initially_assigned_at": {
+                                        "mapping": {
+                                            "destination": "initially_assigned_at"
+                                        }
+                                    },
+                                    "assigned_at": {
+                                        "mapping": {
+                                            "destination": "assigned_at"
+                                        }
+                                    },
+                                    "solved_at": {
+                                        "mapping": {
+                                            "destination": "solved_at"
+                                        }
+                                    },
+                                    "latest_comment_added_at": {
+                                        "mapping": {
+                                            "destination": "latest_comment_added_at"
+                                        }
+                                    },
+                                    "reply_time_in_minutes.calendar": {
+                                        "mapping": {
+                                            "destination": "reply_time_in_minutes_calendar"
+                                        }
+                                    },
+                                    "reply_time_in_minutes.business": {
+                                        "mapping": {
+                                            "destination": "reply_time_in_minutes_business"
+                                        }
+                                    },
+                                    "first_resolution_time_in_minutes.calendar": {
+                                        "mapping": {
+                                            "destination": "first_resolution_time_in_minutes_calendar"
+                                        }
+                                    },
+                                    "first_resolution_time_in_minutes.business": {
+                                        "mapping": {
+                                            "destination": "first_resolution_time_in_minutes_business"
+                                        }
+                                    },
+                                    "full_resolution_time_in_minutes.calendar": {
+                                        "mapping": {
+                                            "destination": "full_resolution_time_in_minutes_calendar"
+                                        }
+                                    },
+                                    "full_resolution_time_in_minutes.business": {
+                                        "mapping": {
+                                            "destination": "full_resolution_time_in_minutes_business"
+                                        }
+                                    },
+                                    "agent_wait_time_in_minutes.calendar": {
+                                        "mapping": {
+                                            "destination": "agent_wait_time_in_minutes_calendar"
+                                        }
+                                    },
+                                    "agent_wait_time_in_minutes.business": {
+                                        "mapping": {
+                                            "destination": "agent_wait_time_in_minutes_business"
+                                        }
+                                    },
+                                    "requester_wait_time_in_minutes.calendar": {
+                                        "mapping": {
+                                            "destination": "requester_wait_time_in_minutes_calendar"
+                                        }
+                                    },
+                                    "requester_wait_time_in_minutes.business": {
+                                        "mapping": {
+                                            "destination": "requester_wait_time_in_minutes_business"
+                                        }
+                                    },
+                                    "on_hold_time_in_minutes.calendar": {
+                                        "mapping": {
+                                            "destination": "on_hold_time_in_minutes_calendar"
+                                        }
+                                    },
+                                    "on_hold_time_in_minutes.business": {
+                                        "mapping": {
+                                            "destination": "on_hold_time_in_minutes_business"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

@@ -1,0 +1,35 @@
+{
+    "name": "",
+    "author": "Keboola",
+    "description": "",
+    "inputs": [
+        {
+            "id": "keboolaExZendeskZendeskSupport",
+            "componentId": "keboola.ex-zendesk",
+            "name": "Zendesk Support",
+            "required": true,
+            "schema": null
+        },
+        {
+            "id": "transformationZendeskSupport",
+            "componentId": "transformation",
+            "name": "Zendesk Support",
+            "required": true,
+            "schema": null
+        },
+        {
+            "id": "keboolaWrDbSnowflakeSnowflake",
+            "componentId": "keboola.wr-db-snowflake",
+            "name": "Snowflake",
+            "required": true,
+            "schema": null
+        },
+        {
+            "id": "orchestrationSupport",
+            "componentId": "orchestrator",
+            "name": "Support",
+            "required": true,
+            "schema": null
+        }
+    ]
+}

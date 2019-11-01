@@ -1,0 +1,591 @@
+{
+    "componentId": "keboola.wr-db-snowflake",
+    "payload": {
+        "name": "Snowflake",
+        "configuration": {
+            "parameters": {
+                "db": {
+                },
+                "tables": [
+                    {
+                        "dbName": "GROUP",
+                        "export": true,
+                        "tableId": "out.c-support.group",
+                        "items": [
+                            {
+                                "name": "group_id",
+                                "dbName": "GROUP_ID",
+                                "type": "varchar",
+                                "size": "255",
+                                "nullable": false,
+                                "default": ""
+                            },
+                            {
+                                "name": "group",
+                                "dbName": "GROUP",
+                                "type": "varchar",
+                                "size": "255",
+                                "nullable": false,
+                                "default": ""
+                            }
+                        ],
+                        "primaryKey": [
+                            "GROUP_ID"
+                        ]
+                    },
+                    {
+                        "dbName": "COMPANY",
+                        "export": true,
+                        "tableId": "out.c-support.company",
+                        "items": [
+                            {
+                                "name": "company_id",
+                                "dbName": "COMPANY_ID",
+                                "type": "varchar",
+                                "size": "255",
+                                "nullable": false,
+                                "default": ""
+                            },
+                            {
+                                "name": "company",
+                                "dbName": "COMPANY",
+                                "type": "varchar",
+                                "size": "255",
+                                "nullable": false,
+                                "default": ""
+                            },
+                            {
+                                "name": "website",
+                                "dbName": "WEBSITE",
+                                "type": "varchar",
+                                "size": "255",
+                                "nullable": false,
+                                "default": ""
+                            },
+                            {
+                                "name": "date_created",
+                                "dbName": "DATE_CREATED",
+                                "type": "date",
+                                "size": "",
+                                "nullable": true,
+                                "default": ""
+                            }
+                        ],
+                        "primaryKey": [
+                            "COMPANY_ID"
+                        ]
+                    },
+                    {
+                        "dbName": "CUSTOMER",
+                        "export": true,
+                        "tableId": "out.c-support.customer",
+                        "items": [
+                            {
+                                "name": "customer_id",
+                                "dbName": "CUSTOMER_ID",
+                                "type": "varchar",
+                                "size": "255",
+                                "nullable": false,
+                                "default": ""
+                            },
+                            {
+                                "name": "company_id",
+                                "dbName": "COMPANY_ID",
+                                "type": "varchar",
+                                "size": "255",
+                                "nullable": false,
+                                "default": ""
+                            },
+                            {
+                                "name": "date_created",
+                                "dbName": "DATE_CREATED",
+                                "type": "date",
+                                "size": "",
+                                "nullable": true,
+                                "default": ""
+                            },
+                            {
+                                "name": "customer",
+                                "dbName": "CUSTOMER",
+                                "type": "varchar",
+                                "size": "255",
+                                "nullable": false,
+                                "default": ""
+                            },
+                            {
+                                "name": "email",
+                                "dbName": "EMAIL",
+                                "type": "varchar",
+                                "size": "255",
+                                "nullable": false,
+                                "default": ""
+                            }
+                        ],
+                        "primaryKey": [
+                            "CUSTOMER_ID"
+                        ]
+                    },
+                    {
+                        "dbName": "EMPLOYEE",
+                        "export": true,
+                        "tableId": "out.c-support.employee",
+                        "items": [
+                            {
+                                "name": "employee_id",
+                                "dbName": "EMPLOYEE_ID",
+                                "type": "varchar",
+                                "size": "255",
+                                "nullable": false,
+                                "default": ""
+                            },
+                            {
+                                "name": "employee",
+                                "dbName": "EMPLOYEE",
+                                "type": "varchar",
+                                "size": "255",
+                                "nullable": false,
+                                "default": ""
+                            },
+                            {
+                                "name": "email",
+                                "dbName": "EMAIL",
+                                "type": "varchar",
+                                "size": "255",
+                                "nullable": false,
+                                "default": ""
+                            }
+                        ],
+                        "primaryKey": [
+                            "EMPLOYEE_ID"
+                        ]
+                    },
+                    {
+                        "dbName": "EMPLOYEE_GROUP",
+                        "export": true,
+                        "tableId": "out.c-support.employee_group",
+                        "items": [
+                            {
+                                "name": "employee_id",
+                                "dbName": "EMPLOYEE_ID",
+                                "type": "varchar",
+                                "size": "255",
+                                "nullable": false,
+                                "default": ""
+                            },
+                            {
+                                "name": "group_id",
+                                "dbName": "GROUP_ID",
+                                "type": "varchar",
+                                "size": "255",
+                                "nullable": false,
+                                "default": ""
+                            }
+                        ],
+                        "primaryKey": [
+                            "EMPLOYEE_ID",
+                            "GROUP_ID"
+                        ]
+                    },
+                    {
+                        "dbName": "TICKET",
+                        "export": true,
+                        "tableId": "out.c-support.ticket",
+                        "items": [
+                            {
+                                "name": "ticket_id",
+                                "dbName": "TICKET_ID",
+                                "type": "varchar",
+                                "size": "255",
+                                "nullable": false,
+                                "default": ""
+                            },
+                            {
+                                "name": "employee_id",
+                                "dbName": "EMPLOYEE_ID",
+                                "type": "varchar",
+                                "size": "255",
+                                "nullable": false,
+                                "default": ""
+                            },
+                            {
+                                "name": "customer_id",
+                                "dbName": "CUSTOMER_ID",
+                                "type": "varchar",
+                                "size": "255",
+                                "nullable": false,
+                                "default": ""
+                            },
+                            {
+                                "name": "created_date",
+                                "dbName": "CREATED_DATE",
+                                "type": "timestamp",
+                                "size": "",
+                                "nullable": true,
+                                "default": ""
+                            },
+                            {
+                                "name": "last_update",
+                                "dbName": "LAST_UPDATE",
+                                "type": "timestamp",
+                                "size": "",
+                                "nullable": true,
+                                "default": ""
+                            },
+                            {
+                                "name": "ticket_subject",
+                                "dbName": "TICKET_SUBJECT",
+                                "type": "varchar",
+                                "size": "255",
+                                "nullable": false,
+                                "default": ""
+                            },
+                            {
+                                "name": "channel",
+                                "dbName": "CHANNEL",
+                                "type": "varchar",
+                                "size": "255",
+                                "nullable": false,
+                                "default": ""
+                            },
+                            {
+                                "name": "status",
+                                "dbName": "STATUS",
+                                "type": "varchar",
+                                "size": "255",
+                                "nullable": false,
+                                "default": ""
+                            },
+                            {
+                                "name": "priority",
+                                "dbName": "PRIORITY",
+                                "type": "varchar",
+                                "size": "255",
+                                "nullable": false,
+                                "default": ""
+                            },
+                            {
+                                "name": "score",
+                                "dbName": "SCORE",
+                                "type": "varchar",
+                                "size": "255",
+                                "nullable": false,
+                                "default": ""
+                            },
+                            {
+                                "name": "replies",
+                                "dbName": "REPLIES",
+                                "type": "integer",
+                                "size": "",
+                                "nullable": true,
+                                "default": ""
+                            },
+                            {
+                                "name": "reopens",
+                                "dbName": "REOPENS",
+                                "type": "integer",
+                                "size": "",
+                                "nullable": true,
+                                "default": ""
+                            },
+                            {
+                                "name": "first_reply_time_total_m",
+                                "dbName": "FIRST_REPLY_TIME_TOTAL_M",
+                                "type": "integer",
+                                "size": "",
+                                "nullable": true,
+                                "default": ""
+                            },
+                            {
+                                "name": "first_reply_time_business_m",
+                                "dbName": "FIRST_REPLY_TIME_BUSINESS_M",
+                                "type": "integer",
+                                "size": "",
+                                "nullable": true,
+                                "default": ""
+                            },
+                            {
+                                "name": "resolution_time_total_m",
+                                "dbName": "RESOLUTION_TIME_TOTAL_M",
+                                "type": "integer",
+                                "size": "",
+                                "nullable": true,
+                                "default": ""
+                            },
+                            {
+                                "name": "resolution_time_business_m",
+                                "dbName": "RESOLUTION_TIME_BUSINESS_M",
+                                "type": "integer",
+                                "size": "",
+                                "nullable": true,
+                                "default": ""
+                            }
+                        ],
+                        "primaryKey": [
+                            "TICKET_ID"
+                        ]
+                    },
+                    {
+                        "dbName": "TICKET_EVENT",
+                        "export": true,
+                        "tableId": "out.c-support.ticket_event",
+                        "items": [
+                            {
+                                "name": "ticket_id",
+                                "dbName": "TICKET_ID",
+                                "type": "varchar",
+                                "size": "255",
+                                "nullable": false,
+                                "default": ""
+                            },
+                            {
+                                "name": "event",
+                                "dbName": "EVENT",
+                                "type": "varchar",
+                                "size": "255",
+                                "nullable": false,
+                                "default": ""
+                            },
+                            {
+                                "name": "event_date",
+                                "dbName": "EVENT_DATE",
+                                "type": "timestamp",
+                                "size": "",
+                                "nullable": true,
+                                "default": ""
+                            }
+                        ],
+                        "primaryKey": [
+                            "TICKET_ID",
+                            "EVENT"
+                        ]
+                    },
+                    {
+                        "dbName": "TICKET_FIELD",
+                        "export": false,
+                        "tableId": "out.c-support.ticket_field",
+                        "items": [
+                            {
+                                "name": "ticket_field_id",
+                                "dbName": "TICKET_FIELD_ID",
+                                "type": "varchar",
+                                "size": "255",
+                                "nullable": false,
+                                "default": ""
+                            },
+                            {
+                                "name": "ticket_field",
+                                "dbName": "TICKET_FIELD",
+                                "type": "varchar",
+                                "size": "255",
+                                "nullable": false,
+                                "default": ""
+                            },
+                            {
+                                "name": "field_type",
+                                "dbName": "FIELD_TYPE",
+                                "type": "varchar",
+                                "size": "255",
+                                "nullable": false,
+                                "default": ""
+                            }
+                        ],
+                        "primaryKey": [
+                            "TICKET_FIELD_ID"
+                        ]
+                    },
+                    {
+                        "dbName": "TICKET_FIELD_VALUE",
+                        "export": true,
+                        "tableId": "out.c-support.ticket_field_value",
+                        "items": [
+                            {
+                                "name": "ticket_field_id",
+                                "dbName": "TICKET_FIELD_ID",
+                                "type": "varchar",
+                                "size": "255",
+                                "nullable": false,
+                                "default": ""
+                            },
+                            {
+                                "name": "ticket_id",
+                                "dbName": "TICKET_ID",
+                                "type": "varchar",
+                                "size": "255",
+                                "nullable": false,
+                                "default": ""
+                            },
+                            {
+                                "name": "ticket_field",
+                                "dbName": "TICKET_FIELD",
+                                "type": "string",
+                                "size": "255",
+                                "nullable": false,
+                                "default": ""
+                            },
+                            {
+                                "name": "ticket_field_type",
+                                "dbName": "TICKET_FIELD_TYPE",
+                                "type": "string",
+                                "size": "255",
+                                "nullable": false,
+                                "default": ""
+                            },
+                            {
+                                "name": "ticket_field_value",
+                                "dbName": "TICKET_FIELD_VALUE",
+                                "type": "varchar",
+                                "size": "255",
+                                "nullable": false,
+                                "default": ""
+                            }
+                        ],
+                        "primaryKey": [
+                            "TICKET_FIELD_ID",
+                            "TICKET_ID"
+                        ]
+                    }
+                ]
+            },
+            "storage": {
+                "input": {
+                    "tables": [
+                        {
+                            "destination": "out.c-support.group.csv",
+                            "columns": [
+                                "group_id",
+                                "group"
+                            ],
+                            "source_search": {
+                                "key": "bdm.scaffold.table.tag",
+                                "__SCAFFOLD_CHECK__.value": "ZendeskSupport.internal.outSupportGroup"
+                            },
+                            "__SCAFFOLD_CHECK__.original_source": "out.c-support.group"
+                        },
+                        {
+                            "destination": "out.c-support.company.csv",
+                            "columns": [
+                                "company_id",
+                                "company",
+                                "website",
+                                "date_created"
+                            ],
+                            "source_search": {
+                                "key": "bdm.scaffold.table.tag",
+                                "__SCAFFOLD_CHECK__.value": "ZendeskSupport.internal.outSupportCompany"
+                            },
+                            "__SCAFFOLD_CHECK__.original_source": "out.c-support.company"
+                        },
+                        {
+                            "destination": "out.c-support.customer.csv",
+                            "columns": [
+                                "customer_id",
+                                "company_id",
+                                "date_created",
+                                "customer",
+                                "email"
+                            ],
+                            "source_search": {
+                                "key": "bdm.scaffold.table.tag",
+                                "__SCAFFOLD_CHECK__.value": "ZendeskSupport.internal.outSupportCustomer"
+                            },
+                            "__SCAFFOLD_CHECK__.original_source": "out.c-support.customer"
+                        },
+                        {
+                            "destination": "out.c-support.employee.csv",
+                            "columns": [
+                                "employee_id",
+                                "employee",
+                                "email"
+                            ],
+                            "source_search": {
+                                "key": "bdm.scaffold.table.tag",
+                                "__SCAFFOLD_CHECK__.value": "ZendeskSupport.internal.outSupportEmployee"
+                            },
+                            "__SCAFFOLD_CHECK__.original_source": "out.c-support.employee"
+                        },
+                        {
+                            "destination": "out.c-support.employee_group.csv",
+                            "columns": [
+                                "employee_id",
+                                "group_id"
+                            ],
+                            "source_search": {
+                                "key": "bdm.scaffold.table.tag",
+                                "__SCAFFOLD_CHECK__.value": "ZendeskSupport.internal.outSupportEmployeeGroup"
+                            },
+                            "__SCAFFOLD_CHECK__.original_source": "out.c-support.employee_group"
+                        },
+                        {
+                            "destination": "out.c-support.ticket.csv",
+                            "columns": [
+                                "ticket_id",
+                                "employee_id",
+                                "customer_id",
+                                "created_date",
+                                "last_update",
+                                "ticket_subject",
+                                "channel",
+                                "status",
+                                "priority",
+                                "score",
+                                "replies",
+                                "reopens",
+                                "first_reply_time_total_m",
+                                "first_reply_time_business_m",
+                                "resolution_time_total_m",
+                                "resolution_time_business_m"
+                            ],
+                            "source_search": {
+                                "key": "bdm.scaffold.table.tag",
+                                "__SCAFFOLD_CHECK__.value": "ZendeskSupport.internal.outSupportTicket"
+                            },
+                            "__SCAFFOLD_CHECK__.original_source": "out.c-support.ticket"
+                        },
+                        {
+                            "destination": "out.c-support.ticket_event.csv",
+                            "columns": [
+                                "ticket_id",
+                                "event",
+                                "event_date"
+                            ],
+                            "source_search": {
+                                "key": "bdm.scaffold.table.tag",
+                                "__SCAFFOLD_CHECK__.value": "ZendeskSupport.internal.outSupportTicketEvent"
+                            },
+                            "__SCAFFOLD_CHECK__.original_source": "out.c-support.ticket_event"
+                        },
+                        {
+                            "destination": "out.c-support.ticket_field.csv",
+                            "columns": [
+                                "ticket_field_id",
+                                "ticket_field",
+                                "field_type"
+                            ],
+                            "limit": 1,
+                            "source_search": {
+                                "key": "bdm.scaffold.table.tag",
+                                "__SCAFFOLD_CHECK__.value": "ZendeskSupport.internal.outSupportTicketField"
+                            },
+                            "__SCAFFOLD_CHECK__.original_source": "out.c-support.ticket_field"
+                        },
+                        {
+                            "destination": "out.c-support.ticket_field_value.csv",
+                            "columns": [
+                                "ticket_field_id",
+                                "ticket_id",
+                                "ticket_field",
+                                "ticket_field_type",
+                                "ticket_field_value"
+                            ],
+                            "source_search": {
+                                "key": "bdm.scaffold.table.tag",
+                                "__SCAFFOLD_CHECK__.value": "ZendeskSupport.internal.outSupportTicketFieldValue"
+                            },
+                            "__SCAFFOLD_CHECK__.original_source": "out.c-support.ticket_field_value"
+                        }
+                    ]
+                }
+            }
+        }
+    }
+}

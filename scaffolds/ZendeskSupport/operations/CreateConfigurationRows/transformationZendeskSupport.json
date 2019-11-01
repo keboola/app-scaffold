@@ -1,0 +1,503 @@
+[
+    {
+        "configuration": {
+            "output": [
+                {
+                    "source": "out_company",
+                    "incremental": true,
+                    "deleteWhereColumn": "",
+                    "deleteWhereOperator": "eq",
+                    "deleteWhereValues": [],
+                    "primaryKey": [
+                        "company_id"
+                    ],
+                    "metadata": [
+                        {
+                            "key": "bdm.scaffold.table.tag",
+                            "value": "ZendeskSupport.internal.outSupportCompany"
+                        },
+                        {
+                            "key": "scaffold.id",
+                            "value": "ZendeskSupport"
+                        }
+                    ],
+                    "destination": "out.c-zendeskSupport.supportCompany",
+                    "__SCAFFOLD_CHECK__original_destination": "out.c-support.company"
+                }
+            ],
+            "queries": [
+                "--create output table with companies\nCREATE TABLE \"out_company\"\nAS\n  SELECT DISTINCT\n    \"o\".\"id\"                   AS \"company_id\",\n    \"name\"                     AS \"company\",\n    \"d\".\"domain\"               AS \"website\",\n    left(\"o\".\"created_at\", 10) AS \"date_created\"\n  FROM \"organizations\" \"o\"\n         LEFT JOIN \"organizations_domain_names\" \"d\"\n                   ON \"o\".\"id\" = \"d\".\"organizations_pk\";",
+                "--fake row to keep referential integrity if child tables are missing existing company ids\nINSERT INTO \"out_company\"\n  (\"company_id\", \"company\", \"website\", \"date_created\")\nVALUES\n  ('0', 'Unknown', '', '');"
+            ],
+            "input": [
+                {
+                    "destination": "organizations",
+                    "datatypes": [],
+                    "whereColumn": "",
+                    "whereValues": [],
+                    "whereOperator": "eq",
+                    "columns": [],
+                    "loadType": "clone",
+                    "source_search": {
+                        "key": "bdm.scaffold.table.tag",
+                        "__SCAFFOLD_CHECK__.value": "ZendeskSupport.internal.inKeboolaExZendesk490227519Organizations"
+                    },
+                    "__SCAFFOLD_CHECK__.source": "in.c-zendeskSupport.keboolaExZendesk490227519Organizations",
+                    "__SCAFFOLD_CHECK__.original_source": "in.c-keboola-ex-zendesk-490227519.organizations"
+                },
+                {
+                    "destination": "organizations_domain_names",
+                    "datatypes": [],
+                    "whereColumn": "",
+                    "whereValues": [],
+                    "whereOperator": "eq",
+                    "columns": [],
+                    "loadType": "clone",
+                    "source_search": {
+                        "key": "bdm.scaffold.table.tag",
+                        "__SCAFFOLD_CHECK__.value": "ZendeskSupport.internal.inKeboolaExZendesk490227519OrganizationsDomainNames"
+                    },
+                    "__SCAFFOLD_CHECK__.source": "in.c-zendeskSupport.keboolaExZendesk490227519OrganizationsDomainNames",
+                    "__SCAFFOLD_CHECK__.original_source": "in.c-keboola-ex-zendesk-490227519.organizations_domain_names"
+                }
+            ],
+            "name": "Company",
+            "packages": [],
+            "requires": [],
+            "backend": "snowflake",
+            "type": "simple",
+            "id": "490435713",
+            "phase": 1,
+            "disabled": false,
+            "description": ""
+        },
+        "description": "",
+        "name": "Company"
+    },
+    {
+        "configuration": {
+            "output": [
+                {
+                    "source": "out_group",
+                    "incremental": true,
+                    "deleteWhereColumn": "",
+                    "deleteWhereOperator": "eq",
+                    "deleteWhereValues": [],
+                    "primaryKey": [
+                        "group_id"
+                    ],
+                    "metadata": [
+                        {
+                            "key": "bdm.scaffold.table.tag",
+                            "value": "ZendeskSupport.internal.outSupportGroup"
+                        },
+                        {
+                            "key": "scaffold.id",
+                            "value": "ZendeskSupport"
+                        }
+                    ],
+                    "destination": "out.c-zendeskSupport.supportGroup",
+                    "__SCAFFOLD_CHECK__original_destination": "out.c-support.group"
+                }
+            ],
+            "queries": [
+                "--create output table with agent groups\nCREATE TABLE \"out_group\"\nAS\n  SELECT DISTINCT\n    \"id\"   AS \"group_id\",\n    \"name\" AS \"group\"\n  FROM \"groups\";",
+                "--fake row to keep referential integrity if child tables are missing existing group ids\nINSERT INTO \"out_group\"\n  (\"group_id\", \"group\")\nVALUES\n  ('0', 'Unknown');"
+            ],
+            "input": [
+                {
+                    "destination": "groups",
+                    "datatypes": [],
+                    "whereColumn": "",
+                    "whereValues": [],
+                    "whereOperator": "eq",
+                    "columns": [],
+                    "loadType": "clone",
+                    "source_search": {
+                        "key": "bdm.scaffold.table.tag",
+                        "__SCAFFOLD_CHECK__.value": "ZendeskSupport.internal.inKeboolaExZendesk490227519Groups"
+                    },
+                    "__SCAFFOLD_CHECK__.source": "in.c-zendeskSupport.keboolaExZendesk490227519Groups",
+                    "__SCAFFOLD_CHECK__.original_source": "in.c-keboola-ex-zendesk-490227519.groups"
+                }
+            ],
+            "name": "Group",
+            "packages": [],
+            "requires": [],
+            "backend": "snowflake",
+            "type": "simple",
+            "id": "490448330",
+            "phase": 1,
+            "disabled": false,
+            "description": ""
+        },
+        "description": "",
+        "name": "Group"
+    },
+    {
+        "configuration": {
+            "output": [
+                {
+                    "source": "out_employee",
+                    "primaryKey": [
+                        "employee_id"
+                    ],
+                    "incremental": true,
+                    "deleteWhereColumn": "",
+                    "deleteWhereOperator": "eq",
+                    "deleteWhereValues": [],
+                    "metadata": [
+                        {
+                            "key": "bdm.scaffold.table.tag",
+                            "value": "ZendeskSupport.internal.outSupportEmployee"
+                        },
+                        {
+                            "key": "scaffold.id",
+                            "value": "ZendeskSupport"
+                        }
+                    ],
+                    "destination": "out.c-zendeskSupport.supportEmployee",
+                    "__SCAFFOLD_CHECK__original_destination": "out.c-support.employee"
+                },
+                {
+                    "source": "out_customer",
+                    "incremental": true,
+                    "deleteWhereColumn": "",
+                    "deleteWhereOperator": "eq",
+                    "deleteWhereValues": [],
+                    "primaryKey": [
+                        "customer_id"
+                    ],
+                    "metadata": [
+                        {
+                            "key": "bdm.scaffold.table.tag",
+                            "value": "ZendeskSupport.internal.outSupportCustomer"
+                        },
+                        {
+                            "key": "scaffold.id",
+                            "value": "ZendeskSupport"
+                        }
+                    ],
+                    "destination": "out.c-zendeskSupport.supportCustomer",
+                    "__SCAFFOLD_CHECK__original_destination": "out.c-support.customer"
+                },
+                {
+                    "source": "out_employee_group",
+                    "primaryKey": [
+                        "employee_id",
+                        "group_id"
+                    ],
+                    "metadata": [
+                        {
+                            "key": "bdm.scaffold.table.tag",
+                            "value": "ZendeskSupport.internal.outSupportEmployeeGroup"
+                        },
+                        {
+                            "key": "scaffold.id",
+                            "value": "ZendeskSupport"
+                        }
+                    ],
+                    "destination": "out.c-zendeskSupport.supportEmployeeGroup",
+                    "__SCAFFOLD_CHECK__original_destination": "out.c-support.employee_group"
+                }
+            ],
+            "queries": [
+                "--create output table with employees\n--filter out end-users (customers)\nCREATE TABLE \"out_employee\"\nAS\n  SELECT\n    \"u\".\"id\"   AS \"employee_id\",\n    \"u\".\"name\" AS \"employee\",\n    \"u\".\"email\"\n  FROM \"users\" \"u\"\n  WHERE \"u\".\"role\" <> 'end-user';",
+                "--fake row to keep referential integrity if child tables are missing existing employee ids\nINSERT INTO \"out_employee\"\n  (\"employee_id\", \"employee\", \"email\")\nVALUES\n  ('0', 'Unknown', '');",
+                "--create output table with employee-group combinations\n--assign Unknown group if employee doesn't belong to any group\nCREATE TABLE \"out_employee_group\"\nAS\n  SELECT\n    \"e\".\"employee_id\",\n    ifnull(\"g\".\"group_id\", '0') AS \"group_id\"\n  FROM \"out_employee\" \"e\"\n         LEFT JOIN \"users_groups\" \"ug\"\n                   ON \"e\".\"employee_id\" = \"ug\".\"users_pk\"\n         LEFT JOIN \"group\" \"g\"\n                   ON \"ug\".\"groups_pk\" = \"g\".\"group_id\";",
+                "--create output table with customers\nCREATE TABLE \"out_customer\"\nAS\n  SELECT\n    \"u\".\"id\"                      AS \"customer_id\",\n    ifnull(\"c\".\"company_id\", '0') AS \"company_id\",\n    left(\"u\".\"created_at\", 10)    AS \"date_created\",\n    \"u\".\"name\"                    AS \"customer\",\n    \"u\".\"email\"\n  FROM \"users\" \"u\"\n         LEFT JOIN \"company\" \"c\"\n                   ON \"u\".\"organizations_pk\" = \"c\".\"company_id\"\n  WHERE \"u\".\"role\" = 'end-user';",
+                "--fake row to keep referential integrity if child tables are missing existing customer ids\nINSERT INTO \"out_customer\"\n  (\"customer_id\", \"company_id\", \"date_created\", \"customer\", \"email\")\nVALUES\n  ('0', '0', '', 'Unknown', '');"
+            ],
+            "input": [
+                {
+                    "destination": "users",
+                    "datatypes": [],
+                    "whereColumn": "",
+                    "whereValues": [],
+                    "whereOperator": "eq",
+                    "columns": [],
+                    "loadType": "clone",
+                    "source_search": {
+                        "key": "bdm.scaffold.table.tag",
+                        "__SCAFFOLD_CHECK__.value": "ZendeskSupport.internal.inKeboolaExZendesk490227519Users"
+                    },
+                    "__SCAFFOLD_CHECK__.source": "in.c-zendeskSupport.keboolaExZendesk490227519Users",
+                    "__SCAFFOLD_CHECK__.original_source": "in.c-keboola-ex-zendesk-490227519.users"
+                },
+                {
+                    "destination": "users_groups",
+                    "datatypes": [],
+                    "whereColumn": "",
+                    "whereValues": [],
+                    "whereOperator": "eq",
+                    "columns": [],
+                    "loadType": "clone",
+                    "source_search": {
+                        "key": "bdm.scaffold.table.tag",
+                        "__SCAFFOLD_CHECK__.value": "ZendeskSupport.internal.inKeboolaExZendesk490227519UsersGroups"
+                    },
+                    "__SCAFFOLD_CHECK__.source": "in.c-zendeskSupport.keboolaExZendesk490227519UsersGroups",
+                    "__SCAFFOLD_CHECK__.original_source": "in.c-keboola-ex-zendesk-490227519.users_groups"
+                },
+                {
+                    "destination": "company",
+                    "datatypes": [],
+                    "whereColumn": "",
+                    "whereValues": [],
+                    "whereOperator": "eq",
+                    "columns": [],
+                    "loadType": "clone",
+                    "source_search": {
+                        "key": "bdm.scaffold.table.tag",
+                        "__SCAFFOLD_CHECK__.value": "ZendeskSupport.internal.outSupportCompany"
+                    },
+                    "__SCAFFOLD_CHECK__.source": "out.c-zendeskSupport.supportCompany",
+                    "__SCAFFOLD_CHECK__.original_source": "out.c-support.company"
+                },
+                {
+                    "destination": "group",
+                    "datatypes": [],
+                    "whereColumn": "",
+                    "whereValues": [],
+                    "whereOperator": "eq",
+                    "columns": [],
+                    "loadType": "clone",
+                    "source_search": {
+                        "key": "bdm.scaffold.table.tag",
+                        "__SCAFFOLD_CHECK__.value": "ZendeskSupport.internal.outSupportGroup"
+                    },
+                    "__SCAFFOLD_CHECK__.source": "out.c-zendeskSupport.supportGroup",
+                    "__SCAFFOLD_CHECK__.original_source": "out.c-support.group"
+                }
+            ],
+            "name": "Employee & Customer",
+            "packages": [],
+            "requires": [],
+            "backend": "snowflake",
+            "type": "simple",
+            "id": "491596747",
+            "phase": "2",
+            "disabled": false,
+            "description": ""
+        },
+        "description": "",
+        "name": "Employee & Customer"
+    },
+    {
+        "configuration": {
+            "output": [
+                {
+                    "source": "out_ticket_field",
+                    "incremental": true,
+                    "deleteWhereColumn": "",
+                    "deleteWhereOperator": "eq",
+                    "deleteWhereValues": [],
+                    "primaryKey": [
+                        "ticket_field_id"
+                    ],
+                    "metadata": [
+                        {
+                            "key": "bdm.scaffold.table.tag",
+                            "value": "ZendeskSupport.internal.outSupportTicketField"
+                        },
+                        {
+                            "key": "scaffold.id",
+                            "value": "ZendeskSupport"
+                        }
+                    ],
+                    "destination": "out.c-zendeskSupport.supportTicketField",
+                    "__SCAFFOLD_CHECK__original_destination": "out.c-support.ticket_field"
+                },
+                {
+                    "source": "out_ticket",
+                    "incremental": true,
+                    "deleteWhereColumn": "",
+                    "deleteWhereOperator": "eq",
+                    "deleteWhereValues": [],
+                    "primaryKey": [
+                        "ticket_id"
+                    ],
+                    "metadata": [
+                        {
+                            "key": "bdm.scaffold.table.tag",
+                            "value": "ZendeskSupport.internal.outSupportTicket"
+                        },
+                        {
+                            "key": "scaffold.id",
+                            "value": "ZendeskSupport"
+                        }
+                    ],
+                    "destination": "out.c-zendeskSupport.supportTicket",
+                    "__SCAFFOLD_CHECK__original_destination": "out.c-support.ticket"
+                },
+                {
+                    "source": "out_ticket_event",
+                    "incremental": true,
+                    "deleteWhereColumn": "",
+                    "deleteWhereOperator": "eq",
+                    "deleteWhereValues": [],
+                    "primaryKey": [
+                        "ticket_id",
+                        "event"
+                    ],
+                    "metadata": [
+                        {
+                            "key": "bdm.scaffold.table.tag",
+                            "value": "ZendeskSupport.internal.outSupportTicketEvent"
+                        },
+                        {
+                            "key": "scaffold.id",
+                            "value": "ZendeskSupport"
+                        }
+                    ],
+                    "destination": "out.c-zendeskSupport.supportTicketEvent",
+                    "__SCAFFOLD_CHECK__original_destination": "out.c-support.ticket_event"
+                },
+                {
+                    "source": "out_ticket_field_value",
+                    "primaryKey": [
+                        "ticket_field_id",
+                        "ticket_id",
+                        "ticket_field_value"
+                    ],
+                    "metadata": [
+                        {
+                            "key": "bdm.scaffold.table.tag",
+                            "value": "ZendeskSupport.internal.outSupportTicketFieldValue"
+                        },
+                        {
+                            "key": "scaffold.id",
+                            "value": "ZendeskSupport"
+                        }
+                    ],
+                    "destination": "out.c-zendeskSupport.supportTicketFieldValue",
+                    "__SCAFFOLD_CHECK__original_destination": "out.c-support.ticket_field_value"
+                }
+            ],
+            "queries": [
+                "--create output table with ticket fields (this table may not be necessary as it's flattened into the ticket_field_values later anyway)\nCREATE TABLE \"out_ticket_field\"\nAS\n  SELECT\n    \"id\"    AS \"ticket_field_id\",\n    \"title\" AS \"ticket_field\",\n    \"type\"  AS \"field_type\"\n  FROM \"tickets_fields\";",
+                "--create output table with tickets\n--format timestamp\n--join metrics to tickets\nCREATE TABLE \"out_ticket\"\nAS\n  SELECT\n    \"t\".\"id\"                                           AS \"ticket_id\",\n    ifnull(\"e\".\"employee_id\", '0')                     AS \"employee_id\",\n    ifnull(\"c\".\"customer_id\", '0')                     AS \"customer_id\",\n    trim(regexp_replace(\"t\".\"created_at\", 'T|Z', ' ')) AS \"created_date\",\n    trim(regexp_replace(\"t\".\"created_at\", 'T|Z', ' ')) AS \"last_update\",\n    \"t\".\"subject\"                                      AS \"ticket_subject\",\n    \"t\".\"via_channel\"                                  AS \"channel\",\n    \"t\".\"status\",\n    IFF(\"t\".\"priority\"='','unspecified',\"t\".\"priority\") AS \"priority\",\n    \"r\".\"score\",\n    \"m\".\"replies\",\n    \"m\".\"reopens\",\n    \"m\".\"reply_time_in_minutes_calendar\"               AS \"first_reply_time_total_m\",\n    \"m\".\"reply_time_in_minutes_business\"               AS \"first_reply_time_business_m\",\n    \"m\".\"full_resolution_time_in_minutes_calendar\"     AS \"resolution_time_total_m\",\n    \"m\".\"full_resolution_time_in_minutes_business\"     AS \"resolution_time_business_m\"\n  FROM \"tickets\" \"t\"\n         LEFT JOIN \"employee\" \"e\"\n                   ON \"t\".\"assignee_users_pk\" = \"e\".\"employee_id\"\n         LEFT JOIN \"customer\" \"c\"\n                   ON \"t\".\"requester_users_pk\" = \"c\".\"customer_id\"\n         LEFT JOIN \"tickets_metrics\" \"m\"\n                   ON \"t\".\"id\" = \"m\".\"tickets_pk\"\n         LEFT JOIN \"tickets_ratings\" \"r\"\n                   ON \"t\".\"id\" = \"r\".\"tickets_pk\";",
+                "--create output table with ticket events\nCREATE TABLE \"out_ticket_event\"\nAS\n  SELECT\n    \"id\"                                           AS \"ticket_id\",\n    'Created'                                      AS \"event\",\n    trim(regexp_replace(\"created_at\", 'T|Z', ' ')) AS \"event_date\"\n  FROM \"tickets\"\n  WHERE \"created_at\" <> ''\n  UNION ALL\n  SELECT\n    \"id\"                                           AS \"ticket_id\",\n    'Updated'                                      AS \"event\",\n    trim(regexp_replace(\"updated_at\", 'T|Z', ' ')) AS \"event_date\"\n  FROM \"tickets\"\n  WHERE \"updated_at\" <> ''\n  UNION ALL\n  SELECT\n    \"id\"                                          AS \"ticket_id\",\n    'Solved'                                      AS \"event\",\n    trim(regexp_replace(\"solved_at\", 'T|Z', ' ')) AS \"event_date\"\n  FROM \"tickets_metrics\"\n  WHERE \"solved_at\" <> ''\n  UNION ALL\n  SELECT\n    \"id\"                                            AS \"ticket_id\",\n    'Assigned'                                      AS \"event\",\n    trim(regexp_replace(\"assigned_at\", 'T|Z', ' ')) AS \"event_date\"\n  FROM \"tickets_metrics\"\n  WHERE \"assigned_at\" <> ''\n  UNION ALL\n  SELECT\n    \"id\"                                                      AS \"ticket_id\",\n    'Initially assigned'                                      AS \"event\",\n    trim(regexp_replace(\"initially_assigned_at\", 'T|Z', ' ')) AS \"event_date\"\n  FROM \"tickets_metrics\"\n  WHERE \"initially_assigned_at\" <> '';",
+                "--create output table with ticket fields values\nCREATE TABLE \"out_ticket_field_value\"\nAS\n  SELECT\n    \"f\".\"id\" AS \"ticket_field_id\",\n    \"t\".\"ticket_id\",\n    \"f\".\"title\" AS \"ticket_field\",\n    \"f\".\"type\"  AS \"ticket_field_type\",\n    \"v\".\"value\" AS \"ticket_field_value\"\n  FROM \"tickets_fields_values\" \"v\"\n         INNER JOIN \"out_ticket\" \"t\"\n                    ON \"v\".\"tickets_pk\" = \"t\".\"ticket_id\"\n         INNER JOIN \"tickets_fields\" \"f\"\n                    ON \"v\".\"tickets_fields_pk\" = \"f\".\"id\"\n  WHERE \"value\" <> '';"
+            ],
+            "input": [
+                {
+                    "destination": "tickets",
+                    "datatypes": [],
+                    "whereColumn": "",
+                    "whereValues": [],
+                    "whereOperator": "eq",
+                    "columns": [],
+                    "loadType": "clone",
+                    "source_search": {
+                        "key": "bdm.scaffold.table.tag",
+                        "__SCAFFOLD_CHECK__.value": "ZendeskSupport.internal.inKeboolaExZendesk490227519Tickets"
+                    },
+                    "__SCAFFOLD_CHECK__.source": "in.c-zendeskSupport.keboolaExZendesk490227519Tickets",
+                    "__SCAFFOLD_CHECK__.original_source": "in.c-keboola-ex-zendesk-490227519.tickets"
+                },
+                {
+                    "destination": "tickets_fields",
+                    "datatypes": [],
+                    "whereColumn": "",
+                    "whereValues": [],
+                    "whereOperator": "eq",
+                    "columns": [],
+                    "loadType": "clone",
+                    "source_search": {
+                        "key": "bdm.scaffold.table.tag",
+                        "__SCAFFOLD_CHECK__.value": "ZendeskSupport.internal.inKeboolaExZendesk490227519TicketsFields"
+                    },
+                    "__SCAFFOLD_CHECK__.source": "in.c-zendeskSupport.keboolaExZendesk490227519TicketsFields",
+                    "__SCAFFOLD_CHECK__.original_source": "in.c-keboola-ex-zendesk-490227519.tickets_fields"
+                },
+                {
+                    "destination": "tickets_fields_values",
+                    "datatypes": [],
+                    "whereColumn": "",
+                    "whereValues": [],
+                    "whereOperator": "eq",
+                    "columns": [],
+                    "loadType": "clone",
+                    "source_search": {
+                        "key": "bdm.scaffold.table.tag",
+                        "__SCAFFOLD_CHECK__.value": "ZendeskSupport.internal.inKeboolaExZendesk490227519TicketsFieldsValues"
+                    },
+                    "__SCAFFOLD_CHECK__.source": "in.c-zendeskSupport.keboolaExZendesk490227519TicketsFieldsValues",
+                    "__SCAFFOLD_CHECK__.original_source": "in.c-keboola-ex-zendesk-490227519.tickets_fields_values"
+                },
+                {
+                    "destination": "customer",
+                    "datatypes": [],
+                    "whereColumn": "",
+                    "whereValues": [],
+                    "whereOperator": "eq",
+                    "columns": [],
+                    "loadType": "clone",
+                    "source_search": {
+                        "key": "bdm.scaffold.table.tag",
+                        "__SCAFFOLD_CHECK__.value": "ZendeskSupport.internal.outSupportCustomer"
+                    },
+                    "__SCAFFOLD_CHECK__.source": "out.c-zendeskSupport.supportCustomer",
+                    "__SCAFFOLD_CHECK__.original_source": "out.c-support.customer"
+                },
+                {
+                    "destination": "tickets_metrics",
+                    "datatypes": [],
+                    "whereColumn": "",
+                    "whereValues": [],
+                    "whereOperator": "eq",
+                    "columns": [],
+                    "loadType": "clone",
+                    "source_search": {
+                        "key": "bdm.scaffold.table.tag",
+                        "__SCAFFOLD_CHECK__.value": "ZendeskSupport.internal.inKeboolaExZendesk490227519TicketsMetrics"
+                    },
+                    "__SCAFFOLD_CHECK__.source": "in.c-zendeskSupport.keboolaExZendesk490227519TicketsMetrics",
+                    "__SCAFFOLD_CHECK__.original_source": "in.c-keboola-ex-zendesk-490227519.tickets_metrics"
+                },
+                {
+                    "destination": "employee",
+                    "datatypes": [],
+                    "whereColumn": "",
+                    "whereValues": [],
+                    "whereOperator": "eq",
+                    "columns": [],
+                    "loadType": "clone",
+                    "source_search": {
+                        "key": "bdm.scaffold.table.tag",
+                        "__SCAFFOLD_CHECK__.value": "ZendeskSupport.internal.outSupportEmployee"
+                    },
+                    "__SCAFFOLD_CHECK__.source": "out.c-zendeskSupport.supportEmployee",
+                    "__SCAFFOLD_CHECK__.original_source": "out.c-support.employee"
+                },
+                {
+                    "destination": "tickets_ratings",
+                    "datatypes": [],
+                    "whereColumn": "",
+                    "whereValues": [],
+                    "whereOperator": "eq",
+                    "columns": [],
+                    "loadType": "clone",
+                    "source_search": {
+                        "key": "bdm.scaffold.table.tag",
+                        "__SCAFFOLD_CHECK__.value": "ZendeskSupport.internal.inKeboolaExZendesk490227519TicketsRatings"
+                    },
+                    "__SCAFFOLD_CHECK__.source": "in.c-zendeskSupport.keboolaExZendesk490227519TicketsRatings",
+                    "__SCAFFOLD_CHECK__.original_source": "in.c-keboola-ex-zendesk-490227519.tickets_ratings"
+                }
+            ],
+            "name": "Ticket, Metrics & Fields",
+            "packages": [],
+            "requires": [],
+            "backend": "snowflake",
+            "type": "simple",
+            "id": "491608614",
+            "phase": "3",
+            "disabled": false,
+            "description": ""
+        },
+        "description": "",
+        "name": "Ticket, Metrics & Fields"
+    }
+]
