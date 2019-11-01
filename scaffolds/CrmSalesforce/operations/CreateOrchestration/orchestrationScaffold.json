@@ -1,6 +1,6 @@
 {
     "payload": {
-        "name": "Scaffold",
+        "name": "CRM Salesforce",
         "tasks": [
             {
                 "component": "htns.ex-salesforce",

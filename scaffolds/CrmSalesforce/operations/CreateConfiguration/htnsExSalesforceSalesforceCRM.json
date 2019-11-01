@@ -4,6 +4,7 @@
         "name": "Salesforce CRM",
         "configuration": {
             "parameters": {
+            	"sandbox": false            	
             }
         }
     }
