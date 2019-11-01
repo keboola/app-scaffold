@@ -1,0 +1,885 @@
+[
+    {
+        "configuration": {
+            "output": [
+                {
+                    "source": "out_activities",
+                    "primaryKey": [
+                        "activity_id"
+                    ],
+                    "metadata": [
+                        {
+                            "key": "bdm.scaffold.table.tag",
+                            "value": "CrmPipedrive.internal.inPipedriveCrmActivities"
+                        },
+                        {
+                            "key": "scaffold.id",
+                            "value": "CrmPipedrive"
+                        }
+                    ],
+                    "destination": "in.c-crmPipedrive.pipedriveCrmActivities",
+                    "__SCAFFOLD_CHECK__original_destination": "in.c-pipedrive-crm.activities"
+                },
+                {
+                    "source": "out_deals",
+                    "primaryKey": [
+                        "deal_id"
+                    ],
+                    "metadata": [
+                        {
+                            "key": "bdm.scaffold.table.tag",
+                            "value": "CrmPipedrive.internal.inPipedriveCrmDeals"
+                        },
+                        {
+                            "key": "scaffold.id",
+                            "value": "CrmPipedrive"
+                        }
+                    ],
+                    "destination": "in.c-crmPipedrive.pipedriveCrmDeals",
+                    "__SCAFFOLD_CHECK__original_destination": "in.c-pipedrive-crm.deals"
+                },
+                {
+                    "source": "out_organizations",
+                    "primaryKey": [
+                        "organization_id"
+                    ],
+                    "metadata": [
+                        {
+                            "key": "bdm.scaffold.table.tag",
+                            "value": "CrmPipedrive.internal.inPipedriveCrmOrganizations"
+                        },
+                        {
+                            "key": "scaffold.id",
+                            "value": "CrmPipedrive"
+                        }
+                    ],
+                    "destination": "in.c-crmPipedrive.pipedriveCrmOrganizations",
+                    "__SCAFFOLD_CHECK__original_destination": "in.c-pipedrive-crm.organizations"
+                },
+                {
+                    "source": "out_persons",
+                    "primaryKey": [
+                        "contact_id"
+                    ],
+                    "metadata": [
+                        {
+                            "key": "bdm.scaffold.table.tag",
+                            "value": "CrmPipedrive.internal.inPipedriveCrmPersons"
+                        },
+                        {
+                            "key": "scaffold.id",
+                            "value": "CrmPipedrive"
+                        }
+                    ],
+                    "destination": "in.c-crmPipedrive.pipedriveCrmPersons",
+                    "__SCAFFOLD_CHECK__original_destination": "in.c-pipedrive-crm.persons"
+                },
+                {
+                    "source": "out_pipelines",
+                    "primaryKey": [
+                        "pipeline_id"
+                    ],
+                    "metadata": [
+                        {
+                            "key": "bdm.scaffold.table.tag",
+                            "value": "CrmPipedrive.internal.inPipedriveCrmPipelines"
+                        },
+                        {
+                            "key": "scaffold.id",
+                            "value": "CrmPipedrive"
+                        }
+                    ],
+                    "destination": "in.c-crmPipedrive.pipedriveCrmPipelines",
+                    "__SCAFFOLD_CHECK__original_destination": "in.c-pipedrive-crm.pipelines"
+                },
+                {
+                    "source": "out_stages",
+                    "primaryKey": [
+                        "stage_id"
+                    ],
+                    "metadata": [
+                        {
+                            "key": "bdm.scaffold.table.tag",
+                            "value": "CrmPipedrive.internal.inPipedriveCrmStages"
+                        },
+                        {
+                            "key": "scaffold.id",
+                            "value": "CrmPipedrive"
+                        }
+                    ],
+                    "destination": "in.c-crmPipedrive.pipedriveCrmStages",
+                    "__SCAFFOLD_CHECK__original_destination": "in.c-pipedrive-crm.stages"
+                },
+                {
+                    "source": "out_users",
+                    "primaryKey": [
+                        "owner_id"
+                    ],
+                    "metadata": [
+                        {
+                            "key": "bdm.scaffold.table.tag",
+                            "value": "CrmPipedrive.internal.inPipedriveCrmUsers"
+                        },
+                        {
+                            "key": "scaffold.id",
+                            "value": "CrmPipedrive"
+                        }
+                    ],
+                    "destination": "in.c-crmPipedrive.pipedriveCrmUsers",
+                    "__SCAFFOLD_CHECK__original_destination": "in.c-pipedrive-crm.users"
+                },
+                {
+                    "source": "out_person_emails",
+                    "primaryKey": [
+                        "contact_id",
+                        "label"
+                    ],
+                    "metadata": [
+                        {
+                            "key": "bdm.scaffold.table.tag",
+                            "value": "CrmPipedrive.internal.inPipedriveCrmPersonEmails"
+                        },
+                        {
+                            "key": "scaffold.id",
+                            "value": "CrmPipedrive"
+                        }
+                    ],
+                    "destination": "in.c-crmPipedrive.pipedriveCrmPersonEmails",
+                    "__SCAFFOLD_CHECK__original_destination": "in.c-pipedrive-crm.person_emails"
+                }
+            ],
+            "queries": [
+                "--activities table\nCREATE TABLE \"activities_tmp\"\nAS\n    SELECT\n        OBJECT_CONSTRUCT(*) AS \"obj\"\n    FROM \"activities\";",
+                "CREATE TABLE \"out_activities\"\nAS\n    SELECT\n        trim(\"obj\":\"activity_id\", '\"') AS \"activity_id\",\n        trim(\"obj\":\"company_id\", '\"')  AS \"company_id\",\n        trim(\"obj\":\"user_id\", '\"')     AS \"user_id\",\n        trim(\"obj\":\"person_id\", '\"')   AS \"person_id\",\n        trim(\"obj\":\"type\", '\"')        AS \"type\",\n        trim(\"obj\":\"deal_id\", '\"')     AS \"deal_id\",\n        trim(\"obj\":\"subject\", '\"')     AS \"subject\",\n        trim(\"obj\":\"due_date\", '\"')    AS \"due_date\",\n        trim(\"obj\":\"add_time\", '\"')    AS \"add_time\",\n        trim(\"obj\":\"done\", '\"')        AS \"done\"\n    FROM \"activities_tmp\";",
+                "--deals table\nCREATE TABLE \"deals_tmp\"\nAS\n    SELECT\n        OBJECT_CONSTRUCT(*) AS \"obj\"\n    FROM \"deals\";",
+                "CREATE TABLE \"out_deals\"\nAS\n    SELECT\n        trim(\"obj\":\"deal_id\", '\"')              AS \"deal_id\",\n        trim(\"obj\":\"deal_deleted\", '\"')         AS \"deal_deleted\",\n        trim(\"obj\":\"lost_time\", '\"')            AS \"lost_time\",\n        trim(\"obj\":\"add_time\", '\"')             AS \"add_time\",\n        trim(\"obj\":\"deal_currency\", '\"')        AS \"deal_currency\",\n        trim(\"obj\":\"deal_value\", '\"')           AS \"deal_value\",\n        trim(\"obj\":\"deal_status\", '\"')          AS \"deal_status\",\n        trim(\"obj\":\"close_time\", '\"')           AS \"close_time\",\n        trim(\"obj\":\"products_count\", '\"')       AS \"products_count\",\n        trim(\"obj\":\"person_id\", '\"')   \t\t    AS \"person_id\",\n        trim(\"obj\":\"stage_order_nr\", '\"')       AS \"stage_order_nr\",\n        trim(\"obj\":\"won_time\", '\"')             AS \"won_time\",\n        trim(\"obj\":\"deal_title\", '\"')           AS \"deal_title\",\n        trim(\"obj\":\"pipeline_id\", '\"')          AS \"pipeline_id\",\n        trim(\"obj\":\"org_id\", '\"')               AS \"org_id\",\n        trim(\"obj\":\"owner_id\", '\"')             AS \"owner_id\",\n        trim(\"obj\":\"deal_active\", '\"')          AS \"deal_active\",\n        trim(\"obj\":\"expected_close_date\", '\"')  AS \"expected_close_date\",\n        trim(\"obj\":\"stage_id\", '\"')             AS \"stage_id\",\n        trim(\"obj\":\"activities_count\", '\"')     AS \"activities_count\",\n        trim(\"obj\":\"email_messages_count\", '\"') AS \"email_messages_count\",\n        trim(\"obj\":\"lost_reason\", '\"')          AS \"lost_reason\"\n    FROM \"deals_tmp\";",
+                "--organizations table\nCREATE TABLE \"organizations_tmp\"\nAS\n    SELECT\n        OBJECT_CONSTRUCT(*) AS \"obj\"\n    FROM \"organizations\";",
+                "CREATE TABLE \"out_organizations\"\nAS\n    SELECT\n        trim(\"obj\":\"organization_id\", '\"')         AS \"organization_id\",\n        trim(\"obj\":\"org_name\", '\"')                AS \"org_name\",\n        trim(\"obj\":\"owner_id\", '\"')                AS \"owner_id\",\n        trim(\"obj\":\"org_address\", '\"')             AS \"org_address\",\n        trim(\"obj\":\"fk_category_id\", '\"')          AS \"fk_category_id\",\n        trim(\"obj\":\"org_address_country\", '\"')     AS \"org_address_country\",\n        trim(\"obj\":\"org_address_postal_code\", '\"') AS \"org_address_postal_code\",\n        trim(\"obj\":\"org_add_date\", '\"')            AS \"org_add_date\"\n    FROM \"organizations_tmp\";",
+                "--persons table\nCREATE TABLE \"persons_tmp\"\nAS\n    SELECT\n        OBJECT_CONSTRUCT(*) AS \"obj\"\n    FROM \"persons\";",
+                "CREATE TABLE \"out_persons\"\nAS\n    SELECT\n        trim(\"obj\":\"contact_id\", '\"')   AS \"contact_id\",\n        trim(\"obj\":\"contact_name\", '\"') AS \"contact_name\",\n        trim(\"obj\":\"org_id\", '\"')       AS \"org_id\",\n        trim(\"obj\":\"add_time\", '\"')     AS \"add_time\"\n    FROM \"persons_tmp\";",
+                "--person emails table\nCREATE TABLE \"person_emails_tmp\"\nAS\n    SELECT\n        OBJECT_CONSTRUCT(*) AS \"obj\"\n    FROM \"person_emails\";",
+                "CREATE TABLE \"out_person_emails\"\nAS\n    SELECT\n        trim(\"obj\":\"persons_pk\", '\"') AS \"contact_id\",\n        trim(\"obj\":\"label\", '\"')      AS \"label\",\n        trim(\"obj\":\"value\", '\"')      AS \"value\",\n        trim(\"obj\":\"primary\", '\"')    AS \"primary\"\n    FROM \"person_emails_tmp\";",
+                "--pipelines table\nCREATE TABLE \"pipelines_tmp\"\nAS\n    SELECT\n        OBJECT_CONSTRUCT(*) AS \"obj\"\n    FROM \"pipelines\";",
+                "CREATE TABLE \"out_pipelines\"\nAS\n    SELECT\n        trim(\"obj\":\"pipeline_id\", '\"')   AS \"pipeline_id\",\n        trim(\"obj\":\"pipeline_name\", '\"') AS \"pipeline_name\",\n        trim(\"obj\":\"url_title\", '\"')     AS \"url_title\",\n        trim(\"obj\":\"order_nr\", '\"')      AS \"order_nr\",\n        trim(\"obj\":\"active\", '\"')        AS \"active\"\n    FROM \"pipelines_tmp\";",
+                "--stages table\nCREATE TABLE \"stages_tmp\"\nAS\n    SELECT\n        OBJECT_CONSTRUCT(*) AS \"obj\"\n    FROM \"stages\";",
+                "CREATE TABLE \"out_stages\"\nAS\n    SELECT\n        trim(\"obj\":\"stage_id\", '\"')         AS \"stage_id\",\n        trim(\"obj\":\"order_nr\", '\"')         AS \"order_nr\",\n        trim(\"obj\":\"stage_name\", '\"')       AS \"stage_name\",\n        trim(\"obj\":\"active_flag\", '\"')      AS \"active_flag\",\n        trim(\"obj\":\"pipeline_id\", '\"')      AS \"pipeline_id\",\n        trim(\"obj\":\"deal_probability\", '\"') AS \"deal_probability\",\n        trim(\"obj\":\"add_time\", '\"')         AS \"add_time\"\n    FROM \"stages_tmp\";",
+                "--users table\nCREATE TABLE \"users_tmp\"\nAS\n    SELECT\n        OBJECT_CONSTRUCT(*) AS \"obj\"\n    FROM \"users\";",
+                "CREATE TABLE \"out_users\"\nAS\n    SELECT\n        trim(\"obj\":\"owner_id\", '\"')    AS \"owner_id\",\n        trim(\"obj\":\"owner_name\", '\"')  AS \"owner_name\",\n        trim(\"obj\":\"owner_email\", '\"') AS \"owner_email\"\n    FROM \"users_tmp\";"
+            ],
+            "input": [
+                {
+                    "destination": "activities",
+                    "datatypes": [],
+                    "whereColumn": "",
+                    "whereValues": [],
+                    "whereOperator": "eq",
+                    "columns": [],
+                    "loadType": "clone",
+                    "source_search": {
+                        "key": "bdm.scaffold.table.tag",
+                        "__SCAFFOLD_CHECK__.value": "CrmPipedrive.internal.inKeboolaExPipedrive547397172Activities"
+                    },
+                    "__SCAFFOLD_CHECK__.source": "in.c-crmPipedrive.keboolaExPipedrive547397172Activities",
+                    "__SCAFFOLD_CHECK__.original_source": "in.c-keboola-ex-pipedrive-547397172.activities"
+                },
+                {
+                    "destination": "deals",
+                    "datatypes": [],
+                    "whereColumn": "",
+                    "whereValues": [],
+                    "whereOperator": "eq",
+                    "columns": [],
+                    "loadType": "clone",
+                    "source_search": {
+                        "key": "bdm.scaffold.table.tag",
+                        "__SCAFFOLD_CHECK__.value": "CrmPipedrive.internal.inKeboolaExPipedrive547397172Deals"
+                    },
+                    "__SCAFFOLD_CHECK__.source": "in.c-crmPipedrive.keboolaExPipedrive547397172Deals",
+                    "__SCAFFOLD_CHECK__.original_source": "in.c-keboola-ex-pipedrive-547397172.deals"
+                },
+                {
+                    "destination": "organizations",
+                    "datatypes": [],
+                    "whereColumn": "",
+                    "whereValues": [],
+                    "whereOperator": "eq",
+                    "columns": [],
+                    "loadType": "clone",
+                    "source_search": {
+                        "key": "bdm.scaffold.table.tag",
+                        "__SCAFFOLD_CHECK__.value": "CrmPipedrive.internal.inKeboolaExPipedrive547397172Organizations"
+                    },
+                    "__SCAFFOLD_CHECK__.source": "in.c-crmPipedrive.keboolaExPipedrive547397172Organizations",
+                    "__SCAFFOLD_CHECK__.original_source": "in.c-keboola-ex-pipedrive-547397172.organizations"
+                },
+                {
+                    "destination": "persons",
+                    "datatypes": [],
+                    "whereColumn": "",
+                    "whereValues": [],
+                    "whereOperator": "eq",
+                    "columns": [],
+                    "loadType": "clone",
+                    "source_search": {
+                        "key": "bdm.scaffold.table.tag",
+                        "__SCAFFOLD_CHECK__.value": "CrmPipedrive.internal.inKeboolaExPipedrive547397172Persons"
+                    },
+                    "__SCAFFOLD_CHECK__.source": "in.c-crmPipedrive.keboolaExPipedrive547397172Persons",
+                    "__SCAFFOLD_CHECK__.original_source": "in.c-keboola-ex-pipedrive-547397172.persons"
+                },
+                {
+                    "destination": "pipelines",
+                    "datatypes": [],
+                    "whereColumn": "",
+                    "whereValues": [],
+                    "whereOperator": "eq",
+                    "columns": [],
+                    "loadType": "clone",
+                    "source_search": {
+                        "key": "bdm.scaffold.table.tag",
+                        "__SCAFFOLD_CHECK__.value": "CrmPipedrive.internal.inKeboolaExPipedrive547397172Pipelines"
+                    },
+                    "__SCAFFOLD_CHECK__.source": "in.c-crmPipedrive.keboolaExPipedrive547397172Pipelines",
+                    "__SCAFFOLD_CHECK__.original_source": "in.c-keboola-ex-pipedrive-547397172.pipelines"
+                },
+                {
+                    "destination": "stages",
+                    "datatypes": [],
+                    "whereColumn": "",
+                    "whereValues": [],
+                    "whereOperator": "eq",
+                    "columns": [],
+                    "loadType": "clone",
+                    "source_search": {
+                        "key": "bdm.scaffold.table.tag",
+                        "__SCAFFOLD_CHECK__.value": "CrmPipedrive.internal.inKeboolaExPipedrive547397172Stages"
+                    },
+                    "__SCAFFOLD_CHECK__.source": "in.c-crmPipedrive.keboolaExPipedrive547397172Stages",
+                    "__SCAFFOLD_CHECK__.original_source": "in.c-keboola-ex-pipedrive-547397172.stages"
+                },
+                {
+                    "destination": "users",
+                    "datatypes": [],
+                    "whereColumn": "",
+                    "whereValues": [],
+                    "whereOperator": "eq",
+                    "columns": [],
+                    "loadType": "clone",
+                    "source_search": {
+                        "key": "bdm.scaffold.table.tag",
+                        "__SCAFFOLD_CHECK__.value": "CrmPipedrive.internal.inKeboolaExPipedrive547397172Users"
+                    },
+                    "__SCAFFOLD_CHECK__.source": "in.c-crmPipedrive.keboolaExPipedrive547397172Users",
+                    "__SCAFFOLD_CHECK__.original_source": "in.c-keboola-ex-pipedrive-547397172.users"
+                },
+                {
+                    "destination": "person_emails",
+                    "datatypes": [],
+                    "whereColumn": "",
+                    "whereValues": [],
+                    "whereOperator": "eq",
+                    "columns": [],
+                    "loadType": "clone",
+                    "source_search": {
+                        "key": "bdm.scaffold.table.tag",
+                        "__SCAFFOLD_CHECK__.value": "CrmPipedrive.internal.inKeboolaExPipedrive547397172PersonEmails"
+                    },
+                    "__SCAFFOLD_CHECK__.source": "in.c-crmPipedrive.keboolaExPipedrive547397172PersonEmails",
+                    "__SCAFFOLD_CHECK__.original_source": "in.c-keboola-ex-pipedrive-547397172.person_emails"
+                }
+            ],
+            "name": "Input Tables Creation",
+            "packages": [],
+            "requires": [],
+            "backend": "snowflake",
+            "type": "simple",
+            "id": "544257652",
+            "phase": 1,
+            "disabled": false,
+            "description": ""
+        },
+        "description": "This Transformation checks for missing columns needed in the following Transformations, adding them to the output tables a populating them with NULL values if missing.",
+        "name": "Input Tables Creation"
+    },
+    {
+        "configuration": {
+            "output": [
+                {
+                    "source": "out_activity",
+                    "primaryKey": [
+                        "activity_id"
+                    ],
+                    "metadata": [
+                        {
+                            "key": "bdm.scaffold.table.tag",
+                            "value": "CrmPipedrive.internal.outPipedriveCrmActivity"
+                        },
+                        {
+                            "key": "scaffold.id",
+                            "value": "CrmPipedrive"
+                        }
+                    ],
+                    "destination": "out.c-crmPipedrive.pipedriveCrmActivity",
+                    "__SCAFFOLD_CHECK__original_destination": "out.c-pipedrive-crm.activity"
+                }
+            ],
+            "queries": [
+                "--create output activity table\n--use only activity related to either contact\/lead or opportunity\n--format datetime\nCREATE OR REPLACE TABLE \"out_activity\"\nAS\n    SELECT\n        \"a\".\"activity_id\"                                                                    AS \"activity_id\",\n        ifnull(\"e\".\"employee_id\", '0')                                                       AS \"employee_id\",\n        ifnull(\"c\".\"contact_id\", '0')                                                        AS \"contact_id\",\n        ifnull(\"o\".\"opportunity_id\", '0')                                                    AS \"opportunity_id\",\n        iff(length(\"a\".\"subject\") > 1028, left(\"a\".\"subject\", 1025) || '...', \"a\".\"subject\") AS \"activity\",\n        TO_CHAR(TO_TIMESTAMP_NTZ(\"a\".\"due_date\"),\n                'YYYY-MM-DD hh24:mi:ss')                                                     AS \"activity_date\",\n        ''                                                                                   AS \"activity_duration_m\"\n    FROM \"activities\" \"a\"\n             LEFT JOIN \"contact\" \"c\"\n                       ON \"a\".\"person_id\" = \"c\".\"contact_id\"\n             LEFT JOIN \"opportunity\" \"o\"\n                       ON \"a\".\"deal_id\" = \"o\".\"opportunity_id\"\n             LEFT JOIN \"employee\" \"e\"\n                       ON \"a\".\"user_id\" = \"e\".\"employee_id\"\n    WHERE (\"c\".\"contact_id\" IS NOT NULL OR \"o\".\"opportunity_id\" IS NOT NULL);"
+            ],
+            "input": [
+                {
+                    "destination": "activities",
+                    "datatypes": [],
+                    "whereColumn": "",
+                    "whereValues": [],
+                    "whereOperator": "eq",
+                    "columns": [],
+                    "loadType": "clone",
+                    "source_search": {
+                        "key": "bdm.scaffold.table.tag",
+                        "__SCAFFOLD_CHECK__.value": "CrmPipedrive.internal.inPipedriveCrmActivities"
+                    },
+                    "__SCAFFOLD_CHECK__.source": "in.c-crmPipedrive.pipedriveCrmActivities",
+                    "__SCAFFOLD_CHECK__.original_source": "in.c-pipedrive-crm.activities"
+                },
+                {
+                    "destination": "opportunity",
+                    "datatypes": [],
+                    "whereColumn": "",
+                    "whereValues": [],
+                    "whereOperator": "eq",
+                    "columns": [],
+                    "loadType": "clone",
+                    "source_search": {
+                        "key": "bdm.scaffold.table.tag",
+                        "__SCAFFOLD_CHECK__.value": "CrmPipedrive.internal.outPipedriveCrmOpportunity"
+                    },
+                    "__SCAFFOLD_CHECK__.source": "out.c-crmPipedrive.pipedriveCrmOpportunity",
+                    "__SCAFFOLD_CHECK__.original_source": "out.c-pipedrive-crm.opportunity"
+                },
+                {
+                    "destination": "contact",
+                    "datatypes": [],
+                    "whereColumn": "",
+                    "whereValues": [],
+                    "whereOperator": "eq",
+                    "columns": [],
+                    "loadType": "clone",
+                    "source_search": {
+                        "key": "bdm.scaffold.table.tag",
+                        "__SCAFFOLD_CHECK__.value": "CrmPipedrive.internal.outPipedriveCrmContact"
+                    },
+                    "__SCAFFOLD_CHECK__.source": "out.c-crmPipedrive.pipedriveCrmContact",
+                    "__SCAFFOLD_CHECK__.original_source": "out.c-pipedrive-crm.contact"
+                },
+                {
+                    "destination": "employee",
+                    "datatypes": [],
+                    "whereColumn": "",
+                    "whereValues": [],
+                    "whereOperator": "eq",
+                    "columns": [],
+                    "loadType": "clone",
+                    "source_search": {
+                        "key": "bdm.scaffold.table.tag",
+                        "__SCAFFOLD_CHECK__.value": "CrmPipedrive.internal.outPipedriveCrmEmployee"
+                    },
+                    "__SCAFFOLD_CHECK__.source": "out.c-crmPipedrive.pipedriveCrmEmployee",
+                    "__SCAFFOLD_CHECK__.original_source": "out.c-pipedrive-crm.employee"
+                }
+            ],
+            "name": "Activities",
+            "packages": [],
+            "requires": [],
+            "backend": "snowflake",
+            "type": "simple",
+            "id": "544262860",
+            "phase": "4",
+            "disabled": false,
+            "description": ""
+        },
+        "description": "",
+        "name": "Activities"
+    },
+    {
+        "configuration": {
+            "output": [
+                {
+                    "source": "out_company",
+                    "primaryKey": [
+                        "company_id"
+                    ],
+                    "metadata": [
+                        {
+                            "key": "bdm.scaffold.table.tag",
+                            "value": "CrmPipedrive.internal.outPipedriveCrmCompany"
+                        },
+                        {
+                            "key": "scaffold.id",
+                            "value": "CrmPipedrive"
+                        }
+                    ],
+                    "destination": "out.c-crmPipedrive.pipedriveCrmCompany",
+                    "__SCAFFOLD_CHECK__original_destination": "out.c-pipedrive-crm.company"
+                }
+            ],
+            "queries": [
+                "--create output table with companies\n--cast timestamp to date\nCREATE TABLE \"out_company\"\nAS\nSELECT DISTINCT \"organization_id\"                                                     AS \"company_id\",\n                \"org_name\"                                                            AS \"company\",\n                ''                                                                    AS \"website\",\n                iff(\"org_add_date\" = '', NULL, to_date(\"org_add_date\")):: VARCHAR(10) AS \"date_created\"\nFROM \"organizations\";",
+                "--fake row to keep referential integrity if child tables are missing existing company ids\nINSERT INTO \"out_company\"\n    (\"company_id\", \"company\", \"website\", \"date_created\")\nVALUES ('0', 'Unknown', '', '');"
+            ],
+            "input": [
+                {
+                    "destination": "organizations",
+                    "datatypes": [],
+                    "whereColumn": "",
+                    "whereValues": [],
+                    "whereOperator": "eq",
+                    "columns": [],
+                    "loadType": "clone",
+                    "source_search": {
+                        "key": "bdm.scaffold.table.tag",
+                        "__SCAFFOLD_CHECK__.value": "CrmPipedrive.internal.inPipedriveCrmOrganizations"
+                    },
+                    "__SCAFFOLD_CHECK__.source": "in.c-crmPipedrive.pipedriveCrmOrganizations",
+                    "__SCAFFOLD_CHECK__.original_source": "in.c-pipedrive-crm.organizations"
+                }
+            ],
+            "name": "Company",
+            "packages": [],
+            "requires": [],
+            "backend": "snowflake",
+            "type": "simple",
+            "id": "544263083",
+            "phase": "2",
+            "disabled": false,
+            "description": ""
+        },
+        "description": "",
+        "name": "Company"
+    },
+    {
+        "configuration": {
+            "output": [
+                {
+                    "source": "out_contact",
+                    "primaryKey": [
+                        "contact_id"
+                    ],
+                    "metadata": [
+                        {
+                            "key": "bdm.scaffold.table.tag",
+                            "value": "CrmPipedrive.internal.outPipedriveCrmContact"
+                        },
+                        {
+                            "key": "scaffold.id",
+                            "value": "CrmPipedrive"
+                        }
+                    ],
+                    "destination": "out.c-crmPipedrive.pipedriveCrmContact",
+                    "__SCAFFOLD_CHECK__original_destination": "out.c-pipedrive-crm.contact"
+                }
+            ],
+            "queries": [
+                "--create output table with contacts\nCREATE TABLE \"out_contact\"\nAS\n    SELECT\n        \"p\".\"contact_id\"         AS \"contact_id\",\n        \"p\".\"contact_name\"       AS \"contact\",\n        \"e\".\"value\"              AS \"email\",\n        'Contact'                AS \"contact_type\",\n        left(\"p\".\"add_time\", 10) AS \"date_created\",\n        ''                       AS \"lead_source\",\n        'Is Contact'             AS \"lead_converted\"\n    FROM \"persons\" \"p\"\n             LEFT JOIN (SELECT\n                            \"contact_id\",\n                            \"value\"\n                        FROM \"person_emails\"\n                        WHERE \"primary\" = '1') \"e\"\n                       ON \"p\".\"contact_id\" = \"e\".\"contact_id\";",
+                "--fake row to keep referential integrity if child tables are missing existing contact ids\nINSERT INTO \"out_contact\"\n    (\"contact_id\", \"contact\", \"email\", \"contact_type\", \"date_created\", \"lead_source\", \"lead_converted\")\nVALUES\n    ('0', 'Unknown', '', 'Lead', '', '', 'No');"
+            ],
+            "input": [
+                {
+                    "destination": "persons",
+                    "datatypes": [],
+                    "whereColumn": "",
+                    "whereValues": [],
+                    "whereOperator": "eq",
+                    "columns": [],
+                    "loadType": "clone",
+                    "source_search": {
+                        "key": "bdm.scaffold.table.tag",
+                        "__SCAFFOLD_CHECK__.value": "CrmPipedrive.internal.inPipedriveCrmPersons"
+                    },
+                    "__SCAFFOLD_CHECK__.source": "in.c-crmPipedrive.pipedriveCrmPersons",
+                    "__SCAFFOLD_CHECK__.original_source": "in.c-pipedrive-crm.persons"
+                },
+                {
+                    "destination": "person_emails",
+                    "datatypes": [],
+                    "whereColumn": "",
+                    "whereValues": [],
+                    "whereOperator": "eq",
+                    "columns": [],
+                    "loadType": "clone",
+                    "source_search": {
+                        "key": "bdm.scaffold.table.tag",
+                        "__SCAFFOLD_CHECK__.value": "CrmPipedrive.internal.inPipedriveCrmPersonEmails"
+                    },
+                    "__SCAFFOLD_CHECK__.source": "in.c-crmPipedrive.pipedriveCrmPersonEmails",
+                    "__SCAFFOLD_CHECK__.original_source": "in.c-pipedrive-crm.person_emails"
+                }
+            ],
+            "name": "Contact",
+            "packages": [],
+            "requires": [],
+            "backend": "snowflake",
+            "type": "simple",
+            "id": "544263721",
+            "phase": "2",
+            "disabled": false,
+            "description": ""
+        },
+        "description": "",
+        "name": "Contact"
+    },
+    {
+        "configuration": {
+            "output": [
+                {
+                    "source": "out_employee",
+                    "primaryKey": [
+                        "employee_id"
+                    ],
+                    "metadata": [
+                        {
+                            "key": "bdm.scaffold.table.tag",
+                            "value": "CrmPipedrive.internal.outPipedriveCrmEmployee"
+                        },
+                        {
+                            "key": "scaffold.id",
+                            "value": "CrmPipedrive"
+                        }
+                    ],
+                    "destination": "out.c-crmPipedrive.pipedriveCrmEmployee",
+                    "__SCAFFOLD_CHECK__original_destination": "out.c-pipedrive-crm.employee"
+                }
+            ],
+            "queries": [
+                "--create output table with employees\nCREATE TABLE \"out_employee\"\nAS\nSELECT \"owner_id\"    AS \"employee_id\",\n       \"owner_name\"  AS \"employee\",\n       \"owner_email\" AS \"email\",\n       ''            AS \"position\"\nFROM \"users\";",
+                "--fake row to keep referential integrity if child tables are missing existing employee ids\nINSERT INTO \"out_employee\"\n    (\"employee_id\", \"employee\", \"email\", \"position\")\nVALUES ('0', 'Unknown', '', '');"
+            ],
+            "input": [
+                {
+                    "destination": "users",
+                    "datatypes": [],
+                    "whereColumn": "",
+                    "whereValues": [],
+                    "whereOperator": "eq",
+                    "columns": [],
+                    "loadType": "clone",
+                    "source_search": {
+                        "key": "bdm.scaffold.table.tag",
+                        "__SCAFFOLD_CHECK__.value": "CrmPipedrive.internal.inPipedriveCrmUsers"
+                    },
+                    "__SCAFFOLD_CHECK__.source": "in.c-crmPipedrive.pipedriveCrmUsers",
+                    "__SCAFFOLD_CHECK__.original_source": "in.c-pipedrive-crm.users"
+                }
+            ],
+            "name": "Employee",
+            "packages": [],
+            "requires": [],
+            "backend": "snowflake",
+            "type": "simple",
+            "id": "544266500",
+            "phase": "2",
+            "disabled": false,
+            "description": ""
+        },
+        "description": "",
+        "name": "Employee"
+    },
+    {
+        "configuration": {
+            "output": [
+                {
+                    "source": "out_opportunity",
+                    "primaryKey": [
+                        "opportunity_id"
+                    ],
+                    "metadata": [
+                        {
+                            "key": "bdm.scaffold.table.tag",
+                            "value": "CrmPipedrive.internal.outPipedriveCrmOpportunity"
+                        },
+                        {
+                            "key": "scaffold.id",
+                            "value": "CrmPipedrive"
+                        }
+                    ],
+                    "destination": "out.c-crmPipedrive.pipedriveCrmOpportunity",
+                    "__SCAFFOLD_CHECK__original_destination": "out.c-pipedrive-crm.opportunity"
+                },
+                {
+                    "source": "out_opportunity_snapshot",
+                    "primaryKey": [
+                        "snapshot_date",
+                        "opportunity_id"
+                    ],
+                    "incremental": true,
+                    "deleteWhereColumn": "",
+                    "deleteWhereOperator": "eq",
+                    "deleteWhereValues": [],
+                    "metadata": [
+                        {
+                            "key": "bdm.scaffold.table.tag",
+                            "value": "CrmPipedrive.internal.outPipedriveCrmAuxiliaryTablesOpportunitySnapshot"
+                        },
+                        {
+                            "key": "scaffold.id",
+                            "value": "CrmPipedrive"
+                        }
+                    ],
+                    "destination": "out.c-crmPipedrive.pipedriveCrmAuxiliaryTablesOpportunitySnapshot",
+                    "__SCAFFOLD_CHECK__original_destination": "out.c-pipedrive-crm-auxiliary-tables.opportunity_snapshot"
+                }
+            ],
+            "queries": [
+                "--create output table with opportunities\n--change timestamps to date\n--if there is no amount set, place 0 instead of empty value\n--check referential integrity with employees and companies\n--change boolean values to commonly used format in KBC scaffolds\nCREATE TABLE \"out_opportunity\"\nAS\n    SELECT\n        \"d\".\"deal_id\"                                       AS \"opportunity_id\",\n        ifnull(\"c\".\"company_id\", '0')                       AS \"company_id\",\n        ifnull(\"e\".\"employee_id\", '0')                      AS \"employee_id\",\n        \"d\".\"deal_title\"                                    AS \"opportunity\",\n        left(\"d\".\"add_time\", 10)                            AS \"date_created\",\n        left(\"d\".\"close_time\", 10)                          AS \"date_closed\",\n        iff(\"d\".\"close_time\" = '', 'No', 'Yes')             AS \"is_closed\",\n        iff(\"d\".\"deal_status\" = 'won', 'Yes', 'No')         AS \"is_won\",\n        \"p\".\"pipeline_name\"                                 AS \"pipeline\",\n        \"s\".\"stage_name\"                                    AS \"stage\",\n        ifnull(\"s\".\"order_nr\", '0')                         AS \"stage_order\",\n        ''                                                  AS \"opportunity_type\",\n        iff(\"d\".\"deal_value\" = '', '0.0', \"d\".\"deal_value\") AS \"opportunity_value\",\n        \"d\".\"deal_currency\"                                 AS \"currency\",\n        ''                                                  AS \"lead_source\",\n        \"s\".\"deal_probability\"                              AS \"probability\"\n    FROM \"deals\" \"d\"\n             LEFT JOIN \"company\" \"c\"\n                       ON \"d\".\"org_id\" = \"c\".\"company_id\"\n             LEFT JOIN \"pipelines\" \"p\"\n                       ON \"d\".\"pipeline_id\" = \"p\".\"pipeline_id\"\n             LEFT JOIN \"stages\" \"s\"\n                       ON \"d\".\"stage_id\" = \"s\".\"stage_id\"\n             LEFT JOIN \"employee\" \"e\"\n                       ON \"d\".\"owner_id\" = \"e\".\"employee_id\"\n    WHERE \"deal_deleted\" = '';",
+                "--set timezone to UTC (!!!CHANGE ACCORDINGLY TO YOUR REGION!!!)\nALTER SESSION\n    SET TIMEZONE = 'UTC';",
+                "--create snapshot of the output table to track changes throughout time\n--snapshot will be used in another transformation where it will be adjusted for a better final analysis\nCREATE TABLE \"out_opportunity_snapshot\"\nAS\n    SELECT\n        current_date AS \"snapshot_date\",\n        \"o\".*\n    FROM \"out_opportunity\" \"o\";",
+                "--fake row to keep referential integrity if child tables are missing existing opportunity ids\n--adding row after snapshot, so we're not unnecessary snapshoting it\nINSERT INTO \"out_opportunity\"\n    (\"opportunity_id\", \"company_id\", \"employee_id\", \"opportunity\", \"is_closed\", \"is_won\",\n     \"pipeline\", \"stage\", \"stage_order\", \"opportunity_value\", \"currency\")\nVALUES\n    ('0', '0', '0', 'Unknown', 'No', 'No', '', '', '0', '0.0', 'USD');"
+            ],
+            "input": [
+                {
+                    "destination": "deals",
+                    "datatypes": [],
+                    "whereColumn": "",
+                    "whereValues": [],
+                    "whereOperator": "eq",
+                    "columns": [],
+                    "loadType": "clone",
+                    "source_search": {
+                        "key": "bdm.scaffold.table.tag",
+                        "__SCAFFOLD_CHECK__.value": "CrmPipedrive.internal.inPipedriveCrmDeals"
+                    },
+                    "__SCAFFOLD_CHECK__.source": "in.c-crmPipedrive.pipedriveCrmDeals",
+                    "__SCAFFOLD_CHECK__.original_source": "in.c-pipedrive-crm.deals"
+                },
+                {
+                    "destination": "contact",
+                    "datatypes": [],
+                    "whereColumn": "",
+                    "whereValues": [],
+                    "whereOperator": "eq",
+                    "columns": [],
+                    "loadType": "clone",
+                    "source_search": {
+                        "key": "bdm.scaffold.table.tag",
+                        "__SCAFFOLD_CHECK__.value": "CrmPipedrive.internal.outPipedriveCrmContact"
+                    },
+                    "__SCAFFOLD_CHECK__.source": "out.c-crmPipedrive.pipedriveCrmContact",
+                    "__SCAFFOLD_CHECK__.original_source": "out.c-pipedrive-crm.contact"
+                },
+                {
+                    "destination": "company",
+                    "datatypes": [],
+                    "whereColumn": "",
+                    "whereValues": [],
+                    "whereOperator": "eq",
+                    "columns": [],
+                    "loadType": "clone",
+                    "source_search": {
+                        "key": "bdm.scaffold.table.tag",
+                        "__SCAFFOLD_CHECK__.value": "CrmPipedrive.internal.outPipedriveCrmCompany"
+                    },
+                    "__SCAFFOLD_CHECK__.source": "out.c-crmPipedrive.pipedriveCrmCompany",
+                    "__SCAFFOLD_CHECK__.original_source": "out.c-pipedrive-crm.company"
+                },
+                {
+                    "destination": "employee",
+                    "datatypes": [],
+                    "whereColumn": "",
+                    "whereValues": [],
+                    "whereOperator": "eq",
+                    "columns": [],
+                    "loadType": "clone",
+                    "source_search": {
+                        "key": "bdm.scaffold.table.tag",
+                        "__SCAFFOLD_CHECK__.value": "CrmPipedrive.internal.outPipedriveCrmEmployee"
+                    },
+                    "__SCAFFOLD_CHECK__.source": "out.c-crmPipedrive.pipedriveCrmEmployee",
+                    "__SCAFFOLD_CHECK__.original_source": "out.c-pipedrive-crm.employee"
+                },
+                {
+                    "destination": "pipelines",
+                    "datatypes": [],
+                    "whereColumn": "",
+                    "whereValues": [],
+                    "whereOperator": "eq",
+                    "columns": [],
+                    "loadType": "clone",
+                    "source_search": {
+                        "key": "bdm.scaffold.table.tag",
+                        "__SCAFFOLD_CHECK__.value": "CrmPipedrive.internal.inPipedriveCrmPipelines"
+                    },
+                    "__SCAFFOLD_CHECK__.source": "in.c-crmPipedrive.pipedriveCrmPipelines",
+                    "__SCAFFOLD_CHECK__.original_source": "in.c-pipedrive-crm.pipelines"
+                },
+                {
+                    "destination": "stages",
+                    "datatypes": [],
+                    "whereColumn": "",
+                    "whereValues": [],
+                    "whereOperator": "eq",
+                    "columns": [],
+                    "loadType": "clone",
+                    "source_search": {
+                        "key": "bdm.scaffold.table.tag",
+                        "__SCAFFOLD_CHECK__.value": "CrmPipedrive.internal.inPipedriveCrmStages"
+                    },
+                    "__SCAFFOLD_CHECK__.source": "in.c-crmPipedrive.pipedriveCrmStages",
+                    "__SCAFFOLD_CHECK__.original_source": "in.c-pipedrive-crm.stages"
+                }
+            ],
+            "name": "Opportunity & auxiliary snapshot",
+            "packages": [],
+            "requires": [],
+            "backend": "snowflake",
+            "type": "simple",
+            "id": "544268870",
+            "phase": "3",
+            "disabled": false,
+            "description": ""
+        },
+        "description": "",
+        "name": "Opportunity & auxiliary snapshot"
+    },
+    {
+        "configuration": {
+            "output": [
+                {
+                    "source": "out_opportunity_contact",
+                    "primaryKey": [
+                        "opportunity_contact_id"
+                    ],
+                    "metadata": [
+                        {
+                            "key": "bdm.scaffold.table.tag",
+                            "value": "CrmPipedrive.internal.outPipedriveCrmOpportunityContact"
+                        },
+                        {
+                            "key": "scaffold.id",
+                            "value": "CrmPipedrive"
+                        }
+                    ],
+                    "destination": "out.c-crmPipedrive.pipedriveCrmOpportunityContact",
+                    "__SCAFFOLD_CHECK__original_destination": "out.c-pipedrive-crm.opportunity_contact"
+                }
+            ],
+            "queries": [
+                "--create output paring table for opportunities and contacts\n--merge both tables ids as paring table id\n--use inner joins and ids from referring tables to make sure referential integrity is intact\nCREATE TABLE \"out_opportunity_contact\"\nAS\nSELECT \"o\".\"opportunity_id\" || '-' || \"c\".\"contact_id\" AS \"opportunity_contact_id\",\n       \"o\".\"opportunity_id\",\n       \"c\".\"contact_id\",\n       ''                                              AS \"is_primary_contact\",\n       ''                                              AS \"role\"\nFROM \"deals\" \"d\"\n         INNER JOIN \"opportunity_ri\" \"o\"\n                    ON \"d\".\"deal_id\" = \"o\".\"opportunity_id\"\n         INNER JOIN \"contact_ri\" \"c\"\n                    ON \"d\".\"person_id\" = \"c\".\"contact_id\";"
+            ],
+            "input": [
+                {
+                    "destination": "contact_ri",
+                    "datatypes": [],
+                    "whereColumn": "",
+                    "whereValues": [],
+                    "whereOperator": "eq",
+                    "columns": [],
+                    "loadType": "clone",
+                    "source_search": {
+                        "key": "bdm.scaffold.table.tag",
+                        "__SCAFFOLD_CHECK__.value": "CrmPipedrive.internal.outPipedriveCrmContact"
+                    },
+                    "__SCAFFOLD_CHECK__.source": "out.c-crmPipedrive.pipedriveCrmContact",
+                    "__SCAFFOLD_CHECK__.original_source": "out.c-pipedrive-crm.contact"
+                },
+                {
+                    "destination": "opportunity_ri",
+                    "datatypes": [],
+                    "whereColumn": "",
+                    "whereValues": [],
+                    "whereOperator": "eq",
+                    "columns": [],
+                    "loadType": "clone",
+                    "source_search": {
+                        "key": "bdm.scaffold.table.tag",
+                        "__SCAFFOLD_CHECK__.value": "CrmPipedrive.internal.outPipedriveCrmOpportunity"
+                    },
+                    "__SCAFFOLD_CHECK__.source": "out.c-crmPipedrive.pipedriveCrmOpportunity",
+                    "__SCAFFOLD_CHECK__.original_source": "out.c-pipedrive-crm.opportunity"
+                },
+                {
+                    "destination": "deals",
+                    "datatypes": [],
+                    "whereColumn": "",
+                    "whereValues": [],
+                    "whereOperator": "eq",
+                    "columns": [],
+                    "loadType": "clone",
+                    "source_search": {
+                        "key": "bdm.scaffold.table.tag",
+                        "__SCAFFOLD_CHECK__.value": "CrmPipedrive.internal.inPipedriveCrmDeals"
+                    },
+                    "__SCAFFOLD_CHECK__.source": "in.c-crmPipedrive.pipedriveCrmDeals",
+                    "__SCAFFOLD_CHECK__.original_source": "in.c-pipedrive-crm.deals"
+                }
+            ],
+            "name": "Opportunity Contact",
+            "packages": [],
+            "requires": [],
+            "backend": "snowflake",
+            "type": "simple",
+            "id": "544276457",
+            "phase": "4",
+            "disabled": false,
+            "description": ""
+        },
+        "description": "",
+        "name": "Opportunity Contact"
+    },
+    {
+        "configuration": {
+            "output": [
+                {
+                    "source": "out_opportunity_snapshot",
+                    "primaryKey": [
+                        "opportunity_id",
+                        "snapshot_date"
+                    ],
+                    "metadata": [
+                        {
+                            "key": "bdm.scaffold.table.tag",
+                            "value": "CrmPipedrive.internal.outPipedriveCrmOpportunitySnapshot"
+                        },
+                        {
+                            "key": "scaffold.id",
+                            "value": "CrmPipedrive"
+                        }
+                    ],
+                    "destination": "out.c-crmPipedrive.pipedriveCrmOpportunitySnapshot",
+                    "__SCAFFOLD_CHECK__original_destination": "out.c-pipedrive-crm.opportunity_snapshot"
+                }
+            ],
+            "queries": [
+                "--create temporary table for additional calculations\n--add previous values of pipeline, stage and value, so we can define if there has been any change\nCREATE TABLE \"opportunity_snapshot_tmp\"\nAS\n    SELECT\n        \"opportunity_id\",\n        \"snapshot_date\",\n        \"employee_id\",\n        \"company_id\",\n        \"pipeline\",\n        ifnull(lag(\"pipeline\") OVER (PARTITION BY \"opportunity_id\" ORDER BY \"snapshot_date\"),\n               \"pipeline\")          AS \"previous_pipeline\",\n        \"stage\",\n        \"stage_order\",\n        ifnull(lag(\"stage\") OVER (PARTITION BY \"opportunity_id\" ORDER BY \"snapshot_date\"),\n               \"stage\")             AS \"previous_stage\",\n        ifnull(lag(\"stage_order\") OVER (PARTITION BY \"opportunity_id\" ORDER BY \"snapshot_date\"),\n               \"stage_order\")       AS \"previous_stage_order\",\n        \"opportunity_value\",\n        ifnull(lag(\"opportunity_value\") OVER (PARTITION BY \"opportunity_id\" ORDER BY \"snapshot_date\"),\n               \"opportunity_value\") AS \"previous_opportunity_value\",\n        \"probability\",\n        ifnull(lag(\"probability\") OVER (PARTITION BY \"opportunity_id\" ORDER BY \"snapshot_date\"),\n               \"probability\")       AS \"previous_probability\"\n    FROM \"opportunity_snapshot\";",
+                "--create opportunity snapshot table\n--define if there has been change of pipeline, stage or value\nCREATE TABLE \"out_opportunity_snapshot\"\nAS\n    SELECT\n        \"s\".\"opportunity_id\",\n        \"s\".\"snapshot_date\",\n        \"s\".\"employee_id\",\n        \"s\".\"company_id\",\n        \"s\".\"pipeline\",\n        \"s\".\"previous_pipeline\",\n        iff(\"s\".\"pipeline\" <> \"s\".\"previous_pipeline\", 'Yes', 'No')                   AS \"pipeline_change\",\n        \"s\".\"stage\",\n        \"s\".\"stage_order\",\n        \"s\".\"previous_stage\",\n        \"s\".\"previous_stage_order\",\n        iff(\"s\".\"stage\" <> \"s\".\"previous_stage\", 'Yes', 'No')                         AS \"stage_change\",\n        \"s\".\"opportunity_value\",\n        \"s\".\"previous_opportunity_value\",\n        iff(\"s\".\"opportunity_value\" <> \"s\".\"previous_opportunity_value\", 'Yes', 'No') AS \"opportunity_value_change\",\n        \"s\".\"probability\",\n        \"s\".\"previous_probability\",\n        iff(\"s\".\"probability\" <> \"s\".\"previous_probability\", 'Yes', 'No')             AS \"probability_change\",\n        iff(\"m\".\"max_date_in_month\" IS NULL, 'false', 'true')                         AS \"max_date_in_month\"\n    FROM \"opportunity_snapshot_tmp\" \"s\"\n             LEFT JOIN (SELECT\n                            \"opportunity_id\",\n                            left(\"snapshot_date\", 7) AS \"month\",\n                            max(\"snapshot_date\")     AS \"max_date_in_month\"\n                        FROM \"opportunity_snapshot_tmp\"\n                        GROUP BY 1, 2) \"m\"\n                       ON \"s\".\"opportunity_id\" = \"m\".\"opportunity_id\"\n                           AND \"s\".\"snapshot_date\" = \"m\".\"max_date_in_month\";"
+            ],
+            "input": [
+                {
+                    "destination": "opportunity_snapshot",
+                    "datatypes": [],
+                    "whereColumn": "",
+                    "whereValues": [],
+                    "whereOperator": "eq",
+                    "columns": [],
+                    "loadType": "clone",
+                    "source_search": {
+                        "key": "bdm.scaffold.table.tag",
+                        "__SCAFFOLD_CHECK__.value": "CrmPipedrive.internal.outPipedriveCrmAuxiliaryTablesOpportunitySnapshot"
+                    },
+                    "__SCAFFOLD_CHECK__.source": "out.c-crmPipedrive.pipedriveCrmAuxiliaryTablesOpportunitySnapshot",
+                    "__SCAFFOLD_CHECK__.original_source": "out.c-pipedrive-crm-auxiliary-tables.opportunity_snapshot"
+                }
+            ],
+            "name": "Opportunity Snapshot",
+            "packages": [],
+            "requires": [],
+            "backend": "snowflake",
+            "type": "simple",
+            "id": "544461383",
+            "phase": "4",
+            "disabled": false,
+            "description": ""
+        },
+        "description": "",
+        "name": "Opportunity Snapshot"
+    }
+]

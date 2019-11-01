@@ -1,0 +1,35 @@
+{
+    "name": "Pipedrive CRM to Snowflake",
+    "author": "Keboola",
+    "description": "Full workflow to extract and process Pipedrive data into a standard CRM data model. Contains extractor, set of transformations and a Snowflake writer.",
+    "inputs": [
+        {
+            "id": "keboolaExPipedrivePipedrive",
+            "componentId": "keboola.ex-pipedrive",
+            "name": "Pipedrive",
+            "required": true,
+            "schema": null
+        },
+        {
+            "id": "transformationPipedriveCRM",
+            "componentId": "transformation",
+            "name": "Pipedrive CRM",
+            "required": true,
+            "schema": null
+        },
+        {
+            "id": "keboolaWrDbSnowflakeSnowflake",
+            "componentId": "keboola.wr-db-snowflake",
+            "name": "Snowflake",
+            "required": true,
+            "schema": null
+        },
+        {
+            "id": "orchestrationPipedriveCRM",
+            "componentId": "orchestrator",
+            "name": "Pipedrive CRM",
+            "required": true,
+            "schema": null
+        }
+    ]
+}
