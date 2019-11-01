@@ -1,0 +1,11 @@
+{
+    "componentId": "htns.ex-salesforce",
+    "payload": {
+        "name": "Salesforce CRM",
+        "configuration": {
+            "parameters": {
+            	"sandbox": false            	
+            }
+        }
+    }
+}
