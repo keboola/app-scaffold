@@ -1,0 +1,62 @@
+{
+    "name": "Salesforce CRM to Snowflake",
+    "author": "Keboola",
+    "description": "Full workflow to extract and process Salesforce data into a standard CRM data model. Contains extractor, set of transformations and a Snowflake writer.",
+    "inputs": [
+        {
+            "id": "htnsExSalesforceSalesforceCRM",
+            "componentId": "htns.ex-salesforce",
+            "name": "Salesforce CRM",
+            "required": true,
+            "schema": {
+                "type": "object",
+                "required": [
+                    "loginname",
+                    "#password",
+                    "#securitytoken"
+                ],
+                "properties": {
+                    "loginname": {
+                        "title": "Login Name",
+                        "type": "string"
+                    },
+                    "#password": {
+                        "title": "Password",
+                        "type": "string",
+                        "format": "password"
+                    },
+                    "#securitytoken": {
+                        "title": "Security Token",
+                        "type": "string",
+                        "format": "password"
+                    },
+                    "sandbox": {
+                        "type": "boolean",
+                        "default": false
+                    }
+                }
+            }
+        },
+        {
+            "id": "transformationSalesforceCRM",
+            "componentId": "transformation",
+            "name": "Salesforce CRM",
+            "required": true,
+            "schema": null
+        },
+        {
+            "id": "keboolaWrDbSnowflakeSnowflake",
+            "componentId": "keboola.wr-db-snowflake",
+            "name": "Snowflake",
+            "required": true,
+            "schema": null
+        },
+        {
+            "id": "orchestrationScaffold",
+            "componentId": "orchestrator",
+            "name": "Scaffold",
+            "required": true,
+            "schema": null
+        }
+    ]
+}

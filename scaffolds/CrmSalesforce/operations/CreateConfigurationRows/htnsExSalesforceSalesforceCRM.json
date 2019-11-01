@@ -1,0 +1,498 @@
+[
+    {
+        "configuration": {
+            "parameters": {
+                "sinceLast": false,
+                "objects": [
+                    {
+                        "name": "account",
+                        "soql": ""
+                    }
+                ]
+            },
+            "processors": {
+                "__SCAFFOLD_CHECK__.after": [
+                    {
+                        "definition": {
+                            "component": "keboola.processor-create-manifest"
+                        },
+                        "parameters": {
+                            "delimiter": ",",
+                            "enclosure": "\"",
+                            "incremental": false,
+                            "primary_key": [],
+                            "columns_from": "header"
+                        }
+                    },
+                    {
+                        "definition": {
+                            "component": "keboola.processor-skip-lines"
+                        },
+                        "parameters": {
+                            "lines": 1,
+                            "direction_from": "top"
+                        }
+                    },
+                    {
+                        "definition": {
+                            "component": "keboola.processor-add-metadata"
+                        },
+                        "parameters": {
+                            "tables": [
+                                {
+                                    "table": "account.csv",
+                                    "metadata": [
+                                        {
+                                            "key": "bdm.scaffold.table.tag",
+                                            "__SCAFFOLD_CHECK__value": "CrmSalesforce.internal.inHtnsExSalesforce######Account"
+                                        },
+                                        {
+                                            "key": "scaffold.id",
+                                            "0": "CrmSalesforce"
+                                        }
+                                    ]
+                                }
+                            ]
+                        }
+                    }
+                ]
+            }
+        },
+        "description": "",
+        "name": "Account"
+    },
+    {
+        "configuration": {
+            "parameters": {
+                "sinceLast": false,
+                "objects": [
+                    {
+                        "name": "contact",
+                        "soql": ""
+                    }
+                ]
+            },
+            "processors": {
+                "__SCAFFOLD_CHECK__.after": [
+                    {
+                        "definition": {
+                            "component": "keboola.processor-create-manifest"
+                        },
+                        "parameters": {
+                            "delimiter": ",",
+                            "enclosure": "\"",
+                            "incremental": false,
+                            "primary_key": [],
+                            "columns_from": "header"
+                        }
+                    },
+                    {
+                        "definition": {
+                            "component": "keboola.processor-skip-lines"
+                        },
+                        "parameters": {
+                            "lines": 1,
+                            "direction_from": "top"
+                        }
+                    },
+                    {
+                        "definition": {
+                            "component": "keboola.processor-add-metadata"
+                        },
+                        "parameters": {
+                            "tables": [
+                                {
+                                    "table": "contact.csv",
+                                    "metadata": [
+                                        {
+                                            "key": "bdm.scaffold.table.tag",
+                                            "__SCAFFOLD_CHECK__value": "CrmSalesforce.internal.inHtnsExSalesforce######Contact"
+                                        },
+                                        {
+                                            "key": "scaffold.id",
+                                            "0": "CrmSalesforce"
+                                        }
+                                    ]
+                                }
+                            ]
+                        }
+                    }
+                ]
+            }
+        },
+        "description": "",
+        "name": "Contact"
+    },
+    {
+        "configuration": {
+            "parameters": {
+                "sinceLast": false,
+                "objects": [
+                    {
+                        "name": "opportunity",
+                        "soql": ""
+                    }
+                ]
+            },
+            "processors": {
+                "__SCAFFOLD_CHECK__.after": [
+                    {
+                        "definition": {
+                            "component": "keboola.processor-create-manifest"
+                        },
+                        "parameters": {
+                            "delimiter": ",",
+                            "enclosure": "\"",
+                            "incremental": false,
+                            "primary_key": [],
+                            "columns_from": "header"
+                        }
+                    },
+                    {
+                        "definition": {
+                            "component": "keboola.processor-skip-lines"
+                        },
+                        "parameters": {
+                            "lines": 1,
+                            "direction_from": "top"
+                        }
+                    },
+                    {
+                        "definition": {
+                            "component": "keboola.processor-add-metadata"
+                        },
+                        "parameters": {
+                            "tables": [
+                                {
+                                    "table": "opportunity.csv",
+                                    "metadata": [
+                                        {
+                                            "key": "bdm.scaffold.table.tag",
+                                            "__SCAFFOLD_CHECK__value": "CrmSalesforce.internal.inHtnsExSalesforce######Opportunity"
+                                        },
+                                        {
+                                            "key": "scaffold.id",
+                                            "0": "CrmSalesforce"
+                                        }
+                                    ]
+                                }
+                            ]
+                        }
+                    }
+                ]
+            }
+        },
+        "description": "",
+        "name": "Opportunity"
+    },
+    {
+        "configuration": {
+            "parameters": {
+                "sinceLast": false,
+                "objects": [
+                    {
+                        "name": "user",
+                        "soql": ""
+                    }
+                ]
+            },
+            "processors": {
+                "__SCAFFOLD_CHECK__.after": [
+                    {
+                        "definition": {
+                            "component": "keboola.processor-create-manifest"
+                        },
+                        "parameters": {
+                            "delimiter": ",",
+                            "enclosure": "\"",
+                            "incremental": false,
+                            "primary_key": [],
+                            "columns_from": "header"
+                        }
+                    },
+                    {
+                        "definition": {
+                            "component": "keboola.processor-skip-lines"
+                        },
+                        "parameters": {
+                            "lines": 1,
+                            "direction_from": "top"
+                        }
+                    },
+                    {
+                        "definition": {
+                            "component": "keboola.processor-add-metadata"
+                        },
+                        "parameters": {
+                            "tables": [
+                                {
+                                    "table": "user.csv",
+                                    "metadata": [
+                                        {
+                                            "key": "bdm.scaffold.table.tag",
+                                            "__SCAFFOLD_CHECK__value": "CrmSalesforce.internal.inHtnsExSalesforce######User"
+                                        },
+                                        {
+                                            "key": "scaffold.id",
+                                            "0": "CrmSalesforce"
+                                        }
+                                    ]
+                                }
+                            ]
+                        }
+                    }
+                ]
+            }
+        },
+        "description": "",
+        "name": "User"
+    },
+    {
+        "configuration": {
+            "parameters": {
+                "sinceLast": false,
+                "objects": [
+                    {
+                        "name": "event",
+                        "soql": ""
+                    }
+                ]
+            },
+            "processors": {
+                "__SCAFFOLD_CHECK__.after": [
+                    {
+                        "definition": {
+                            "component": "keboola.processor-create-manifest"
+                        },
+                        "parameters": {
+                            "delimiter": ",",
+                            "enclosure": "\"",
+                            "incremental": false,
+                            "primary_key": [],
+                            "columns_from": "header"
+                        }
+                    },
+                    {
+                        "definition": {
+                            "component": "keboola.processor-skip-lines"
+                        },
+                        "parameters": {
+                            "lines": 1,
+                            "direction_from": "top"
+                        }
+                    },
+                    {
+                        "definition": {
+                            "component": "keboola.processor-add-metadata"
+                        },
+                        "parameters": {
+                            "tables": [
+                                {
+                                    "table": "event.csv",
+                                    "metadata": [
+                                        {
+                                            "key": "bdm.scaffold.table.tag",
+                                            "__SCAFFOLD_CHECK__value": "CrmSalesforce.internal.inHtnsExSalesforce######Event"
+                                        },
+                                        {
+                                            "key": "scaffold.id",
+                                            "0": "CrmSalesforce"
+                                        }
+                                    ]
+                                }
+                            ]
+                        }
+                    }
+                ]
+            }
+        },
+        "description": "",
+        "name": "Event"
+    },
+    {
+        "configuration": {
+            "parameters": {
+                "sinceLast": false,
+                "objects": [
+                    {
+                        "name": "lead",
+                        "soql": ""
+                    }
+                ]
+            },
+            "processors": {
+                "__SCAFFOLD_CHECK__.after": [
+                    {
+                        "definition": {
+                            "component": "keboola.processor-create-manifest"
+                        },
+                        "parameters": {
+                            "delimiter": ",",
+                            "enclosure": "\"",
+                            "incremental": false,
+                            "primary_key": [],
+                            "columns_from": "header"
+                        }
+                    },
+                    {
+                        "definition": {
+                            "component": "keboola.processor-skip-lines"
+                        },
+                        "parameters": {
+                            "lines": 1,
+                            "direction_from": "top"
+                        }
+                    },
+                    {
+                        "definition": {
+                            "component": "keboola.processor-add-metadata"
+                        },
+                        "parameters": {
+                            "tables": [
+                                {
+                                    "table": "lead.csv",
+                                    "metadata": [
+                                        {
+                                            "key": "bdm.scaffold.table.tag",
+                                            "__SCAFFOLD_CHECK__value": "CrmSalesforce.internal.inHtnsExSalesforce######Lead"
+                                        },
+                                        {
+                                            "key": "scaffold.id",
+                                            "0": "CrmSalesforce"
+                                        }
+                                    ]
+                                }
+                            ]
+                        }
+                    }
+                ]
+            }
+        },
+        "description": "",
+        "name": "Lead"
+    },
+    {
+        "configuration": {
+            "parameters": {
+                "sinceLast": false,
+                "objects": [
+                    {
+                        "name": "opportunitycontactrole",
+                        "soql": ""
+                    }
+                ]
+            },
+            "processors": {
+                "__SCAFFOLD_CHECK__.after": [
+                    {
+                        "definition": {
+                            "component": "keboola.processor-create-manifest"
+                        },
+                        "parameters": {
+                            "delimiter": ",",
+                            "enclosure": "\"",
+                            "incremental": false,
+                            "primary_key": [],
+                            "columns_from": "header"
+                        }
+                    },
+                    {
+                        "definition": {
+                            "component": "keboola.processor-skip-lines"
+                        },
+                        "parameters": {
+                            "lines": 1,
+                            "direction_from": "top"
+                        }
+                    },
+                    {
+                        "definition": {
+                            "component": "keboola.processor-add-metadata"
+                        },
+                        "parameters": {
+                            "tables": [
+                                {
+                                    "table": "opportunitycontactrole.csv",
+                                    "metadata": [
+                                        {
+                                            "key": "bdm.scaffold.table.tag",
+                                            "__SCAFFOLD_CHECK__value": "CrmSalesforce.internal.inHtnsExSalesforce######Opportunitycontactrole"
+                                        },
+                                        {
+                                            "key": "scaffold.id",
+                                            "0": "CrmSalesforce"
+                                        }
+                                    ]
+                                }
+                            ]
+                        }
+                    }
+                ]
+            }
+        },
+        "description": "",
+        "name": "Opportunity Contact Role"
+    },
+    {
+        "configuration": {
+            "parameters": {
+                "sinceLast": false,
+                "objects": [
+                    {
+                        "name": "opportunitystage",
+                        "soql": ""
+                    }
+                ]
+            },
+            "processors": {
+                "__SCAFFOLD_CHECK__.after": [
+                    {
+                        "definition": {
+                            "component": "keboola.processor-create-manifest"
+                        },
+                        "parameters": {
+                            "delimiter": ",",
+                            "enclosure": "\"",
+                            "incremental": false,
+                            "primary_key": [],
+                            "columns_from": "header"
+                        }
+                    },
+                    {
+                        "definition": {
+                            "component": "keboola.processor-skip-lines"
+                        },
+                        "parameters": {
+                            "lines": 1,
+                            "direction_from": "top"
+                        }
+                    },
+                    {
+                        "definition": {
+                            "component": "keboola.processor-add-metadata"
+                        },
+                        "parameters": {
+                            "tables": [
+                                {
+                                    "table": "opportunitystage.csv",
+                                    "metadata": [
+                                        {
+                                            "key": "bdm.scaffold.table.tag",
+                                            "__SCAFFOLD_CHECK__value": "CrmSalesforce.internal.inHtnsExSalesforce######Opportunitystage"
+                                        },
+                                        {
+                                            "key": "scaffold.id",
+                                            "0": "CrmSalesforce"
+                                        }
+                                    ]
+                                }
+                            ]
+                        }
+                    }
+                ]
+            }
+        },
+        "description": "",
+        "name": "Stage"
+    }
+]
