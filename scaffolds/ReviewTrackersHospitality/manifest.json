@@ -1,7 +1,7 @@
 {
-    "name": "Review Trackers Hospitality",
+    "name": "Reviewtrackers Reviews to Snowflake",
     "author": "Keboola",
-    "description": "Reviews - ReviewTrackers Hospitality",
+    "description": "Complete business application to extract multi-location reviews from Review Trackers (trial account available), NLP processing for entity, relations and sentiment analysis and output of standardized data model into Snowflake.",
     "inputs": [
         {
             "id": "kdsTeamExReviewtrackersSurveys",
@@ -10,7 +10,10 @@
             "required": true,
             "schema": {
                 "type": "object",
-                "required": ["username", "#password"],
+                "required": [
+                    "username",
+                    "#password"
+                ],
                 "properties": {
                     "username": {
                         "title": "Username",
