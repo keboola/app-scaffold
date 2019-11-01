@@ -8,14 +8,54 @@
             "componentId": "kds-team.ex-paymo",
             "name": "Paymo",
             "required": true,
-            "schema": null
+            "schema": {
+                "type": "object",
+                "required": [
+                    "config"
+                ],
+                "properties": {
+                    "config": {
+                        "type": "object",
+                        "required": [
+                            "#username"
+                        ],
+                        "properties": {
+                            "#username": {
+                                "title": "API Token",
+                                "type": "string",
+                                "format": "password"
+                            }
+                        }
+                    }
+                }
+            }
         },
         {
             "id": "kdsTeamExPaymoPaymoFullEntryIDs",
             "componentId": "kds-team.ex-paymo",
             "name": "Paymo Full Entry IDs",
             "required": true,
-            "schema": null
+            "schema": {
+                "type": "object",
+                "required": [
+                    "config"
+                ],
+                "properties": {
+                    "config": {
+                        "type": "object",
+                        "required": [
+                            "#username"
+                        ],
+                        "properties": {
+                            "#username": {
+                                "title": "API Token",
+                                "type": "string",
+                                "format": "password"
+                            }
+                        }
+                    }
+                }
+            }
         },
         {
             "id": "transformationPaymo",

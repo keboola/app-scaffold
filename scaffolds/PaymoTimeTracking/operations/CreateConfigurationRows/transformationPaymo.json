@@ -17,8 +17,7 @@
                             "value": "PaymoTimeTracking"
                         }
                     ],
-                    "destination": "out.c-paymoTimeTracking.paymoClient",
-                    "__SCAFFOLD_CHECK__original_destination": "out.c-paymo.client"
+                    "destination": "out.c-paymoTimeTracking.paymoClient"
                 },
                 {
                     "source": "out_user",
@@ -35,8 +34,7 @@
                             "value": "PaymoTimeTracking"
                         }
                     ],
-                    "destination": "out.c-paymoTimeTracking.paymoUser",
-                    "__SCAFFOLD_CHECK__original_destination": "out.c-paymo.user"
+                    "destination": "out.c-paymoTimeTracking.paymoUser"
                 },
                 {
                     "source": "out_project",
@@ -53,8 +51,7 @@
                             "value": "PaymoTimeTracking"
                         }
                     ],
-                    "destination": "out.c-paymoTimeTracking.paymoProject",
-                    "__SCAFFOLD_CHECK__original_destination": "out.c-paymo.project"
+                    "destination": "out.c-paymoTimeTracking.paymoProject"
                 }
             ],
             "queries": [
@@ -75,10 +72,8 @@
                     "loadType": "clone",
                     "source_search": {
                         "key": "bdm.scaffold.table.tag",
-                        "__SCAFFOLD_CHECK__.value": "PaymoTimeTracking.internal.inKdsTeamExPaymo542555852Project"
-                    },
-                    "__SCAFFOLD_CHECK__.source": "in.c-paymoTimeTracking.kdsTeamExPaymo542555852Project",
-                    "__SCAFFOLD_CHECK__.original_source": "in.c-kds-team-ex-paymo-542555852.project"
+                        "value": "PaymoTimeTracking.internal.inKdsTeamExPaymo01Project"
+                    }
                 },
                 {
                     "destination": "client",
@@ -90,10 +85,8 @@
                     "loadType": "clone",
                     "source_search": {
                         "key": "bdm.scaffold.table.tag",
-                        "__SCAFFOLD_CHECK__.value": "PaymoTimeTracking.internal.inKdsTeamExPaymo542555852Client"
-                    },
-                    "__SCAFFOLD_CHECK__.source": "in.c-paymoTimeTracking.kdsTeamExPaymo542555852Client",
-                    "__SCAFFOLD_CHECK__.original_source": "in.c-kds-team-ex-paymo-542555852.client"
+                        "value": "PaymoTimeTracking.internal.inKdsTeamExPaymo01Client"
+                    }
                 },
                 {
                     "destination": "user",
@@ -105,10 +98,8 @@
                     "loadType": "clone",
                     "source_search": {
                         "key": "bdm.scaffold.table.tag",
-                        "__SCAFFOLD_CHECK__.value": "PaymoTimeTracking.internal.inKdsTeamExPaymo542555852User"
-                    },
-                    "__SCAFFOLD_CHECK__.source": "in.c-paymoTimeTracking.kdsTeamExPaymo542555852User",
-                    "__SCAFFOLD_CHECK__.original_source": "in.c-kds-team-ex-paymo-542555852.user"
+                        "value": "PaymoTimeTracking.internal.inKdsTeamExPaymo01User"
+                    }
                 }
             ],
             "name": "Clients, Projects & Users",
@@ -142,8 +133,7 @@
                             "value": "PaymoTimeTracking"
                         }
                     ],
-                    "destination": "out.c-paymoTimeTracking.paymoTask",
-                    "__SCAFFOLD_CHECK__original_destination": "out.c-paymo.task"
+                    "destination": "out.c-paymoTimeTracking.paymoTask"
                 }
             ],
             "queries": [
@@ -161,10 +151,8 @@
                     "loadType": "clone",
                     "source_search": {
                         "key": "bdm.scaffold.table.tag",
-                        "__SCAFFOLD_CHECK__.value": "PaymoTimeTracking.internal.inKdsTeamExPaymo542555852Task"
-                    },
-                    "__SCAFFOLD_CHECK__.source": "in.c-paymoTimeTracking.kdsTeamExPaymo542555852Task",
-                    "__SCAFFOLD_CHECK__.original_source": "in.c-kds-team-ex-paymo-542555852.task"
+                        "value": "PaymoTimeTracking.internal.inKdsTeamExPaymo01Task"
+                    }
                 },
                 {
                     "destination": "tasklist",
@@ -176,10 +164,8 @@
                     "loadType": "clone",
                     "source_search": {
                         "key": "bdm.scaffold.table.tag",
-                        "__SCAFFOLD_CHECK__.value": "PaymoTimeTracking.internal.inKdsTeamExPaymo542555852Tasklist"
-                    },
-                    "__SCAFFOLD_CHECK__.source": "in.c-paymoTimeTracking.kdsTeamExPaymo542555852Tasklist",
-                    "__SCAFFOLD_CHECK__.original_source": "in.c-kds-team-ex-paymo-542555852.tasklist"
+                        "value": "PaymoTimeTracking.internal.inKdsTeamExPaymo01Tasklist"
+                    }
                 },
                 {
                     "destination": "project",
@@ -189,12 +175,7 @@
                     "whereOperator": "eq",
                     "columns": [],
                     "loadType": "clone",
-                    "source_search": {
-                        "key": "bdm.scaffold.table.tag",
-                        "__SCAFFOLD_CHECK__.value": "PaymoTimeTracking.internal.outPaymoProject"
-                    },
-                    "__SCAFFOLD_CHECK__.source": "out.c-paymoTimeTracking.paymoProject",
-                    "__SCAFFOLD_CHECK__.original_source": "out.c-paymo.project"
+                    "source": "out.c-paymoTimeTracking.paymoProject"
                 }
             ],
             "name": "Task",
@@ -228,8 +209,7 @@
                             "value": "PaymoTimeTracking"
                         }
                     ],
-                    "destination": "out.c-paymoTimeTracking.paymoEntry",
-                    "__SCAFFOLD_CHECK__original_destination": "out.c-paymo.entry"
+                    "destination": "out.c-paymoTimeTracking.paymoEntry"
                 }
             ],
             "queries": [
@@ -248,12 +228,7 @@
                     "whereOperator": "eq",
                     "columns": [],
                     "loadType": "clone",
-                    "source_search": {
-                        "key": "bdm.scaffold.table.tag",
-                        "__SCAFFOLD_CHECK__.value": "PaymoTimeTracking.internal.outPaymoTask"
-                    },
-                    "__SCAFFOLD_CHECK__.source": "out.c-paymoTimeTracking.paymoTask",
-                    "__SCAFFOLD_CHECK__.original_source": "out.c-paymo.task"
+                    "source": "out.c-paymoTimeTracking.paymoTask"
                 },
                 {
                     "destination": "project",
@@ -263,12 +238,7 @@
                     "whereOperator": "eq",
                     "columns": [],
                     "loadType": "clone",
-                    "source_search": {
-                        "key": "bdm.scaffold.table.tag",
-                        "__SCAFFOLD_CHECK__.value": "PaymoTimeTracking.internal.outPaymoProject"
-                    },
-                    "__SCAFFOLD_CHECK__.source": "out.c-paymoTimeTracking.paymoProject",
-                    "__SCAFFOLD_CHECK__.original_source": "out.c-paymo.project"
+                    "source": "out.c-paymoTimeTracking.paymoProject"
                 },
                 {
                     "destination": "entry",
@@ -280,10 +250,8 @@
                     "loadType": "clone",
                     "source_search": {
                         "key": "bdm.scaffold.table.tag",
-                        "__SCAFFOLD_CHECK__.value": "PaymoTimeTracking.internal.inKdsTeamExPaymo542555852Entry"
-                    },
-                    "__SCAFFOLD_CHECK__.source": "in.c-paymoTimeTracking.kdsTeamExPaymo542555852Entry",
-                    "__SCAFFOLD_CHECK__.original_source": "in.c-kds-team-ex-paymo-542555852.entry"
+                        "value": "PaymoTimeTracking.internal.inKdsTeamExPaymo01Entry"
+                    }
                 },
                 {
                     "destination": "entry_full",
@@ -295,10 +263,8 @@
                     "loadType": "clone",
                     "source_search": {
                         "key": "bdm.scaffold.table.tag",
-                        "__SCAFFOLD_CHECK__.value": "PaymoTimeTracking.internal.inKdsTeamExPaymo542943588Entry"
-                    },
-                    "__SCAFFOLD_CHECK__.source": "in.c-paymoTimeTracking.kdsTeamExPaymo542943588Entry",
-                    "__SCAFFOLD_CHECK__.original_source": "in.c-kds-team-ex-paymo-542943588.entry"
+                        "value": "PaymoTimeTracking.internal.inKdsTeamExPaymo02Entry"
+                    }
                 }
             ],
             "name": "Entries",
@@ -336,8 +302,7 @@
                             "value": "PaymoTimeTracking"
                         }
                     ],
-                    "destination": "out.c-paymoTimeTracking.paymoWorkday",
-                    "__SCAFFOLD_CHECK__original_destination": "out.c-paymo.workday"
+                    "destination": "out.c-paymoTimeTracking.paymoWorkday"
                 }
             ],
             "queries": [

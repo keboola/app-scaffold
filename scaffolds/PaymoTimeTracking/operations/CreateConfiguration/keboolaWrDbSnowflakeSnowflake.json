@@ -1,5 +1,6 @@
 {
     "componentId": "keboola.wr-db-snowflake",
+    "authorization": "provisionedSnowflake",
     "payload": {
         "name": "Snowflake",
         "configuration": {
@@ -485,9 +486,8 @@
                             ],
                             "source_search": {
                                 "key": "bdm.scaffold.table.tag",
-                                "__SCAFFOLD_CHECK__.value": "PaymoTimeTracking.internal.outPaymoClient"
-                            },
-                            "__SCAFFOLD_CHECK__.original_source": "out.c-paymo.client"
+                                "value": "PaymoTimeTracking.internal.outPaymoClient"
+                            }
                         },
                         {
                             "destination": "out.c-paymo.entry.csv",
@@ -512,9 +512,8 @@
                             ],
                             "source_search": {
                                 "key": "bdm.scaffold.table.tag",
-                                "__SCAFFOLD_CHECK__.value": "PaymoTimeTracking.internal.outPaymoEntry"
-                            },
-                            "__SCAFFOLD_CHECK__.original_source": "out.c-paymo.entry"
+                                "value": "PaymoTimeTracking.internal.outPaymoEntry"
+                            }
                         },
                         {
                             "destination": "out.c-paymo.project.csv",
@@ -531,9 +530,8 @@
                             ],
                             "source_search": {
                                 "key": "bdm.scaffold.table.tag",
-                                "__SCAFFOLD_CHECK__.value": "PaymoTimeTracking.internal.outPaymoProject"
-                            },
-                            "__SCAFFOLD_CHECK__.original_source": "out.c-paymo.project"
+                                "value": "PaymoTimeTracking.internal.outPaymoProject"
+                            }
                         },
                         {
                             "destination": "out.c-paymo.task.csv",
@@ -550,9 +548,8 @@
                             ],
                             "source_search": {
                                 "key": "bdm.scaffold.table.tag",
-                                "__SCAFFOLD_CHECK__.value": "PaymoTimeTracking.internal.outPaymoTask"
-                            },
-                            "__SCAFFOLD_CHECK__.original_source": "out.c-paymo.task"
+                                "value": "PaymoTimeTracking.internal.outPaymoTask"
+                            }
                         },
                         {
                             "destination": "out.c-paymo.user.csv",
@@ -566,9 +563,8 @@
                             ],
                             "source_search": {
                                 "key": "bdm.scaffold.table.tag",
-                                "__SCAFFOLD_CHECK__.value": "PaymoTimeTracking.internal.outPaymoUser"
-                            },
-                            "__SCAFFOLD_CHECK__.original_source": "out.c-paymo.user"
+                                "value": "PaymoTimeTracking.internal.outPaymoUser"
+                            }
                         },
                         {
                             "destination": "out.c-paymo.workday.csv",
@@ -578,9 +574,8 @@
                             ],
                             "source_search": {
                                 "key": "bdm.scaffold.table.tag",
-                                "__SCAFFOLD_CHECK__.value": "PaymoTimeTracking.internal.outPaymoWorkday"
-                            },
-                            "__SCAFFOLD_CHECK__.original_source": "out.c-paymo.workday"
+                                "value": "PaymoTimeTracking.internal.outPaymoWorkday"
+                            }
                         }
                     ]
                 }
