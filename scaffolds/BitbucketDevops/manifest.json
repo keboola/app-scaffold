@@ -1,0 +1,35 @@
+{
+    "name": "",
+    "author": "Keboola",
+    "description": "",
+    "inputs": [
+        {
+            "id": "kdsTeamExBitbucketBitbucket",
+            "componentId": "kds-team.ex-bitbucket",
+            "name": "Bitbucket",
+            "required": true,
+            "schema": null
+        },
+        {
+            "id": "transformationBitBucket",
+            "componentId": "transformation",
+            "name": "BitBucket",
+            "required": true,
+            "schema": null
+        },
+        {
+            "id": "keboolaWrDbSnowflakeSnowflake",
+            "componentId": "keboola.wr-db-snowflake",
+            "name": "Snowflake",
+            "required": true,
+            "schema": null
+        },
+        {
+            "id": "orchestrationDevops",
+            "componentId": "orchestrator",
+            "name": "Devops",
+            "required": true,
+            "schema": null
+        }
+    ]
+}

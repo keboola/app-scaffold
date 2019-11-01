@@ -1,0 +1,590 @@
+{
+    "componentId": "kds-team.ex-bitbucket",
+    "payload": {
+        "name": "Bitbucket",
+        "configuration": {
+            "parameters": {
+                "api": {
+                    "authentication": {
+                        "type": "basic"
+                    },
+                    "baseUrl": "https:\/\/api.bitbucket.org\/2.0\/",
+                    "pagination": {
+                        "method": "pagenum",
+                        "pageParam": "page"
+                    },
+                    "http": {
+                        "headers": {
+                            "Accept": "application\/json"
+                        },
+                        "ignoreErrors": [
+                            404
+                        ]
+                    }
+                },
+                "config": {
+                    "username": "matejkys",
+                    "#password": "__SCAFFOLD_CHECK__",
+                    "incrementalOutput": true,
+                    "jobs": [
+                        {
+                            "endpoint": "teams",
+                            "dataField": "values",
+                            "dataType": "team",
+                            "params": {
+                                "role": "member"
+                            },
+                            "children": [
+                                {
+                                    "endpoint": "teams\/{team_uuid}\/members\/",
+                                    "dataField": "values",
+                                    "dataType": "member",
+                                    "placeholders": {
+                                        "team_uuid": "uuid"
+                                    }
+                                },
+                                {
+                                    "endpoint": "teams\/{team_uuid}\/projects\/",
+                                    "dataField": "values",
+                                    "dataType": "project",
+                                    "placeholders": {
+                                        "team_uuid": "uuid"
+                                    }
+                                },
+                                {
+                                    "endpoint": "repositories\/{team_uuid}",
+                                    "dataField": "values",
+                                    "dataType": "repository",
+                                    "placeholders": {
+                                        "team_uuid": "uuid"
+                                    },
+                                    "children": [
+                                        {
+                                            "endpoint": "repositories\/{team_uuid}\/{repo_uuid}\/commits\/",
+                                            "dataField": "values",
+                                            "dataType": "repository_commit",
+                                            "placeholders": {
+                                                "team_uuid": "owner.uuid",
+                                                "repo_uuid": "uuid"
+                                            },
+                                            "children": [
+                                                {
+                                                    "endpoint": "repositories\/{2:team_uuid}\/{2:repo_uuid}\/diffstat\/{1:id}",
+                                                    "dataField": "values",
+                                                    "dataType": "repository_commit_change",
+                                                    "placeholders": {
+                                                        "2:team_uuid": "owner.uuid",
+                                                        "2:repo_uuid": "uuid",
+                                                        "1:id": "hash"
+                                                    }
+                                                }
+                                            ]
+                                        },
+                                        {
+                                            "endpoint": "repositories\/{team_uuid}\/{repo_uuid}\/pullrequests\/",
+                                            "dataField": "values",
+                                            "dataType": "pull_request_open",
+                                            "params": {
+                                                "state": "OPEN"
+                                            },
+                                            "placeholders": {
+                                                "team_uuid": "owner.uuid",
+                                                "repo_uuid": "uuid"
+                                            },
+                                            "children": [
+                                                {
+                                                    "endpoint": "repositories\/{2:team_uuid}\/{2:repo_uuid}\/pullrequests\/{1:id}\/activity\/",
+                                                    "dataField": "values",
+                                                    "dataType": "pull_request_open_activity",
+                                                    "placeholders": {
+                                                        "2:team_uuid": "owner.uuid",
+                                                        "2:repo_uuid": "uuid",
+                                                        "1:id": "id"
+                                                    }
+                                                }
+                                            ]
+                                        },
+                                        {
+                                            "endpoint": "repositories\/{team_uuid}\/{repo_uuid}\/pullrequests\/",
+                                            "dataField": "values",
+                                            "dataType": "pull_request_merged",
+                                            "params": {
+                                                "state": "MERGED"
+                                            },
+                                            "placeholders": {
+                                                "team_uuid": "owner.uuid",
+                                                "repo_uuid": "uuid"
+                                            },
+                                            "children": [
+                                                {
+                                                    "endpoint": "repositories\/{2:team_uuid}\/{2:repo_uuid}\/pullrequests\/{1:id}\/activity\/",
+                                                    "dataField": "values",
+                                                    "dataType": "pull_request_merged_activity",
+                                                    "placeholders": {
+                                                        "2:team_uuid": "owner.uuid",
+                                                        "2:repo_uuid": "uuid",
+                                                        "1:id": "id"
+                                                    }
+                                                }
+                                            ]
+                                        },
+                                        {
+                                            "endpoint": "repositories\/{team_uuid}\/{repo_uuid}\/pullrequests\/",
+                                            "dataField": "values",
+                                            "dataType": "pull_request_superseded",
+                                            "params": {
+                                                "state": "SUPERSEDED"
+                                            },
+                                            "placeholders": {
+                                                "team_uuid": "owner.uuid",
+                                                "repo_uuid": "uuid"
+                                            },
+                                            "children": [
+                                                {
+                                                    "endpoint": "repositories\/{2:team_uuid}\/{2:repo_uuid}\/pullrequests\/{1:id}\/activity\/",
+                                                    "dataField": "values",
+                                                    "dataType": "pull_request_superseded_activity",
+                                                    "placeholders": {
+                                                        "2:team_uuid": "owner.uuid",
+                                                        "2:repo_uuid": "uuid",
+                                                        "1:id": "id"
+                                                    }
+                                                }
+                                            ]
+                                        },
+                                        {
+                                            "endpoint": "repositories\/{team_uuid}\/{repo_uuid}\/pullrequests\/",
+                                            "dataField": "values",
+                                            "dataType": "pull_request_declined",
+                                            "params": {
+                                                "state": "DECLINED"
+                                            },
+                                            "placeholders": {
+                                                "team_uuid": "owner.uuid",
+                                                "repo_uuid": "uuid"
+                                            },
+                                            "children": [
+                                                {
+                                                    "endpoint": "repositories\/{2:team_uuid}\/{2:repo_uuid}\/pullrequests\/{1:id}\/activity\/",
+                                                    "dataField": "values",
+                                                    "dataType": "pull_request_declined_activity",
+                                                    "placeholders": {
+                                                        "2:team_uuid": "owner.uuid",
+                                                        "2:repo_uuid": "uuid",
+                                                        "1:id": "id"
+                                                    }
+                                                }
+                                            ]
+                                        },
+                                        {
+                                            "endpoint": "repositories\/{team_uuid}\/{repo_uuid}\/issues\/",
+                                            "dataField": "values",
+                                            "dataType": "issue",
+                                            "placeholders": {
+                                                "team_uuid": "owner.uuid",
+                                                "repo_uuid": "uuid"
+                                            },
+                                            "children": [
+                                                {
+                                                    "endpoint": "repositories\/{2:team_uuid}\/{2:repo_uuid}\/issues\/{1:id}\/comments\/",
+                                                    "dataField": "values",
+                                                    "dataType": "issue_comment",
+                                                    "placeholders": {
+                                                        "2:team_uuid": "owner.uuid",
+                                                        "2:repo_uuid": "uuid",
+                                                        "1:id": "id"
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    ]
+                                }
+                            ]
+                        }
+                    ],
+                    "mappings": {
+                        "pull_request_superseded": {
+                            "updated_on": "updated_on",
+                            "author.display_name": "author",
+                            "source.repository.uuid": {
+                                "mapping": {
+                                    "destination": "repository_id",
+                                    "primaryKey": true
+                                }
+                            },
+                            "state": "state",
+                            "created_on": "created_on",
+                            "title": "title",
+                            "links.html.href": "html_url",
+                            "id": {
+                                "mapping": {
+                                    "destination": "pull_request_id",
+                                    "primaryKey": true
+                                }
+                            },
+                            "description": "description",
+                            "author.type": "author_type",
+                            "author.uuid": "author_id"
+                        },
+                        "repository_commit_change": {
+                            "parent_hash": {
+                                "type": "user",
+                                "mapping": {
+                                    "destination": "repository_commit_id",
+                                    "primaryKey": true
+                                }
+                            },
+                            "status": {
+                                "mapping": {
+                                    "destination": "status",
+                                    "primaryKey": true
+                                }
+                            },
+                            "new.path": {
+                                "mapping": {
+                                    "destination": "new_path",
+                                    "primaryKey": true
+                                }
+                            },
+                            "new.type": "new_type",
+                            "old.path": "old_path",
+                            "old.type": "old_type",
+                            "lines_removed": "lines_removed",
+                            "lines_added": "lines_added"
+                        },
+                        "repository": {
+                            "size": "size",
+                            "updated_on": "updated_on",
+                            "name": "name",
+                            "is_private": "is_private",
+                            "project.uuid": "project_id",
+                            "has_wiki": "has_wiki",
+                            "created_on": "created_on",
+                            "language": "language",
+                            "links.html.href": "html_url",
+                            "uuid": {
+                                "mapping": {
+                                    "destination": "repository_id",
+                                    "primaryKey": true
+                                }
+                            },
+                            "description": "description",
+                            "mainbranch.name": "main_branch",
+                            "has_issues": "has_issues"
+                        },
+                        "repository_commit": {
+                            "hash": {
+                                "mapping": {
+                                    "destination": "repository_commit_id",
+                                    "primaryKey": true
+                                }
+                            },
+                            "repository.uuid": "repository_id",
+                            "message": "message",
+                            "author.raw": "author",
+                            "author.user.uuid": "author_id",
+                            "date": "date",
+                            "links.html.href": "html_url"
+                        },
+                        "pull_request_superseded_activity": {
+                            "update.author.display_name": "author",
+                            "update.reason": "reason",
+                            "update.state": {
+                                "mapping": {
+                                    "destination": "state",
+                                    "primaryKey": true
+                                }
+                            },
+                            "parent_uuid": {
+                                "type": "user",
+                                "mapping": {
+                                    "destination": "repository_id",
+                                    "primaryKey": true
+                                }
+                            },
+                            "update.title": "title",
+                            "update.date": {
+                                "mapping": {
+                                    "destination": "date",
+                                    "primaryKey": true
+                                }
+                            },
+                            "pull_request.id": {
+                                "mapping": {
+                                    "destination": "pull_request_id",
+                                    "primaryKey": true
+                                }
+                            },
+                            "update.description": "description",
+                            "update.author.uuid": "author_id"
+                        },
+                        "pull_request_open": {
+                            "updated_on": "updated_on",
+                            "author.display_name": "author",
+                            "source.repository.uuid": {
+                                "mapping": {
+                                    "destination": "repository_id",
+                                    "primaryKey": true
+                                }
+                            },
+                            "state": "state",
+                            "created_on": "created_on",
+                            "title": "title",
+                            "links.html.href": "html_url",
+                            "id": {
+                                "mapping": {
+                                    "destination": "pull_request_id",
+                                    "primaryKey": true
+                                }
+                            },
+                            "description": "description",
+                            "author.type": "author_type",
+                            "author.uuid": "author_id"
+                        },
+                        "pull_request_merged": {
+                            "updated_on": "updated_on",
+                            "author.display_name": "author",
+                            "source.repository.uuid": {
+                                "mapping": {
+                                    "destination": "repository_id",
+                                    "primaryKey": true
+                                }
+                            },
+                            "state": "state",
+                            "created_on": "created_on",
+                            "title": "title",
+                            "links.html.href": "html_url",
+                            "id": {
+                                "mapping": {
+                                    "destination": "pull_request_id",
+                                    "primaryKey": true
+                                }
+                            },
+                            "description": "description",
+                            "author.type": "author_type",
+                            "author.uuid": "author_id"
+                        },
+                        "pull_request_declined_activity": {
+                            "update.author.display_name": "author",
+                            "update.reason": "reason",
+                            "update.state": {
+                                "mapping": {
+                                    "destination": "state",
+                                    "primaryKey": true
+                                }
+                            },
+                            "parent_uuid": {
+                                "type": "user",
+                                "mapping": {
+                                    "destination": "repository_id",
+                                    "primaryKey": true
+                                }
+                            },
+                            "update.title": "title",
+                            "update.date": {
+                                "mapping": {
+                                    "destination": "date",
+                                    "primaryKey": true
+                                }
+                            },
+                            "pull_request.id": {
+                                "mapping": {
+                                    "destination": "pull_request_id",
+                                    "primaryKey": true
+                                }
+                            },
+                            "update.description": "description",
+                            "update.author.uuid": "author_id"
+                        },
+                        "pull_request_merged_activity": {
+                            "update.author.display_name": "author",
+                            "update.reason": "reason",
+                            "update.state": {
+                                "mapping": {
+                                    "destination": "state",
+                                    "primaryKey": true
+                                }
+                            },
+                            "parent_uuid": {
+                                "type": "user",
+                                "mapping": {
+                                    "destination": "repository_id",
+                                    "primaryKey": true
+                                }
+                            },
+                            "update.title": "title",
+                            "update.date": {
+                                "mapping": {
+                                    "destination": "date",
+                                    "primaryKey": true
+                                }
+                            },
+                            "pull_request.id": {
+                                "mapping": {
+                                    "destination": "pull_request_id",
+                                    "primaryKey": true
+                                }
+                            },
+                            "update.description": "description",
+                            "update.author.uuid": "author_id"
+                        },
+                        "pull_request_declined": {
+                            "updated_on": "updated_on",
+                            "author.display_name": "author",
+                            "source.repository.uuid": {
+                                "mapping": {
+                                    "destination": "repository_id",
+                                    "primaryKey": true
+                                }
+                            },
+                            "state": "state",
+                            "created_on": "created_on",
+                            "title": "title",
+                            "links.html.href": "html_url",
+                            "id": {
+                                "mapping": {
+                                    "destination": "pull_request_id",
+                                    "primaryKey": true
+                                }
+                            },
+                            "description": "description",
+                            "author.type": "author_type",
+                            "author.uuid": "author_id"
+                        },
+                        "issue": {
+                            "updated_on": "updated_on",
+                            "priority": "priority",
+                            "reporter.type": "reporter_type",
+                            "assignee.display_name": "assignee",
+                            "reporter.uuid": "reporter_id",
+                            "state": "state",
+                            "content.raw": "text",
+                            "kind": "kind",
+                            "reporter.display_name": "reporter",
+                            "created_on": "created_on",
+                            "title": "title",
+                            "links.html.href": "html_url",
+                            "assignee.type": "assignee_type",
+                            "assignee.uuid": "assignee_id",
+                            "id": {
+                                "mapping": {
+                                    "destination": "issue_id",
+                                    "primaryKey": true
+                                }
+                            },
+                            "repository.uuid": {
+                                "mapping": {
+                                    "destination": "repository_id",
+                                    "primaryKey": true
+                                }
+                            }
+                        },
+                        "issue_comment": {
+                            "updated_on": "updated_on",
+                            "issue.repository.uuid": {
+                                "mapping": {
+                                    "destination": "repository_id",
+                                    "primaryKey": true
+                                }
+                            },
+                            "user.display_name": "user",
+                            "issue.id": {
+                                "mapping": {
+                                    "destination": "issue_id",
+                                    "primaryKey": true
+                                }
+                            },
+                            "content.raw": "text",
+                            "created_on": "created_on",
+                            "links.html.href": "html_url",
+                            "type": "type",
+                            "id": {
+                                "mapping": {
+                                    "destination": "issue_comment_id",
+                                    "primaryKey": true
+                                }
+                            },
+                            "user.type": "user_type",
+                            "user.uuid": "user_id"
+                        },
+                        "project": {
+                            "uuid": {
+                                "mapping": {
+                                    "destination": "project_id",
+                                    "primaryKey": true
+                                }
+                            },
+                            "owner.uuid": "team_id",
+                            "name": "name",
+                            "key": "key",
+                            "is_private": "is_private",
+                            "created_on": "created_on"
+                        },
+                        "pull_request_open_activity": {
+                            "update.author.display_name": "author",
+                            "update.reason": "reason",
+                            "update.state": {
+                                "mapping": {
+                                    "destination": "state",
+                                    "primaryKey": true
+                                }
+                            },
+                            "parent_uuid": {
+                                "type": "user",
+                                "mapping": {
+                                    "destination": "repository_id",
+                                    "primaryKey": true
+                                }
+                            },
+                            "update.title": "title",
+                            "update.date": {
+                                "mapping": {
+                                    "destination": "date",
+                                    "primaryKey": true
+                                }
+                            },
+                            "pull_request.id": {
+                                "mapping": {
+                                    "destination": "pull_request_id",
+                                    "primaryKey": true
+                                }
+                            },
+                            "update.description": "description",
+                            "update.author.uuid": "author_id"
+                        },
+                        "member": {
+                            "uuid": {
+                                "mapping": {
+                                    "destination": "member_id",
+                                    "primaryKey": true
+                                }
+                            },
+                            "parent_uuid": {
+                                "type": "user",
+                                "mapping": {
+                                    "destination": "team_id"
+                                }
+                            },
+                            "display_name": "display_name",
+                            "created_on": "created_on",
+                            "type": "type",
+                            "is_staff": "is_staff",
+                            "account_status": "account_status"
+                        },
+                        "team": {
+                            "uuid": {
+                                "mapping": {
+                                    "destination": "team_id",
+                                    "primaryKey": true
+                                }
+                            },
+                            "username": "username",
+                            "display_name": "display_name",
+                            "created_on": "created_on"
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
