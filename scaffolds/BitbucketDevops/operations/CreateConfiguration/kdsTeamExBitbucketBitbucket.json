@@ -769,6 +769,19 @@
                                     ]
                                 },
                                 {
+                                    "table": "pull_request_superseded",
+                                    "metadata": [
+                                        {
+                                            "key": "bdm.scaffold.table.tag",
+                                            "value": "BitbucketDevops.internal.inKdsTeamExBitbucketPullRequestSuperSeded"
+                                        },
+                                        {
+                                            "key": "scaffold.id",
+                                            "value": "BitbucketDevops"
+                                        }
+                                    ]
+                                },                                
+                                {
                                     "table": "repository",
                                     "metadata": [
                                         {
