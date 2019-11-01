@@ -458,9 +458,8 @@
                             ],
                             "source_search": {
                                 "key": "bdm.scaffold.table.tag",
-                                "__SCAFFOLD_CHECK__.value": "ZendeskSupport.internal.outSupportGroup"
-                            },
-                            "__SCAFFOLD_CHECK__.original_source": "out.c-support.group"
+                                "value": "ZendeskSupport.internal.outSupportGroup"
+                            }
                         },
                         {
                             "destination": "out.c-support.company.csv",
@@ -472,9 +471,8 @@
                             ],
                             "source_search": {
                                 "key": "bdm.scaffold.table.tag",
-                                "__SCAFFOLD_CHECK__.value": "ZendeskSupport.internal.outSupportCompany"
-                            },
-                            "__SCAFFOLD_CHECK__.original_source": "out.c-support.company"
+                                "value": "ZendeskSupport.internal.outSupportCompany"
+                            }
                         },
                         {
                             "destination": "out.c-support.customer.csv",
@@ -487,9 +485,8 @@
                             ],
                             "source_search": {
                                 "key": "bdm.scaffold.table.tag",
-                                "__SCAFFOLD_CHECK__.value": "ZendeskSupport.internal.outSupportCustomer"
-                            },
-                            "__SCAFFOLD_CHECK__.original_source": "out.c-support.customer"
+                                "value": "ZendeskSupport.internal.outSupportCustomer"
+                            }
                         },
                         {
                             "destination": "out.c-support.employee.csv",
@@ -500,9 +497,8 @@
                             ],
                             "source_search": {
                                 "key": "bdm.scaffold.table.tag",
-                                "__SCAFFOLD_CHECK__.value": "ZendeskSupport.internal.outSupportEmployee"
-                            },
-                            "__SCAFFOLD_CHECK__.original_source": "out.c-support.employee"
+                                "value": "ZendeskSupport.internal.outSupportEmployee"
+                            }
                         },
                         {
                             "destination": "out.c-support.employee_group.csv",
@@ -512,9 +508,8 @@
                             ],
                             "source_search": {
                                 "key": "bdm.scaffold.table.tag",
-                                "__SCAFFOLD_CHECK__.value": "ZendeskSupport.internal.outSupportEmployeeGroup"
-                            },
-                            "__SCAFFOLD_CHECK__.original_source": "out.c-support.employee_group"
+                                "value": "ZendeskSupport.internal.outSupportEmployeeGroup"
+                            }
                         },
                         {
                             "destination": "out.c-support.ticket.csv",
@@ -538,9 +533,8 @@
                             ],
                             "source_search": {
                                 "key": "bdm.scaffold.table.tag",
-                                "__SCAFFOLD_CHECK__.value": "ZendeskSupport.internal.outSupportTicket"
-                            },
-                            "__SCAFFOLD_CHECK__.original_source": "out.c-support.ticket"
+                                "value": "ZendeskSupport.internal.outSupportTicket"
+                            }
                         },
                         {
                             "destination": "out.c-support.ticket_event.csv",
@@ -551,9 +545,8 @@
                             ],
                             "source_search": {
                                 "key": "bdm.scaffold.table.tag",
-                                "__SCAFFOLD_CHECK__.value": "ZendeskSupport.internal.outSupportTicketEvent"
-                            },
-                            "__SCAFFOLD_CHECK__.original_source": "out.c-support.ticket_event"
+                                "value": "ZendeskSupport.internal.outSupportTicketEvent"
+                            }
                         },
                         {
                             "destination": "out.c-support.ticket_field.csv",
@@ -565,9 +558,8 @@
                             "limit": 1,
                             "source_search": {
                                 "key": "bdm.scaffold.table.tag",
-                                "__SCAFFOLD_CHECK__.value": "ZendeskSupport.internal.outSupportTicketField"
-                            },
-                            "__SCAFFOLD_CHECK__.original_source": "out.c-support.ticket_field"
+                                "value": "ZendeskSupport.internal.outSupportTicketField"
+                            }
                         },
                         {
                             "destination": "out.c-support.ticket_field_value.csv",
@@ -580,9 +572,8 @@
                             ],
                             "source_search": {
                                 "key": "bdm.scaffold.table.tag",
-                                "__SCAFFOLD_CHECK__.value": "ZendeskSupport.internal.outSupportTicketFieldValue"
-                            },
-                            "__SCAFFOLD_CHECK__.original_source": "out.c-support.ticket_field_value"
+                                "value": "ZendeskSupport.internal.outSupportTicketFieldValue"
+                            }
                         }
                     ]
                 }

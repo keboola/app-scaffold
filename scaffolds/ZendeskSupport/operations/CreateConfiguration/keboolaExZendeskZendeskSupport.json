@@ -733,12 +733,33 @@
                 "after": [
                     {
                         "definition": {
+                            "component": "keboola.processor-create-manifest"
+                        },
+                        "parameters": {
+                            "delimiter": ",",
+                            "enclosure": "\"",
+                            "incremental": false,
+                            "primary_key": [],
+                            "columns_from": "header"
+                        }
+                    },
+                    {
+                        "definition": {
+                            "component": "keboola.processor-skip-lines"
+                        },
+                        "parameters": {
+                            "lines": 1,
+                            "direction_from": "top"
+                        }
+                    },
+                    {
+                        "definition": {
                             "component": "keboola.processor-add-metadata"
                         },
                         "parameters": {
                             "tables": [
                                 {
-                                    "table": "tags.csv",
+                                    "table": "tags",
                                     "metadata": [
                                         {
                                             "key": "bdm.scaffold.table.tag",
@@ -751,7 +772,7 @@
                                     ]
                                 },
                                 {
-                                    "table": "organizations.csv",
+                                    "table": "organizations",
                                     "metadata": [
                                         {
                                             "key": "bdm.scaffold.table.tag",
@@ -764,7 +785,7 @@
                                     ]
                                 },
                                 {
-                                    "table": "organizations_domain_names.csv",
+                                    "table": "organizations_domain_names",
                                     "metadata": [
                                         {
                                             "key": "bdm.scaffold.table.tag",
@@ -777,7 +798,7 @@
                                     ]
                                 },
                                 {
-                                    "table": "groups.csv",
+                                    "table": "groups",
                                     "metadata": [
                                         {
                                             "key": "bdm.scaffold.table.tag",
@@ -790,7 +811,7 @@
                                     ]
                                 },
                                 {
-                                    "table": "users.csv",
+                                    "table": "users",
                                     "metadata": [
                                         {
                                             "key": "bdm.scaffold.table.tag",
@@ -803,7 +824,7 @@
                                     ]
                                 },
                                 {
-                                    "table": "users_groups.csv",
+                                    "table": "users_groups",
                                     "metadata": [
                                         {
                                             "key": "bdm.scaffold.table.tag",
@@ -816,7 +837,7 @@
                                     ]
                                 },
                                 {
-                                    "table": "users_photos.csv",
+                                    "table": "users_photos",
                                     "metadata": [
                                         {
                                             "key": "bdm.scaffold.table.tag",
@@ -829,7 +850,7 @@
                                     ]
                                 },
                                 {
-                                    "table": "tickets.csv",
+                                    "table": "tickets",
                                     "metadata": [
                                         {
                                             "key": "bdm.scaffold.table.tag",
@@ -842,7 +863,7 @@
                                     ]
                                 },
                                 {
-                                    "table": "tickets_fields.csv",
+                                    "table": "tickets_fields",
                                     "metadata": [
                                         {
                                             "key": "bdm.scaffold.table.tag",
@@ -855,7 +876,7 @@
                                     ]
                                 },
                                 {
-                                    "table": "tickets_fields_values.csv",
+                                    "table": "tickets_fields_values",
                                     "metadata": [
                                         {
                                             "key": "bdm.scaffold.table.tag",
@@ -868,7 +889,7 @@
                                     ]
                                 },
                                 {
-                                    "table": "tickets_metrics.csv",
+                                    "table": "tickets_metrics",
                                     "metadata": [
                                         {
                                             "key": "bdm.scaffold.table.tag",
@@ -881,7 +902,7 @@
                                     ]
                                 },
                                 {
-                                    "table": "tickets_ratings.csv",
+                                    "table": "tickets_ratings",
                                     "metadata": [
                                         {
                                             "key": "bdm.scaffold.table.tag",
@@ -894,7 +915,7 @@
                                     ]
                                 },
                                 {
-                                    "table": "tickets_fields_custom_field_options.csv",
+                                    "table": "tickets_fields_custom_field_options",
                                     "metadata": [
                                         {
                                             "key": "bdm.scaffold.table.tag",
@@ -907,7 +928,7 @@
                                     ]
                                 },
                                 {
-                                    "table": "tickets_fields_system_field_options.csv",
+                                    "table": "tickets_fields_system_field_options",
                                     "metadata": [
                                         {
                                             "key": "bdm.scaffold.table.tag",
