@@ -763,9 +763,8 @@
                             ],
                             "source_search": {
                                 "key": "bdm.scaffold.table.tag",
-                                "__SCAFFOLD_CHECK__.value": "BitbucketDevops.internal.outBitbucketIssue"
-                            },
-                            "__SCAFFOLD_CHECK__.original_source": "out.c-bitbucket.issue"
+                                "value": "BitbucketDevops.internal.outBitbucketIssue"
+                            }
                         },
                         {
                             "destination": "out.c-bitbucket.issue_comment.csv",
@@ -781,9 +780,8 @@
                             ],
                             "source_search": {
                                 "key": "bdm.scaffold.table.tag",
-                                "__SCAFFOLD_CHECK__.value": "BitbucketDevops.internal.outBitbucketIssueComment"
-                            },
-                            "__SCAFFOLD_CHECK__.original_source": "out.c-bitbucket.issue_comment"
+                                "value": "BitbucketDevops.internal.outBitbucketIssueComment"
+                            }
                         },
                         {
                             "destination": "out.c-bitbucket.organization.csv",
@@ -793,9 +791,8 @@
                             ],
                             "source_search": {
                                 "key": "bdm.scaffold.table.tag",
-                                "__SCAFFOLD_CHECK__.value": "BitbucketDevops.internal.outBitbucketOrganization"
-                            },
-                            "__SCAFFOLD_CHECK__.original_source": "out.c-bitbucket.organization"
+                                "value": "BitbucketDevops.internal.outBitbucketOrganization"
+                            }
                         },
                         {
                             "destination": "out.c-bitbucket.pull_request.csv",
@@ -812,9 +809,8 @@
                             ],
                             "source_search": {
                                 "key": "bdm.scaffold.table.tag",
-                                "__SCAFFOLD_CHECK__.value": "BitbucketDevops.internal.outBitbucketPullRequest"
-                            },
-                            "__SCAFFOLD_CHECK__.original_source": "out.c-bitbucket.pull_request"
+                                "value": "BitbucketDevops.internal.outBitbucketPullRequest"
+                            }
                         },
                         {
                             "destination": "out.c-bitbucket.pull_request_activity.csv",
@@ -831,9 +827,8 @@
                             ],
                             "source_search": {
                                 "key": "bdm.scaffold.table.tag",
-                                "__SCAFFOLD_CHECK__.value": "BitbucketDevops.internal.outBitbucketPullRequestActivity"
-                            },
-                            "__SCAFFOLD_CHECK__.original_source": "out.c-bitbucket.pull_request_activity"
+                                "value": "BitbucketDevops.internal.outBitbucketPullRequestActivity"
+                            }
                         },
                         {
                             "destination": "out.c-bitbucket.repository.csv",
@@ -852,9 +847,8 @@
                             ],
                             "source_search": {
                                 "key": "bdm.scaffold.table.tag",
-                                "__SCAFFOLD_CHECK__.value": "BitbucketDevops.internal.outBitbucketRepository"
-                            },
-                            "__SCAFFOLD_CHECK__.original_source": "out.c-bitbucket.repository"
+                                "value": "BitbucketDevops.internal.outBitbucketRepository"
+                            }
                         },
                         {
                             "destination": "out.c-bitbucket.repository_commit.csv",
@@ -868,9 +862,8 @@
                             ],
                             "source_search": {
                                 "key": "bdm.scaffold.table.tag",
-                                "__SCAFFOLD_CHECK__.value": "BitbucketDevops.internal.outBitbucketRepositoryCommit"
-                            },
-                            "__SCAFFOLD_CHECK__.original_source": "out.c-bitbucket.repository_commit"
+                                "value": "BitbucketDevops.internal.outBitbucketRepositoryCommit"
+                            }
                         },
                         {
                             "destination": "out.c-bitbucket.repository_commit_change.csv",
@@ -886,9 +879,8 @@
                             ],
                             "source_search": {
                                 "key": "bdm.scaffold.table.tag",
-                                "__SCAFFOLD_CHECK__.value": "BitbucketDevops.internal.outBitbucketRepositoryCommitChange"
-                            },
-                            "__SCAFFOLD_CHECK__.original_source": "out.c-bitbucket.repository_commit_change"
+                                "value": "BitbucketDevops.internal.outBitbucketRepositoryCommitChange"
+                            }
                         },
                         {
                             "destination": "out.c-bitbucket.user.csv",
@@ -903,9 +895,8 @@
                             ],
                             "source_search": {
                                 "key": "bdm.scaffold.table.tag",
-                                "__SCAFFOLD_CHECK__.value": "BitbucketDevops.internal.outBitbucketUser"
-                            },
-                            "__SCAFFOLD_CHECK__.original_source": "out.c-bitbucket.user"
+                                "value": "BitbucketDevops.internal.outBitbucketUser"
+                            }
                         },
                         {
                             "destination": "out.c-bitbucket.event.csv",
@@ -919,9 +910,8 @@
                             ],
                             "source_search": {
                                 "key": "bdm.scaffold.table.tag",
-                                "__SCAFFOLD_CHECK__.value": "BitbucketDevops.internal.outBitbucketEvent"
-                            },
-                            "__SCAFFOLD_CHECK__.original_source": "out.c-bitbucket.event"
+                                "value": "BitbucketDevops.internal.outBitbucketEvent"
+                            }
                         }
                     ]
                 }

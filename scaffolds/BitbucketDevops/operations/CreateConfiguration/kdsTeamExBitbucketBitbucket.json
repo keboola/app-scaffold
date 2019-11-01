@@ -23,8 +23,6 @@
                     }
                 },
                 "config": {
-                    "username": "matejkys",
-                    "#password": "__SCAFFOLD_CHECK__",
                     "incrementalOutput": true,
                     "jobs": [
                         {
@@ -584,6 +582,201 @@
                         }
                     }
                 }
+            },
+            "processors": {
+                "after": [
+                    {
+                        "definition": {
+                            "component": "keboola.processor-add-metadata"
+                        },
+                        "parameters": {
+                            "tables": [
+                                {
+                                    "table": "team.csv",
+                                    "metadata": [
+                                        {
+                                            "key": "bdm.scaffold.table.tag",
+                                            "value": "BitbucketDevops.internal.inKdsTeamExBitbucketTeam"
+                                        },
+                                        {
+                                            "key": "scaffold.id",
+                                            "value": "CrmHubSpot"
+                                        }
+                                    ]
+                                },
+                                {
+                                    "table": "member.csv",
+                                    "metadata": [
+                                        {
+                                            "key": "bdm.scaffold.table.tag",
+                                            "value": "BitbucketDevops.internal.inKdsTeamExBitbucketMember"
+                                        },
+                                        {
+                                            "key": "scaffold.id",
+                                            "value": "CrmHubSpot"
+                                        }
+                                    ]
+                                },
+                                {
+                                    "table": "issue.csv",
+                                    "metadata": [
+                                        {
+                                            "key": "bdm.scaffold.table.tag",
+                                            "value": "BitbucketDevops.internal.inKdsTeamExBitbucketIssue"
+                                        },
+                                        {
+                                            "key": "scaffold.id",
+                                            "value": "CrmHubSpot"
+                                        }
+                                    ]
+                                },
+                                {
+                                    "table": "issue_comment.csv",
+                                    "metadata": [
+                                        {
+                                            "key": "bdm.scaffold.table.tag",
+                                            "value": "BitbucketDevops.internal.inKdsTeamExBitbucketIssueComment"
+                                        },
+                                        {
+                                            "key": "scaffold.id",
+                                            "value": "CrmHubSpot"
+                                        }
+                                    ]
+                                },
+                                {
+                                    "table": "repository_commit.csv",
+                                    "metadata": [
+                                        {
+                                            "key": "bdm.scaffold.table.tag",
+                                            "value": "BitbucketDevops.internal.inKdsTeamExBitbucketRepositoryCommit"
+                                        },
+                                        {
+                                            "key": "scaffold.id",
+                                            "value": "CrmHubSpot"
+                                        }
+                                    ]
+                                },
+                                {
+                                    "table": "repository_commit_change.csv",
+                                    "metadata": [
+                                        {
+                                            "key": "bdm.scaffold.table.tag",
+                                            "value": "BitbucketDevops.internal.inKdsTeamExBitbucketRepositoryCommitChange"
+                                        },
+                                        {
+                                            "key": "scaffold.id",
+                                            "value": "CrmHubSpot"
+                                        }
+                                    ]
+                                },
+                                {
+                                    "table": "pull_request_declined.csv",
+                                    "metadata": [
+                                        {
+                                            "key": "bdm.scaffold.table.tag",
+                                            "value": "BitbucketDevops.internal.inKdsTeamExBitbucketPullRequestDeclined"
+                                        },
+                                        {
+                                            "key": "scaffold.id",
+                                            "value": "CrmHubSpot"
+                                        }
+                                    ]
+                                },
+                                {
+                                    "table": "pull_request_declined_activity.csv",
+                                    "metadata": [
+                                        {
+                                            "key": "bdm.scaffold.table.tag",
+                                            "value": "BitbucketDevops.internal.inKdsTeamExBitbucketPullRequestDeclinedActivity"
+                                        },
+                                        {
+                                            "key": "scaffold.id",
+                                            "value": "CrmHubSpot"
+                                        }
+                                    ]
+                                },
+                                {
+                                    "table": "pull_request_merged.csv",
+                                    "metadata": [
+                                        {
+                                            "key": "bdm.scaffold.table.tag",
+                                            "value": "BitbucketDevops.internal.inKdsTeamExBitbucketPullRequestMerged"
+                                        },
+                                        {
+                                            "key": "scaffold.id",
+                                            "value": "CrmHubSpot"
+                                        }
+                                    ]
+                                },
+                                {
+                                    "table": "pull_request_merged_activity.csv",
+                                    "metadata": [
+                                        {
+                                            "key": "bdm.scaffold.table.tag",
+                                            "value": "BitbucketDevops.internal.inKdsTeamExBitbucketPullRequestMergedActivity"
+                                        },
+                                        {
+                                            "key": "scaffold.id",
+                                            "value": "CrmHubSpot"
+                                        }
+                                    ]
+                                },
+                                {
+                                    "table": "pull_request_open.csv",
+                                    "metadata": [
+                                        {
+                                            "key": "bdm.scaffold.table.tag",
+                                            "value": "BitbucketDevops.internal.inKdsTeamExBitbucketPullRequestOpen"
+                                        },
+                                        {
+                                            "key": "scaffold.id",
+                                            "value": "CrmHubSpot"
+                                        }
+                                    ]
+                                },
+                                {
+                                    "table": "pull_request_open_activity.csv",
+                                    "metadata": [
+                                        {
+                                            "key": "bdm.scaffold.table.tag",
+                                            "value": "BitbucketDevops.internal.inKdsTeamExBitbucketPullRequestOpenActivity"
+                                        },
+                                        {
+                                            "key": "scaffold.id",
+                                            "value": "CrmHubSpot"
+                                        }
+                                    ]
+                                },
+                                {
+                                    "table": "repository.csv",
+                                    "metadata": [
+                                        {
+                                            "key": "bdm.scaffold.table.tag",
+                                            "value": "BitbucketDevops.internal.inKdsTeamExBitbucketRepository"
+                                        },
+                                        {
+                                            "key": "scaffold.id",
+                                            "value": "CrmHubSpot"
+                                        }
+                                    ]
+                                },
+                                {
+                                    "table": "project.csv",
+                                    "metadata": [
+                                        {
+                                            "key": "bdm.scaffold.table.tag",
+                                            "value": "BitbucketDevops.internal.inKdsTeamExBitbucketProject"
+                                        },
+                                        {
+                                            "key": "scaffold.id",
+                                            "value": "CrmHubSpot"
+                                        }
+                                    ]
+                                }
+                            ]
+                        }
+                    }
+                ]
             }
         }
     }

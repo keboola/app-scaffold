@@ -17,8 +17,7 @@
                             "value": "BitbucketDevops"
                         }
                     ],
-                    "destination": "out.c-bitbucketDevops.bitbucketOrganization",
-                    "__SCAFFOLD_CHECK__original_destination": "out.c-bitbucket.organization"
+                    "destination": "out.c-bitbucketDevops.bitbucketOrganization"
                 }
             ],
             "queries": [
@@ -36,10 +35,8 @@
                     "loadType": "clone",
                     "source_search": {
                         "key": "bdm.scaffold.table.tag",
-                        "__SCAFFOLD_CHECK__.value": "BitbucketDevops.internal.inKdsTeamExBitbucket546916442Team"
-                    },
-                    "__SCAFFOLD_CHECK__.source": "in.c-bitbucketDevops.kdsTeamExBitbucket546916442Team",
-                    "__SCAFFOLD_CHECK__.original_source": "in.c-kds-team-ex-bitbucket-546916442.team"
+                        "value": "BitbucketDevops.internal.inKdsTeamExBitbucketTeam"
+                    }
                 }
             ],
             "name": "Organization",
@@ -73,8 +70,7 @@
                             "value": "BitbucketDevops"
                         }
                     ],
-                    "destination": "out.c-bitbucketDevops.bitbucketUser",
-                    "__SCAFFOLD_CHECK__original_destination": "out.c-bitbucket.user"
+                    "destination": "out.c-bitbucketDevops.bitbucketUser"
                 }
             ],
             "queries": [
@@ -92,10 +88,8 @@
                     "loadType": "clone",
                     "source_search": {
                         "key": "bdm.scaffold.table.tag",
-                        "__SCAFFOLD_CHECK__.value": "BitbucketDevops.internal.inKdsTeamExBitbucket546916442Member"
-                    },
-                    "__SCAFFOLD_CHECK__.source": "in.c-bitbucketDevops.kdsTeamExBitbucket546916442Member",
-                    "__SCAFFOLD_CHECK__.original_source": "in.c-kds-team-ex-bitbucket-546916442.member"
+                        "value": "BitbucketDevops.internal.inKdsTeamExBitbucketMember"
+                    }
                 },
                 {
                     "destination": "organization",
@@ -105,12 +99,7 @@
                     "whereOperator": "eq",
                     "columns": [],
                     "loadType": "clone",
-                    "source_search": {
-                        "key": "bdm.scaffold.table.tag",
-                        "__SCAFFOLD_CHECK__.value": "BitbucketDevops.internal.outBitbucketOrganization"
-                    },
-                    "__SCAFFOLD_CHECK__.source": "out.c-bitbucketDevops.bitbucketOrganization",
-                    "__SCAFFOLD_CHECK__.original_source": "out.c-bitbucket.organization"
+                    "source": "out.c-bitbucketDevops.bitbucketOrganization"
                 }
             ],
             "name": "User",
@@ -144,8 +133,7 @@
                             "value": "BitbucketDevops"
                         }
                     ],
-                    "destination": "out.c-bitbucketDevops.bitbucketRepository",
-                    "__SCAFFOLD_CHECK__original_destination": "out.c-bitbucket.repository"
+                    "destination": "out.c-bitbucketDevops.bitbucketRepository"
                 },
                 {
                     "source": "out_pull_request",
@@ -162,8 +150,7 @@
                             "value": "BitbucketDevops"
                         }
                     ],
-                    "destination": "out.c-bitbucketDevops.bitbucketPullRequest",
-                    "__SCAFFOLD_CHECK__original_destination": "out.c-bitbucket.pull_request"
+                    "destination": "out.c-bitbucketDevops.bitbucketPullRequest"
                 },
                 {
                     "source": "out_pull_request_activity",
@@ -180,8 +167,7 @@
                             "value": "BitbucketDevops"
                         }
                     ],
-                    "destination": "out.c-bitbucketDevops.bitbucketPullRequestActivity",
-                    "__SCAFFOLD_CHECK__original_destination": "out.c-bitbucket.pull_request_activity"
+                    "destination": "out.c-bitbucketDevops.bitbucketPullRequestActivity"
                 },
                 {
                     "source": "out_repository_commit",
@@ -198,8 +184,7 @@
                             "value": "BitbucketDevops"
                         }
                     ],
-                    "destination": "out.c-bitbucketDevops.bitbucketRepositoryCommit",
-                    "__SCAFFOLD_CHECK__original_destination": "out.c-bitbucket.repository_commit"
+                    "destination": "out.c-bitbucketDevops.bitbucketRepositoryCommit"
                 },
                 {
                     "source": "out_repository_commit_change",
@@ -216,8 +201,7 @@
                             "value": "BitbucketDevops"
                         }
                     ],
-                    "destination": "out.c-bitbucketDevops.bitbucketRepositoryCommitChange",
-                    "__SCAFFOLD_CHECK__original_destination": "out.c-bitbucket.repository_commit_change"
+                    "destination": "out.c-bitbucketDevops.bitbucketRepositoryCommitChange"
                 },
                 {
                     "source": "out_issue",
@@ -234,8 +218,7 @@
                             "value": "BitbucketDevops"
                         }
                     ],
-                    "destination": "out.c-bitbucketDevops.bitbucketIssue",
-                    "__SCAFFOLD_CHECK__original_destination": "out.c-bitbucket.issue"
+                    "destination": "out.c-bitbucketDevops.bitbucketIssue"
                 },
                 {
                     "source": "out_issue_comment",
@@ -252,8 +235,7 @@
                             "value": "BitbucketDevops"
                         }
                     ],
-                    "destination": "out.c-bitbucketDevops.bitbucketIssueComment",
-                    "__SCAFFOLD_CHECK__original_destination": "out.c-bitbucket.issue_comment"
+                    "destination": "out.c-bitbucketDevops.bitbucketIssueComment"
                 },
                 {
                     "source": "out_event",
@@ -270,8 +252,7 @@
                             "value": "BitbucketDevops"
                         }
                     ],
-                    "destination": "out.c-bitbucketDevops.bitbucketEvent",
-                    "__SCAFFOLD_CHECK__original_destination": "out.c-bitbucket.event"
+                    "destination": "out.c-bitbucketDevops.bitbucketEvent"
                 }
             ],
             "queries": [
@@ -296,10 +277,8 @@
                     "loadType": "clone",
                     "source_search": {
                         "key": "bdm.scaffold.table.tag",
-                        "__SCAFFOLD_CHECK__.value": "BitbucketDevops.internal.inKdsTeamExBitbucket546916442Issue"
-                    },
-                    "__SCAFFOLD_CHECK__.source": "in.c-bitbucketDevops.kdsTeamExBitbucket546916442Issue",
-                    "__SCAFFOLD_CHECK__.original_source": "in.c-kds-team-ex-bitbucket-546916442.issue"
+                        "value": "BitbucketDevops.internal.inKdsTeamExBitbucketIssue"
+                    }
                 },
                 {
                     "destination": "issue_comment",
@@ -311,10 +290,8 @@
                     "loadType": "clone",
                     "source_search": {
                         "key": "bdm.scaffold.table.tag",
-                        "__SCAFFOLD_CHECK__.value": "BitbucketDevops.internal.inKdsTeamExBitbucket546916442IssueComment"
-                    },
-                    "__SCAFFOLD_CHECK__.source": "in.c-bitbucketDevops.kdsTeamExBitbucket546916442IssueComment",
-                    "__SCAFFOLD_CHECK__.original_source": "in.c-kds-team-ex-bitbucket-546916442.issue_comment"
+                        "value": "BitbucketDevops.internal.inKdsTeamExBitbucketIssueComment"
+                    }
                 },
                 {
                     "destination": "repository_commit",
@@ -326,10 +303,8 @@
                     "loadType": "clone",
                     "source_search": {
                         "key": "bdm.scaffold.table.tag",
-                        "__SCAFFOLD_CHECK__.value": "BitbucketDevops.internal.inKdsTeamExBitbucket546916442RepositoryCommit"
-                    },
-                    "__SCAFFOLD_CHECK__.source": "in.c-bitbucketDevops.kdsTeamExBitbucket546916442RepositoryCommit",
-                    "__SCAFFOLD_CHECK__.original_source": "in.c-kds-team-ex-bitbucket-546916442.repository_commit"
+                        "value": "BitbucketDevops.internal.inKdsTeamExBitbucketRepositoryCommit"
+                    }
                 },
                 {
                     "destination": "repository_commit_change",
@@ -341,10 +316,8 @@
                     "loadType": "clone",
                     "source_search": {
                         "key": "bdm.scaffold.table.tag",
-                        "__SCAFFOLD_CHECK__.value": "BitbucketDevops.internal.inKdsTeamExBitbucket546916442RepositoryCommitChange"
-                    },
-                    "__SCAFFOLD_CHECK__.source": "in.c-bitbucketDevops.kdsTeamExBitbucket546916442RepositoryCommitChange",
-                    "__SCAFFOLD_CHECK__.original_source": "in.c-kds-team-ex-bitbucket-546916442.repository_commit_change"
+                        "value": "BitbucketDevops.internal.inKdsTeamExBitbucketRepositoryCommitChange"
+                    }
                 },
                 {
                     "destination": "pull_request_declined",
@@ -356,10 +329,8 @@
                     "loadType": "clone",
                     "source_search": {
                         "key": "bdm.scaffold.table.tag",
-                        "__SCAFFOLD_CHECK__.value": "BitbucketDevops.internal.inKdsTeamExBitbucket546916442PullRequestDeclined"
-                    },
-                    "__SCAFFOLD_CHECK__.source": "in.c-bitbucketDevops.kdsTeamExBitbucket546916442PullRequestDeclined",
-                    "__SCAFFOLD_CHECK__.original_source": "in.c-kds-team-ex-bitbucket-546916442.pull_request_declined"
+                        "value": "BitbucketDevops.internal.inKdsTeamExBitbucketPullRequestDeclined"
+                    }
                 },
                 {
                     "destination": "pull_request_declined_activity",
@@ -371,10 +342,8 @@
                     "loadType": "clone",
                     "source_search": {
                         "key": "bdm.scaffold.table.tag",
-                        "__SCAFFOLD_CHECK__.value": "BitbucketDevops.internal.inKdsTeamExBitbucket546916442PullRequestDeclinedActivity"
-                    },
-                    "__SCAFFOLD_CHECK__.source": "in.c-bitbucketDevops.kdsTeamExBitbucket546916442PullRequestDeclinedActivity",
-                    "__SCAFFOLD_CHECK__.original_source": "in.c-kds-team-ex-bitbucket-546916442.pull_request_declined_activity"
+                        "value": "BitbucketDevops.internal.inKdsTeamExBitbucketPullRequestDeclinedActivity"
+                    }
                 },
                 {
                     "destination": "pull_request_merged",
@@ -386,10 +355,8 @@
                     "loadType": "clone",
                     "source_search": {
                         "key": "bdm.scaffold.table.tag",
-                        "__SCAFFOLD_CHECK__.value": "BitbucketDevops.internal.inKdsTeamExBitbucket546916442PullRequestMerged"
-                    },
-                    "__SCAFFOLD_CHECK__.source": "in.c-bitbucketDevops.kdsTeamExBitbucket546916442PullRequestMerged",
-                    "__SCAFFOLD_CHECK__.original_source": "in.c-kds-team-ex-bitbucket-546916442.pull_request_merged"
+                        "value": "BitbucketDevops.internal.inKdsTeamExBitbucketPullRequestMerged"
+                    }
                 },
                 {
                     "destination": "pull_request_merged_activity",
@@ -401,10 +368,8 @@
                     "loadType": "clone",
                     "source_search": {
                         "key": "bdm.scaffold.table.tag",
-                        "__SCAFFOLD_CHECK__.value": "BitbucketDevops.internal.inKdsTeamExBitbucket546916442PullRequestMergedActivity"
-                    },
-                    "__SCAFFOLD_CHECK__.source": "in.c-bitbucketDevops.kdsTeamExBitbucket546916442PullRequestMergedActivity",
-                    "__SCAFFOLD_CHECK__.original_source": "in.c-kds-team-ex-bitbucket-546916442.pull_request_merged_activity"
+                        "value": "BitbucketDevops.internal.inKdsTeamExBitbucketPullRequestMergedActivity"
+                    }
                 },
                 {
                     "destination": "pull_request_open",
@@ -416,10 +381,8 @@
                     "loadType": "clone",
                     "source_search": {
                         "key": "bdm.scaffold.table.tag",
-                        "__SCAFFOLD_CHECK__.value": "BitbucketDevops.internal.inKdsTeamExBitbucket546916442PullRequestOpen"
-                    },
-                    "__SCAFFOLD_CHECK__.source": "in.c-bitbucketDevops.kdsTeamExBitbucket546916442PullRequestOpen",
-                    "__SCAFFOLD_CHECK__.original_source": "in.c-kds-team-ex-bitbucket-546916442.pull_request_open"
+                        "value": "BitbucketDevops.internal.inKdsTeamExBitbucketPullRequestOpen"
+                    }
                 },
                 {
                     "destination": "pull_request_open_activity",
@@ -431,10 +394,8 @@
                     "loadType": "clone",
                     "source_search": {
                         "key": "bdm.scaffold.table.tag",
-                        "__SCAFFOLD_CHECK__.value": "BitbucketDevops.internal.inKdsTeamExBitbucket546916442PullRequestOpenActivity"
-                    },
-                    "__SCAFFOLD_CHECK__.source": "in.c-bitbucketDevops.kdsTeamExBitbucket546916442PullRequestOpenActivity",
-                    "__SCAFFOLD_CHECK__.original_source": "in.c-kds-team-ex-bitbucket-546916442.pull_request_open_activity"
+                        "value": "BitbucketDevops.internal.inKdsTeamExBitbucketPullRequestOpenActivity"
+                    }
                 },
                 {
                     "destination": "user",
@@ -444,12 +405,7 @@
                     "whereOperator": "eq",
                     "columns": [],
                     "loadType": "clone",
-                    "source_search": {
-                        "key": "bdm.scaffold.table.tag",
-                        "__SCAFFOLD_CHECK__.value": "BitbucketDevops.internal.outBitbucketUser"
-                    },
-                    "__SCAFFOLD_CHECK__.source": "out.c-bitbucketDevops.bitbucketUser",
-                    "__SCAFFOLD_CHECK__.original_source": "out.c-bitbucket.user"
+                    "source": "out.c-bitbucketDevops.bitbucketUser"
                 },
                 {
                     "destination": "repository",
@@ -461,10 +417,8 @@
                     "loadType": "clone",
                     "source_search": {
                         "key": "bdm.scaffold.table.tag",
-                        "__SCAFFOLD_CHECK__.value": "BitbucketDevops.internal.inKdsTeamExBitbucket546916442Repository"
-                    },
-                    "__SCAFFOLD_CHECK__.source": "in.c-bitbucketDevops.kdsTeamExBitbucket546916442Repository",
-                    "__SCAFFOLD_CHECK__.original_source": "in.c-kds-team-ex-bitbucket-546916442.repository"
+                        "value": "BitbucketDevops.internal.inKdsTeamExBitbucketRepository"
+                    }
                 },
                 {
                     "destination": "project",
@@ -476,10 +430,8 @@
                     "loadType": "clone",
                     "source_search": {
                         "key": "bdm.scaffold.table.tag",
-                        "__SCAFFOLD_CHECK__.value": "BitbucketDevops.internal.inKdsTeamExBitbucket546916442Project"
-                    },
-                    "__SCAFFOLD_CHECK__.source": "in.c-bitbucketDevops.kdsTeamExBitbucket546916442Project",
-                    "__SCAFFOLD_CHECK__.original_source": "in.c-kds-team-ex-bitbucket-546916442.project"
+                        "value": "BitbucketDevops.internal.inKdsTeamExBitbucketProject"
+                    }
                 }
             ],
             "name": "Repository, Pulls, Commits, Issues, Events",

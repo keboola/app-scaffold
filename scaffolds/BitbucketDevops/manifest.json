@@ -1,14 +1,39 @@
 {
-    "name": "",
+    "name": "Bitbucket Devops to Snowflake",
     "author": "Keboola",
-    "description": "",
+    "description": "Bitbucket repositories analysis to track progress of your development and activity of your team members. Includes output to Snowflake DWH.",
     "inputs": [
         {
             "id": "kdsTeamExBitbucketBitbucket",
             "componentId": "kds-team.ex-bitbucket",
             "name": "Bitbucket",
             "required": true,
-            "schema": null
+            "schema": {
+                "type": "object",
+                "required": [
+                    "config"
+                ],
+                "properties": {
+                    "config": {
+                        "type": "object",
+                        "required": [
+                            "username",
+                            "#password"
+                        ],
+                        "properties": {
+                            "username": {
+                                "title": "User Name",
+                                "type": "string"
+                            },
+                            "#password": {
+                                "title": "Password",
+                                "type": "string",
+                                "format": "password"
+                            }
+                        }
+                    }
+                }
+            }
         },
         {
             "id": "transformationBitBucket",
