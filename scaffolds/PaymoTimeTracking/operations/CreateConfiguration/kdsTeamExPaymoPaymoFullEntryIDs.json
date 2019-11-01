@@ -1,0 +1,91 @@
+{
+    "componentId": "kds-team.ex-paymo",
+    "payload": {
+        "name": "Paymo Full Entry IDs",
+        "configuration": {
+            "parameters": {
+                "api": {
+                    "baseUrl": "https:\/\/app.paymoapp.com\/api\/",
+                    "pagination": {
+                        "method": "multiple",
+                        "scrollers": {
+                            "pagenum_scroller": {
+                                "method": "pagenum",
+                                "limit": 100,
+                                "limitParam": "page_size",
+                                "pageParam": "page"
+                            }
+                        }
+                    },
+                    "http": {
+                        "headers": {
+                            "Authorization": {
+                                "function": "concat",
+                                "args": [
+                                    "Basic ",
+                                    {
+                                        "function": "base64_encode",
+                                        "args": [
+                                            {
+                                                "function": "concat",
+                                                "args": [
+                                                    {
+                                                        "attr": "#username"
+                                                    },
+                                                    ":no_password_required"
+                                                ]
+                                            }
+                                        ]
+                                    }
+                                ]
+                            }
+                        }
+                    }
+                },
+                "config": {
+                    "days": "0",
+                    "#username": "__SCAFFOLD_CHECK__",
+                    "password": "X",
+                    "incrementalOutput": false,
+                    "jobs": [
+                        {
+                            "endpoint": "clients",
+                            "dataType": "client",
+                            "dataField": "clients",
+                            "children": [
+                                {
+                                    "endpoint": "entries?where=client_id={id}",
+                                    "dataType": "entry",
+                                    "dataField": "entries",
+                                    "placeholders": {
+                                        "id": "id"
+                                    }
+                                }
+                            ]
+                        }
+                    ],
+                    "mappings": {
+                        "client": {
+                            "id": {
+                                "type": "column",
+                                "mapping": {
+                                    "destination": "client_id",
+                                    "primaryKey": true
+                                }
+                            }
+                        },
+                        "entry": {
+                            "id": {
+                                "type": "column",
+                                "mapping": {
+                                    "destination": "entry_id",
+                                    "primaryKey": true
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
