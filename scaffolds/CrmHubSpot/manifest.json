@@ -1,14 +1,26 @@
 {
-    "name": "",
+    "name": "Hubspot CRM to Snowflake",
     "author": "Keboola",
-    "description": "",
+    "description": "Full workflow to extract and process Hubspot data into a standard CRM data model. Contains extractor, set of transformations and a Snowflake writer.",
     "inputs": [
         {
             "id": "kdsTeamExHubspotCrmHubspot",
             "componentId": "kds-team.ex-hubspot-crm",
             "name": "Hubspot",
             "required": true,
-            "schema": null
+            "schema": {
+                "type": "object",
+                "required": [
+                    "#api_token"
+                ],
+                "properties": {
+                    "#api_token": {
+                        "title": "Api token",
+                        "type": "string",
+                        "format": "password"
+                    }
+                }
+            }
         },
         {
             "id": "transformationHubspotCRM",

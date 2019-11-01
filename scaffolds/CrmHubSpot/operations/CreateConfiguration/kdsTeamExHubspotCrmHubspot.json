@@ -12,7 +12,6 @@
                 "incremental_output": 1,
                 "deal_properties": "authority, budget, campaign_source, hs_analytics_source, hs_campaign, hs_lastmodifieddate, need, timeframe, dealname, amount, closedate, pipeline, createdate, engagements_last_meeting_booked, dealtype, hs_createdate, description, start_date, closed_lost_reason, closed_won_reason, end_date, lead_owner, tech_owner, service_amount, contract_type, hubspot_owner_id, partner_name, notes_last_updated",
                 "period_from": "",
-                "#api_token": "__SCAFFOLD_CHECK__",
                 "contact_properties": "hs_facebookid, hs_linkedinid, ip_city, ip_country, ip_country_code, newsletter_opt_in, firstname, linkedin_profile, lastname, email, mobilephone, phone, city, country, region, jobtitle, company, website, numemployees, industry, associatedcompanyid, hs_lead_status, lastmodifieddate, source, hs_email_optout, twitterhandle, lead_type, hubspot_owner_id, notes_last_updated, hs_analytics_source, opt_in, createdate, hs_twitterid, lifecyclestage",
                 "debug": false,
                 "company_properties": "about_us, name, phone, facebook_company_page, city, country, website, industry, annualrevenue, linkedin_company_page, hs_lastmodifieddate, hubspot_owner_id, notes_last_updated, description, createdate, numberofemployees, hs_lead_status, founded_year, twitterhandle, linkedinbio",
@@ -26,6 +25,235 @@
                     "contacts",
                     "deals",
                     "pipelines"
+                ]
+            },
+            "processors": {
+                "after": [
+                    {
+                        "definition": {
+                            "component": "keboola.processor-create-manifest"
+                        },
+                        "parameters": {
+                            "delimiter": ",",
+                            "enclosure": "\"",
+                            "incremental": false,
+                            "primary_key": [],
+                            "columns_from": "header"
+                        }
+                    },
+                    {
+                        "definition": {
+                            "component": "keboola.processor-skip-lines"
+                        },
+                        "parameters": {
+                            "lines": 1,
+                            "direction_from": "top"
+                        }
+                    },
+                    {
+                        "definition": {
+                            "component": "keboola.processor-add-metadata"
+                        },
+                        "parameters": {
+                            "tables": [
+                                {
+                                    "table": "companies.csv",
+                                    "metadata": [
+                                        {
+                                            "key": "bdm.scaffold.table.tag",
+                                            "value": "CrmHubSpot.internal.inKdsTeamExHubspotCrmCompanies"
+                                        },
+                                        {
+                                            "key": "scaffold.id",
+                                            "value": "CrmHubSpot"
+                                        }
+                                    ]
+                                },
+                                {
+                                    "table": "email_events.csv",
+                                    "metadata": [
+                                        {
+                                            "key": "bdm.scaffold.table.tag",
+                                            "value": "CrmHubSpot.internal.inKdsTeamExHubspotCrmEmailEvents"
+                                        },
+                                        {
+                                            "key": "scaffold.id",
+                                            "value": "CrmHubSpot"
+                                        }
+                                    ]
+                                },
+                                {
+                                    "table": "activities.csv",
+                                    "metadata": [
+                                        {
+                                            "key": "bdm.scaffold.table.tag",
+                                            "value": "CrmHubSpot.internal.inKdsTeamExHubspotCrmActivities"
+                                        },
+                                        {
+                                            "key": "scaffold.id",
+                                            "value": "CrmHubSpot"
+                                        }
+                                    ]
+                                },
+                                {
+                                    "table": "lists.csv",
+                                    "metadata": [
+                                        {
+                                            "key": "bdm.scaffold.table.tag",
+                                            "value": "CrmHubSpot.internal.inKdsTeamExHubspotCrmLists"
+                                        },
+                                        {
+                                            "key": "scaffold.id",
+                                            "value": "CrmHubSpot"
+                                        }
+                                    ]
+                                },
+                                {
+                                    "table": "owners.csv",
+                                    "metadata": [
+                                        {
+                                            "key": "bdm.scaffold.table.tag",
+                                            "value": "CrmHubSpot.internal.inKdsTeamExHubspotCrmOwners"
+                                        },
+                                        {
+                                            "key": "scaffold.id",
+                                            "value": "CrmHubSpot"
+                                        }
+                                    ]
+                                },
+                                {
+                                    "table": "contacts_lists.csv",
+                                    "metadata": [
+                                        {
+                                            "key": "bdm.scaffold.table.tag",
+                                            "value": "CrmHubSpot.internal.inKdsTeamExHubspotCrmContactsLists"
+                                        },
+                                        {
+                                            "key": "scaffold.id",
+                                            "value": "CrmHubSpot"
+                                        }
+                                    ]
+                                },
+                                {
+                                    "table": "contacts_identity_profile_identities.csv",
+                                    "metadata": [
+                                        {
+                                            "key": "bdm.scaffold.table.tag",
+                                            "value": "CrmHubSpot.internal.inKdsTeamExHubspotCrmContactsIdentityProfileIdentities"
+                                        },
+                                        {
+                                            "key": "scaffold.id",
+                                            "value": "CrmHubSpot"
+                                        }
+                                    ]
+                                },
+                                {
+                                    "table": "contacts_identity_profiles.csv",
+                                    "metadata": [
+                                        {
+                                            "key": "bdm.scaffold.table.tag",
+                                            "value": "CrmHubSpot.internal.inKdsTeamExHubspotCrmContactsIdentityProfiles"
+                                        },
+                                        {
+                                            "key": "scaffold.id",
+                                            "value": "CrmHubSpot"
+                                        }
+                                    ]
+                                },
+                                {
+                                    "table": "contacts.csv",
+                                    "metadata": [
+                                        {
+                                            "key": "bdm.scaffold.table.tag",
+                                            "value": "CrmHubSpot.internal.inKdsTeamExHubspotCrmContacts"
+                                        },
+                                        {
+                                            "key": "scaffold.id",
+                                            "value": "CrmHubSpot"
+                                        }
+                                    ]
+                                },
+                                {
+                                    "table": "deals_stage_history.csv",
+                                    "metadata": [
+                                        {
+                                            "key": "bdm.scaffold.table.tag",
+                                            "value": "CrmHubSpot.internal.inKdsTeamExHubspotCrmDealsStageHistory"
+                                        },
+                                        {
+                                            "key": "scaffold.id",
+                                            "value": "CrmHubSpot"
+                                        }
+                                    ]
+                                },
+                                {
+                                    "table": "deals_contacts_list.csv",
+                                    "metadata": [
+                                        {
+                                            "key": "bdm.scaffold.table.tag",
+                                            "value": "CrmHubSpot.internal.inKdsTeamExHubspotCrmDealsContactsList"
+                                        },
+                                        {
+                                            "key": "scaffold.id",
+                                            "value": "CrmHubSpot"
+                                        }
+                                    ]
+                                },
+                                {
+                                    "table": "deals_assoc_companies_list.csv",
+                                    "metadata": [
+                                        {
+                                            "key": "bdm.scaffold.table.tag",
+                                            "value": "CrmHubSpot.internal.inKdsTeamExHubspotCrmDealsAssocCompaniesList"
+                                        },
+                                        {
+                                            "key": "scaffold.id",
+                                            "value": "CrmHubSpot"
+                                        }
+                                    ]
+                                },
+                                {
+                                    "table": "deals.csv",
+                                    "metadata": [
+                                        {
+                                            "key": "bdm.scaffold.table.tag",
+                                            "value": "CrmHubSpot.internal.inKdsTeamExHubspotCrmDeals"
+                                        },
+                                        {
+                                            "key": "scaffold.id",
+                                            "value": "CrmHubSpot"
+                                        }
+                                    ]
+                                },
+                                {
+                                    "table": "pipeline_stages.csv",
+                                    "metadata": [
+                                        {
+                                            "key": "bdm.scaffold.table.tag",
+                                            "value": "CrmHubSpot.internal.inKdsTeamExHubspotCrmPipelineStages"
+                                        },
+                                        {
+                                            "key": "scaffold.id",
+                                            "value": "CrmHubSpot"
+                                        }
+                                    ]
+                                },
+                                {
+                                    "table": "pipelines.csv",
+                                    "metadata": [
+                                        {
+                                            "key": "bdm.scaffold.table.tag",
+                                            "value": "CrmHubSpot.internal.inKdsTeamExHubspotCrmPipelines"
+                                        },
+                                        {
+                                            "key": "scaffold.id",
+                                            "value": "CrmHubSpot"
+                                        }
+                                    ]
+                                }
+                            ]
+                        }
+                    }
                 ]
             }
         }

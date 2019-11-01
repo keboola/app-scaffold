@@ -17,8 +17,7 @@
                             "value": "CrmHubSpot"
                         }
                     ],
-                    "destination": "out.c-crmHubSpot.crmCompany",
-                    "__SCAFFOLD_CHECK__original_destination": "out.c-crm.company"
+                    "destination": "out.c-crmHubSpot.crmCompany"
                 }
             ],
             "queries": [
@@ -34,12 +33,7 @@
                     "whereOperator": "eq",
                     "columns": [],
                     "loadType": "clone",
-                    "source_search": {
-                        "key": "bdm.scaffold.table.tag",
-                        "__SCAFFOLD_CHECK__.value": "CrmHubSpot.internal.inHubspotCompanies"
-                    },
-                    "__SCAFFOLD_CHECK__.source": "in.c-crmHubSpot.hubspotCompanies",
-                    "__SCAFFOLD_CHECK__.original_source": "in.c-hubspot.companies"
+                    "source": "in.c-crmHubSpot.hubspotCompanies"
                 }
             ],
             "name": "Company",
@@ -77,8 +71,7 @@
                             "value": "CrmHubSpot"
                         }
                     ],
-                    "destination": "out.c-crmHubSpot.crmEmployee",
-                    "__SCAFFOLD_CHECK__original_destination": "out.c-crm.employee"
+                    "destination": "out.c-crmHubSpot.crmEmployee"
                 }
             ],
             "queries": [
@@ -94,12 +87,7 @@
                     "whereOperator": "eq",
                     "columns": [],
                     "loadType": "clone",
-                    "source_search": {
-                        "key": "bdm.scaffold.table.tag",
-                        "__SCAFFOLD_CHECK__.value": "CrmHubSpot.internal.inHubspotOwners"
-                    },
-                    "__SCAFFOLD_CHECK__.source": "in.c-crmHubSpot.hubspotOwners",
-                    "__SCAFFOLD_CHECK__.original_source": "in.c-hubspot.owners"
+                    "source": "in.c-crmHubSpot.hubspotOwners"
                 }
             ],
             "name": "Employee",
@@ -133,8 +121,7 @@
                             "value": "CrmHubSpot"
                         }
                     ],
-                    "destination": "out.c-crmHubSpot.crmContact",
-                    "__SCAFFOLD_CHECK__original_destination": "out.c-crm.contact"
+                    "destination": "out.c-crmHubSpot.crmContact"
                 }
             ],
             "queries": [
@@ -150,12 +137,7 @@
                     "whereOperator": "eq",
                     "columns": [],
                     "loadType": "clone",
-                    "source_search": {
-                        "key": "bdm.scaffold.table.tag",
-                        "__SCAFFOLD_CHECK__.value": "CrmHubSpot.internal.inHubspotContacts"
-                    },
-                    "__SCAFFOLD_CHECK__.source": "in.c-crmHubSpot.hubspotContacts",
-                    "__SCAFFOLD_CHECK__.original_source": "in.c-hubspot.contacts"
+                    "source": "in.c-crmHubSpot.hubspotContacts"
                 }
             ],
             "name": "Contact",
@@ -189,8 +171,7 @@
                             "value": "CrmHubSpot"
                         }
                     ],
-                    "destination": "out.c-crmHubSpot.crmOpportunity",
-                    "__SCAFFOLD_CHECK__original_destination": "out.c-crm.opportunity"
+                    "destination": "out.c-crmHubSpot.crmOpportunity"
                 },
                 {
                     "source": "out_opportunity_snapshot",
@@ -212,8 +193,7 @@
                             "value": "CrmHubSpot"
                         }
                     ],
-                    "destination": "out.c-crmHubSpot.crmAuxiliaryTablesOpportunitySnapshot",
-                    "__SCAFFOLD_CHECK__original_destination": "out.c-crm-auxiliary-tables.opportunity_snapshot"
+                    "destination": "out.c-crmHubSpot.crmAuxiliaryTablesOpportunitySnapshot"
                 }
             ],
             "queries": [
@@ -231,12 +211,7 @@
                     "whereOperator": "eq",
                     "columns": [],
                     "loadType": "clone",
-                    "source_search": {
-                        "key": "bdm.scaffold.table.tag",
-                        "__SCAFFOLD_CHECK__.value": "CrmHubSpot.internal.outCrmEmployee"
-                    },
-                    "__SCAFFOLD_CHECK__.source": "out.c-crmHubSpot.crmEmployee",
-                    "__SCAFFOLD_CHECK__.original_source": "out.c-crm.employee"
+                    "source": "out.c-crmHubSpot.crmEmployee"
                 },
                 {
                     "destination": "company_ri",
@@ -246,12 +221,7 @@
                     "whereOperator": "eq",
                     "columns": [],
                     "loadType": "clone",
-                    "source_search": {
-                        "key": "bdm.scaffold.table.tag",
-                        "__SCAFFOLD_CHECK__.value": "CrmHubSpot.internal.outCrmCompany"
-                    },
-                    "__SCAFFOLD_CHECK__.source": "out.c-crmHubSpot.crmCompany",
-                    "__SCAFFOLD_CHECK__.original_source": "out.c-crm.company"
+                    "source": "out.c-crmHubSpot.crmCompany"
                 },
                 {
                     "destination": "deals",
@@ -261,12 +231,7 @@
                     "whereOperator": "eq",
                     "columns": [],
                     "loadType": "clone",
-                    "source_search": {
-                        "key": "bdm.scaffold.table.tag",
-                        "__SCAFFOLD_CHECK__.value": "CrmHubSpot.internal.inHubspotDeals"
-                    },
-                    "__SCAFFOLD_CHECK__.source": "in.c-crmHubSpot.hubspotDeals",
-                    "__SCAFFOLD_CHECK__.original_source": "in.c-hubspot.deals"
+                    "source": "in.c-crmHubSpot.hubspotDeals"
                 },
                 {
                     "destination": "stages",
@@ -276,12 +241,7 @@
                     "whereOperator": "eq",
                     "columns": [],
                     "loadType": "clone",
-                    "source_search": {
-                        "key": "bdm.scaffold.table.tag",
-                        "__SCAFFOLD_CHECK__.value": "CrmHubSpot.internal.inHubspotStages"
-                    },
-                    "__SCAFFOLD_CHECK__.source": "in.c-crmHubSpot.hubspotStages",
-                    "__SCAFFOLD_CHECK__.original_source": "in.c-hubspot.stages"
+                    "source": "in.c-crmHubSpot.hubspotStages"
                 },
                 {
                     "destination": "pipelines",
@@ -291,12 +251,7 @@
                     "whereOperator": "eq",
                     "columns": [],
                     "loadType": "clone",
-                    "source_search": {
-                        "key": "bdm.scaffold.table.tag",
-                        "__SCAFFOLD_CHECK__.value": "CrmHubSpot.internal.inHubspotPipelines"
-                    },
-                    "__SCAFFOLD_CHECK__.source": "in.c-crmHubSpot.hubspotPipelines",
-                    "__SCAFFOLD_CHECK__.original_source": "in.c-hubspot.pipelines"
+                    "source": "in.c-crmHubSpot.hubspotPipelines"
                 },
                 {
                     "destination": "deals_companies",
@@ -306,12 +261,7 @@
                     "whereOperator": "eq",
                     "columns": [],
                     "loadType": "clone",
-                    "source_search": {
-                        "key": "bdm.scaffold.table.tag",
-                        "__SCAFFOLD_CHECK__.value": "CrmHubSpot.internal.inHubspotDealsCompanies"
-                    },
-                    "__SCAFFOLD_CHECK__.source": "in.c-crmHubSpot.hubspotDealsCompanies",
-                    "__SCAFFOLD_CHECK__.original_source": "in.c-hubspot.deals_companies"
+                    "source": "in.c-crmHubSpot.hubspotDealsCompanies"
                 }
             ],
             "name": "Opportunity & Auxiliary Snapshot",
@@ -345,8 +295,7 @@
                             "value": "CrmHubSpot"
                         }
                     ],
-                    "destination": "out.c-crmHubSpot.crmOpportunityContact",
-                    "__SCAFFOLD_CHECK__original_destination": "out.c-crm.opportunity_contact"
+                    "destination": "out.c-crmHubSpot.crmOpportunityContact"
                 }
             ],
             "queries": [
@@ -361,12 +310,7 @@
                     "whereOperator": "eq",
                     "columns": [],
                     "loadType": "clone",
-                    "source_search": {
-                        "key": "bdm.scaffold.table.tag",
-                        "__SCAFFOLD_CHECK__.value": "CrmHubSpot.internal.outCrmContact"
-                    },
-                    "__SCAFFOLD_CHECK__.source": "out.c-crmHubSpot.crmContact",
-                    "__SCAFFOLD_CHECK__.original_source": "out.c-crm.contact"
+                    "source": "out.c-crmHubSpot.crmContact"
                 },
                 {
                     "destination": "opportunity_ri",
@@ -376,12 +320,7 @@
                     "whereOperator": "eq",
                     "columns": [],
                     "loadType": "clone",
-                    "source_search": {
-                        "key": "bdm.scaffold.table.tag",
-                        "__SCAFFOLD_CHECK__.value": "CrmHubSpot.internal.outCrmOpportunity"
-                    },
-                    "__SCAFFOLD_CHECK__.source": "out.c-crmHubSpot.crmOpportunity",
-                    "__SCAFFOLD_CHECK__.original_source": "out.c-crm.opportunity"
+                    "source": "out.c-crmHubSpot.crmOpportunity"
                 },
                 {
                     "destination": "deals_contacts_list",
@@ -391,12 +330,7 @@
                     "whereOperator": "eq",
                     "columns": [],
                     "loadType": "clone",
-                    "source_search": {
-                        "key": "bdm.scaffold.table.tag",
-                        "__SCAFFOLD_CHECK__.value": "CrmHubSpot.internal.inHubspotDealsContactsList"
-                    },
-                    "__SCAFFOLD_CHECK__.source": "in.c-crmHubSpot.hubspotDealsContactsList",
-                    "__SCAFFOLD_CHECK__.original_source": "in.c-hubspot.deals_contacts_list"
+                    "source": "in.c-crmHubSpot.hubspotDealsContactsList"
                 }
             ],
             "name": "Opportunity Contact",
@@ -435,8 +369,7 @@
                             "value": "CrmHubSpot"
                         }
                     ],
-                    "destination": "out.c-crmHubSpot.crmOpportunitySnapshot",
-                    "__SCAFFOLD_CHECK__original_destination": "out.c-crm.opportunity_snapshot"
+                    "destination": "out.c-crmHubSpot.crmOpportunitySnapshot"
                 }
             ],
             "queries": [
@@ -452,12 +385,7 @@
                     "whereOperator": "eq",
                     "columns": [],
                     "loadType": "clone",
-                    "source_search": {
-                        "key": "bdm.scaffold.table.tag",
-                        "__SCAFFOLD_CHECK__.value": "CrmHubSpot.internal.outCrmAuxiliaryTablesOpportunitySnapshot"
-                    },
-                    "__SCAFFOLD_CHECK__.source": "out.c-crmHubSpot.crmAuxiliaryTablesOpportunitySnapshot",
-                    "__SCAFFOLD_CHECK__.original_source": "out.c-crm-auxiliary-tables.opportunity_snapshot"
+                    "source": "out.c-crmHubSpot.crmAuxiliaryTablesOpportunitySnapshot"
                 }
             ],
             "name": "Opportunity Snapshot",
@@ -491,8 +419,7 @@
                             "value": "CrmHubSpot"
                         }
                     ],
-                    "destination": "in.c-crmHubSpot.hubspotCompanies",
-                    "__SCAFFOLD_CHECK__original_destination": "in.c-hubspot.companies"
+                    "destination": "in.c-crmHubSpot.hubspotCompanies"
                 },
                 {
                     "source": "out_contacts",
@@ -509,8 +436,7 @@
                             "value": "CrmHubSpot"
                         }
                     ],
-                    "destination": "in.c-crmHubSpot.hubspotContacts",
-                    "__SCAFFOLD_CHECK__original_destination": "in.c-hubspot.contacts"
+                    "destination": "in.c-crmHubSpot.hubspotContacts"
                 },
                 {
                     "source": "out_owners",
@@ -527,8 +453,7 @@
                             "value": "CrmHubSpot"
                         }
                     ],
-                    "destination": "in.c-crmHubSpot.hubspotOwners",
-                    "__SCAFFOLD_CHECK__original_destination": "in.c-hubspot.owners"
+                    "destination": "in.c-crmHubSpot.hubspotOwners"
                 },
                 {
                     "source": "out_deals",
@@ -545,8 +470,7 @@
                             "value": "CrmHubSpot"
                         }
                     ],
-                    "destination": "in.c-crmHubSpot.hubspotDeals",
-                    "__SCAFFOLD_CHECK__original_destination": "in.c-hubspot.deals"
+                    "destination": "in.c-crmHubSpot.hubspotDeals"
                 },
                 {
                     "source": "out_pipelines",
@@ -563,8 +487,7 @@
                             "value": "CrmHubSpot"
                         }
                     ],
-                    "destination": "in.c-crmHubSpot.hubspotPipelines",
-                    "__SCAFFOLD_CHECK__original_destination": "in.c-hubspot.pipelines"
+                    "destination": "in.c-crmHubSpot.hubspotPipelines"
                 },
                 {
                     "source": "out_stages",
@@ -581,8 +504,7 @@
                             "value": "CrmHubSpot"
                         }
                     ],
-                    "destination": "in.c-crmHubSpot.hubspotStages",
-                    "__SCAFFOLD_CHECK__original_destination": "in.c-hubspot.stages"
+                    "destination": "in.c-crmHubSpot.hubspotStages"
                 },
                 {
                     "source": "out_deals_contacts_list",
@@ -600,8 +522,7 @@
                             "value": "CrmHubSpot"
                         }
                     ],
-                    "destination": "in.c-crmHubSpot.hubspotDealsContactsList",
-                    "__SCAFFOLD_CHECK__original_destination": "in.c-hubspot.deals_contacts_list"
+                    "destination": "in.c-crmHubSpot.hubspotDealsContactsList"
                 },
                 {
                     "source": "out_activities",
@@ -618,8 +539,7 @@
                             "value": "CrmHubSpot"
                         }
                     ],
-                    "destination": "in.c-crmHubSpot.hubspotActivities",
-                    "__SCAFFOLD_CHECK__original_destination": "in.c-hubspot.activities"
+                    "destination": "in.c-crmHubSpot.hubspotActivities"
                 },
                 {
                     "source": "out_deals_companies",
@@ -637,8 +557,7 @@
                             "value": "CrmHubSpot"
                         }
                     ],
-                    "destination": "in.c-crmHubSpot.hubspotDealsCompanies",
-                    "__SCAFFOLD_CHECK__original_destination": "in.c-hubspot.deals_companies"
+                    "destination": "in.c-crmHubSpot.hubspotDealsCompanies"
                 }
             ],
             "queries": [
@@ -672,10 +591,8 @@
                     "loadType": "clone",
                     "source_search": {
                         "key": "bdm.scaffold.table.tag",
-                        "__SCAFFOLD_CHECK__.value": "CrmHubSpot.internal.inKdsTeamExHubspotCrmCompanies"
-                    },
-                    "__SCAFFOLD_CHECK__.source": "in.c-crmHubSpot.kdsTeamExHubspotCrm542900623Companies",
-                    "__SCAFFOLD_CHECK__.original_source": "in.c-kds-team-ex-hubspot-crm-542900623.companies"
+                        "value": "CrmHubSpot.internal.inKdsTeamExHubspotCrmCompanies"
+                    }
                 },
                 {
                     "destination": "contacts",
@@ -687,10 +604,8 @@
                     "loadType": "clone",
                     "source_search": {
                         "key": "bdm.scaffold.table.tag",
-                        "__SCAFFOLD_CHECK__.value": "CrmHubSpot.internal.inKdsTeamExHubspotCrmContacts"
-                    },
-                    "__SCAFFOLD_CHECK__.source": "in.c-crmHubSpot.kdsTeamExHubspotCrm542900623Contacts",
-                    "__SCAFFOLD_CHECK__.original_source": "in.c-kds-team-ex-hubspot-crm-542900623.contacts"
+                        "value": "CrmHubSpot.internal.inKdsTeamExHubspotCrmContacts"
+                    }
                 },
                 {
                     "destination": "owners",
@@ -702,10 +617,8 @@
                     "loadType": "clone",
                     "source_search": {
                         "key": "bdm.scaffold.table.tag",
-                        "__SCAFFOLD_CHECK__.value": "CrmHubSpot.internal.inKdsTeamExHubspotCrmOwners"
-                    },
-                    "__SCAFFOLD_CHECK__.source": "in.c-crmHubSpot.kdsTeamExHubspotCrm542900623Owners",
-                    "__SCAFFOLD_CHECK__.original_source": "in.c-kds-team-ex-hubspot-crm-542900623.owners"
+                        "value": "CrmHubSpot.internal.inKdsTeamExHubspotCrmOwners"
+                    }
                 },
                 {
                     "destination": "deals",
@@ -717,10 +630,8 @@
                     "loadType": "clone",
                     "source_search": {
                         "key": "bdm.scaffold.table.tag",
-                        "__SCAFFOLD_CHECK__.value": "CrmHubSpot.internal.inKdsTeamExHubspotCrmDeals"
-                    },
-                    "__SCAFFOLD_CHECK__.source": "in.c-crmHubSpot.kdsTeamExHubspotCrm542900623Deals",
-                    "__SCAFFOLD_CHECK__.original_source": "in.c-kds-team-ex-hubspot-crm-542900623.deals"
+                        "value": "CrmHubSpot.internal.inKdsTeamExHubspotCrmDeals"
+                    }
                 },
                 {
                     "destination": "pipelines",
@@ -732,10 +643,8 @@
                     "loadType": "clone",
                     "source_search": {
                         "key": "bdm.scaffold.table.tag",
-                        "__SCAFFOLD_CHECK__.value": "CrmHubSpot.internal.inKdsTeamExHubspotCrmPipelines"
-                    },
-                    "__SCAFFOLD_CHECK__.source": "in.c-crmHubSpot.kdsTeamExHubspotCrm542900623Pipelines",
-                    "__SCAFFOLD_CHECK__.original_source": "in.c-kds-team-ex-hubspot-crm-542900623.pipelines"
+                        "value": "CrmHubSpot.internal.inKdsTeamExHubspotCrmPipelines"
+                    }
                 },
                 {
                     "destination": "deals_contacts_list",
@@ -747,10 +656,8 @@
                     "loadType": "clone",
                     "source_search": {
                         "key": "bdm.scaffold.table.tag",
-                        "__SCAFFOLD_CHECK__.value": "CrmHubSpot.internal.inKdsTeamExHubspotCrmDealsContactsList"
-                    },
-                    "__SCAFFOLD_CHECK__.source": "in.c-crmHubSpot.kdsTeamExHubspotCrm542900623DealsContactsList",
-                    "__SCAFFOLD_CHECK__.original_source": "in.c-kds-team-ex-hubspot-crm-542900623.deals_contacts_list"
+                        "value": "CrmHubSpot.internal.inKdsTeamExHubspotCrmDealsContactsList"
+                    }
                 },
                 {
                     "destination": "pipeline_stages",
@@ -762,10 +669,8 @@
                     "loadType": "clone",
                     "source_search": {
                         "key": "bdm.scaffold.table.tag",
-                        "__SCAFFOLD_CHECK__.value": "CrmHubSpot.internal.inKdsTeamExHubspotCrmPipelineStages"
-                    },
-                    "__SCAFFOLD_CHECK__.source": "in.c-crmHubSpot.kdsTeamExHubspotCrm542900623PipelineStages",
-                    "__SCAFFOLD_CHECK__.original_source": "in.c-kds-team-ex-hubspot-crm-542900623.pipeline_stages"
+                        "value": "CrmHubSpot.internal.inKdsTeamExHubspotCrmPipelineStages"
+                    }
                 },
                 {
                     "destination": "activities",
@@ -777,10 +682,8 @@
                     "loadType": "clone",
                     "source_search": {
                         "key": "bdm.scaffold.table.tag",
-                        "__SCAFFOLD_CHECK__.value": "CrmHubSpot.internal.inKdsTeamExHubspotCrmActivities"
-                    },
-                    "__SCAFFOLD_CHECK__.source": "in.c-crmHubSpot.kdsTeamExHubspotCrm542900623Activities",
-                    "__SCAFFOLD_CHECK__.original_source": "in.c-kds-team-ex-hubspot-crm-542900623.activities"
+                        "value": "CrmHubSpot.internal.inKdsTeamExHubspotCrmActivities"
+                    }
                 },
                 {
                     "destination": "deals_companies",
@@ -792,10 +695,8 @@
                     "loadType": "clone",
                     "source_search": {
                         "key": "bdm.scaffold.table.tag",
-                        "__SCAFFOLD_CHECK__.value": "CrmHubSpot.internal.inKdsTeamExHubspotCrmDealsAssocCompaniesList"
-                    },
-                    "__SCAFFOLD_CHECK__.source": "in.c-crmHubSpot.kdsTeamExHubspotCrm542900623DealsAssocCompaniesList",
-                    "__SCAFFOLD_CHECK__.original_source": "in.c-kds-team-ex-hubspot-crm-542900623.deals_assoc_companies_list"
+                        "value": "CrmHubSpot.internal.inKdsTeamExHubspotCrmDealsAssocCompaniesList"
+                    }
                 }
             ],
             "name": "Input Tables Creation",
@@ -829,8 +730,7 @@
                             "value": "CrmHubSpot"
                         }
                     ],
-                    "destination": "out.c-crmHubSpot.crmActivity",
-                    "__SCAFFOLD_CHECK__original_destination": "out.c-crm.activity"
+                    "destination": "out.c-crmHubSpot.crmActivity"
                 }
             ],
             "queries": [
@@ -845,12 +745,7 @@
                     "whereOperator": "eq",
                     "columns": [],
                     "loadType": "clone",
-                    "source_search": {
-                        "key": "bdm.scaffold.table.tag",
-                        "__SCAFFOLD_CHECK__.value": "CrmHubSpot.internal.inHubspotActivities"
-                    },
-                    "__SCAFFOLD_CHECK__.source": "in.c-crmHubSpot.hubspotActivities",
-                    "__SCAFFOLD_CHECK__.original_source": "in.c-hubspot.activities"
+                    "source": "in.c-crmHubSpot.hubspotActivities"
                 },
                 {
                     "destination": "opportunity",
@@ -860,12 +755,7 @@
                     "whereOperator": "eq",
                     "columns": [],
                     "loadType": "clone",
-                    "source_search": {
-                        "key": "bdm.scaffold.table.tag",
-                        "__SCAFFOLD_CHECK__.value": "CrmHubSpot.internal.outCrmOpportunity"
-                    },
-                    "__SCAFFOLD_CHECK__.source": "out.c-crmHubSpot.crmOpportunity",
-                    "__SCAFFOLD_CHECK__.original_source": "out.c-crm.opportunity"
+                    "source": "out.c-crmHubSpot.crmOpportunity"
                 },
                 {
                     "destination": "contact",
@@ -875,12 +765,7 @@
                     "whereOperator": "eq",
                     "columns": [],
                     "loadType": "clone",
-                    "source_search": {
-                        "key": "bdm.scaffold.table.tag",
-                        "__SCAFFOLD_CHECK__.value": "CrmHubSpot.internal.outCrmContact"
-                    },
-                    "__SCAFFOLD_CHECK__.source": "out.c-crmHubSpot.crmContact",
-                    "__SCAFFOLD_CHECK__.original_source": "out.c-crm.contact"
+                    "source": "out.c-crmHubSpot.crmContact"
                 },
                 {
                     "destination": "employee",
@@ -890,12 +775,7 @@
                     "whereOperator": "eq",
                     "columns": [],
                     "loadType": "clone",
-                    "source_search": {
-                        "key": "bdm.scaffold.table.tag",
-                        "__SCAFFOLD_CHECK__.value": "CrmHubSpot.internal.outCrmEmployee"
-                    },
-                    "__SCAFFOLD_CHECK__.source": "out.c-crmHubSpot.crmEmployee",
-                    "__SCAFFOLD_CHECK__.original_source": "out.c-crm.employee"
+                    "source": "out.c-crmHubSpot.crmEmployee"
                 }
             ],
             "name": "Activities",

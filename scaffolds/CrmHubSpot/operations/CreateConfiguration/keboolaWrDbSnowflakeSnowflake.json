@@ -1,5 +1,6 @@
 {
     "componentId": "keboola.wr-db-snowflake",
+    "authorization": "provisionedSnowflake",
     "payload": {
         "name": "Snowflake",
         "configuration": {
@@ -592,9 +593,8 @@
                             ],
                             "source_search": {
                                 "key": "bdm.scaffold.table.tag",
-                                "__SCAFFOLD_CHECK__.value": "CrmHubSpot.internal.outCrmActivity"
-                            },
-                            "__SCAFFOLD_CHECK__.original_source": "out.c-crm.activity"
+                                "value": "CrmHubSpot.internal.outCrmActivity"
+                            }
                         },
                         {
                             "destination": "out.c-crm.company.csv",
@@ -606,9 +606,8 @@
                             ],
                             "source_search": {
                                 "key": "bdm.scaffold.table.tag",
-                                "__SCAFFOLD_CHECK__.value": "CrmHubSpot.internal.outCrmCompany"
-                            },
-                            "__SCAFFOLD_CHECK__.original_source": "out.c-crm.company"
+                                "value": "CrmHubSpot.internal.outCrmCompany"
+                            }
                         },
                         {
                             "destination": "out.c-crm.contact.csv",
@@ -623,9 +622,8 @@
                             ],
                             "source_search": {
                                 "key": "bdm.scaffold.table.tag",
-                                "__SCAFFOLD_CHECK__.value": "CrmHubSpot.internal.outCrmContact"
-                            },
-                            "__SCAFFOLD_CHECK__.original_source": "out.c-crm.contact"
+                                "value": "CrmHubSpot.internal.outCrmContact"
+                            }
                         },
                         {
                             "destination": "out.c-crm.employee.csv",
@@ -637,9 +635,8 @@
                             ],
                             "source_search": {
                                 "key": "bdm.scaffold.table.tag",
-                                "__SCAFFOLD_CHECK__.value": "CrmHubSpot.internal.outCrmEmployee"
-                            },
-                            "__SCAFFOLD_CHECK__.original_source": "out.c-crm.employee"
+                                "value": "CrmHubSpot.internal.outCrmEmployee"
+                            }
                         },
                         {
                             "destination": "out.c-crm.opportunity.csv",
@@ -663,9 +660,8 @@
                             ],
                             "source_search": {
                                 "key": "bdm.scaffold.table.tag",
-                                "__SCAFFOLD_CHECK__.value": "CrmHubSpot.internal.outCrmOpportunity"
-                            },
-                            "__SCAFFOLD_CHECK__.original_source": "out.c-crm.opportunity"
+                                "value": "CrmHubSpot.internal.outCrmOpportunity"
+                            }
                         },
                         {
                             "destination": "out.c-crm.opportunity_contact.csv",
@@ -678,9 +674,8 @@
                             ],
                             "source_search": {
                                 "key": "bdm.scaffold.table.tag",
-                                "__SCAFFOLD_CHECK__.value": "CrmHubSpot.internal.outCrmOpportunityContact"
-                            },
-                            "__SCAFFOLD_CHECK__.original_source": "out.c-crm.opportunity_contact"
+                                "value": "CrmHubSpot.internal.outCrmOpportunityContact"
+                            }
                         },
                         {
                             "destination": "out.c-crm.opportunity_snapshot.csv",
@@ -707,9 +702,8 @@
                             ],
                             "source_search": {
                                 "key": "bdm.scaffold.table.tag",
-                                "__SCAFFOLD_CHECK__.value": "CrmHubSpot.internal.outCrmOpportunitySnapshot"
-                            },
-                            "__SCAFFOLD_CHECK__.original_source": "out.c-crm.opportunity_snapshot"
+                                "value": "CrmHubSpot.internal.outCrmOpportunitySnapshot"
+                            }
                         }
                     ]
                 }
