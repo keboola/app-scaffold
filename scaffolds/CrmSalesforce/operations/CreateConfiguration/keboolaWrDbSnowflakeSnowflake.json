@@ -593,9 +593,8 @@
                             ],
                             "source_search": {
                                 "key": "bdm.scaffold.table.tag",
-                                "__SCAFFOLD_CHECK__.value": "CrmSalesforce.internal.outCrmActivity"
-                            },
-                            "__SCAFFOLD_CHECK__.original_source": "out.c-crm.activity"
+                                "value": "CrmSalesforce.internal.outCrmActivity"
+                            }
                         },
                         {
                             "destination": "out.c-crm.company.csv",
@@ -607,9 +606,8 @@
                             ],
                             "source_search": {
                                 "key": "bdm.scaffold.table.tag",
-                                "__SCAFFOLD_CHECK__.value": "CrmSalesforce.internal.outCrmCompany"
-                            },
-                            "__SCAFFOLD_CHECK__.original_source": "out.c-crm.company"
+                                "value": "CrmSalesforce.internal.outCrmCompany"
+                            }
                         },
                         {
                             "destination": "out.c-crm.contact.csv",
@@ -624,9 +622,8 @@
                             ],
                             "source_search": {
                                 "key": "bdm.scaffold.table.tag",
-                                "__SCAFFOLD_CHECK__.value": "CrmSalesforce.internal.outCrmContact"
-                            },
-                            "__SCAFFOLD_CHECK__.original_source": "out.c-crm.contact"
+                                "value": "CrmSalesforce.internal.outCrmContact"
+                            }
                         },
                         {
                             "destination": "out.c-crm.employee.csv",
@@ -638,9 +635,8 @@
                             ],
                             "source_search": {
                                 "key": "bdm.scaffold.table.tag",
-                                "__SCAFFOLD_CHECK__.value": "CrmSalesforce.internal.outCrmEmployee"
-                            },
-                            "__SCAFFOLD_CHECK__.original_source": "out.c-crm.employee"
+                                "value": "CrmSalesforce.internal.outCrmEmployee"
+                            }
                         },
                         {
                             "destination": "out.c-crm.opportunity.csv",
@@ -664,9 +660,8 @@
                             ],
                             "source_search": {
                                 "key": "bdm.scaffold.table.tag",
-                                "__SCAFFOLD_CHECK__.value": "CrmSalesforce.internal.outCrmOpportunity"
-                            },
-                            "__SCAFFOLD_CHECK__.original_source": "out.c-crm.opportunity"
+                                "value": "CrmSalesforce.internal.outCrmOpportunity"
+                            }
                         },
                         {
                             "destination": "out.c-crm.opportunity_contact.csv",
@@ -679,9 +674,8 @@
                             ],
                             "source_search": {
                                 "key": "bdm.scaffold.table.tag",
-                                "__SCAFFOLD_CHECK__.value": "CrmSalesforce.internal.outCrmOpportunityContact"
-                            },
-                            "__SCAFFOLD_CHECK__.original_source": "out.c-crm.opportunity_contact"
+                                "value": "CrmSalesforce.internal.outCrmOpportunityContact"
+                            }
                         },
                         {
                             "destination": "out.c-crm.opportunity_snapshot.csv",
@@ -708,9 +702,8 @@
                             ],
                             "source_search": {
                                 "key": "bdm.scaffold.table.tag",
-                                "__SCAFFOLD_CHECK__.value": "CrmSalesforce.internal.outCrmOpportunitySnapshot"
-                            },
-                            "__SCAFFOLD_CHECK__.original_source": "out.c-crm.opportunity_snapshot"
+                                "value": "CrmSalesforce.internal.outCrmOpportunitySnapshot"
+                            }
                         }
                     ]
                 }

@@ -11,7 +11,7 @@
                 ]
             },
             "processors": {
-                "__SCAFFOLD_CHECK__.after": [
+                "after": [
                     {
                         "definition": {
                             "component": "keboola.processor-create-manifest"
@@ -44,11 +44,11 @@
                                     "metadata": [
                                         {
                                             "key": "bdm.scaffold.table.tag",
-                                            "__SCAFFOLD_CHECK__value": "CrmSalesforce.internal.inHtnsExSalesforce######Account"
+                                            "value": "CrmSalesforce.internal.inHtnsExSalesforceAccount"
                                         },
                                         {
                                             "key": "scaffold.id",
-                                            "0": "CrmSalesforce"
+                                            "value": "CrmSalesforce"
                                         }
                                     ]
                                 }
@@ -73,7 +73,7 @@
                 ]
             },
             "processors": {
-                "__SCAFFOLD_CHECK__.after": [
+                "after": [
                     {
                         "definition": {
                             "component": "keboola.processor-create-manifest"
@@ -106,11 +106,11 @@
                                     "metadata": [
                                         {
                                             "key": "bdm.scaffold.table.tag",
-                                            "__SCAFFOLD_CHECK__value": "CrmSalesforce.internal.inHtnsExSalesforce######Contact"
+                                            "value": "CrmSalesforce.internal.inHtnsExSalesforceContact"
                                         },
                                         {
                                             "key": "scaffold.id",
-                                            "0": "CrmSalesforce"
+                                            "value": "CrmSalesforce"
                                         }
                                     ]
                                 }
@@ -135,7 +135,7 @@
                 ]
             },
             "processors": {
-                "__SCAFFOLD_CHECK__.after": [
+                "after": [
                     {
                         "definition": {
                             "component": "keboola.processor-create-manifest"
@@ -168,11 +168,11 @@
                                     "metadata": [
                                         {
                                             "key": "bdm.scaffold.table.tag",
-                                            "__SCAFFOLD_CHECK__value": "CrmSalesforce.internal.inHtnsExSalesforce######Opportunity"
+                                            "value": "CrmSalesforce.internal.inHtnsExSalesforceOpportunity"
                                         },
                                         {
                                             "key": "scaffold.id",
-                                            "0": "CrmSalesforce"
+                                            "value": "CrmSalesforce"
                                         }
                                     ]
                                 }
@@ -197,7 +197,7 @@
                 ]
             },
             "processors": {
-                "__SCAFFOLD_CHECK__.after": [
+                "after": [
                     {
                         "definition": {
                             "component": "keboola.processor-create-manifest"
@@ -230,11 +230,11 @@
                                     "metadata": [
                                         {
                                             "key": "bdm.scaffold.table.tag",
-                                            "__SCAFFOLD_CHECK__value": "CrmSalesforce.internal.inHtnsExSalesforce######User"
+                                            "value": "CrmSalesforce.internal.inHtnsExSalesforceUser"
                                         },
                                         {
                                             "key": "scaffold.id",
-                                            "0": "CrmSalesforce"
+                                            "value": "CrmSalesforce"
                                         }
                                     ]
                                 }
@@ -259,7 +259,7 @@
                 ]
             },
             "processors": {
-                "__SCAFFOLD_CHECK__.after": [
+                "after": [
                     {
                         "definition": {
                             "component": "keboola.processor-create-manifest"
@@ -292,11 +292,11 @@
                                     "metadata": [
                                         {
                                             "key": "bdm.scaffold.table.tag",
-                                            "__SCAFFOLD_CHECK__value": "CrmSalesforce.internal.inHtnsExSalesforce######Event"
+                                            "value": "CrmSalesforce.internal.inHtnsExSalesforceEvent"
                                         },
                                         {
                                             "key": "scaffold.id",
-                                            "0": "CrmSalesforce"
+                                            "value": "CrmSalesforce"
                                         }
                                     ]
                                 }
@@ -321,7 +321,7 @@
                 ]
             },
             "processors": {
-                "__SCAFFOLD_CHECK__.after": [
+                "after": [
                     {
                         "definition": {
                             "component": "keboola.processor-create-manifest"
@@ -354,11 +354,11 @@
                                     "metadata": [
                                         {
                                             "key": "bdm.scaffold.table.tag",
-                                            "__SCAFFOLD_CHECK__value": "CrmSalesforce.internal.inHtnsExSalesforce######Lead"
+                                            "value": "CrmSalesforce.internal.inHtnsExSalesforceLead"
                                         },
                                         {
                                             "key": "scaffold.id",
-                                            "0": "CrmSalesforce"
+                                            "value": "CrmSalesforce"
                                         }
                                     ]
                                 }
@@ -383,7 +383,7 @@
                 ]
             },
             "processors": {
-                "__SCAFFOLD_CHECK__.after": [
+                "after": [
                     {
                         "definition": {
                             "component": "keboola.processor-create-manifest"
@@ -416,11 +416,11 @@
                                     "metadata": [
                                         {
                                             "key": "bdm.scaffold.table.tag",
-                                            "__SCAFFOLD_CHECK__value": "CrmSalesforce.internal.inHtnsExSalesforce######Opportunitycontactrole"
+                                            "value": "CrmSalesforce.internal.inHtnsExSalesforceOpportunitycontactrole"
                                         },
                                         {
                                             "key": "scaffold.id",
-                                            "0": "CrmSalesforce"
+                                            "value": "CrmSalesforce"
                                         }
                                     ]
                                 }
@@ -445,7 +445,7 @@
                 ]
             },
             "processors": {
-                "__SCAFFOLD_CHECK__.after": [
+                "after": [
                     {
                         "definition": {
                             "component": "keboola.processor-create-manifest"
@@ -478,11 +478,11 @@
                                     "metadata": [
                                         {
                                             "key": "bdm.scaffold.table.tag",
-                                            "__SCAFFOLD_CHECK__value": "CrmSalesforce.internal.inHtnsExSalesforce######Opportunitystage"
+                                            "value": "CrmSalesforce.internal.inHtnsExSalesforceOpportunitystage"
                                         },
                                         {
                                             "key": "scaffold.id",
-                                            "0": "CrmSalesforce"
+                                            "value": "CrmSalesforce"
                                         }
                                     ]
                                 }
