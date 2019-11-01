@@ -592,7 +592,7 @@
                         "parameters": {
                             "tables": [
                                 {
-                                    "table": "team.csv",
+                                    "table": "team",
                                     "metadata": [
                                         {
                                             "key": "bdm.scaffold.table.tag",
@@ -605,7 +605,7 @@
                                     ]
                                 },
                                 {
-                                    "table": "member.csv",
+                                    "table": "member",
                                     "metadata": [
                                         {
                                             "key": "bdm.scaffold.table.tag",
@@ -618,7 +618,7 @@
                                     ]
                                 },
                                 {
-                                    "table": "issue.csv",
+                                    "table": "issue",
                                     "metadata": [
                                         {
                                             "key": "bdm.scaffold.table.tag",
@@ -631,7 +631,7 @@
                                     ]
                                 },
                                 {
-                                    "table": "issue_comment.csv",
+                                    "table": "issue_comment",
                                     "metadata": [
                                         {
                                             "key": "bdm.scaffold.table.tag",
@@ -644,7 +644,7 @@
                                     ]
                                 },
                                 {
-                                    "table": "repository_commit.csv",
+                                    "table": "repository_commit",
                                     "metadata": [
                                         {
                                             "key": "bdm.scaffold.table.tag",
@@ -657,7 +657,7 @@
                                     ]
                                 },
                                 {
-                                    "table": "repository_commit_change.csv",
+                                    "table": "repository_commit_change",
                                     "metadata": [
                                         {
                                             "key": "bdm.scaffold.table.tag",
@@ -670,7 +670,7 @@
                                     ]
                                 },
                                 {
-                                    "table": "pull_request_declined.csv",
+                                    "table": "pull_request_declined",
                                     "metadata": [
                                         {
                                             "key": "bdm.scaffold.table.tag",
@@ -683,7 +683,7 @@
                                     ]
                                 },
                                 {
-                                    "table": "pull_request_declined_activity.csv",
+                                    "table": "pull_request_declined_activity",
                                     "metadata": [
                                         {
                                             "key": "bdm.scaffold.table.tag",
@@ -696,7 +696,7 @@
                                     ]
                                 },
                                 {
-                                    "table": "pull_request_merged.csv",
+                                    "table": "pull_request_merged",
                                     "metadata": [
                                         {
                                             "key": "bdm.scaffold.table.tag",
@@ -709,7 +709,7 @@
                                     ]
                                 },
                                 {
-                                    "table": "pull_request_merged_activity.csv",
+                                    "table": "pull_request_merged_activity",
                                     "metadata": [
                                         {
                                             "key": "bdm.scaffold.table.tag",
@@ -722,7 +722,7 @@
                                     ]
                                 },
                                 {
-                                    "table": "pull_request_open.csv",
+                                    "table": "pull_request_open",
                                     "metadata": [
                                         {
                                             "key": "bdm.scaffold.table.tag",
@@ -735,7 +735,7 @@
                                     ]
                                 },
                                 {
-                                    "table": "pull_request_open_activity.csv",
+                                    "table": "pull_request_open_activity",
                                     "metadata": [
                                         {
                                             "key": "bdm.scaffold.table.tag",
@@ -748,7 +748,7 @@
                                     ]
                                 },
                                 {
-                                    "table": "repository.csv",
+                                    "table": "repository",
                                     "metadata": [
                                         {
                                             "key": "bdm.scaffold.table.tag",
@@ -761,7 +761,7 @@
                                     ]
                                 },
                                 {
-                                    "table": "project.csv",
+                                    "table": "project",
                                     "metadata": [
                                         {
                                             "key": "bdm.scaffold.table.tag",
