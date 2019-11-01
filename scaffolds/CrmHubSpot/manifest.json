@@ -1,0 +1,35 @@
+{
+    "name": "",
+    "author": "Keboola",
+    "description": "",
+    "inputs": [
+        {
+            "id": "kdsTeamExHubspotCrmHubspot",
+            "componentId": "kds-team.ex-hubspot-crm",
+            "name": "Hubspot",
+            "required": true,
+            "schema": null
+        },
+        {
+            "id": "transformationHubspotCRM",
+            "componentId": "transformation",
+            "name": "Hubspot CRM",
+            "required": true,
+            "schema": null
+        },
+        {
+            "id": "keboolaWrDbSnowflakeSnowflake",
+            "componentId": "keboola.wr-db-snowflake",
+            "name": "Snowflake",
+            "required": true,
+            "schema": null
+        },
+        {
+            "id": "orchestrationCRM",
+            "componentId": "orchestrator",
+            "name": "CRM",
+            "required": true,
+            "schema": null
+        }
+    ]
+}
