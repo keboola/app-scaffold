@@ -327,6 +327,19 @@
                                             "value": "CrmPipedrive"
                                         }
                                     ]
+                                },
+                                {
+                                    "table": "person_emails",
+                                    "metadata": [
+                                        {
+                                            "key": "bdm.scaffold.table.tag",
+                                            "value": "CrmPipedrive.internal.inKeboolaExPipedrivePersonEmails"
+                                        },
+                                        {
+                                            "key": "scaffold.id",
+                                            "value": "CrmPipedrive"
+                                        }
+                                    ]
                                 }
                             ]
                         }
@@ -336,4 +349,3 @@
         }
     }
 }
-
