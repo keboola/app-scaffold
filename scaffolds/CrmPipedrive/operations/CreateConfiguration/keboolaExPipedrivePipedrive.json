@@ -1,0 +1,351 @@
+{
+    "componentId": "keboola.ex-pipedrive",
+    "payload": {
+        "name": "Pipedrive",
+        "configuration": {
+            "parameters": {
+                "api": {
+                    "baseUrl": {
+                        "function": "concat",
+                        "args": [
+                            "https:\/\/",
+                            {
+                                "attr": "companyDomain"
+                            },
+                            ".pipedrive.com\/v1\/"
+                        ]
+                    },
+                    "authentication": {
+                        "type": "url.query",
+                        "query": {
+                            "api_token": {
+                                "attr": "#apiToken"
+                            }
+                        }
+                    },
+                    "pagination": {
+                        "method": "offset",
+                        "limit": 500,
+                        "limitParam": "limit",
+                        "offsetParam": "start"
+                    }
+                },
+                "config": {
+                    "incrementalOutput": true,
+                    "jobs": [
+                        {
+                            "endpoint": "organizations",
+                            "dataField": "data",
+                            "dataType": "organizations"
+                        },
+                        {
+                            "endpoint": "persons",
+                            "dataField": "data",
+                            "dataType": "persons"
+                        },
+                        {
+                            "endpoint": "users",
+                            "dataField": "data",
+                            "dataType": "users"
+                        },
+                        {
+                            "endpoint": "deals",
+                            "dataField": "data",
+                            "dataType": "deals"
+                        },
+                        {
+                            "endpoint": "pipelines",
+                            "dataField": "data",
+                            "dataType": "pipelines"
+                        },
+                        {
+                            "params": {
+                                "user_id": "0"
+                            },
+                            "endpoint": "activities",
+                            "dataField": "data",
+                            "dataType": "activities"
+                        },
+                        {
+                            "endpoint": "stages",
+                            "dataField": "data",
+                            "dataType": "stages"
+                        }
+                    ],
+                    "mappings": {
+                        "organizations": {
+                            "id": {
+                                "mapping": {
+                                    "destination": "organization_id",
+                                    "primaryKey": true
+                                }
+                            },
+                            "name": "org_name",
+                            "owner_id.id": "owner_id",
+                            "address": "org_address",
+                            "category_id": "fk_category_id",
+                            "address_country": "org_address_country",
+                            "address_postal_code": "org_address_postal_code",
+                            "add_date": "org_add_date"
+                        },
+                        "persons": {
+                            "id": {
+                                "mapping": {
+                                    "destination": "contact_id",
+                                    "primaryKey": true
+                                }
+                            },
+                            "name": "contact_name",
+                            "org_id.value": "org_id",
+                            "add_time": "add_time",
+                            "email": {
+                                "type": "table",
+                                "destination": "person_emails",
+                                "tableMapping": {
+                                    "label": {
+                                        "type": "column",
+                                        "mapping": {
+                                            "destination": "label"
+                                        }
+                                    },
+                                    "value": {
+                                        "type": "column",
+                                        "mapping": {
+                                            "destination": "value"
+                                        }
+                                    },
+                                    "primary": {
+                                        "type": "column",
+                                        "mapping": {
+                                            "destination": "primary"
+                                        }
+                                    }
+                                }
+                            }
+                        },
+                        "users": {
+                            "id": {
+                                "mapping": {
+                                    "destination": "owner_id",
+                                    "primaryKey": true
+                                }
+                            },
+                            "name": "owner_name",
+                            "email": "owner_email"
+                        },
+                        "deals": {
+                            "deal_deleted": "deal_deleted",
+                            "lost_time": "lost_time",
+                            "add_time": "add_time",
+                            "currency": "deal_currency",
+                            "value": "deal_value",
+                            "status": "deal_status",
+                            "close_time": "close_time",
+                            "products_count": "products_count",
+                            "person_id.value": "person_id",
+                            "stage_order_nr": "stage_order_nr",
+                            "won_time": "won_time",
+                            "title": "deal_title",
+                            "pipeline_id": "pipeline_id",
+                            "org_id.value": "org_id",
+                            "user_id.value": "owner_id",
+                            "deal_active": "deal_active",
+                            "id": {
+                                "mapping": {
+                                    "destination": "deal_id",
+                                    "primaryKey": true
+                                }
+                            },
+                            "expected_close_date": "expected_close_date",
+                            "stage_id": "stage_id",
+                            "activities_count": "activities_count",
+                            "email_messages_count": "email_messages_count",
+                            "lost_reason": "lost_reason"
+                        },
+                        "pipelines": {
+                            "id": {
+                                "mapping": {
+                                    "destination": "pipeline_id",
+                                    "primaryKey": true
+                                }
+                            },
+                            "name": "pipeline_name",
+                            "url_title": "url_title",
+                            "order_nr": "order_nr",
+                            "active": "active"
+                        },
+                        "activities": {
+                            "id": {
+                                "mapping": {
+                                    "destination": "activity_id",
+                                    "primaryKey": true
+                                }
+                            },
+                            "company_id": "company_id",
+                            "user_id": "user_id",
+                            "person_id": "person_id",
+                            "type": "type",
+                            "deal_id": "deal_id",
+                            "subject": "subject",
+                            "add_time": "add_time",
+                            "due_date": "due_date",
+                            "done": "done"
+                        },
+                        "stages": {
+                            "id": {
+                                "mapping": {
+                                    "destination": "stage_id",
+                                    "primaryKey": true
+                                }
+                            },
+                            "order_nr": "order_nr",
+                            "name": "stage_name",
+                            "active_flag": "active_flag",
+                            "pipeline_id": "pipeline_id",
+                            "deal_probability": "deal_probability",
+                            "add_time": "add_time"
+                        }
+                    }
+                }
+            },
+            "processors": {
+                "after": [
+                    {
+                        "definition": {
+                            "component": "keboola.processor-create-manifest"
+                        },
+                        "parameters": {
+                            "delimiter": ",",
+                            "enclosure": "\"",
+                            "incremental": false,
+                            "primary_key": [],
+                            "columns_from": "header"
+                        }
+                    },
+                    {
+                        "definition": {
+                            "component": "keboola.processor-skip-lines"
+                        },
+                        "parameters": {
+                            "lines": 1,
+                            "direction_from": "top"
+                        }
+                    },
+                    {
+                        "definition": {
+                            "component": "keboola.processor-add-metadata"
+                        },
+                        "parameters": {
+                            "tables": [
+                                {
+                                    "table": "organizations",
+                                    "metadata": [
+                                        {
+                                            "key": "bdm.scaffold.table.tag",
+                                            "value": "CrmPipedrive.internal.inKeboolaExPipedriveOrganizations"
+                                        },
+                                        {
+                                            "key": "scaffold.id",
+                                            "value": "CrmPipedrive"
+                                        }
+                                    ]
+                                },
+                                {
+                                    "table": "persons",
+                                    "metadata": [
+                                        {
+                                            "key": "bdm.scaffold.table.tag",
+                                            "value": "CrmPipedrive.internal.inKeboolaExPipedrivePersons"
+                                        },
+                                        {
+                                            "key": "scaffold.id",
+                                            "value": "CrmPipedrive"
+                                        }
+                                    ]
+                                },
+                                {
+                                    "table": "users",
+                                    "metadata": [
+                                        {
+                                            "key": "bdm.scaffold.table.tag",
+                                            "value": "CrmPipedrive.internal.inKeboolaExPipedriveUsers"
+                                        },
+                                        {
+                                            "key": "scaffold.id",
+                                            "value": "CrmPipedrive"
+                                        }
+                                    ]
+                                },
+                                {
+                                    "table": "deals",
+                                    "metadata": [
+                                        {
+                                            "key": "bdm.scaffold.table.tag",
+                                            "value": "CrmPipedrive.internal.inKeboolaExPipedriveDeals"
+                                        },
+                                        {
+                                            "key": "scaffold.id",
+                                            "value": "CrmPipedrive"
+                                        }
+                                    ]
+                                },
+                                {
+                                    "table": "pipelines",
+                                    "metadata": [
+                                        {
+                                            "key": "bdm.scaffold.table.tag",
+                                            "value": "CrmPipedrive.internal.inKeboolaExPipedrivePipelines"
+                                        },
+                                        {
+                                            "key": "scaffold.id",
+                                            "value": "CrmPipedrive"
+                                        }
+                                    ]
+                                },
+                                {
+                                    "table": "activities",
+                                    "metadata": [
+                                        {
+                                            "key": "bdm.scaffold.table.tag",
+                                            "value": "CrmPipedrive.internal.inKeboolaExPipedriveActivities"
+                                        },
+                                        {
+                                            "key": "scaffold.id",
+                                            "value": "CrmPipedrive"
+                                        }
+                                    ]
+                                },
+                                {
+                                    "table": "stages",
+                                    "metadata": [
+                                        {
+                                            "key": "bdm.scaffold.table.tag",
+                                            "value": "CrmPipedrive.internal.inKeboolaExPipedriveStages"
+                                        },
+                                        {
+                                            "key": "scaffold.id",
+                                            "value": "CrmPipedrive"
+                                        }
+                                    ]
+                                },
+                                {
+                                    "table": "person_emails",
+                                    "metadata": [
+                                        {
+                                            "key": "bdm.scaffold.table.tag",
+                                            "value": "CrmPipedrive.internal.inKeboolaExPipedrivePersonEmails"
+                                        },
+                                        {
+                                            "key": "scaffold.id",
+                                            "value": "CrmPipedrive"
+                                        }
+                                    ]
+                                }
+                            ]
+                        }
+                    }
+                ]
+            }
+        }
+    }
+}
