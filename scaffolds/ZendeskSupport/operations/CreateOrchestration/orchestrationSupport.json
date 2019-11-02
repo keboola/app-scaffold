@@ -1,6 +1,6 @@
 {
     "payload": {
-        "name": "Support",
+        "name": "Zendesk Support",
         "tasks": [
             {
                 "component": "keboola.ex-zendesk",

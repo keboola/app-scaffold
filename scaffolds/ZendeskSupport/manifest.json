@@ -19,6 +19,7 @@
                         "required": [
                             "domain",
                             "usermail",
+                            "username",
                             "#password"
                         ],
                         "properties": {
@@ -30,6 +31,11 @@
                                 "title": "User e-mail",
                                 "type": "string"
                             },
+                            "username": {
+                                "title": "User name",
+                                "type": "string",
+                                "description": "Use {usermail}/token"
+                            },                            
                             "#password": {
                                 "title": "Token",
                                 "type": "string",
