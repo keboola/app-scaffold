@@ -15,6 +15,7 @@
                 ],
                 "properties": {
                     "config": {
+                        "title": "Zendesk account configuration",
                         "type": "object",
                         "required": [
                             "domain",
