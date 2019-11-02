@@ -1,0 +1,150 @@
+{
+    "componentId": "kds-team.ex-paymo",
+    "payload": {
+        "name": "Paymo Full Entry IDs",
+        "configuration": {
+            "parameters": {
+                "api": {
+                    "baseUrl": "https:\/\/app.paymoapp.com\/api\/",
+                    "pagination": {
+                        "method": "multiple",
+                        "scrollers": {
+                            "pagenum_scroller": {
+                                "method": "pagenum",
+                                "limit": 100,
+                                "limitParam": "page_size",
+                                "pageParam": "page"
+                            }
+                        }
+                    },
+                    "http": {
+                        "headers": {
+                            "Authorization": {
+                                "function": "concat",
+                                "args": [
+                                    "Basic ",
+                                    {
+                                        "function": "base64_encode",
+                                        "args": [
+                                            {
+                                                "function": "concat",
+                                                "args": [
+                                                    {
+                                                        "attr": "#username"
+                                                    },
+                                                    ":no_password_required"
+                                                ]
+                                            }
+                                        ]
+                                    }
+                                ]
+                            }
+                        }
+                    }
+                },
+                "config": {
+                    "days": "0",
+                    "password": "X",
+                    "incrementalOutput": false,
+                    "jobs": [
+                        {
+                            "endpoint": "clients",
+                            "dataType": "client",
+                            "dataField": "clients",
+                            "children": [
+                                {
+                                    "endpoint": "entries?where=client_id={id}",
+                                    "dataType": "entry",
+                                    "dataField": "entries",
+                                    "placeholders": {
+                                        "id": "id"
+                                    }
+                                }
+                            ]
+                        }
+                    ],
+                    "mappings": {
+                        "client": {
+                            "id": {
+                                "type": "column",
+                                "mapping": {
+                                    "destination": "client_id",
+                                    "primaryKey": true
+                                }
+                            }
+                        },
+                        "entry": {
+                            "id": {
+                                "type": "column",
+                                "mapping": {
+                                    "destination": "entry_id",
+                                    "primaryKey": true
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "processors": {
+                "after": [
+                    {
+                        "definition": {
+                            "component": "keboola.processor-create-manifest"
+                        },
+                        "parameters": {
+                            "delimiter": ",",
+                            "enclosure": "\"",
+                            "incremental": false,
+                            "primary_key": [],
+                            "columns_from": "header"
+                        }
+                    },
+                    {
+                        "definition": {
+                            "component": "keboola.processor-skip-lines"
+                        },
+                        "parameters": {
+                            "lines": 1,
+                            "direction_from": "top"
+                        }
+                    },
+                    {
+                        "definition": {
+                            "component": "keboola.processor-add-metadata"
+                        },
+                        "parameters": {
+                            "tables": [
+                                {
+                                    "table": "client",
+                                    "metadata": [
+                                        {
+                                            "key": "bdm.scaffold.table.tag",
+                                            "value": "PaymoTimeTracking.internal.inKdsTeamExPaymo02Client"
+                                        },
+                                        {
+                                            "key": "scaffold.id",
+                                            "value": "PaymoTimeTracking"
+                                        }
+                                    ]
+                                },
+                                {
+                                    "table": "entry",
+                                    "metadata": [
+                                        {
+                                            "key": "bdm.scaffold.table.tag",
+                                            "value": "PaymoTimeTracking.internal.inKdsTeamExPaymo02Entry"
+                                        },
+                                        {
+                                            "key": "scaffold.id",
+                                            "value": "PaymoTimeTracking"
+                                        }
+                                    ]
+                                }
+                            ]
+                        }
+                    }
+                ]
+            }
+        }
+    }
+}

@@ -1,0 +1,585 @@
+{
+    "componentId": "keboola.wr-db-snowflake",
+    "authorization": "provisionedSnowflake",
+    "payload": {
+        "name": "Snowflake",
+        "configuration": {
+            "parameters": {
+                "db": {
+                },
+                "tables": [
+                    {
+                        "dbName": "CLIENT",
+                        "export": true,
+                        "tableId": "out.c-paymo.client",
+                        "items": [
+                            {
+                                "name": "client_id",
+                                "dbName": "CLIENT_ID",
+                                "type": "varchar",
+                                "size": "255",
+                                "nullable": false,
+                                "default": ""
+                            },
+                            {
+                                "name": "client",
+                                "dbName": "CLIENT",
+                                "type": "varchar",
+                                "size": "255",
+                                "nullable": false,
+                                "default": ""
+                            },
+                            {
+                                "name": "client_url",
+                                "dbName": "CLIENT_URL",
+                                "type": "varchar",
+                                "size": "255",
+                                "nullable": false,
+                                "default": ""
+                            },
+                            {
+                                "name": "country",
+                                "dbName": "COUNTRY",
+                                "type": "varchar",
+                                "size": "255",
+                                "nullable": false,
+                                "default": ""
+                            },
+                            {
+                                "name": "city",
+                                "dbName": "CITY",
+                                "type": "varchar",
+                                "size": "255",
+                                "nullable": false,
+                                "default": ""
+                            },
+                            {
+                                "name": "website",
+                                "dbName": "WEBSITE",
+                                "type": "varchar",
+                                "size": "255",
+                                "nullable": false,
+                                "default": ""
+                            },
+                            {
+                                "name": "client_active",
+                                "dbName": "CLIENT_ACTIVE",
+                                "type": "varchar",
+                                "size": "255",
+                                "nullable": false,
+                                "default": ""
+                            }
+                        ],
+                        "primaryKey": [
+                            "CLIENT_ID"
+                        ]
+                    },
+                    {
+                        "dbName": "ENTRY",
+                        "export": true,
+                        "tableId": "out.c-paymo.entry",
+                        "items": [
+                            {
+                                "name": "entry_id",
+                                "dbName": "ENTRY_ID",
+                                "type": "varchar",
+                                "size": "255",
+                                "nullable": false,
+                                "default": ""
+                            },
+                            {
+                                "name": "task_id",
+                                "dbName": "TASK_ID",
+                                "type": "varchar",
+                                "size": "255",
+                                "nullable": false,
+                                "default": ""
+                            },
+                            {
+                                "name": "entry_url",
+                                "dbName": "ENTRY_URL",
+                                "type": "varchar",
+                                "size": "255",
+                                "nullable": false,
+                                "default": ""
+                            },
+                            {
+                                "name": "billed",
+                                "dbName": "BILLED",
+                                "type": "varchar",
+                                "size": "255",
+                                "nullable": false,
+                                "default": ""
+                            },
+                            {
+                                "name": "description",
+                                "dbName": "DESCRIPTION",
+                                "type": "varchar",
+                                "size": "1028",
+                                "nullable": false,
+                                "default": ""
+                            },
+                            {
+                                "name": "user_id",
+                                "dbName": "USER_ID",
+                                "type": "varchar",
+                                "size": "255",
+                                "nullable": false,
+                                "default": ""
+                            },
+                            {
+                                "name": "start_time",
+                                "dbName": "START_TIME",
+                                "type": "timestamp",
+                                "size": "",
+                                "nullable": true,
+                                "default": ""
+                            },
+                            {
+                                "name": "hours",
+                                "dbName": "HOURS",
+                                "type": "number",
+                                "size": "12,6",
+                                "nullable": true,
+                                "default": ""
+                            },
+                            {
+                                "name": "billable_hours",
+                                "dbName": "BILLABLE_HOURS",
+                                "type": "number",
+                                "size": "12,6",
+                                "nullable": true,
+                                "default": ""
+                            },
+                            {
+                                "name": "price_original",
+                                "dbName": "PRICE_ORIGINAL",
+                                "type": "number",
+                                "size": "12,6",
+                                "nullable": true,
+                                "default": ""
+                            },
+                            {
+                                "name": "billable_price",
+                                "dbName": "BILLABLE_PRICE",
+                                "type": "number",
+                                "size": "12,6",
+                                "nullable": true,
+                                "default": ""
+                            },
+                            {
+                                "name": "hour_rate",
+                                "dbName": "HOUR_RATE",
+                                "type": "number",
+                                "size": "12,6",
+                                "nullable": true,
+                                "default": ""
+                            },
+                            {
+                                "name": "budget",
+                                "dbName": "BUDGET",
+                                "type": "number",
+                                "size": "12,6",
+                                "nullable": true,
+                                "default": ""
+                            },
+                            {
+                                "name": "within_budget",
+                                "dbName": "WITHIN_BUDGET",
+                                "type": "varchar",
+                                "size": "255",
+                                "nullable": false,
+                                "default": ""
+                            },
+                            {
+                                "name": "billable",
+                                "dbName": "BILLABLE",
+                                "type": "varchar",
+                                "size": "255",
+                                "nullable": false,
+                                "default": ""
+                            },
+                            {
+                                "name": "budget_use",
+                                "dbName": "BUDGET_USE",
+                                "type": "number",
+                                "size": "12,6",
+                                "nullable": true,
+                                "default": ""
+                            },
+                            {
+                                "name": "is_deleted",
+                                "dbName": "IS_DELETED",
+                                "type": "varchar",
+                                "size": "255",
+                                "nullable": false,
+                                "default": ""
+                            }
+                        ],
+                        "primaryKey": [
+                            "ENTRY_ID"
+                        ]
+                    },
+                    {
+                        "dbName": "PROJECT",
+                        "export": true,
+                        "tableId": "out.c-paymo.project",
+                        "items": [
+                            {
+                                "name": "project_id",
+                                "dbName": "PROJECT_ID",
+                                "type": "varchar",
+                                "size": "255",
+                                "nullable": false,
+                                "default": ""
+                            },
+                            {
+                                "name": "project_url",
+                                "dbName": "PROJECT_URL",
+                                "type": "varchar",
+                                "size": "255",
+                                "nullable": false,
+                                "default": ""
+                            },
+                            {
+                                "name": "client_id",
+                                "dbName": "CLIENT_ID",
+                                "type": "varchar",
+                                "size": "255",
+                                "nullable": false,
+                                "default": ""
+                            },
+                            {
+                                "name": "name",
+                                "dbName": "NAME",
+                                "type": "varchar",
+                                "size": "255",
+                                "nullable": false,
+                                "default": ""
+                            },
+                            {
+                                "name": "created_date",
+                                "dbName": "CREATED_DATE",
+                                "type": "date",
+                                "size": "",
+                                "nullable": true,
+                                "default": ""
+                            },
+                            {
+                                "name": "billable",
+                                "dbName": "BILLABLE",
+                                "type": "varchar",
+                                "size": "255",
+                                "nullable": false,
+                                "default": ""
+                            },
+                            {
+                                "name": "project_active",
+                                "dbName": "PROJECT_ACTIVE",
+                                "type": "varchar",
+                                "size": "255",
+                                "nullable": false,
+                                "default": ""
+                            },
+                            {
+                                "name": "budget_hours",
+                                "dbName": "BUDGET_HOURS",
+                                "type": "number",
+                                "size": "12,6",
+                                "nullable": true,
+                                "default": ""
+                            },
+                            {
+                                "name": "project_rate",
+                                "dbName": "PROJECT_RATE",
+                                "type": "number",
+                                "size": "12,6",
+                                "nullable": true,
+                                "default": ""
+                            }
+                        ],
+                        "primaryKey": [
+                            "PROJECT_ID"
+                        ]
+                    },
+                    {
+                        "dbName": "TASK",
+                        "export": true,
+                        "tableId": "out.c-paymo.task",
+                        "items": [
+                            {
+                                "name": "task_id",
+                                "dbName": "TASK_ID",
+                                "type": "varchar",
+                                "size": "255",
+                                "nullable": false,
+                                "default": ""
+                            },
+                            {
+                                "name": "project_id",
+                                "dbName": "PROJECT_ID",
+                                "type": "varchar",
+                                "size": "255",
+                                "nullable": false,
+                                "default": ""
+                            },
+                            {
+                                "name": "task_name",
+                                "dbName": "TASK_NAME",
+                                "type": "varchar",
+                                "size": "255",
+                                "nullable": false,
+                                "default": ""
+                            },
+                            {
+                                "name": "tasklist_name",
+                                "dbName": "TASKLIST_NAME",
+                                "type": "varchar",
+                                "size": "255",
+                                "nullable": false,
+                                "default": ""
+                            },
+                            {
+                                "name": "task_billable",
+                                "dbName": "TASK_BILLABLE",
+                                "type": "varchar",
+                                "size": "255",
+                                "nullable": false,
+                                "default": ""
+                            },
+                            {
+                                "name": "description",
+                                "dbName": "DESCRIPTION",
+                                "type": "varchar",
+                                "size": "1028",
+                                "nullable": false,
+                                "default": ""
+                            },
+                            {
+                                "name": "price_per_hour",
+                                "dbName": "PRICE_PER_HOUR",
+                                "type": "number",
+                                "size": "12,6",
+                                "nullable": true,
+                                "default": ""
+                            },
+                            {
+                                "name": "budget_hours",
+                                "dbName": "BUDGET_HOURS",
+                                "type": "number",
+                                "size": "12,6",
+                                "nullable": true,
+                                "default": ""
+                            },
+                            {
+                                "name": "billing_type",
+                                "dbName": "BILLING_TYPE",
+                                "type": "varchar",
+                                "size": "255",
+                                "nullable": false,
+                                "default": ""
+                            }
+                        ],
+                        "primaryKey": [
+                            "TASK_ID"
+                        ]
+                    },
+                    {
+                        "dbName": "USER",
+                        "export": true,
+                        "tableId": "out.c-paymo.user",
+                        "items": [
+                            {
+                                "name": "user_id",
+                                "dbName": "USER_ID",
+                                "type": "varchar",
+                                "size": "255",
+                                "nullable": false,
+                                "default": ""
+                            },
+                            {
+                                "name": "user",
+                                "dbName": "USER",
+                                "type": "varchar",
+                                "size": "255",
+                                "nullable": false,
+                                "default": ""
+                            },
+                            {
+                                "name": "user_url",
+                                "dbName": "USER_URL",
+                                "type": "varchar",
+                                "size": "255",
+                                "nullable": false,
+                                "default": ""
+                            },
+                            {
+                                "name": "email",
+                                "dbName": "EMAIL",
+                                "type": "varchar",
+                                "size": "255",
+                                "nullable": false,
+                                "default": ""
+                            },
+                            {
+                                "name": "role",
+                                "dbName": "ROLE",
+                                "type": "varchar",
+                                "size": "255",
+                                "nullable": false,
+                                "default": ""
+                            },
+                            {
+                                "name": "user_active",
+                                "dbName": "USER_ACTIVE",
+                                "type": "varchar",
+                                "size": "255",
+                                "nullable": false,
+                                "default": ""
+                            }
+                        ],
+                        "primaryKey": [
+                            "USER_ID"
+                        ]
+                    },
+                    {
+                        "dbName": "WORKDAY",
+                        "export": true,
+                        "tableId": "out.c-paymo.workday",
+                        "items": [
+                            {
+                                "name": "date",
+                                "dbName": "DATE",
+                                "type": "date",
+                                "size": "",
+                                "nullable": false,
+                                "default": ""
+                            },
+                            {
+                                "name": "workday",
+                                "dbName": "WORKDAY",
+                                "type": "string",
+                                "size": "255",
+                                "nullable": false,
+                                "default": ""
+                            }
+                        ],
+                        "primaryKey": [
+                            "DATE"
+                        ]
+                    }
+                ]
+            },
+            "storage": {
+                "input": {
+                    "tables": [
+                        {
+                            "destination": "out.c-paymo.client.csv",
+                            "columns": [
+                                "client_id",
+                                "client",
+                                "client_url",
+                                "country",
+                                "city",
+                                "website",
+                                "client_active"
+                            ],
+                            "source_search": {
+                                "key": "bdm.scaffold.table.tag",
+                                "value": "PaymoTimeTracking.internal.outPaymoClient"
+                            }
+                        },
+                        {
+                            "destination": "out.c-paymo.entry.csv",
+                            "columns": [
+                                "entry_id",
+                                "task_id",
+                                "entry_url",
+                                "billed",
+                                "description",
+                                "user_id",
+                                "start_time",
+                                "hours",
+                                "billable_hours",
+                                "price_original",
+                                "billable_price",
+                                "hour_rate",
+                                "budget",
+                                "within_budget",
+                                "billable",
+                                "budget_use",
+                                "is_deleted"
+                            ],
+                            "source_search": {
+                                "key": "bdm.scaffold.table.tag",
+                                "value": "PaymoTimeTracking.internal.outPaymoEntry"
+                            }
+                        },
+                        {
+                            "destination": "out.c-paymo.project.csv",
+                            "columns": [
+                                "project_id",
+                                "project_url",
+                                "client_id",
+                                "name",
+                                "created_date",
+                                "billable",
+                                "project_active",
+                                "budget_hours",
+                                "project_rate"
+                            ],
+                            "source_search": {
+                                "key": "bdm.scaffold.table.tag",
+                                "value": "PaymoTimeTracking.internal.outPaymoProject"
+                            }
+                        },
+                        {
+                            "destination": "out.c-paymo.task.csv",
+                            "columns": [
+                                "task_id",
+                                "project_id",
+                                "task_name",
+                                "tasklist_name",
+                                "task_billable",
+                                "description",
+                                "price_per_hour",
+                                "budget_hours",
+                                "billing_type"
+                            ],
+                            "source_search": {
+                                "key": "bdm.scaffold.table.tag",
+                                "value": "PaymoTimeTracking.internal.outPaymoTask"
+                            }
+                        },
+                        {
+                            "destination": "out.c-paymo.user.csv",
+                            "columns": [
+                                "user_id",
+                                "user",
+                                "user_url",
+                                "email",
+                                "role",
+                                "user_active"
+                            ],
+                            "source_search": {
+                                "key": "bdm.scaffold.table.tag",
+                                "value": "PaymoTimeTracking.internal.outPaymoUser"
+                            }
+                        },
+                        {
+                            "destination": "out.c-paymo.workday.csv",
+                            "columns": [
+                                "date",
+                                "workday"
+                            ],
+                            "source_search": {
+                                "key": "bdm.scaffold.table.tag",
+                                "value": "PaymoTimeTracking.internal.outPaymoWorkday"
+                            }
+                        }
+                    ]
+                }
+            }
+        }
+    }
+}

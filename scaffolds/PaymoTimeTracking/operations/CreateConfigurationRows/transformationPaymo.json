@@ -1,0 +1,326 @@
+[
+    {
+        "configuration": {
+            "output": [
+                {
+                    "source": "out_client",
+                    "primaryKey": [
+                        "client_id"
+                    ],
+                    "metadata": [
+                        {
+                            "key": "bdm.scaffold.table.tag",
+                            "value": "PaymoTimeTracking.internal.outPaymoClient"
+                        },
+                        {
+                            "key": "scaffold.id",
+                            "value": "PaymoTimeTracking"
+                        }
+                    ],
+                    "destination": "out.c-paymoTimeTracking.paymoClient"
+                },
+                {
+                    "source": "out_user",
+                    "primaryKey": [
+                        "user_id"
+                    ],
+                    "metadata": [
+                        {
+                            "key": "bdm.scaffold.table.tag",
+                            "value": "PaymoTimeTracking.internal.outPaymoUser"
+                        },
+                        {
+                            "key": "scaffold.id",
+                            "value": "PaymoTimeTracking"
+                        }
+                    ],
+                    "destination": "out.c-paymoTimeTracking.paymoUser"
+                },
+                {
+                    "source": "out_project",
+                    "primaryKey": [
+                        "project_id"
+                    ],
+                    "metadata": [
+                        {
+                            "key": "bdm.scaffold.table.tag",
+                            "value": "PaymoTimeTracking.internal.outPaymoProject"
+                        },
+                        {
+                            "key": "scaffold.id",
+                            "value": "PaymoTimeTracking"
+                        }
+                    ],
+                    "destination": "out.c-paymoTimeTracking.paymoProject"
+                }
+            ],
+            "queries": [
+                "--client output table\nCREATE TABLE \"out_client\"\nAS\n    SELECT\n        \"client_id\",\n        \"name\"                                                                   AS \"client\",\n        'https:\/\/app.paymoapp.com\/#Paymo.Clients\/' || \"client_id\" || '\/projects' AS \"client_url\",\n        \"country\",\n        \"city\",\n        \"website\",\n        iff(\"active\" = '1', 'Yes', 'No')                                         AS \"client_active\"\n    FROM \"client\";",
+                "--user output table\nCREATE TABLE \"out_user\"\nAS\n    SELECT\n        \"user_id\",\n        \"name\"                                                               AS \"user\",\n        'https:\/\/app.paymoapp.com\/#Paymo.Users\/' || \"user_id\" || '\/overview' AS \"user_url\",\n        \"email\",\n        \"type\"                                                               AS \"role\",\n        iff(\"active\" = '1', 'Yes', 'No')                                     AS \"user_active\"\n    FROM \"user\";",
+                "--fill empty values\nUPDATE \"project\"\nSET \"budget_hours\" = '0'\nWHERE \"budget_hours\" = '';",
+                "UPDATE \"project\"\nSET \"price_per_hour\" = '0'\nWHERE \"price_per_hour\" = '';",
+                "--project output table\nCREATE TABLE \"out_project\"\nAS\n    SELECT\n        \"project_id\"                                                               AS \"project_id\",\n        'https:\/\/app.paymoapp.com\/#Paymo.Projects\/' || \"project_id\" || '\/overview' AS \"project_url\",\n        \"client_id\"                                                                AS \"client_id\",\n        \"name\"                                                                     AS \"name\",\n        LEFT(\"created_on\", 10)                                                     AS \"created_date\",\n        IFF(\"billable\" = '1', 'true', 'false')                                     AS \"billable\",\n        iff(\"active\" = '1', 'true', 'false')                                       AS \"project_active\",\n        \"budget_hours\",\n        \"price_per_hour\"                                                           AS \"project_rate\"\n    FROM \"project\";"
+            ],
+            "input": [
+                {
+                    "destination": "project",
+                    "datatypes": [],
+                    "whereColumn": "",
+                    "whereValues": [],
+                    "whereOperator": "eq",
+                    "columns": [],
+                    "loadType": "clone",
+                    "source_search": {
+                        "key": "bdm.scaffold.table.tag",
+                        "value": "PaymoTimeTracking.internal.inKdsTeamExPaymo01Project"
+                    }
+                },
+                {
+                    "destination": "client",
+                    "datatypes": [],
+                    "whereColumn": "",
+                    "whereValues": [],
+                    "whereOperator": "eq",
+                    "columns": [],
+                    "loadType": "clone",
+                    "source_search": {
+                        "key": "bdm.scaffold.table.tag",
+                        "value": "PaymoTimeTracking.internal.inKdsTeamExPaymo01Client"
+                    }
+                },
+                {
+                    "destination": "user",
+                    "datatypes": [],
+                    "whereColumn": "",
+                    "whereValues": [],
+                    "whereOperator": "eq",
+                    "columns": [],
+                    "loadType": "clone",
+                    "source_search": {
+                        "key": "bdm.scaffold.table.tag",
+                        "value": "PaymoTimeTracking.internal.inKdsTeamExPaymo01User"
+                    }
+                }
+            ],
+            "name": "Clients, Projects & Users",
+            "packages": [],
+            "requires": [],
+            "backend": "snowflake",
+            "type": "simple",
+            "id": "542753122",
+            "phase": 1,
+            "disabled": false,
+            "description": ""
+        },
+        "description": "",
+        "name": "Clients, Projects & Users"
+    },
+    {
+        "configuration": {
+            "output": [
+                {
+                    "source": "out_task",
+                    "primaryKey": [
+                        "task_id"
+                    ],
+                    "metadata": [
+                        {
+                            "key": "bdm.scaffold.table.tag",
+                            "value": "PaymoTimeTracking.internal.outPaymoTask"
+                        },
+                        {
+                            "key": "scaffold.id",
+                            "value": "PaymoTimeTracking"
+                        }
+                    ],
+                    "destination": "out.c-paymoTimeTracking.paymoTask"
+                }
+            ],
+            "queries": [
+                "UPDATE \"task\"\nSET \"price_per_hour\"='0'\nWHERE \"price_per_hour\" = '';",
+                "--task output table\nCREATE TABLE \"out_task\"\nAS\n    SELECT\n        \"t\".\"task_id\",\n        ifnull(\"p\".\"project_id\", '0')              AS \"project_id\",\n        \"t\".\"name\"                                 AS \"task_name\",\n        \"l\".\"name\"                                 AS \"tasklist_name\",\n        iff(\"t\".\"billable\" = '1', 'true', 'false') AS \"task_billable\",\n        left(\"t\".\"description\", 1028)              AS \"description\",\n        IFF(\"t\".\"price_per_hour\" > 0, \"t\".\"price_per_hour\",\n            \"p\".\"project_rate\")                    AS \"price_per_hour\",\n        \"t\".\"budget_hours\"                         AS \"budget_hours\",\n        \"t\".\"billing_type\"                         AS \"billing_type\"\n    FROM \"task\" \"t\"\n             LEFT JOIN \"project\" \"p\"\n                       ON \"t\".\"project_id\" = \"p\".\"project_id\"\n             LEFT JOIN \"tasklist\" \"l\"\n                       ON \"t\".\"tasklist_id\" = \"l\".\"tasklist_id\";"
+            ],
+            "input": [
+                {
+                    "destination": "task",
+                    "datatypes": [],
+                    "whereColumn": "",
+                    "whereValues": [],
+                    "whereOperator": "eq",
+                    "columns": [],
+                    "loadType": "clone",
+                    "source_search": {
+                        "key": "bdm.scaffold.table.tag",
+                        "value": "PaymoTimeTracking.internal.inKdsTeamExPaymo01Task"
+                    }
+                },
+                {
+                    "destination": "tasklist",
+                    "datatypes": [],
+                    "whereColumn": "",
+                    "whereValues": [],
+                    "whereOperator": "eq",
+                    "columns": [],
+                    "loadType": "clone",
+                    "source_search": {
+                        "key": "bdm.scaffold.table.tag",
+                        "value": "PaymoTimeTracking.internal.inKdsTeamExPaymo01Tasklist"
+                    }
+                },
+                {
+                    "destination": "project",
+                    "datatypes": [],
+                    "whereColumn": "",
+                    "whereValues": [],
+                    "whereOperator": "eq",
+                    "columns": [],
+                    "loadType": "clone",
+                    "source": "out.c-paymoTimeTracking.paymoProject"
+                }
+            ],
+            "name": "Task",
+            "packages": [],
+            "requires": [],
+            "backend": "snowflake",
+            "type": "simple",
+            "id": "542944301",
+            "phase": "2",
+            "disabled": false,
+            "description": ""
+        },
+        "description": "",
+        "name": "Tasks"
+    },
+    {
+        "configuration": {
+            "output": [
+                {
+                    "source": "out_entry",
+                    "primaryKey": [
+                        "entry_id"
+                    ],
+                    "metadata": [
+                        {
+                            "key": "bdm.scaffold.table.tag",
+                            "value": "PaymoTimeTracking.internal.outPaymoEntry"
+                        },
+                        {
+                            "key": "scaffold.id",
+                            "value": "PaymoTimeTracking"
+                        }
+                    ],
+                    "destination": "out.c-paymoTimeTracking.paymoEntry"
+                }
+            ],
+            "queries": [
+                "--delete empty entries\nDELETE\nFROM \"entry\"\nWHERE \"duration\" = 0;",
+                "--temp entry table\n--date conversion\n--rounding of hours\n--marking deleted records\nCREATE TABLE \"entry_tmp\"\nAS\n    SELECT\n        \"e\".\"entry_id\",\n        \"t\".\"task_id\",\n        \"e\".\"project_id\",\n        'https:\/\/keboola.paymo.biz\/entries\/edit\/id\/' || \"e\".\"entry_id\"                   AS \"entry_url\",\n        iff(\"e\".\"billed\" = '1', 'true', 'false')                                         AS \"billed\",\n        iff(length(\"e\".\"description\") > 1028, left(\"e\".\"description\", 1025) || '...',\n            \"e\".\"description\")                                                           AS \"description\",\n        \"e\".\"user_id\",\n        IFF(\"e\".\"start_time\" <> '', trim(replace(\"e\".\"start_time\",'T',' '),'Z'),\n            \"e\".\"date\" || ' 00:00:00')                                                   AS \"start_time\",\n        (\"duration\"::DECIMAL(12, 6) \/ 3600)::DECIMAL(12, 6)                              AS \"hours\",\n        (\"t\".\"price_per_hour\"::DECIMAL(12, 6) * \"duration\"::DECIMAL(12, 6) \/\n         3600)::DECIMAL(12, 6)                                                           AS \"price_original\",\n        \"t\".\"price_per_hour\"                                                             AS \"hour_rate\",\n        IFNULL(\"p\".\"budget_hours\", '0')                                                  AS \"budget\",\n        IFF((\"p\".\"billable\" = 'true' AND \"t\".\"task_billable\" = 'true'), 'true', 'false') AS \"billable\",\n        iff(\"f\".\"entry_id\" IS NULL, 'true', 'false')                                     AS \"is_deleted\"\n    FROM \"entry\" \"e\"\n             JOIN \"task\" \"t\"\n                  ON \"e\".\"task_id\" = \"t\".\"task_id\"\n             LEFT JOIN \"project\" \"p\"\n                       ON \"e\".\"project_id\" = \"p\".\"project_id\"\n             LEFT JOIN \"entry_full\" \"f\"\n                       ON \"e\".\"entry_id\" = \"f\".\"entry_id\"\n    WHERE (\"e\".\"start_time\" <> '' OR \"e\".\"date\" <> '');",
+                "-- table for simplified running totals\nCREATE TABLE \"pre\"\nAS\n    SELECT\n        \"e\".*\n    FROM \"entry_tmp\" \"e\"\n    WHERE \"e\".\"billable\" = 'true'\n      AND \"e\".\"is_deleted\" = 'false';",
+                "-- setp up output table, budget - use pre-calculations\nCREATE TABLE \"out_entry\"\nAS\n    SELECT\n        \"e\".\"entry_id\",\n        \"e\".\"task_id\",\n        \"e\".\"project_id\",\n        \"e\".\"entry_url\",\n        \"e\".\"billed\",\n        \"e\".\"description\",\n        \"e\".\"user_id\",\n        \"e\".\"start_time\",\n        \"e\".\"hours\",\n        NULL                                                                              AS \"billable_hours\",\n        \"e\".\"price_original\",\n        NULL                                                                              AS \"billable_price\",\n        \"e\".\"hour_rate\",\n        \"e\".\"budget\",\n        NULL                                                                              AS \"within_budget\",\n        \"e\".\"billable\",\n        (IFNULL(SUM(\"pre\".\"hours\"::DECIMAL(12, 6))::DECIMAL(12, 6), '0'))::DECIMAL(12, 6) AS \"budget_use\",\n        \"e\".\"is_deleted\"\n    FROM \"entry_tmp\" \"e\"\n             LEFT JOIN \"pre\" \"pre\"\n                       ON \"pre\".\"start_time\" < \"e\".\"start_time\"\n                           AND \"pre\".\"project_id\" = \"e\".\"project_id\"\n             LEFT JOIN \"project\" \"p\"\n                       ON \"p\".\"project_id\" = \"e\".\"project_id\"\n    GROUP BY \"e\".\"entry_id\",\n             \"e\".\"task_id\",\n             \"e\".\"project_id\",\n             \"e\".\"entry_url\",\n             \"e\".\"billed\",\n             \"e\".\"description\",\n             \"e\".\"user_id\",\n             \"e\".\"start_time\",\n             \"e\".\"hours\",\n             \"e\".\"price_original\",\n             \"e\".\"hour_rate\",\n             \"e\".\"budget\",\n             \"e\".\"billable\",\n             \"e\".\"is_deleted\";",
+                "-- calculate b_hours, b_price, within_budget\nUPDATE \"out_entry\" \"e\"\nSET \"e\".\"billable_hours\" =(CASE\n                               WHEN \"e\".\"billable\" = 'false'\n                                   THEN 0\n                               WHEN \"e\".\"budget\"::DECIMAL(12, 2) = 0\n                                   THEN \"e\".\"hours\"::DECIMAL(12, 6)\n                               WHEN (\"e\".\"budget_use\"::DECIMAL(12, 6) + \"e\".\"hours\"::DECIMAL(12, 6) <=\n                                     \"e\".\"budget\"::DECIMAL(12, 2))\n                                   THEN \"e\".\"hours\"::DECIMAL(12, 6)\n                               WHEN (\"e\".\"budget\"::DECIMAL(12, 2) - \"e\".\"budget_use\"::DECIMAL(12, 6) > 0)\n                                   THEN \"e\".\"budget\"::DECIMAL(12, 2) - \"e\".\"budget_use\"::DECIMAL(12, 6)\n                               ELSE 0\n                           END),\n    \"e\".\"billable_price\" =(CASE\n                               WHEN \"e\".\"billable\" = 'false'\n                                   THEN 0\n                               WHEN \"e\".\"budget\"::DECIMAL(12, 2) = 0\n                                   THEN \"e\".\"hours\"::DECIMAL(12, 6) * \"e\".\"hour_rate\"\n                               WHEN (\"e\".\"budget_use\"::DECIMAL(12, 6) + \"e\".\"hours\"::DECIMAL(12, 6) <=\n                                     \"e\".\"budget\"::DECIMAL(12, 2))\n                                   THEN \"e\".\"hours\"::DECIMAL(12, 6) * \"e\".\"hour_rate\"::DECIMAL(12, 2)\n                               WHEN (\"e\".\"budget\"::DECIMAL(12, 2) - \"e\".\"budget_use\"::DECIMAL(12, 6) > 0)\n                                   THEN (\"e\".\"budget\"::DECIMAL(12, 2) - \"e\".\"budget_use\"::DECIMAL(12, 6)) *\n                                        \"e\".\"hour_rate\"::DECIMAL(12, 2)\n                               ELSE 0\n                           END),\n    \"e\".\"within_budget\"  =(CASE\n                               WHEN \"e\".\"billable\" = 'false'\n                                   THEN 'Excluded'\n                               WHEN \"e\".\"budget\"::DECIMAL(12, 2) = 0\n                                   THEN 'Yes'\n                               WHEN (\"e\".\"budget_use\"::DECIMAL(12, 6) + \"e\".\"hours\"::DECIMAL(12, 6) <=\n                                     \"e\".\"budget\"::DECIMAL(12, 2))\n                                   THEN 'Yes'\n                               WHEN (\"e\".\"budget\"::DECIMAL(12, 2) - \"e\".\"budget_use\"::DECIMAL(12, 6) > 0)\n                                   THEN 'Partial'\n                               ELSE 'No'\n                           END);"
+            ],
+            "input": [
+                {
+                    "destination": "task",
+                    "datatypes": [],
+                    "whereColumn": "",
+                    "whereValues": [],
+                    "whereOperator": "eq",
+                    "columns": [],
+                    "loadType": "clone",
+                    "source": "out.c-paymoTimeTracking.paymoTask"
+                },
+                {
+                    "destination": "project",
+                    "datatypes": [],
+                    "whereColumn": "",
+                    "whereValues": [],
+                    "whereOperator": "eq",
+                    "columns": [],
+                    "loadType": "clone",
+                    "source": "out.c-paymoTimeTracking.paymoProject"
+                },
+                {
+                    "destination": "entry",
+                    "datatypes": [],
+                    "whereColumn": "",
+                    "whereValues": [],
+                    "whereOperator": "eq",
+                    "columns": [],
+                    "loadType": "clone",
+                    "source_search": {
+                        "key": "bdm.scaffold.table.tag",
+                        "value": "PaymoTimeTracking.internal.inKdsTeamExPaymo01Entry"
+                    }
+                },
+                {
+                    "destination": "entry_full",
+                    "datatypes": [],
+                    "whereColumn": "",
+                    "whereValues": [],
+                    "whereOperator": "eq",
+                    "columns": [],
+                    "loadType": "clone",
+                    "source_search": {
+                        "key": "bdm.scaffold.table.tag",
+                        "value": "PaymoTimeTracking.internal.inKdsTeamExPaymo02Entry"
+                    }
+                }
+            ],
+            "name": "Entries",
+            "packages": [],
+            "requires": [],
+            "backend": "snowflake",
+            "type": "simple",
+            "id": "542945963",
+            "phase": "3",
+            "disabled": false,
+            "description": ""
+        },
+        "description": "",
+        "name": "Entries"
+    },
+    {
+        "configuration": {
+            "output": [
+                {
+                    "source": "out_workday",
+                    "primaryKey": [
+                        "date"
+                    ],
+                    "incremental": true,
+                    "deleteWhereColumn": "",
+                    "deleteWhereOperator": "eq",
+                    "deleteWhereValues": [],
+                    "metadata": [
+                        {
+                            "key": "bdm.scaffold.table.tag",
+                            "value": "PaymoTimeTracking.internal.outPaymoWorkday"
+                        },
+                        {
+                            "key": "scaffold.id",
+                            "value": "PaymoTimeTracking"
+                        }
+                    ],
+                    "destination": "out.c-paymoTimeTracking.paymoWorkday"
+                }
+            ],
+            "queries": [
+                "--generate dates table for creation on workdays table\n--it generates dates between now - 5 years and next 10k days\nCREATE TABLE \"dates\"\nAS\n    SELECT\n        DATEADD(\n                \"DAY\", \/* simple DATE math *\/\n                \"seq\".\"seq\", \/* adding generated numbers from fixed date *\/\n                \"oldday\"\n            ) :: DATE AS \"date\"\n    FROM (\n             SELECT\n                 dateadd(YEAR, -5, current_date) AS \"oldday\" \/* Start date as todays -5 years *\/\n         ) \"t1\"\n             LEFT JOIN (\n        SELECT\n            seq2() AS \"seq\" \/* SUBQUERY #1 *\/\n        FROM TABLE (generator(ROWCOUNT => 10000)) \/* - produce 100 rows table with {0:99} numbers *\/\n    ) \"seq\"\n    ORDER BY 1;",
+                "--creating output workday table\n--marking workdays as \"true\"\n\/*Commented part of the query can serve as additional identification of other non-working days, like bank holidays.\n  You just need a table with dates you want to exclude from usual working days.\n  We might suggest using https:\/\/calendarific.com\/ which you can use for free and get data from the API by using our Generic Extractor.*\/\nCREATE TABLE \"out_workday\"\nAS\n    SELECT\n        \"d\".\"date\",\n        iff(dayofweekiso(\"d\".\"date\"::DATE) IN (6, 7) \/*OR \"h\".\"date\" IS NOT NULL*\/, 'false', 'true') AS \"workday\"\n    FROM \"dates\" \"d\"\n             \/*LEFT JOIN \"holidays\" \"h\"\n                       ON \"d\".\"date\" = \"h\".\"date\"*\/;"
+            ],
+            "input": [],
+            "name": "Workdays",
+            "packages": [],
+            "requires": [],
+            "backend": "snowflake",
+            "type": "simple",
+            "id": "544114523",
+            "phase": 1,
+            "disabled": false,
+            "description": ""
+        },
+        "description": "This transformation creates dates table with flagged workdays. That helps with Paymo reporting in Looker.",
+        "name": "Workdays"
+    }
+]

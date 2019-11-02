@@ -1,0 +1,43 @@
+{
+    "payload": {
+        "name": "Paymo",
+        "tasks": [
+            {
+                "component": "kds-team.ex-paymo",
+                "operationReferenceId": "kdsTeamExPaymoPaymo",
+                "action": "run",
+                "timeoutMinutes": null,
+                "active": true,
+                "continueOnFailure": false,
+                "phase": null
+            },
+            {
+                "component": "kds-team.ex-paymo",
+                "operationReferenceId": "kdsTeamExPaymoPaymoFullEntryIDs",
+                "action": "run",
+                "timeoutMinutes": null,
+                "active": true,
+                "continueOnFailure": false,
+                "phase": null
+            },
+            {
+                "component": "transformation",
+                "operationReferenceId": "transformationPaymo",
+                "action": "run",
+                "timeoutMinutes": null,
+                "active": true,
+                "continueOnFailure": false,
+                "phase": null
+            },
+            {
+                "component": "keboola.wr-db-snowflake",
+                "operationReferenceId": "keboolaWrDbSnowflakeSnowflake",
+                "action": "run",
+                "timeoutMinutes": null,
+                "active": true,
+                "continueOnFailure": false,
+                "phase": null
+            }
+        ]
+    }
+}

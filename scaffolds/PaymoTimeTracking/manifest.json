@@ -1,0 +1,82 @@
+{
+    "name": "Paymo Time Tracking to Snowflake",
+    "author": "Keboola",
+    "description": "Processing of projects, employees, tasks and time entries into simple-to-analyze model including budget monitorin etc., with output to Snowflake.",
+    "inputs": [
+        {
+            "id": "kdsTeamExPaymoPaymo",
+            "componentId": "kds-team.ex-paymo",
+            "name": "Paymo",
+            "required": true,
+            "schema": {
+                "type": "object",
+                "required": [
+                    "config"
+                ],
+                "properties": {
+                    "config": {
+                        "type": "object",
+                        "required": [
+                            "#username"
+                        ],
+                        "properties": {
+                            "#username": {
+                                "title": "API Token",
+                                "type": "string",
+                                "format": "password"
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        {
+            "id": "kdsTeamExPaymoPaymoFullEntryIDs",
+            "componentId": "kds-team.ex-paymo",
+            "name": "Paymo Full Entry IDs",
+            "required": true,
+            "schema": {
+                "type": "object",
+                "required": [
+                    "config"
+                ],
+                "properties": {
+                    "config": {
+                        "type": "object",
+                        "required": [
+                            "#username"
+                        ],
+                        "properties": {
+                            "#username": {
+                                "title": "API Token",
+                                "type": "string",
+                                "format": "password"
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        {
+            "id": "transformationPaymo",
+            "componentId": "transformation",
+            "name": "Paymo",
+            "required": true,
+            "schema": null
+        },
+        {
+            "id": "keboolaWrDbSnowflakeSnowflake",
+            "componentId": "keboola.wr-db-snowflake",
+            "name": "Snowflake",
+            "required": true,
+            "schema": null
+        },
+        {
+            "id": "orchestrationPaymo",
+            "componentId": "orchestrator",
+            "name": "Paymo",
+            "required": true,
+            "schema": null
+        }
+    ]
+}
