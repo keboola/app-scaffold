@@ -1,0 +1,34 @@
+{
+    "payload": {
+        "name": "Zendesk Support",
+        "tasks": [
+            {
+                "component": "keboola.ex-zendesk",
+                "operationReferenceId": "keboolaExZendeskZendeskSupport",
+                "action": "run",
+                "timeoutMinutes": null,
+                "active": true,
+                "continueOnFailure": false,
+                "phase": null
+            },
+            {
+                "component": "transformation",
+                "operationReferenceId": "transformationZendeskSupport",
+                "action": "run",
+                "timeoutMinutes": null,
+                "active": true,
+                "continueOnFailure": false,
+                "phase": null
+            },
+            {
+                "component": "keboola.wr-db-snowflake",
+                "operationReferenceId": "keboolaWrDbSnowflakeSnowflake",
+                "action": "run",
+                "timeoutMinutes": null,
+                "active": true,
+                "continueOnFailure": false,
+                "phase": null
+            }
+        ]
+    }
+}

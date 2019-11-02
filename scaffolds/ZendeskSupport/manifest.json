@@ -1,0 +1,71 @@
+{
+    "name": "Zendesk Support to Snowflake",
+    "author": "Keboola",
+    "description": "Basic acquisition of Zendesk data with transformation to standard support data model and output to Snowflake.",
+    "inputs": [
+        {
+            "id": "keboolaExZendeskZendeskSupport",
+            "componentId": "keboola.ex-zendesk",
+            "name": "Zendesk Support",
+            "required": true,
+            "schema": {
+                "type": "object",
+                "required": [
+                    "config"
+                ],
+                "properties": {
+                    "config": {
+                        "type": "object",
+                        "required": [
+                            "domain",
+                            "usermail",
+                            "username",
+                            "#password"
+                        ],
+                        "properties": {
+                            "domain": {
+                                "title": "Your Zendesk domain",
+                                "type": "string"
+                            },
+                            "usermail": {
+                                "title": "User e-mail",
+                                "type": "string"
+                            },
+                            "username": {
+                                "title": "User name",
+                                "type": "string",
+                                "description": "Use {usermail}/token"
+                            },                            
+                            "#password": {
+                                "title": "Token",
+                                "type": "string",
+                                "format": "password"
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        {
+            "id": "transformationZendeskSupport",
+            "componentId": "transformation",
+            "name": "Zendesk Support",
+            "required": true,
+            "schema": null
+        },
+        {
+            "id": "keboolaWrDbSnowflakeSnowflake",
+            "componentId": "keboola.wr-db-snowflake",
+            "name": "Snowflake",
+            "required": true,
+            "schema": null
+        },
+        {
+            "id": "orchestrationSupport",
+            "componentId": "orchestrator",
+            "name": "Support",
+            "required": true,
+            "schema": null
+        }
+    ]
+}
