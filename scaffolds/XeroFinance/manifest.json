@@ -1,14 +1,32 @@
 {
-    "name": "",
+    "name": "Xero Finance to Snowflake",
     "author": "Keboola",
-    "description": "",
+    "description": "Bank account and Invoice analysis from Xero with output of simple data model to Snowflake. Often combined with other scaffolds (such as support) for a more complete view of the customer's activities.",
     "inputs": [
         {
             "id": "vokurkaExXeroXero",
             "componentId": "vokurka.ex-xero",
             "name": "Xero",
             "required": true,
-            "schema": null
+            "schema": {
+                "type": "object",
+                "required": [
+                    "#private_key",
+                    "#consumer_secret"
+                ],
+                "properties": {
+                    "#private_key": {
+                        "title": "Private key",
+                        "type": "string",
+                        "format": "password"
+                    },
+                    "#consumer_secret": {
+                        "title": "Consumer secret",
+                        "type": "string",
+                        "format": "password"
+                    }
+                }
+            }
         },
         {
             "id": "transformationXero",

@@ -354,9 +354,8 @@
                             ],
                             "source_search": {
                                 "key": "bdm.scaffold.table.tag",
-                                "__SCAFFOLD_CHECK__.value": "XeroFinance.internal.outXeroAccount"
-                            },
-                            "__SCAFFOLD_CHECK__.original_source": "out.c-xero.account"
+                                "value": "XeroFinance.internal.outXeroAccount"
+                            }
                         },
                         {
                             "destination": "out.c-xero.account_balance.csv",
@@ -370,9 +369,8 @@
                             ],
                             "source_search": {
                                 "key": "bdm.scaffold.table.tag",
-                                "__SCAFFOLD_CHECK__.value": "XeroFinance.internal.outXeroAccountBalance"
-                            },
-                            "__SCAFFOLD_CHECK__.original_source": "out.c-xero.account_balance"
+                                "value": "XeroFinance.internal.outXeroAccountBalance"
+                            }
                         },
                         {
                             "destination": "out.c-xero.contact.csv",
@@ -384,9 +382,8 @@
                             ],
                             "source_search": {
                                 "key": "bdm.scaffold.table.tag",
-                                "__SCAFFOLD_CHECK__.value": "XeroFinance.internal.outXeroContact"
-                            },
-                            "__SCAFFOLD_CHECK__.original_source": "out.c-xero.contact"
+                                "value": "XeroFinance.internal.outXeroContact"
+                            }
                         },
                         {
                             "destination": "out.c-xero.invoice.csv",
@@ -412,9 +409,8 @@
                             ],
                             "source_search": {
                                 "key": "bdm.scaffold.table.tag",
-                                "__SCAFFOLD_CHECK__.value": "XeroFinance.internal.outXeroInvoice"
-                            },
-                            "__SCAFFOLD_CHECK__.original_source": "out.c-xero.invoice"
+                                "value": "XeroFinance.internal.outXeroInvoice"
+                            }
                         },
                         {
                             "destination": "out.c-xero.invoice_item.csv",
@@ -429,9 +425,8 @@
                             "limit": 1,
                             "source_search": {
                                 "key": "bdm.scaffold.table.tag",
-                                "__SCAFFOLD_CHECK__.value": "XeroFinance.internal.outXeroInvoiceItem"
-                            },
-                            "__SCAFFOLD_CHECK__.original_source": "out.c-xero.invoice_item"
+                                "value": "XeroFinance.internal.outXeroInvoiceItem"
+                            }
                         }
                     ]
                 }

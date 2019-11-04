@@ -17,8 +17,7 @@
                             "value": "XeroFinance"
                         }
                     ],
-                    "destination": "out.c-xeroFinance.xeroAccount",
-                    "__SCAFFOLD_CHECK__original_destination": "out.c-xero.account"
+                    "destination": "out.c-xeroFinance.xeroAccount"
                 }
             ],
             "queries": [
@@ -35,10 +34,8 @@
                     "loadType": "clone",
                     "source_search": {
                         "key": "bdm.scaffold.table.tag",
-                        "__SCAFFOLD_CHECK__.value": "XeroFinance.internal.inVokurkaExXero542515348AccountsAccounts"
-                    },
-                    "__SCAFFOLD_CHECK__.source": "in.c-xeroFinance.vokurkaExXero542515348AccountsAccounts",
-                    "__SCAFFOLD_CHECK__.original_source": "in.c-vokurka-ex-xero-542515348.Accounts_Accounts"
+                        "value": "XeroFinance.internal.inVokurkaExXeroAccountsAccounts"
+                    }
                 }
             ],
             "name": "Accounts",
@@ -72,8 +69,7 @@
                             "value": "XeroFinance"
                         }
                     ],
-                    "destination": "out.c-xeroFinance.xeroContact",
-                    "__SCAFFOLD_CHECK__original_destination": "out.c-xero.contact"
+                    "destination": "out.c-xeroFinance.xeroContact"
                 }
             ],
             "queries": [
@@ -91,10 +87,8 @@
                     "loadType": "clone",
                     "source_search": {
                         "key": "bdm.scaffold.table.tag",
-                        "__SCAFFOLD_CHECK__.value": "XeroFinance.internal.inVokurkaExXero542515348Contacts"
-                    },
-                    "__SCAFFOLD_CHECK__.source": "in.c-xeroFinance.vokurkaExXero542515348Contacts",
-                    "__SCAFFOLD_CHECK__.original_source": "in.c-vokurka-ex-xero-542515348.Contacts"
+                        "value": "XeroFinance.internal.inVokurkaExXeroContacts"
+                    }
                 }
             ],
             "name": "Contacts",
@@ -128,8 +122,7 @@
                             "value": "XeroFinance"
                         }
                     ],
-                    "destination": "out.c-xeroFinance.xeroAccountBalance",
-                    "__SCAFFOLD_CHECK__original_destination": "out.c-xero.account_balance"
+                    "destination": "out.c-xeroFinance.xeroAccountBalance"
                 }
             ],
             "queries": [
@@ -151,12 +144,7 @@
                     "whereOperator": "eq",
                     "columns": [],
                     "loadType": "clone",
-                    "source_search": {
-                        "key": "bdm.scaffold.table.tag",
-                        "__SCAFFOLD_CHECK__.value": "XeroFinance.internal.outXeroAccount"
-                    },
-                    "__SCAFFOLD_CHECK__.source": "out.c-xeroFinance.xeroAccount",
-                    "__SCAFFOLD_CHECK__.original_source": "out.c-xero.account"
+                    "source": "out.c-xeroFinance.xeroAccount"
                 },
                 {
                     "destination": "bank_transactions",
@@ -168,10 +156,8 @@
                     "loadType": "clone",
                     "source_search": {
                         "key": "bdm.scaffold.table.tag",
-                        "__SCAFFOLD_CHECK__.value": "XeroFinance.internal.inVokurkaExXero542515348BankTransactions"
-                    },
-                    "__SCAFFOLD_CHECK__.source": "in.c-xeroFinance.vokurkaExXero542515348BankTransactions",
-                    "__SCAFFOLD_CHECK__.original_source": "in.c-vokurka-ex-xero-542515348.BankTransactions"
+                        "value": "XeroFinance.internal.inVokurkaExXeroBankTransactions"
+                    }
                 },
                 {
                     "destination": "payments",
@@ -183,10 +169,8 @@
                     "loadType": "clone",
                     "source_search": {
                         "key": "bdm.scaffold.table.tag",
-                        "__SCAFFOLD_CHECK__.value": "XeroFinance.internal.inVokurkaExXero542515348PaymentsPayments"
-                    },
-                    "__SCAFFOLD_CHECK__.source": "in.c-xeroFinance.vokurkaExXero542515348PaymentsPayments",
-                    "__SCAFFOLD_CHECK__.original_source": "in.c-vokurka-ex-xero-542515348.Payments_Payments"
+                        "value": "XeroFinance.internal.inVokurkaExXeroPaymentsPayments"
+                    }
                 }
             ],
             "name": "Accounts Balance",
@@ -220,8 +204,7 @@
                             "value": "XeroFinance"
                         }
                     ],
-                    "destination": "out.c-xeroFinance.xeroInvoice",
-                    "__SCAFFOLD_CHECK__original_destination": "out.c-xero.invoice"
+                    "destination": "out.c-xeroFinance.xeroInvoice"
                 },
                 {
                     "source": "out_invoice_item",
@@ -238,8 +221,7 @@
                             "value": "XeroFinance"
                         }
                     ],
-                    "destination": "out.c-xeroFinance.xeroInvoiceItem",
-                    "__SCAFFOLD_CHECK__original_destination": "out.c-xero.invoice_item"
+                    "destination": "out.c-xeroFinance.xeroInvoiceItem"
                 }
             ],
             "queries": [
@@ -260,10 +242,8 @@
                     "loadType": "clone",
                     "source_search": {
                         "key": "bdm.scaffold.table.tag",
-                        "__SCAFFOLD_CHECK__.value": "XeroFinance.internal.inVokurkaExXero542515348Invoices"
-                    },
-                    "__SCAFFOLD_CHECK__.source": "in.c-xeroFinance.vokurkaExXero542515348Invoices",
-                    "__SCAFFOLD_CHECK__.original_source": "in.c-vokurka-ex-xero-542515348.Invoices"
+                        "value": "XeroFinance.internal.inVokurkaExXeroInvoices"
+                    }
                 },
                 {
                     "destination": "invoices_lines",
@@ -275,10 +255,8 @@
                     "loadType": "clone",
                     "source_search": {
                         "key": "bdm.scaffold.table.tag",
-                        "__SCAFFOLD_CHECK__.value": "XeroFinance.internal.inVokurkaExXero542515348InvoicesLineItems"
-                    },
-                    "__SCAFFOLD_CHECK__.source": "in.c-xeroFinance.vokurkaExXero542515348InvoicesLineItems",
-                    "__SCAFFOLD_CHECK__.original_source": "in.c-vokurka-ex-xero-542515348.Invoices_LineItems"
+                        "value": "XeroFinance.internal.inVokurkaExXeroInvoicesLineItems"
+                    }
                 },
                 {
                     "destination": "contact",
@@ -288,12 +266,7 @@
                     "whereOperator": "eq",
                     "columns": [],
                     "loadType": "clone",
-                    "source_search": {
-                        "key": "bdm.scaffold.table.tag",
-                        "__SCAFFOLD_CHECK__.value": "XeroFinance.internal.outXeroContact"
-                    },
-                    "__SCAFFOLD_CHECK__.source": "out.c-xeroFinance.xeroContact",
-                    "__SCAFFOLD_CHECK__.original_source": "out.c-xero.contact"
+                    "source": "out.c-xeroFinance.xeroContact"
                 }
             ],
             "name": "Invoices",

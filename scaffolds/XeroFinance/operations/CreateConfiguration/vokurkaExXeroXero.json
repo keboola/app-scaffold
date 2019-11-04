@@ -5,8 +5,6 @@
         "configuration": {
             "parameters": {
                 "consumer_key": "",
-                "#consumer_secret": "__SCAFFOLD_CHECK__",
-                "#private_key": "__SCAFFOLD_CHECK__",
                 "public_key": "-----BEGIN CERTIFICATE-----{INSERT-PUBLIC-KEY-HERE}\n-----END CERTIFICATE-----",
                 "parameters": {
                     "fromDate": "2016-01-01",
@@ -23,6 +21,261 @@
                                 "includeArchived": "true"
                             }
                         ]
+                    }
+                ]
+            },
+            "processors": {
+                "after": [
+                    {
+                        "definition": {
+                            "component": "keboola.processor-create-manifest"
+                        },
+                        "parameters": {
+                            "delimiter": ",",
+                            "enclosure": "\"",
+                            "incremental": false,
+                            "primary_key": [],
+                            "columns_from": "header"
+                        }
+                    },
+                    {
+                        "definition": {
+                            "component": "keboola.processor-skip-lines"
+                        },
+                        "parameters": {
+                            "lines": 1,
+                            "direction_from": "top"
+                        }
+                    },
+                    {
+                        "definition": {
+                            "component": "keboola.processor-add-metadata"
+                        },
+                        "parameters": {
+                            "tables": [
+                                {
+                                    "table": "Accounts",
+                                    "metadata": [
+                                        {
+                                            "key": "bdm.scaffold.table.tag",
+                                            "value": "XeroFinance.internal.inVokurkaExXeroAccounts"
+                                        },
+                                        {
+                                            "key": "scaffold.id",
+                                            "value": "XeroFinance"
+                                        }
+                                    ]
+                                },
+                                {
+                                    "table": "Accounts_Accounts",
+                                    "metadata": [
+                                        {
+                                            "key": "bdm.scaffold.table.tag",
+                                            "value": "XeroFinance.internal.inVokurkaExXeroAccountsAccounts"
+                                        },
+                                        {
+                                            "key": "scaffold.id",
+                                            "value": "XeroFinance"
+                                        }
+                                    ]
+                                },
+                                {
+                                    "table": "BankTransactions",
+                                    "metadata": [
+                                        {
+                                            "key": "bdm.scaffold.table.tag",
+                                            "value": "XeroFinance.internal.inVokurkaExXeroBankTransactions"
+                                        },
+                                        {
+                                            "key": "scaffold.id",
+                                            "value": "XeroFinance"
+                                        }
+                                    ]
+                                },
+                                {
+                                    "table": "BankTransactions_LineItems",
+                                    "metadata": [
+                                        {
+                                            "key": "bdm.scaffold.table.tag",
+                                            "value": "XeroFinance.internal.inVokurkaExXeroBankTransactionsLineItems"
+                                        },
+                                        {
+                                            "key": "scaffold.id",
+                                            "value": "XeroFinance"
+                                        }
+                                    ]
+                                },
+                                {
+                                    "table": "BankTransactions_LineItems_Tracking",
+                                    "metadata": [
+                                        {
+                                            "key": "bdm.scaffold.table.tag",
+                                            "value": "XeroFinance.internal.inVokurkaExXeroBankTransactionsLineItemsTracking"
+                                        },
+                                        {
+                                            "key": "scaffold.id",
+                                            "value": "XeroFinance"
+                                        }
+                                    ]
+                                },
+                                {
+                                    "table": "Contacts",
+                                    "metadata": [
+                                        {
+                                            "key": "bdm.scaffold.table.tag",
+                                            "value": "XeroFinance.internal.inVokurkaExXeroContacts"
+                                        },
+                                        {
+                                            "key": "scaffold.id",
+                                            "value": "XeroFinance"
+                                        }
+                                    ]
+                                },
+                                {
+                                    "table": "Contacts_Addresses",
+                                    "metadata": [
+                                        {
+                                            "key": "bdm.scaffold.table.tag",
+                                            "value": "XeroFinance.internal.inVokurkaExXeroContactsAddresses"
+                                        },
+                                        {
+                                            "key": "scaffold.id",
+                                            "value": "XeroFinance"
+                                        }
+                                    ]
+                                },
+                                {
+                                    "table": "Contacts_ContactPersons",
+                                    "metadata": [
+                                        {
+                                            "key": "bdm.scaffold.table.tag",
+                                            "value": "XeroFinance.internal.inVokurkaExXeroContactsContactPersons"
+                                        },
+                                        {
+                                            "key": "scaffold.id",
+                                            "value": "XeroFinance"
+                                        }
+                                    ]
+                                },
+                                {
+                                    "table": "Contacts_Phones",
+                                    "metadata": [
+                                        {
+                                            "key": "bdm.scaffold.table.tag",
+                                            "value": "XeroFinance.internal.inVokurkaExXeroContactsPhones"
+                                        },
+                                        {
+                                            "key": "scaffold.id",
+                                            "value": "XeroFinance"
+                                        }
+                                    ]
+                                },
+                                {
+                                    "table": "Invoices",
+                                    "metadata": [
+                                        {
+                                            "key": "bdm.scaffold.table.tag",
+                                            "value": "XeroFinance.internal.inVokurkaExXeroInvoices"
+                                        },
+                                        {
+                                            "key": "scaffold.id",
+                                            "value": "XeroFinance"
+                                        }
+                                    ]
+                                },
+                                {
+                                    "table": "Invoices_CreditNotes",
+                                    "metadata": [
+                                        {
+                                            "key": "bdm.scaffold.table.tag",
+                                            "value": "XeroFinance.internal.inVokurkaExXeroInvoicesCreditNotes"
+                                        },
+                                        {
+                                            "key": "scaffold.id",
+                                            "value": "XeroFinance"
+                                        }
+                                    ]
+                                },
+                                {
+                                    "table": "Invoices_LineItems",
+                                    "metadata": [
+                                        {
+                                            "key": "bdm.scaffold.table.tag",
+                                            "value": "XeroFinance.internal.inVokurkaExXeroInvoicesLineItems"
+                                        },
+                                        {
+                                            "key": "scaffold.id",
+                                            "value": "XeroFinance"
+                                        }
+                                    ]
+                                },
+                                {
+                                    "table": "Invoices_LineItems_Tracking",
+                                    "metadata": [
+                                        {
+                                            "key": "bdm.scaffold.table.tag",
+                                            "value": "XeroFinance.internal.inVokurkaExXeroInvoicesLineItemsTracking"
+                                        },
+                                        {
+                                            "key": "scaffold.id",
+                                            "value": "XeroFinance"
+                                        }
+                                    ]
+                                },
+                                {
+                                    "table": "Invoices_Overpayments",
+                                    "metadata": [
+                                        {
+                                            "key": "bdm.scaffold.table.tag",
+                                            "value": "XeroFinance.internal.inVokurkaExXeroInvoicesOverpayments"
+                                        },
+                                        {
+                                            "key": "scaffold.id",
+                                            "value": "XeroFinance"
+                                        }
+                                    ]
+                                },
+                                {
+                                    "table": "Invoices_Payments",
+                                    "metadata": [
+                                        {
+                                            "key": "bdm.scaffold.table.tag",
+                                            "value": "XeroFinance.internal.inVokurkaExXeroInvoicesPayments"
+                                        },
+                                        {
+                                            "key": "scaffold.id",
+                                            "value": "XeroFinance"
+                                        }
+                                    ]
+                                },
+                                {
+                                    "table": "Payments",
+                                    "metadata": [
+                                        {
+                                            "key": "bdm.scaffold.table.tag",
+                                            "value": "XeroFinance.internal.inVokurkaExXeroPayments"
+                                        },
+                                        {
+                                            "key": "scaffold.id",
+                                            "value": "XeroFinance"
+                                        }
+                                    ]
+                                },
+                                {
+                                    "table": "Payments_Payments",
+                                    "metadata": [
+                                        {
+                                            "key": "bdm.scaffold.table.tag",
+                                            "value": "XeroFinance.internal.inVokurkaExXeroPaymentsPayments"
+                                        },
+                                        {
+                                            "key": "scaffold.id",
+                                            "value": "XeroFinance"
+                                        }
+                                    ]
+                                }
+                            ]
+                        }
                     }
                 ]
             }
