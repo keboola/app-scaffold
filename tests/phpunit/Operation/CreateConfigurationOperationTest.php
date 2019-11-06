@@ -143,7 +143,7 @@ class CreateConfigurationOperationTest extends BaseOperationTestCase
         $executionMock = self::getExecutionContext([], $parameters);
 
         $apiClientStoreMock = self::getApiClientStore();
-        $encryptionApiClient = self::getMockEncryptionApiClient(self::exactly(2));
+        $encryptionApiClient = self::getMockEncryptionApiClient(self::exactly(1));
         $apiClientStoreMock->method('getEncryptionApiClient')->willReturn($encryptionApiClient);
         $apiClientStoreMock->method('getComponentsApiClient')->willReturn($this->componentsApiClient);
         $this->sapiClient->method('apiPost')->willReturn([
@@ -227,7 +227,7 @@ class CreateConfigurationOperationTest extends BaseOperationTestCase
         $apiClientStoreMock = self::getApiClientStore(
             $this->sapiClient,
             $this->componentsApiClient,
-            self::getMockEncryptionApiClient(self::exactly(2)),
+            self::getMockEncryptionApiClient(self::exactly(1)),
             null
         );
 
