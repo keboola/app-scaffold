@@ -121,11 +121,11 @@ class ExSalesforceConfigurationRowsDecorator extends AbstractDecorator
                 'metadata' => [
                     [
                         'key' => OrchestrationImporter::SCAFFOLD_TABLE_TAG,
-                        self::USER_ACTION_KEY_PREFIX . 'value' => $metadataValue,
+                        'value' => $metadataValue,
                     ],
                     [
                         'key' => DecoratorInterface::SCAFFOLD_ID_TAG,
-                        $operationImport->getScaffoldId(),
+                        'value' => $operationImport->getScaffoldId(),
                     ],
                 ],
             ];
@@ -135,12 +135,11 @@ class ExSalesforceConfigurationRowsDecorator extends AbstractDecorator
             $row['configuration']['processors'] = [];
         }
         if (empty($row['configuration']['processors']['after'])) {
-            $row['configuration']['processors']['after'] = [];
+            $row['configuration']['processors']['after'] = $processors;
+        } else {
+            $row['configuration']['processors']['after'] =
+                array_merge_recursive($row['configuration']['processors']['after'], $processors);
         }
-
-        $afterProcessors = array_merge_recursive($row['configuration']['processors']['after'], $processors);
-        $row['configuration']['processors'][self::USER_ACTION_KEY_PREFIX . '.after'] = $afterProcessors;
-        unset($row['configuration']['processors']['after']);
 
         return $row;
     }
