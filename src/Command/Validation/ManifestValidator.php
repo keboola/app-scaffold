@@ -6,6 +6,7 @@ namespace Keboola\ScaffoldApp\Command\Validation;
 
 use Keboola\Component\JsonHelper;
 use Keboola\ScaffoldApp\Operation\OperationsConfig;
+use Swaggest\JsonSchema\Schema;
 use Symfony\Component\Finder\Finder;
 use Symfony\Component\Finder\SplFileInfo;
 use Symfony\Component\Validator\Constraints as Assert;
@@ -64,6 +65,7 @@ final class ManifestValidator
                         $payload
                     ): void {
                         $this->validateScaffoldInputsOperationListing($context);
+                        $this->validateJsonSchema($context, $object);
                     }),
                 ],
             ],
@@ -133,5 +135,26 @@ final class ManifestValidator
         }
 
         return $missingOperations;
+    }
+
+    private function validateJsonSchema(
+        ExecutionContextInterface $context,
+        array $inputs
+    ): void {
+        foreach ($inputs as $index => $input) {
+            if (empty($input['schema'])) {
+                continue;
+            }
+            try {
+                $schema = (string) json_encode($input['schema']);
+                Schema::import(json_decode($schema, false));
+            } catch (\Throwable $e) {
+                $context->buildViolation(sprintf(
+                    'Json schema for component "%s" is not valid: "%s".',
+                    $input['id'],
+                    $e->getMessage()
+                ))->addViolation();
+            }
+        }
     }
 }

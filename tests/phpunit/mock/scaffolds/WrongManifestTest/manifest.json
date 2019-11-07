@@ -1,0 +1,25 @@
+{
+    "name": "",
+    "author": "",
+    "description": "Sample",
+    "inputs": [
+        {
+            "id": "connectionWriter",
+            "name": "writer",
+            "required": true,
+            "componentId": "keboola.wr-storage",
+            "schema": {
+            }
+        },{
+            "id": "invalid props"
+        },{
+            "id": "invalid schema",
+            "name": "writer",
+            "required": true,
+            "componentId": "keboola.component-xxx",
+            "schema": {
+                "type": "any"
+            }
+        }
+    ]
+}
