@@ -14,7 +14,7 @@ use Keboola\ScaffoldApp\Importer\OrchestrationImporter;
  *
  * ## Configuration specification:
  *
- * Configuration has path "configuration.parameters.jobs[].dataType"
+ * Configuration has path "configuration.parameters.config.jobs[].dataType"
  *
  * Jobs can have recursive children[]
  * each dataType is exported table.
@@ -64,7 +64,7 @@ class GenericExtractorConfigurationDecorator extends AbstractDecorator
         OperationImport $operationImport
     ): OperationImport {
         $payload = $operationImport->getPayload();
-        $dataTypes = $this->getDataTypesRecursive($payload['configuration']['parameters']['jobs']);
+        $dataTypes = $this->getDataTypesRecursive($payload['configuration']['parameters']['config']['jobs']);
 
         // add tables to metadata processor
         $processors = self::AFTER_PROCESSORS_TEMPLATE;
@@ -143,10 +143,14 @@ class GenericExtractorConfigurationDecorator extends AbstractDecorator
             return false;
         }
 
-        if (empty($payload['configuration']['parameters']['jobs'])) {
+        if (!isset($payload['configuration']['parameters']['config'])) {
             return false;
         }
-        $dataTypes = $this->getDataTypesRecursive($payload['configuration']['parameters']['jobs']);
+
+        if (empty($payload['configuration']['parameters']['config']['jobs'])) {
+            return false;
+        }
+        $dataTypes = $this->getDataTypesRecursive($payload['configuration']['parameters']['config']['jobs']);
 
         return !empty($dataTypes);
     }

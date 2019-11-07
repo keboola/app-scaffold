@@ -20,12 +20,14 @@ class GenericExtractorConfigurationDecoratorTest extends ImporterBaseTestCase
                 'name' => '',
                 'configuration' => [
                     'parameters' => [
-                        'jobs' => [
-                            [
-                                'dataType' => 'table',
-                                'children' => [
-                                    [
-                                        'dataType' => 'table2',
+                        'config' => [
+                            'jobs' => [
+                                [
+                                    'dataType' => 'table',
+                                    'children' => [
+                                        [
+                                            'dataType' => 'table2',
+                                        ],
                                     ],
                                 ],
                             ],
@@ -108,7 +110,9 @@ class GenericExtractorConfigurationDecoratorTest extends ImporterBaseTestCase
                 'name' => '',
                 'configuration' => [
                     'parameters' => [
-                        'jobs' => [],
+                        'config' => [
+                            'jobs' => [],
+                        ],
                     ],
                 ],
                 'rows' => [],
@@ -132,9 +136,11 @@ class GenericExtractorConfigurationDecoratorTest extends ImporterBaseTestCase
                 'name' => '',
                 'configuration' => [
                     'parameters' => [
-                        'jobs' => [
-                            [
-                                'dataType' => 'table',
+                        'config' => [
+                            'jobs' => [
+                                [
+                                    'dataType' => 'table',
+                                ],
                             ],
                         ],
                     ],
@@ -155,11 +161,13 @@ class GenericExtractorConfigurationDecoratorTest extends ImporterBaseTestCase
                 'name' => '',
                 'configuration' => [
                     'parameters' => [
-                        'jobs' => [
-                            [
-                                'children' => [
-                                    [
-                                        'dataType' => 'table',
+                        'config' => [
+                            'jobs' => [
+                                [
+                                    'children' => [
+                                        [
+                                            'dataType' => 'table',
+                                        ],
                                     ],
                                 ],
                             ],
