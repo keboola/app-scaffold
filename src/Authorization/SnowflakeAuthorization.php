@@ -39,15 +39,9 @@ class SnowflakeAuthorization implements AuthorizationInterface
         $configData['parameters']['db']['schema'] = $data['connection']['schema'];
         $configData['parameters']['db']['warehouse'] = $data['connection']['warehouse'];
         $configData['parameters']['db']['user'] = $data['connection']['user'];
-        $configData['parameters']['db']['#password'] = $data['connection']['password'];
+        $configData['parameters']['db']['password'] = $data['connection']['password'];
         $configData['parameters']['db']['port'] = '443';
         $configData['parameters']['db']['driver'] = 'snowflake';
-        $tokenInfo = $storageClient->verifyToken();
-        $configData = $encryptionClient->encryptConfigurationData(
-            $configData,
-            $configuration->getComponentId(),
-            (string) $tokenInfo['owner']['id']
-        );
         $configuration->setConfiguration($configData);
         $components = new Components($storageClient);
         $components->updateConfiguration($configuration);
