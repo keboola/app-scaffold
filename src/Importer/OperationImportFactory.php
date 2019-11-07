@@ -6,6 +6,7 @@ namespace Keboola\ScaffoldApp\Importer;
 
 use Keboola\Orchestrator\OrchestrationTask;
 use Keboola\ScaffoldApp\Importer\Decorator\ComponentSpecific\ExSalesforceConfigurationRowsDecorator;
+use Keboola\ScaffoldApp\Importer\Decorator\ComponentSpecific\GenericExtractorConfigurationDecorator;
 use Keboola\ScaffoldApp\Importer\Decorator\DecoratorInterface;
 use Keboola\ScaffoldApp\Importer\Decorator\ClearEncryptedParametersDecorator;
 use Keboola\ScaffoldApp\Importer\Decorator\StorageInputTablesDecorator;
@@ -19,6 +20,7 @@ class OperationImportFactory
         ExSalesforceConfigurationRowsDecorator::class,
         ClearEncryptedParametersDecorator::class,
         StorageInputTablesDecorator::class,
+        GenericExtractorConfigurationDecorator::class,
     ];
 
     public static function createOperationImport(
