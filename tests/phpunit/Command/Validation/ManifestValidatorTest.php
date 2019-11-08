@@ -44,15 +44,13 @@ class ManifestValidatorTest extends TestCase
             '[inputs][1][required]' => 'This field is missing.',
             '[inputs][2][schema][required]' => 'This field is missing.',
             '[inputs][2][schema][properties]' => 'This field is missing.',
-            '[inputs]' => [
-                0 => 'Scaffold inputs missing this operations: snowflakeExtractor',
-                // phpcs:disable
-                1 => 'Json schema for component "invalid schema" is not valid: "No valid results for anyOf {
+            '[inputs]' => 'Scaffold inputs missing this operations: snowflakeExtractor',
+            // phpcs:disable
+            '[inputs][2][schema]' => 'Json schema for component "invalid schema" is not valid: "No valid results for anyOf {
   0: Enum failed, enum: ["array","boolean","integer","null","number","object","string"], data: "any" at #->properties:type->anyOf[0]
   1: Array expected, "any" received at #->properties:type->anyOf[1]
-} at #->properties:type".',
-                // phpcs:enable
-            ],
+} at #->properties:type".'
+            // phpcs:enable
         ], $errorsActual);
     }
 

@@ -153,7 +153,7 @@ final class ManifestValidator
                     'Json schema for component "%s" is not valid: "%s".',
                     $input['id'],
                     $e->getMessage()
-                ))->addViolation();
+                ))->atPath(sprintf('[%s][schema]', $index))->addViolation();
             }
         }
     }
