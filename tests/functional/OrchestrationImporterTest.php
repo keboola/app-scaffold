@@ -17,9 +17,8 @@ class OrchestrationImporterTest extends FunctionalBaseTestCase
 {
     public function testImport(): void
     {
-        $this->clearWorkspace();
-
         $scaffoldId = 'PassThroughTestNoDefinition';
+        $this->clearWorkspaceForManifest($this->apiClients, __DIR__ . '/../phpunit/mock/scaffolds/' . $scaffoldId);
         $inputParameters = [
             'connectionWriter' => [
                 'parameters' => [
