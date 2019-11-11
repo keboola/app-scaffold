@@ -70,7 +70,7 @@ class ExSalesforceConfigurationRowsDecoratorTest extends ImporterBaseTestCase
                         ],
                     ],
                     'processors' => [
-                        '__SCAFFOLD_CHECK__.after' => [
+                        'after' => [
                             [
                                 'definition' =>
                                     [
@@ -109,12 +109,12 @@ class ExSalesforceConfigurationRowsDecoratorTest extends ImporterBaseTestCase
                                             'metadata' => [
                                                 [
                                                     'key' => 'bdm.scaffold.table.tag',
-                                                    '__SCAFFOLD_CHECK__value' =>
+                                                    'value' =>
                                                         'Scaffold_Id.internal.inHtnsExSalesforce######SampleTableName',
                                                 ],
                                                 [
                                                     'key' => 'scaffold.id',
-                                                    'Scaffold_Id',
+                                                    'value' => 'Scaffold_Id',
                                                 ],
                                             ],
                                         ],
