@@ -12,5 +12,5 @@ interface ConfigurationDecoratorInterface
         Configuration $configuration
     ): Configuration;
 
-    public static function supports(Configuration $configuration): bool;
+    public function supports(Configuration $configuration): bool;
 }

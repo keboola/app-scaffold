@@ -8,7 +8,7 @@ use Keboola\StorageApi\Options\Components\Configuration;
 
 class ZendeskDecorator implements ConfigurationDecoratorInterface
 {
-    public static function supports(Configuration $configuration): bool
+    public function supports(Configuration $configuration): bool
     {
         return $configuration->getComponentId() === 'keboola.ex-zendesk';
     }

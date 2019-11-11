@@ -45,8 +45,8 @@ class CreateConfigurationOperation implements OperationInterface
 
         /** @var ConfigurationDecoratorInterface $decorator */
         foreach (self::DECORATORS as $decorator) {
-            if ($decorator::supports($configuration)) {
-                $decorator = new $decorator();
+            $decorator = new $decorator();
+            if ($decorator->supports($configuration)) {
                 $configuration = $decorator->getDecoratedConfiguration($configuration);
             }
         }

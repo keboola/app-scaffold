@@ -46,10 +46,10 @@ class ZendeskDecoratorTest extends TestCase
     {
         $configuration = new Configuration();
         $configuration->setComponentId('keboola.ex-zendesk');
-        self::assertTrue(ZendeskDecorator::supports($configuration));
+        self::assertTrue((new ZendeskDecorator)->supports($configuration));
 
         $configuration = new Configuration();
         $configuration->setComponentId('keboola.ex-othercomponent');
-        self::assertFalse(ZendeskDecorator::supports($configuration));
+        self::assertFalse((new ZendeskDecorator)->supports($configuration));
     }
 }
