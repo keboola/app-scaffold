@@ -5,6 +5,8 @@ declare(strict_types=1);
 namespace Keboola\ScaffoldApp\Operation;
 
 use Keboola\ScaffoldApp\ApiClientStore;
+use Keboola\ScaffoldApp\Operation\Decorator\CreateConfiguration\ConfigurationDecoratorInterface;
+use Keboola\ScaffoldApp\Operation\Decorator\CreateConfiguration\ZendeskDecorator;
 use Keboola\ScaffoldApp\SyncActions\UseScaffoldExecutionContext\ExecutionContext;
 use Keboola\ScaffoldApp\OperationConfig\CreateConfigurationOperationConfig;
 use Keboola\ScaffoldApp\OperationConfig\OperationConfigInterface;
@@ -12,6 +14,10 @@ use Psr\Log\LoggerInterface;
 
 class CreateConfigurationOperation implements OperationInterface
 {
+    private const DECORATORS = [
+        ZendeskDecorator::class,
+    ];
+
     /**
      * @var ApiClientStore
      */
@@ -36,6 +42,14 @@ class CreateConfigurationOperation implements OperationInterface
         ExecutionContext $executionContext
     ): void {
         $configuration = $operationConfig->getRequestConfiguration($executionContext->getScaffoldId());
+
+        /** @var ConfigurationDecoratorInterface $decorator */
+        foreach (self::DECORATORS as $decorator) {
+            $decorator = new $decorator();
+            if ($decorator->supports($configuration)) {
+                $configuration = $decorator->getDecoratedConfiguration($configuration);
+            }
+        }
 
         $this->logger->info(
             sprintf(
