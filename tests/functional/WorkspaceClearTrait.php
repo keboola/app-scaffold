@@ -5,57 +5,41 @@ declare(strict_types=1);
 namespace Keboola\ScaffoldApp\FunctionalTests;
 
 use Keboola\ScaffoldApp\ApiClientStore;
-use Keboola\ScaffoldApp\Operation\OperationsConfig;
-use Symfony\Component\Finder\Finder;
-use Symfony\Component\Finder\SplFileInfo;
+use Keboola\ScaffoldApp\SyncActions\ObjectLister;
 
 trait WorkspaceClearTrait
 {
-    protected function clearWorkspaceForManifest(
+    protected function clearWorkspace(
         ApiClientStore $store,
-        string $scaffoldFolder
+        string $scaffoldId
     ): void {
-        $configurationsToDelete = [];
-        $orchestrationsToDelete = [];
-        foreach ([
-                     OperationsConfig::CREATE_CONFIGURATION,
-                     OperationsConfig::CREATE_ORCHESTRATION,
-                 ] as $operationsName
-        ) {
-            $finder = new Finder();
-            $operations = $finder->in(sprintf('%s/operations/%s/', $scaffoldFolder, $operationsName))
-                ->files()
-                ->depth(0);
-
-            /** @var SplFileInfo $operation */
-            foreach ($operations as $operation) {
-                if ($operationsName === OperationsConfig::CREATE_ORCHESTRATION) {
-                    $orchestrationsToDelete[] = json_decode($operation->getContents(), true)['payload']['name'];
-                } else {
-                    $configurationsToDelete[] = json_decode($operation->getContents(), true)['payload']['name'];
+        $objects = ObjectLister::listObjects($store->getStorageApiClient(), $store->getComponentsApiClient());
+        if (empty($objects[$scaffoldId])) {
+            return;
+        }
+        if (!empty($objects[$scaffoldId]['configurations'])) {
+            foreach ($objects[$scaffoldId]['configurations'] as $configuration) {
+                $store->getComponentsApiClient()
+                    ->deleteConfiguration($configuration['componentId'], $configuration['configurationId']);
+            }
+        };
+        $bucketsToDrop = [];
+        if (!empty($objects[$scaffoldId]['tables'])) {
+            foreach ($objects[$scaffoldId]['tables'] as $tableId) {
+                $table = $store->getStorageApiClient()
+                    ->getTable($tableId);
+                if (!in_array($table['bucket']['id'], $bucketsToDrop)) {
+                    $bucketsToDrop[] = $table['bucket']['id'];
                 }
+                $store->getStorageApiClient()
+                    ->dropTable($tableId);
             }
-        }
-        $orchestrations = $store->getOrchestrationApiClient()->getOrchestrations();
-        foreach ($orchestrations as $orchestration) {
-            if (in_array($orchestration['name'], $orchestrationsToDelete)) {
-                $store->getOrchestrationApiClient()->deleteOrchestration($orchestration['id']);
+        };
+        if (!empty($bucketsToDrop)) {
+            foreach ($bucketsToDrop as $bucketId) {
+                $store->getStorageApiClient()
+                    ->dropBucket($bucketId);
             }
-        }
-        $components = $store->getComponentsApiClient()->listComponents();
-        foreach ($components as $component) {
-            if ($component['id'] === 'orchestration') {
-                continue;
-            }
-            foreach ($component['configurations'] as $configuration) {
-                if (in_array(
-                    $configuration['name'],
-                    $configurationsToDelete
-                )) {
-                    $store->getComponentsApiClient()
-                        ->deleteConfiguration($component['id'], $configuration['id']);
-                }
-            }
-        }
+        };
     }
 }

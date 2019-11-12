@@ -78,9 +78,9 @@ class ComponentTest extends AbstractDatadirTestCase
             throw new Exception('Env variable "KBC_URL" must be set.');
         }
 
-        $this->clearWorkspaceForManifest(
+        $this->clearWorkspace(
             new ApiClientStore(new NullLogger()),
-            Component::SCAFFOLDS_DIR . '/CrmMrrSalesforce'
+            'CrmMrrSalesforce'
         );
 
         $specification = new DatadirTestSpecification(
