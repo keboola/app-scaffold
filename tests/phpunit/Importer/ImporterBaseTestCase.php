@@ -10,10 +10,10 @@ use PHPUnit\Framework\TestCase;
 
 abstract class ImporterBaseTestCase extends TestCase
 {
-    public function getExampleOrchestrationTask(): OrchestrationTask
+    public function getExampleOrchestrationTask(string $componentId = 'keboola.component'): OrchestrationTask
     {
         return OrchestrationTaskFactory::createTaskFromResponse([
-            'component' => 'keboola.component',
+            'component' => $componentId,
             'action' => 'run',
             'actionParameters' => [
             ],

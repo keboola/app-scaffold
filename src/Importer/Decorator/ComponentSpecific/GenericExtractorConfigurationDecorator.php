@@ -14,7 +14,9 @@ use Keboola\ScaffoldApp\Importer\OrchestrationImporter;
  *
  * ## Configuration specification:
  *
- * Configuration has path "configuration.parameters.config.jobs[].dataType"
+ * Configuration has path
+ * "configuration.parameters.config.jobs[].dataType|endPoint" This applies to
+ * all components based on generic extractor and generic extractor
  *
  * Jobs can have recursive children[]
  * each dataType is exported table.
@@ -22,41 +24,20 @@ use Keboola\ScaffoldApp\Importer\OrchestrationImporter;
  * ## Decorator function:
  *
  * For configuration are added processors:
- * "keboola.processor-create-manifest" "keboola.processor-skip-lines" "keboola.processor-add-metadata".
+ * "keboola.processor-create-manifest" "keboola.processor-skip-lines"
+ * "keboola.processor-add-metadata".
  *
- * "keboola.processor-add-metadata" has table entry for each dataType
+ * "keboola.processor-add-metadata" has table entry for each dataType|endPoint
  */
 class GenericExtractorConfigurationDecorator extends AbstractDecorator
 {
-    private const AFTER_PROCESSORS_TEMPLATE = [
-        [
-            'definition' => [
-                'component' => 'keboola.processor-create-manifest',
-            ],
-            'parameters' => [
-                'delimiter' => ',',
-                'enclosure' => '"',
-                'incremental' => false,
-                'primary_key' => [],
-                'columns_from' => 'header',
-            ],
+    private const GENERIC_EXTRACTOR_COMPONENT_ID = 'keboola.ex-generic-v2';
+    private const PROCESSOR_ADD_METADATA_TEMPLATE = [
+        'definition' => [
+            'component' => 'keboola.processor-add-metadata',
         ],
-        [
-            'definition' => [
-                'component' => 'keboola.processor-skip-lines',
-            ],
-            'parameters' => [
-                'lines' => 1,
-                'direction_from' => 'top',
-            ],
-        ],
-        [
-            'definition' => [
-                'component' => 'keboola.processor-add-metadata',
-            ],
-            'parameters' => [
-                'tables' => [],
-            ],
+        'parameters' => [
+            'tables' => [],
         ],
     ];
 
@@ -65,9 +46,14 @@ class GenericExtractorConfigurationDecorator extends AbstractDecorator
     ): OperationImport {
         $payload = $operationImport->getPayload();
         $dataTypes = $this->getDataTypesRecursive($payload['configuration']['parameters']['config']['jobs']);
+        $isGenericExtractor = $operationImport->getComponentId() === self::GENERIC_EXTRACTOR_COMPONENT_ID;
 
-        // add tables to metadata processor
-        $processors = self::AFTER_PROCESSORS_TEMPLATE;
+        $outputBucket = null;
+        if (!empty($payload['configuration']['parameters']['config']['outputBucket'])) {
+            $outputBucket = $payload['configuration']['parameters']['config']['outputBucket'];
+        }
+
+        $addMetadataProcessorTables = [];
         foreach ($dataTypes as $dataType) {
             // simulate configuration id
             $realTableName = sprintf('in.c-%s.%s', $operationImport->getComponentId(), $dataType);
@@ -75,8 +61,12 @@ class GenericExtractorConfigurationDecorator extends AbstractDecorator
                 $operationImport,
                 $realTableName
             );
-            $processors[2]['parameters']['tables'][] = [
-                'table' => $dataType,
+            $tableName = $dataType;
+            if ($outputBucket !== null) {
+                $tableName = sprintf('%s.%s', $outputBucket, $dataType);
+            }
+            $addMetadataProcessorTables[] = [
+                'table' => $tableName,
                 'metadata' => [
                     [
                         'key' => OrchestrationImporter::SCAFFOLD_TABLE_TAG,
@@ -90,14 +80,29 @@ class GenericExtractorConfigurationDecorator extends AbstractDecorator
             ];
         }
 
+        // add tables to metadata processor
+        $processors = [
+            self::PROCESSOR_ADD_METADATA_TEMPLATE,
+        ];
+        $processors[0]['parameters']['tables'] = $addMetadataProcessorTables;
+        $afterProcessorKey = DecoratorInterface::USER_ACTION_KEY_PREFIX . '.after';
+        if ($isGenericExtractor === true) {
+            $afterProcessorKey = 'after';
+        }
+
         if (empty($payload['configuration']['processors'])) {
             $payload['configuration']['processors'] = [];
         }
         if (empty($payload['configuration']['processors']['after'])) {
-            $payload['configuration']['processors']['after'] = $processors;
+            $payload['configuration']['processors'][$afterProcessorKey] =
+                $processors;
         } else {
-            $payload['configuration']['processors']['after'] =
+            $payload['configuration']['processors'][$afterProcessorKey] =
                 array_merge_recursive($payload['configuration']['processors']['after'], $processors);
+
+            if ($afterProcessorKey !== 'after') {
+                unset($payload['configuration']['processors']['after']);
+            }
         }
 
         $this->output->writeln(sprintf(
@@ -121,6 +126,8 @@ class GenericExtractorConfigurationDecorator extends AbstractDecorator
         foreach ($jobs as $job) {
             if (isset($job['dataType'])) {
                 $dataTypes[] = $job['dataType'];
+            } elseif (isset($job['endPoint'])) {
+                $dataTypes[] = $job['endPoint'];
             }
             if (!empty($job['children'])) {
                 $dataTypes = array_merge(

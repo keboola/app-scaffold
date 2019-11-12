@@ -23,10 +23,15 @@ class GenericExtractorConfigurationDecoratorTest extends ImporterBaseTestCase
                         'config' => [
                             'jobs' => [
                                 [
+                                    'endPoint' => 'table',
                                     'dataType' => 'table',
                                     'children' => [
                                         [
                                             'dataType' => 'table2',
+                                            'endPoint' => 'table2',
+                                        ],
+                                        [
+                                            'endPoint' => 'table3',
                                         ],
                                     ],
                                 ],
@@ -42,27 +47,6 @@ class GenericExtractorConfigurationDecoratorTest extends ImporterBaseTestCase
         );
 
         self::assertSame([
-            [
-                'definition' => [
-                    'component' => 'keboola.processor-create-manifest',
-                ],
-                'parameters' => [
-                    'delimiter' => ',',
-                    'enclosure' => '"',
-                    'incremental' => false,
-                    'primary_key' => [],
-                    'columns_from' => 'header',
-                ],
-            ],
-            [
-                'definition' => [
-                    'component' => 'keboola.processor-skip-lines',
-                ],
-                'parameters' => [
-                    'lines' => 1,
-                    'direction_from' => 'top',
-                ],
-            ],
             [
                 'definition' => [
                     'component' => 'keboola.processor-add-metadata',
@@ -88,6 +72,107 @@ class GenericExtractorConfigurationDecoratorTest extends ImporterBaseTestCase
                                 [
                                     'key' => 'bdm.scaffold.table.tag',
                                     'value' => 'scaffoldId.internal.inKeboolaComponentTable2',
+                                ],
+                                [
+                                    'key' => 'scaffold.id',
+                                    'value' => 'scaffoldId',
+                                ],
+                            ],
+                        ],
+                        [
+                            'table' => 'table3',
+                            'metadata' => [
+                                [
+                                    'key' => 'bdm.scaffold.table.tag',
+                                    'value' => 'scaffoldId.internal.inKeboolaComponentTable3',
+                                ],
+                                [
+                                    'key' => 'scaffold.id',
+                                    'value' => 'scaffoldId',
+                                ],
+                            ],
+                        ],
+                    ],
+                ],
+            ],
+        ], $operationImport->getPayload()['configuration']['processors']['__SCAFFOLD_CHECK__.after']);
+    }
+
+    public function testGetDecoratedProjectImportWithGenericExtractor(): void
+    {
+        $task = $this->getExampleOrchestrationTask('keboola.ex-generic-v2');
+
+        $operationImport = OperationImportFactory::createOperationImport(
+            [
+                'name' => '',
+                'configuration' => [
+                    'parameters' => [
+                        'config' => [
+                            'outputBucket' => 'my-bucket',
+                            'jobs' => [
+                                [
+                                    'endPoint' => 'table',
+                                    'dataType' => 'table',
+                                    'children' => [
+                                        [
+                                            'dataType' => 'table2',
+                                            'endPoint' => 'table2',
+                                        ],
+                                        [
+                                            'endPoint' => 'table3',
+                                        ],
+                                    ],
+                                ],
+                            ],
+                        ],
+                    ],
+                ],
+                'rows' => [],
+            ],
+            $task,
+            'scaffoldId',
+            new NullOutput
+        );
+
+        self::assertSame([
+            [
+                'definition' => [
+                    'component' => 'keboola.processor-add-metadata',
+                ],
+                'parameters' => [
+                    'tables' => [
+                        [
+                            'table' => 'my-bucket.table',
+                            'metadata' => [
+                                [
+                                    'key' => 'bdm.scaffold.table.tag',
+                                    'value' => 'scaffoldId.internal.inKeboolaExGenericV2Table',
+                                ],
+                                [
+                                    'key' => 'scaffold.id',
+                                    'value' => 'scaffoldId',
+                                ],
+                            ],
+                        ],
+                        [
+                            'table' => 'my-bucket.table2',
+                            'metadata' => [
+                                [
+                                    'key' => 'bdm.scaffold.table.tag',
+                                    'value' => 'scaffoldId.internal.inKeboolaExGenericV2Table2',
+                                ],
+                                [
+                                    'key' => 'scaffold.id',
+                                    'value' => 'scaffoldId',
+                                ],
+                            ],
+                        ],
+                        [
+                            'table' => 'my-bucket.table3',
+                            'metadata' => [
+                                [
+                                    'key' => 'bdm.scaffold.table.tag',
+                                    'value' => 'scaffoldId.internal.inKeboolaExGenericV2Table3',
                                 ],
                                 [
                                     'key' => 'scaffold.id',
