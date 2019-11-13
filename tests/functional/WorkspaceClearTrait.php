@@ -31,14 +31,12 @@ trait WorkspaceClearTrait
                 if (!in_array($table['bucket']['id'], $bucketsToDrop)) {
                     $bucketsToDrop[] = $table['bucket']['id'];
                 }
-                $store->getStorageApiClient()
-                    ->dropTable($tableId);
             }
         };
         if (!empty($bucketsToDrop)) {
             foreach ($bucketsToDrop as $bucketId) {
                 $store->getStorageApiClient()
-                    ->dropBucket($bucketId);
+                    ->dropBucket($bucketId, ['force' => true]);
             }
         };
     }
