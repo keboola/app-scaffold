@@ -11,37 +11,11 @@ use Psr\Log\NullLogger;
 
 abstract class FunctionalBaseTestCase extends TestCase
 {
+    use WorkspaceClearTrait;
     /**
      * @var ApiClientStore
      */
     protected $apiClients;
-
-    protected function clearWorkspace(): void
-    {
-        $orchestrations = $this->apiClients->getOrchestrationApiClient()->getOrchestrations();
-        foreach ($orchestrations as $orchestration) {
-            if ($orchestration['name'] === 'orch01') {
-                $this->apiClients->getOrchestrationApiClient()->deleteOrchestration($orchestration['id']);
-            }
-        }
-        $components = $this->apiClients->getComponentsApiClient()->listComponents();
-        foreach ($components as $component) {
-            if ($component['id'] === 'orchestration') {
-                continue;
-            }
-            foreach ($component['configurations'] as $configuration) {
-                if (in_array(
-                    $configuration['name'],
-                    [
-                        'ex01',
-                    ]
-                )) {
-                    $this->apiClients->getComponentsApiClient()
-                        ->deleteConfiguration($component['id'], $configuration['id']);
-                }
-            }
-        }
-    }
 
     protected function setUp(): void
     {
