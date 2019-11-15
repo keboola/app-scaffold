@@ -1,0 +1,712 @@
+{
+    "componentId": "keboola.wr-db-snowflake",
+    "authorization": "provisionedSnowflake",
+    "payload": {
+        "name": "CRM",
+        "configuration": {
+            "parameters": {
+                "db": {},
+                "tables": [
+                    {
+                        "dbName": "ACTIVITY",
+                        "export": true,
+                        "tableId": "out.c-crm.activity",
+                        "items": [
+                            {
+                                "name": "activity_id",
+                                "dbName": "ACTIVITY_ID",
+                                "type": "varchar",
+                                "size": "255",
+                                "nullable": false,
+                                "default": ""
+                            },
+                            {
+                                "name": "employee_id",
+                                "dbName": "EMPLOYEE_ID",
+                                "type": "varchar",
+                                "size": "255",
+                                "nullable": false,
+                                "default": ""
+                            },
+                            {
+                                "name": "contact_id",
+                                "dbName": "CONTACT_ID",
+                                "type": "varchar",
+                                "size": "255",
+                                "nullable": false,
+                                "default": ""
+                            },
+                            {
+                                "name": "opportunity_id",
+                                "dbName": "OPPORTUNITY_ID",
+                                "type": "varchar",
+                                "size": "255",
+                                "nullable": false,
+                                "default": ""
+                            },
+                            {
+                                "name": "activity",
+                                "dbName": "ACTIVITY",
+                                "type": "varchar",
+                                "size": "255",
+                                "nullable": false,
+                                "default": ""
+                            },
+                            {
+                                "name": "activity_date",
+                                "dbName": "ACTIVITY_DATE",
+                                "type": "timestamp",
+                                "size": "",
+                                "nullable": true,
+                                "default": ""
+                            },
+                            {
+                                "name": "activity_duration_m",
+                                "dbName": "ACTIVITY_DURATION_M",
+                                "type": "integer",
+                                "size": "",
+                                "nullable": true,
+                                "default": ""
+                            }
+                        ],
+                        "primaryKey": [
+                            "ACTIVITY_ID"
+                        ]
+                    },
+                    {
+                        "dbName": "COMPANY",
+                        "export": true,
+                        "tableId": "out.c-crm.company",
+                        "items": [
+                            {
+                                "name": "company_id",
+                                "dbName": "COMPANY_ID",
+                                "type": "varchar",
+                                "size": "255",
+                                "nullable": false,
+                                "default": ""
+                            },
+                            {
+                                "name": "company",
+                                "dbName": "COMPANY",
+                                "type": "varchar",
+                                "size": "255",
+                                "nullable": false,
+                                "default": ""
+                            },
+                            {
+                                "name": "website",
+                                "dbName": "WEBSITE",
+                                "type": "varchar",
+                                "size": "255",
+                                "nullable": false,
+                                "default": ""
+                            },
+                            {
+                                "name": "date_created",
+                                "dbName": "DATE_CREATED",
+                                "type": "date",
+                                "size": "",
+                                "nullable": true,
+                                "default": ""
+                            }
+                        ],
+                        "primaryKey": [
+                            "COMPANY_ID"
+                        ]
+                    },
+                    {
+                        "dbName": "CONTACT",
+                        "export": true,
+                        "tableId": "out.c-crm.contact",
+                        "items": [
+                            {
+                                "name": "contact_id",
+                                "dbName": "CONTACT_ID",
+                                "type": "varchar",
+                                "size": "255",
+                                "nullable": false,
+                                "default": ""
+                            },
+                            {
+                                "name": "contact",
+                                "dbName": "CONTACT",
+                                "type": "varchar",
+                                "size": "255",
+                                "nullable": false,
+                                "default": ""
+                            },
+                            {
+                                "name": "email",
+                                "dbName": "EMAIL",
+                                "type": "varchar",
+                                "size": "255",
+                                "nullable": false,
+                                "default": ""
+                            },
+                            {
+                                "name": "contact_type",
+                                "dbName": "CONTACT_TYPE",
+                                "type": "varchar",
+                                "size": "255",
+                                "nullable": false,
+                                "default": ""
+                            },
+                            {
+                                "name": "date_created",
+                                "dbName": "DATE_CREATED",
+                                "type": "date",
+                                "size": "",
+                                "nullable": true,
+                                "default": ""
+                            },
+                            {
+                                "name": "lead_source",
+                                "dbName": "LEAD_SOURCE",
+                                "type": "varchar",
+                                "size": "255",
+                                "nullable": false,
+                                "default": ""
+                            },
+                            {
+                                "name": "lead_converted",
+                                "dbName": "LEAD_CONVERTED",
+                                "type": "varchar",
+                                "size": "255",
+                                "nullable": false,
+                                "default": ""
+                            }
+                        ],
+                        "primaryKey": [
+                            "CONTACT_ID"
+                        ]
+                    },
+                    {
+                        "dbName": "EMPLOYEE",
+                        "export": true,
+                        "tableId": "out.c-crm.employee",
+                        "items": [
+                            {
+                                "name": "employee_id",
+                                "dbName": "EMPLOYEE_ID",
+                                "type": "varchar",
+                                "size": "255",
+                                "nullable": false,
+                                "default": ""
+                            },
+                            {
+                                "name": "employee",
+                                "dbName": "EMPLOYEE",
+                                "type": "varchar",
+                                "size": "255",
+                                "nullable": false,
+                                "default": ""
+                            },
+                            {
+                                "name": "email",
+                                "dbName": "EMAIL",
+                                "type": "varchar",
+                                "size": "255",
+                                "nullable": false,
+                                "default": ""
+                            },
+                            {
+                                "name": "position",
+                                "dbName": "POSITION",
+                                "type": "varchar",
+                                "size": "255",
+                                "nullable": false,
+                                "default": ""
+                            }
+                        ],
+                        "primaryKey": [
+                            "EMPLOYEE_ID"
+                        ]
+                    },
+                    {
+                        "dbName": "OPPORTUNITY",
+                        "export": true,
+                        "tableId": "out.c-crm.opportunity",
+                        "items": [
+                            {
+                                "name": "opportunity_id",
+                                "dbName": "OPPORTUNITY_ID",
+                                "type": "varchar",
+                                "size": "255",
+                                "nullable": false,
+                                "default": ""
+                            },
+                            {
+                                "name": "company_id",
+                                "dbName": "COMPANY_ID",
+                                "type": "varchar",
+                                "size": "255",
+                                "nullable": false,
+                                "default": ""
+                            },
+                            {
+                                "name": "employee_id",
+                                "dbName": "EMPLOYEE_ID",
+                                "type": "varchar",
+                                "size": "255",
+                                "nullable": false,
+                                "default": ""
+                            },
+                            {
+                                "name": "opportunity",
+                                "dbName": "OPPORTUNITY",
+                                "type": "varchar",
+                                "size": "255",
+                                "nullable": false,
+                                "default": ""
+                            },
+                            {
+                                "name": "date_created",
+                                "dbName": "DATE_CREATED",
+                                "type": "date",
+                                "size": "",
+                                "nullable": true,
+                                "default": ""
+                            },
+                            {
+                                "name": "date_closed",
+                                "dbName": "DATE_CLOSED",
+                                "type": "date",
+                                "size": "",
+                                "nullable": true,
+                                "default": ""
+                            },
+                            {
+                                "name": "is_closed",
+                                "dbName": "IS_CLOSED",
+                                "type": "varchar",
+                                "size": "255",
+                                "nullable": false,
+                                "default": ""
+                            },
+                            {
+                                "name": "is_won",
+                                "dbName": "IS_WON",
+                                "type": "varchar",
+                                "size": "255",
+                                "nullable": false,
+                                "default": ""
+                            },
+                            {
+                                "name": "pipeline",
+                                "dbName": "PIPELINE",
+                                "type": "varchar",
+                                "size": "255",
+                                "nullable": false,
+                                "default": ""
+                            },
+                            {
+                                "name": "stage",
+                                "dbName": "STAGE",
+                                "type": "varchar",
+                                "size": "255",
+                                "nullable": false,
+                                "default": ""
+                            },
+                            {
+                                "name": "stage_order",
+                                "dbName": "STAGE_ORDER",
+                                "type": "integer",
+                                "size": "",
+                                "nullable": true,
+                                "default": ""
+                            },
+                            {
+                                "name": "opportunity_type",
+                                "dbName": "OPPORTUNITY_TYPE",
+                                "type": "varchar",
+                                "size": "255",
+                                "nullable": false,
+                                "default": ""
+                            },
+                            {
+                                "name": "opportunity_value",
+                                "dbName": "OPPORTUNITY_VALUE",
+                                "type": "number",
+                                "size": "12,5",
+                                "nullable": true,
+                                "default": ""
+                            },
+                            {
+                                "name": "currency",
+                                "dbName": "CURRENCY",
+                                "type": "varchar",
+                                "size": "255",
+                                "nullable": false,
+                                "default": ""
+                            },
+                            {
+                                "name": "lead_source",
+                                "dbName": "LEAD_SOURCE",
+                                "type": "varchar",
+                                "size": "255",
+                                "nullable": false,
+                                "default": ""
+                            },
+                            {
+                                "name": "probability",
+                                "dbName": "PROBABILITY",
+                                "type": "number",
+                                "size": "12,5",
+                                "nullable": true,
+                                "default": ""
+                            }
+                        ],
+                        "primaryKey": [
+                            "OPPORTUNITY_ID"
+                        ]
+                    },
+                    {
+                        "dbName": "OPPORTUNITY_CONTACT",
+                        "export": true,
+                        "tableId": "out.c-crm.opportunity_contact",
+                        "items": [
+                            {
+                                "name": "opportunity_contact_id",
+                                "dbName": "OPPORTUNITY_CONTACT_ID",
+                                "type": "varchar",
+                                "size": "255",
+                                "nullable": false,
+                                "default": ""
+                            },
+                            {
+                                "name": "opportunity_id",
+                                "dbName": "OPPORTUNITY_ID",
+                                "type": "varchar",
+                                "size": "255",
+                                "nullable": false,
+                                "default": ""
+                            },
+                            {
+                                "name": "contact_id",
+                                "dbName": "CONTACT_ID",
+                                "type": "varchar",
+                                "size": "255",
+                                "nullable": false,
+                                "default": ""
+                            },
+                            {
+                                "name": "is_primary_contact",
+                                "dbName": "IS_PRIMARY_CONTACT",
+                                "type": "varchar",
+                                "size": "255",
+                                "nullable": false,
+                                "default": ""
+                            },
+                            {
+                                "name": "role",
+                                "dbName": "ROLE",
+                                "type": "varchar",
+                                "size": "255",
+                                "nullable": false,
+                                "default": ""
+                            }
+                        ],
+                        "primaryKey": [
+                            "OPPORTUNITY_CONTACT_ID"
+                        ]
+                    },
+                    {
+                        "dbName": "OPPORTUNITY_SNAPSHOT",
+                        "export": true,
+                        "tableId": "out.c-crm.opportunity_snapshot",
+                        "items": [
+                            {
+                                "name": "opportunity_id",
+                                "dbName": "OPPORTUNITY_ID",
+                                "type": "varchar",
+                                "size": "255",
+                                "nullable": false,
+                                "default": ""
+                            },
+                            {
+                                "name": "snapshot_date",
+                                "dbName": "SNAPSHOT_DATE",
+                                "type": "date",
+                                "size": "",
+                                "nullable": false,
+                                "default": ""
+                            },
+                            {
+                                "name": "employee_id",
+                                "dbName": "EMPLOYEE_ID",
+                                "type": "varchar",
+                                "size": "255",
+                                "nullable": false,
+                                "default": ""
+                            },
+                            {
+                                "name": "company_id",
+                                "dbName": "COMPANY_ID",
+                                "type": "varchar",
+                                "size": "255",
+                                "nullable": false,
+                                "default": ""
+                            },
+                            {
+                                "name": "pipeline",
+                                "dbName": "PIPELINE",
+                                "type": "varchar",
+                                "size": "255",
+                                "nullable": false,
+                                "default": ""
+                            },
+                            {
+                                "name": "previous_pipeline",
+                                "dbName": "PREVIOUS_PIPELINE",
+                                "type": "varchar",
+                                "size": "255",
+                                "nullable": false,
+                                "default": ""
+                            },
+                            {
+                                "name": "pipeline_change",
+                                "dbName": "PIPELINE_CHANGE",
+                                "type": "varchar",
+                                "size": "255",
+                                "nullable": false,
+                                "default": ""
+                            },
+                            {
+                                "name": "stage",
+                                "dbName": "STAGE",
+                                "type": "varchar",
+                                "size": "255",
+                                "nullable": false,
+                                "default": ""
+                            },
+                            {
+                                "name": "stage_order",
+                                "dbName": "STAGE_ORDER",
+                                "type": "integer",
+                                "size": "",
+                                "nullable": true,
+                                "default": ""
+                            },
+                            {
+                                "name": "previous_stage",
+                                "dbName": "PREVIOUS_STAGE",
+                                "type": "varchar",
+                                "size": "255",
+                                "nullable": false,
+                                "default": ""
+                            },
+                            {
+                                "name": "previous_stage_order",
+                                "dbName": "PREVIOUS_STAGE_ORDER",
+                                "type": "integer",
+                                "size": "",
+                                "nullable": true,
+                                "default": ""
+                            },
+                            {
+                                "name": "stage_change",
+                                "dbName": "STAGE_CHANGE",
+                                "type": "varchar",
+                                "size": "255",
+                                "nullable": false,
+                                "default": ""
+                            },
+                            {
+                                "name": "opportunity_value",
+                                "dbName": "OPPORTUNITY_VALUE",
+                                "type": "number",
+                                "size": "12,5",
+                                "nullable": true,
+                                "default": ""
+                            },
+                            {
+                                "name": "previous_opportunity_value",
+                                "dbName": "PREVIOUS_OPPORTUNITY_VALUE",
+                                "type": "number",
+                                "size": "12,5",
+                                "nullable": true,
+                                "default": ""
+                            },
+                            {
+                                "name": "opportunity_value_change",
+                                "dbName": "OPPORTUNITY_VALUE_CHANGE",
+                                "type": "varchar",
+                                "size": "255",
+                                "nullable": false,
+                                "default": ""
+                            },
+                            {
+                                "name": "probability",
+                                "dbName": "PROBABILITY",
+                                "type": "number",
+                                "size": "12,5",
+                                "nullable": true,
+                                "default": ""
+                            },
+                            {
+                                "name": "previous_probability",
+                                "dbName": "PREVIOUS_PROBABILITY",
+                                "type": "number",
+                                "size": "12,6",
+                                "nullable": true,
+                                "default": ""
+                            },
+                            {
+                                "name": "probability_change",
+                                "dbName": "PROBABILITY_CHANGE",
+                                "type": "varchar",
+                                "size": "255",
+                                "nullable": false,
+                                "default": ""
+                            },
+                            {
+                                "name": "max_date_in_month",
+                                "dbName": "MAX_DATE_IN_MONTH",
+                                "type": "varchar",
+                                "size": "255",
+                                "nullable": false,
+                                "default": ""
+                            }
+                        ],
+                        "primaryKey": [
+                            "OPPORTUNITY_ID",
+                            "SNAPSHOT_DATE"
+                        ]
+                    }
+                ]
+            },
+            "storage": {
+                "input": {
+                    "tables": [
+                        {
+                            "destination": "out.c-crm.activity.csv",
+                            "columns": [
+                                "activity_id",
+                                "employee_id",
+                                "contact_id",
+                                "opportunity_id",
+                                "activity",
+                                "activity_date",
+                                "activity_duration_m"
+                            ],
+                            "source_search": {
+                                "key": "bdm.scaffold.table.tag",
+                                "value": "Crm.external.outCrmActivity"
+                            }
+                        },
+                        {
+                            "destination": "out.c-crm.company.csv",
+                            "columns": [
+                                "company_id",
+                                "company",
+                                "website",
+                                "date_created"
+                            ],
+                            "source_search": {
+                                "key": "bdm.scaffold.table.tag",
+                                "value": "Crm.external.outCrmCompany"
+                            }
+                        },
+                        {
+                            "destination": "out.c-crm.contact.csv",
+                            "columns": [
+                                "contact_id",
+                                "contact",
+                                "email",
+                                "contact_type",
+                                "date_created",
+                                "lead_source",
+                                "lead_converted"
+                            ],
+                            "source_search": {
+                                "key": "bdm.scaffold.table.tag",
+                                "value": "Crm.external.outCrmContact"
+                            }
+                        },
+                        {
+                            "destination": "out.c-crm.employee.csv",
+                            "columns": [
+                                "employee_id",
+                                "employee",
+                                "email",
+                                "position"
+                            ],
+                            "source_search": {
+                                "key": "bdm.scaffold.table.tag",
+                                "value": "Crm.external.outCrmEmployee"
+                            }
+                        },
+                        {
+                            "destination": "out.c-crm.opportunity.csv",
+                            "columns": [
+                                "opportunity_id",
+                                "company_id",
+                                "employee_id",
+                                "opportunity",
+                                "date_created",
+                                "date_closed",
+                                "is_closed",
+                                "is_won",
+                                "pipeline",
+                                "stage",
+                                "stage_order",
+                                "opportunity_type",
+                                "opportunity_value",
+                                "currency",
+                                "lead_source",
+                                "probability"
+                            ],
+                            "source_search": {
+                                "key": "bdm.scaffold.table.tag",
+                                "value": "Crm.external.outCrmOpportunity"
+                            }
+                        },
+                        {
+                            "destination": "out.c-crm.opportunity_contact.csv",
+                            "columns": [
+                                "opportunity_contact_id",
+                                "opportunity_id",
+                                "contact_id",
+                                "is_primary_contact",
+                                "role"
+                            ],
+                            "source_search": {
+                                "key": "bdm.scaffold.table.tag",
+                                "value": "Crm.external.outCrmOpportunityContact"
+                            }
+                        },
+                        {
+                            "destination": "out.c-crm.opportunity_snapshot.csv",
+                            "columns": [
+                                "opportunity_id",
+                                "snapshot_date",
+                                "employee_id",
+                                "company_id",
+                                "pipeline",
+                                "previous_pipeline",
+                                "pipeline_change",
+                                "stage",
+                                "stage_order",
+                                "previous_stage",
+                                "previous_stage_order",
+                                "stage_change",
+                                "opportunity_value",
+                                "previous_opportunity_value",
+                                "opportunity_value_change",
+                                "probability",
+                                "previous_probability",
+                                "probability_change",
+                                "max_date_in_month"
+                            ],
+                            "source_search": {
+                                "key": "bdm.scaffold.table.tag",
+                                "value": "Crm.external.outCrmOpportunitySnapshot"
+                            }
+                        }
+                    ]
+                }
+            }
+        }
+    }
+}
