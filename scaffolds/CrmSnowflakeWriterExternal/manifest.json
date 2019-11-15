@@ -1,0 +1,30 @@
+{
+    "name": "CRM Model to Snowflake",
+    "author": "Keboola",
+    "description": "Sets up Keboola provisioned Snowflake DB Writer for writing CRM model data. Usage of one of the available CRM Scaffolds is required for this Scaffold to work, or you need to set up necessary tables with tags according to the documentation.",
+    "requirements": [
+        "Crm.external.outCrmCompany",
+        "Crm.external.outCrmEmployee",
+        "Crm.external.outCrmContact",
+        "Crm.external.outCrmOpportunity",
+        "Crm.external.outCrmOpportunitySnapshot",
+        "Crm.external.outCrmOpportunityContact",
+        "Crm.external.outCrmActivity"
+    ],
+    "inputs": [
+        {
+            "id": "keboolaWrDbSnowflakeCRM",
+            "componentId": "keboola.wr-db-snowflake",
+            "name": "CRM",
+            "required": true,
+            "schema": null
+        },
+        {
+            "id": "orchestrationCRMLoad",
+            "componentId": "orchestrator",
+            "name": "CRM Load",
+            "required": true,
+            "schema": null
+        }
+    ]
+}
