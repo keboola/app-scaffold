@@ -592,7 +592,7 @@
                             ],
                             "source_search": {
                                 "key": "bdm.scaffold.table.tag",
-                                "value": "Crm.external.outCrmActivity"
+                                "value": "bdm.Crm.Activity"
                             }
                         },
                         {
@@ -605,7 +605,7 @@
                             ],
                             "source_search": {
                                 "key": "bdm.scaffold.table.tag",
-                                "value": "Crm.external.outCrmCompany"
+                                "value": "bdm.Crm.Company"
                             }
                         },
                         {
@@ -621,7 +621,7 @@
                             ],
                             "source_search": {
                                 "key": "bdm.scaffold.table.tag",
-                                "value": "Crm.external.outCrmContact"
+                                "value": "bdm.Crm.Contact"
                             }
                         },
                         {
@@ -634,7 +634,7 @@
                             ],
                             "source_search": {
                                 "key": "bdm.scaffold.table.tag",
-                                "value": "Crm.external.outCrmEmployee"
+                                "value": "bdm.Crm.Employee"
                             }
                         },
                         {
@@ -659,7 +659,7 @@
                             ],
                             "source_search": {
                                 "key": "bdm.scaffold.table.tag",
-                                "value": "Crm.external.outCrmOpportunity"
+                                "value": "bdm.Crm.Opportunity"
                             }
                         },
                         {
@@ -673,7 +673,7 @@
                             ],
                             "source_search": {
                                 "key": "bdm.scaffold.table.tag",
-                                "value": "Crm.external.outCrmOpportunityContact"
+                                "value": "bdm.Crm.OpportunityContact"
                             }
                         },
                         {
@@ -701,7 +701,7 @@
                             ],
                             "source_search": {
                                 "key": "bdm.scaffold.table.tag",
-                                "value": "Crm.external.outCrmOpportunitySnapshot"
+                                "value": "bdm.Crm.OpportunitySnapshot"
                             }
                         }
                     ]
