@@ -3,13 +3,13 @@
     "author": "Keboola",
     "description": "Full workflow to extract and process Salesforce data into a standard CRM data model. Contains extractor and set of transformations. Can be extended by CRM Writer Scaffold.",
     "outputs": [
-        "Crm.external.outCrmCompany",
-        "Crm.external.outCrmEmployee",
-        "Crm.external.outCrmContact",
-        "Crm.external.outCrmOpportunity",
-        "Crm.external.outCrmOpportunitySnapshot",
-        "Crm.external.outCrmOpportunityContact",
-        "Crm.external.outCrmActivity"
+        "bdm.Crm.Company",
+        "bdm.Crm.Employee",
+        "bdm.Crm.Contact",
+        "bdm.Crm.Opportunity",
+        "bdm.Crm.OpportunitySnapshot",
+        "bdm.Crm.OpportunityContact",
+        "bdm.Crm.Activity"
     ],
     "inputs": [
         {

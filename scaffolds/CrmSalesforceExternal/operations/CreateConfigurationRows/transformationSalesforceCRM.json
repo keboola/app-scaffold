@@ -10,7 +10,7 @@
                     "metadata": [
                         {
                             "key": "bdm.scaffold.table.tag",
-                            "value": "Crm.external.outCrmCompany"
+                            "value": "bdm.Crm.Company"
                         },
                         {
                             "key": "scaffold.id",
@@ -64,7 +64,7 @@
                     "metadata": [
                         {
                             "key": "bdm.scaffold.table.tag",
-                            "value": "Crm.external.outCrmEmployee"
+                            "value": "bdm.Crm.Employee"
                         },
                         {
                             "key": "scaffold.id",
@@ -114,7 +114,7 @@
                     "metadata": [
                         {
                             "key": "bdm.scaffold.table.tag",
-                            "value": "Crm.external.outCrmContact"
+                            "value": "bdm.Crm.Contact"
                         },
                         {
                             "key": "scaffold.id",
@@ -174,7 +174,7 @@
                     "metadata": [
                         {
                             "key": "bdm.scaffold.table.tag",
-                            "value": "Crm.external.outCrmOpportunity"
+                            "value": "bdm.Crm.Opportunity"
                         },
                         {
                             "key": "scaffold.id",
@@ -293,7 +293,7 @@
                     "metadata": [
                         {
                             "key": "bdm.scaffold.table.tag",
-                            "value": "Crm.external.outCrmOpportunitySnapshot"
+                            "value": "bdm.Crm.OpportunitySnapshot"
                         },
                         {
                             "key": "scaffold.id",
@@ -343,7 +343,7 @@
                     "metadata": [
                         {
                             "key": "bdm.scaffold.table.tag",
-                            "value": "Crm.external.outCrmOpportunityContact"
+                            "value": "bdm.Crm.OpportunityContact"
                         },
                         {
                             "key": "scaffold.id",
@@ -416,7 +416,7 @@
                     "metadata": [
                         {
                             "key": "bdm.scaffold.table.tag",
-                            "value": "Crm.external.outCrmActivity"
+                            "value": "bdm.Crm.Activity"
                         },
                         {
                             "key": "scaffold.id",
