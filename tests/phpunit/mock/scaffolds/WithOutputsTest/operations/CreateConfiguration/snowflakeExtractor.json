@@ -1,0 +1,44 @@
+{
+    "componentId": "keboola.ex-db-snowflake",
+    "payload": {
+        "name": "Extract sample data",
+        "configuration": {
+            "parameters": {
+                "db": {
+                    "port": 443,
+                    "ssh": {
+                        "sshPort": 22
+                    }
+                },
+                "tables": [
+                    {
+                        "enabled": true,
+                        "name": "ACCOUNT",
+                        "incremental": false,
+                        "outputTable": "in.c-keboola-ex-db-snowflake-sample.account",
+                        "table": {
+                            "schema": "HELP_TUTORIAL",
+                            "tableName": "ACCOUNT"
+                        },
+                        "columns": [],
+                        "primaryKey": [],
+                        "id": 1509
+                    },
+                    {
+                        "enabled": true,
+                        "name": "USER",
+                        "incremental": false,
+                        "outputTable": "in.c-keboola-ex-db-snowflake-sample.user",
+                        "table": {
+                            "schema": "HELP_TUTORIAL",
+                            "tableName": "USER"
+                        },
+                        "columns": [],
+                        "primaryKey": [],
+                        "id": 85768
+                    }
+                ]
+            }
+        }
+    }
+}

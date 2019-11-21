@@ -1,0 +1,61 @@
+{
+    "name": "This is only a test",
+    "author": "John Doe",
+    "description": "Sample Description longer than 20 characters.",
+    "outputs": [
+        "test.Require"
+    ],
+    "inputs": [
+        {
+            "id": "snowflakeExtractor",
+            "name": "extractor",
+            "required": true,
+            "componentId": "keboola.ex-snowflake",
+            "schema": {
+                "type": "object",
+                "required": [
+                    "db"
+                ],
+                "properties": {
+                    "db": {
+                        "type": "object",
+                        "required": [
+                            "host",
+                            "user",
+                            "#password",
+                            "database",
+                            "schema",
+                            "warehouse"
+                        ],
+                        "properties": {
+                            "host": {
+                                "type": "string"
+                            },
+                            "user": {
+                                "type": "string"
+                            },
+                            "schema": {
+                                "type": "string"
+                            },
+                            "database": {
+                                "type": "string"
+                            },
+                            "#password": {
+                                "type": "string"
+                            },
+                            "warehouse": {
+                                "type": "string"
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        {
+            "id": "main",
+            "componentId": "orchestration",
+            "name": "Orchestration",
+            "required": false
+        }
+    ]
+}
