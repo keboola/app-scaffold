@@ -1,0 +1,52 @@
+[
+    {
+        "configuration": {
+            "output": [
+                {
+                    "source": "out_outputs",
+                    "primaryKey": [
+                        "outputs_id"
+                    ],
+                    "metadata": [
+                        {
+                            "key": "bdm.scaffold.table.tag",
+                            "value": "test.Outputs"
+                        },
+                        {
+                            "key": "scaffold.id",
+                            "value": "TestInternal"
+                        }
+                    ],
+                    "destination": "out.c-testInternal.testOutputs"
+                }
+            ],
+            "queries": [
+                "--create output table with companies\n--cast timestamp to date\nCREATE TABLE \"out_company\"\nAS\n  SELECT DISTINCT\n    \"Id\"                                  AS \"company_id\",\n    \"Name\"                                AS \"company\",\n    \"Website\"                             AS \"website\",\n    to_date(\"CreatedDate\") :: VARCHAR(10) AS \"date_created\"\n  FROM \"account\"\n  WHERE lower(\"IsDeleted\") = 'false';",
+                "--fake row to keep referential integrity if child tables are missing existing company ids\nINSERT INTO \"out_company\"\n  (\"company_id\", \"company\", \"website\", \"date_created\")\nVALUES\n  ('0', 'Unknown', '', '');"
+            ],
+            "input": [
+                {
+                    "destination": "outputs",
+                    "datatypes": [],
+                    "whereColumn": "",
+                    "whereValues": [],
+                    "whereOperator": "eq",
+                    "columns": [],
+                    "loadType": "clone",
+                    "source": "in.c-testInternal.testOutput"
+                }
+            ],
+            "name": "Outputs",
+            "packages": [],
+            "requires": [],
+            "backend": "snowflake",
+            "type": "simple",
+            "id": "487273256",
+            "phase": "2",
+            "disabled": false,
+            "description": ""
+        },
+        "description": "",
+        "name": "Outputs"
+    }
+]

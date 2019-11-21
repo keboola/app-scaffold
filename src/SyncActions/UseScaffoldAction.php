@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Keboola\ScaffoldApp\SyncActions;
 
 use Keboola\Component\JsonHelper;
+use Keboola\Component\UserException;
 use Keboola\ScaffoldApp\ApiClientStore;
 use Keboola\ScaffoldApp\SyncActions\UseScaffoldExecutionContext\ExecutionContext;
 use Keboola\ScaffoldApp\Operation\CreateConfigurationOperation;
@@ -14,6 +15,7 @@ use Keboola\ScaffoldApp\Operation\OperationsConfig;
 use Keboola\ScaffoldApp\OperationConfig\CreateCofigurationRowsOperationConfig;
 use Keboola\ScaffoldApp\OperationConfig\CreateConfigurationOperationConfig;
 use Keboola\ScaffoldApp\OperationConfig\CreateOrchestrationOperationConfig;
+use Keboola\ScaffoldApp\SyncActions\UseScaffoldExecutionContext\RequirementsValidator;
 use Psr\Log\LoggerInterface;
 use Symfony\Component\Finder\SplFileInfo;
 
@@ -50,6 +52,11 @@ class UseScaffoldAction
     {
         $queue = $this->executionContext->getOperationsQueue()->getOperationsQueue();
 
+        RequirementsValidator::validate(
+            $this->getUsedScaffoldManifestsOutputs(),
+            $this->executionContext
+        );
+
         /**
          * @var string $operationName
          * @var SplFileInfo[] $operationsFiles
@@ -62,6 +69,38 @@ class UseScaffoldAction
         }
 
         return $this->executionContext->getFinishedOperationsResponse();
+    }
+
+    private function getUsedScaffoldManifestsOutputs(): array
+    {
+        $usedScaffoldObjects =  ObjectLister::listObjects(
+            $this->apiClientStore->getStorageApiClient(),
+            $this->apiClientStore->getComponentsApiClient()
+        );
+
+        $usedScaffoldManifestsOutputs = [];
+        foreach ($usedScaffoldObjects as $name => $usedScaffoldObject) {
+            $manifestFilePath = sprintf(
+                '%s/manifest.json',
+                $this->executionContext->getScaffoldFolder() . '/' . $name
+            );
+
+            if (file_exists($manifestFilePath)) {
+                $manifest = JsonHelper::readFile($manifestFilePath);
+                if (isset($manifest['outputs'])) {
+                    $usedScaffoldManifestsOutputs = array_merge($usedScaffoldManifestsOutputs, $manifest['outputs']);
+                }
+            } else {
+                throw new UserException(
+                    sprintf(
+                        'Manifest file for scaffold \'%s\' does not exist',
+                        $this->executionContext->getScaffoldId()
+                    )
+                );
+            }
+        }
+
+        return $usedScaffoldManifestsOutputs;
     }
 
     private function executeOperation(

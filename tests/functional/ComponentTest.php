@@ -9,7 +9,7 @@ use Keboola\DatadirTests\AbstractDatadirTestCase;
 use Keboola\DatadirTests\DatadirTestSpecification;
 use Keboola\DatadirTests\Exception\DatadirTestsException;
 use Keboola\ScaffoldApp\ApiClientStore;
-use Keboola\ScaffoldApp\Component;
+use Keboola\ScaffoldApp\SyncActions\ObjectLister;
 use Psr\Log\NullLogger;
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\Process\Process;
@@ -17,6 +17,18 @@ use Symfony\Component\Process\Process;
 class ComponentTest extends AbstractDatadirTestCase
 {
     use WorkspaceClearTrait;
+
+    protected function setUp(): void
+    {
+        parent::setUp();
+
+        if (getenv('KBC_TOKEN') === false) {
+            throw new Exception('Env variable "KBC_TOKEN" must be set.');
+        }
+        if (getenv('KBC_URL') === false) {
+            throw new Exception('Env variable "KBC_URL" must be set.');
+        }
+    }
 
     public function testListScaffolds(): void
     {
@@ -61,6 +73,7 @@ class ComponentTest extends AbstractDatadirTestCase
         $runProcess = new Process($runCommand);
         $runProcess->setEnv([
             'KBC_DATADIR' => $datadirPath,
+            'KBC_SCAFFOLDS_DIR' => __DIR__ . '/../phpunit/mock/scaffolds/',
             'KBC_TOKEN' => getenv('KBC_TOKEN'),
             'KBC_URL' => getenv('KBC_URL'),
         ]);
@@ -71,17 +84,61 @@ class ComponentTest extends AbstractDatadirTestCase
 
     public function testUseScaffold(): void
     {
-        if (getenv('KBC_TOKEN') === false) {
-            throw new Exception('Env variable "KBC_TOKEN" must be set.');
-        }
-        if (getenv('KBC_URL') === false) {
-            throw new Exception('Env variable "KBC_URL" must be set.');
-        }
-
         $this->clearWorkspace(
             new ApiClientStore(new NullLogger()),
             'CrmMrrSalesforce'
         );
+        $specification = new DatadirTestSpecification(
+            __DIR__,
+            0,
+            null,
+            null,
+            null
+        );
+        $tempDatadir = $this->getTempDatadir($specification);
+        $data = [
+            'action' => 'useScaffold',
+            'parameters' => [
+                'id' => 'PassThroughTest',
+                'inputs' => [
+                    [
+                        'id' => 'connectionWriter',
+                        'values' => [
+                            'parameters' => [
+                                '#token' => 'xxxxx',
+                            ],
+                        ],
+                    ],
+                    [
+                        'id' => 'snowflakeExtractor',
+                        'values' => [
+                            'parameters' => [
+                                'db' => [
+                                    'host' => 'xxx',
+                                    'user' => 'xxx',
+                                    '#password' => 'xxx',
+                                    'database' => 'xxx',
+                                    'schema' => 'xxx',
+                                    'warehouse' => 'xxx',
+                                ],
+                            ],
+                        ],
+                    ],
+                    [
+                        'id' => 'main',
+                        'values' => null,
+                    ],
+                ],
+            ],
+        ];
+        file_put_contents($tempDatadir->getTmpFolder() . '/config.json', \GuzzleHttp\json_encode($data));
+        $process = $this->runScript($tempDatadir->getTmpFolder());
+        $this->assertMatchesSpecification($specification, $process, $tempDatadir->getTmpFolder());
+    }
+
+    public function testUseDependentScaffold(): void
+    {
+        $this->cleanUpWorkspace();
 
         $specification = new DatadirTestSpecification(
             __DIR__,
@@ -94,22 +151,22 @@ class ComponentTest extends AbstractDatadirTestCase
         $data = [
             'action' => 'useScaffold',
             'parameters' => [
-                'id' => 'CrmMrrSalesforce',
+                'id' => 'WithOutputsTest',
                 'inputs' => [
                     [
-                        'id' => 'htnsExSalesforceMRR',
+                        'id' => 'connectionExtractor',
+                        'values' => [
+                            'parameters' => [
+                                '#token' => 'xxxxx',
+                            ],
+                        ],
+                    ],
+                    [
+                        'id' => 'transformation',
                         'values' => null,
                     ],
                     [
-                        'id' => 'keboolaWrDbSnowflakeLooker',
-                        'values' => null,
-                    ],
-                    [
-                        'id' => 'transformationSalesforceCRM&MRR',
-                        'values' => null,
-                    ],
-                    [
-                        'id' => 'orchestrationMRR',
+                        'id' => 'main',
                         'values' => null,
                     ],
                 ],
@@ -118,5 +175,297 @@ class ComponentTest extends AbstractDatadirTestCase
         file_put_contents($tempDatadir->getTmpFolder() . '/config.json', \GuzzleHttp\json_encode($data));
         $process = $this->runScript($tempDatadir->getTmpFolder());
         $this->assertMatchesSpecification($specification, $process, $tempDatadir->getTmpFolder());
+
+        $specification = new DatadirTestSpecification(
+            __DIR__,
+            0,
+            null,
+            null,
+            null
+        );
+        $tempDatadir = $this->getTempDatadir($specification);
+        $data = [
+            'action' => 'useScaffold',
+            'parameters' => [
+                'id' => 'WithRequirementsTest',
+                'inputs' => [
+                    [
+                        'id' => 'connectionWriter',
+                        'values' => [
+                            'parameters' => [
+                                '#token' => 'xxxxx',
+                            ],
+                        ],
+                    ],
+                    [
+                        'id' => 'main',
+                        'values' => null,
+                    ],
+                ],
+            ],
+        ];
+        file_put_contents($tempDatadir->getTmpFolder() . '/config.json', \GuzzleHttp\json_encode($data));
+        $process = $this->runScript($tempDatadir->getTmpFolder());
+        $this->assertMatchesSpecification($specification, $process, $tempDatadir->getTmpFolder());
+    }
+
+    public function testCantUseScaffoldWithDifferentRequirements(): void
+    {
+        $this->cleanUpWorkspace();
+
+        $specification = new DatadirTestSpecification(
+            __DIR__,
+            0,
+            null,
+            null,
+            null
+        );
+        $tempDatadir = $this->getTempDatadir($specification);
+
+        $data = [
+            'action' => 'useScaffold',
+            'parameters' => [
+                'id' => 'PassThroughTest',
+                'inputs' => [
+                    [
+                        'id' => 'connectionWriter',
+                        'values' => [
+                            'parameters' => [
+                                '#token' => 'xxxxx',
+                            ],
+                        ],
+                    ],
+                    [
+                        'id' => 'snowflakeExtractor',
+                        'values' => [
+                            'parameters' => [
+                                'db' => [
+                                    'host' => 'xxx',
+                                    'user' => 'xxx',
+                                    '#password' => 'xxx',
+                                    'database' => 'xxx',
+                                    'schema' => 'xxx',
+                                    'warehouse' => 'xxx',
+                                ],
+                            ],
+                        ],
+                    ],
+                    [
+                        'id' => 'main',
+                        'values' => null,
+                    ],
+                ],
+            ],
+        ];
+        file_put_contents($tempDatadir->getTmpFolder() . '/config.json', \GuzzleHttp\json_encode($data));
+        $process = $this->runScript($tempDatadir->getTmpFolder());
+        $this->assertMatchesSpecification($specification, $process, $tempDatadir->getTmpFolder());
+
+        $specification = new DatadirTestSpecification(
+            __DIR__,
+            1,
+            null,
+            null,
+            null
+        );
+        $tempDatadir = $this->getTempDatadir($specification);
+
+        $data = [
+            'action' => 'useScaffold',
+            'parameters' => [
+                'id' => 'WithRequirementsTest',
+                'inputs' => [
+                    [
+                        'id' => 'connectionWriter',
+                        'values' => [
+                            'parameters' => [
+                                '#token' => 'xxxxx',
+                            ],
+                        ],
+                    ],
+                    [
+                        'id' => 'main',
+                        'values' => null,
+                    ],
+                ],
+            ],
+        ];
+        file_put_contents($tempDatadir->getTmpFolder() . '/config.json', \GuzzleHttp\json_encode($data));
+        $process = $this->runScript($tempDatadir->getTmpFolder());
+
+        $this->assertMatchesSpecification($specification, $process, $tempDatadir->getTmpFolder());
+    }
+
+    public function testCantCreateScaffoldWithTheSameOutputs(): void
+    {
+        $this->cleanUpWorkspace();
+
+        $specification = new DatadirTestSpecification(
+            __DIR__,
+            0,
+            null,
+            null,
+            null
+        );
+        $tempDatadir = $this->getTempDatadir($specification);
+
+        $data = [
+            'action' => 'useScaffold',
+            'parameters' => [
+                'id' => 'WithOutputsTest',
+                'inputs' => [
+                    [
+                        'id' => 'connectionExtractor',
+                        'values' => [
+                            'parameters' => [
+                                '#token' => 'xxxxx',
+                            ],
+                        ],
+                    ],
+                    [
+                        'id' => 'transformation',
+                        'values' => null,
+                    ],
+                    [
+                        'id' => 'main',
+                        'values' => null,
+                    ],
+                ],
+            ],
+        ];
+        file_put_contents($tempDatadir->getTmpFolder() . '/config.json', \GuzzleHttp\json_encode($data));
+        $process = $this->runScript($tempDatadir->getTmpFolder());
+        $this->assertMatchesSpecification($specification, $process, $tempDatadir->getTmpFolder());
+
+        $specification = new DatadirTestSpecification(
+            __DIR__,
+            1,
+            null,
+            null,
+            null
+        );
+        $tempDatadir = $this->getTempDatadir($specification);
+
+        file_put_contents($tempDatadir->getTmpFolder() . '/config.json', \GuzzleHttp\json_encode($data));
+        $process = $this->runScript($tempDatadir->getTmpFolder());
+        $this->assertMatchesSpecification($specification, $process, $tempDatadir->getTmpFolder());
+    }
+
+    public function testUseRequirementsAndOutputsScaffold(): void
+    {
+        $this->cleanUpWorkspace();
+
+        $specification = new DatadirTestSpecification(
+            __DIR__,
+            0,
+            null,
+            null,
+            null
+        );
+        $tempDatadir = $this->getTempDatadir($specification);
+
+        $data = [
+            'action' => 'useScaffold',
+            'parameters' => [
+                'id' => 'WithRequireOutputsTest',
+                'inputs' => [
+                    [
+                        'id' => 'connectionWriter',
+                        'values' => [
+                            'parameters' => [
+                                '#token' => 'xxxxx',
+                            ],
+                        ],
+                    ],
+                    [
+                        'id' => 'main',
+                        'values' => null,
+                    ],
+                ],
+            ],
+        ];
+        file_put_contents($tempDatadir->getTmpFolder() . '/config.json', \GuzzleHttp\json_encode($data));
+        $process = $this->runScript($tempDatadir->getTmpFolder());
+        $this->assertMatchesSpecification($specification, $process, $tempDatadir->getTmpFolder());
+
+        $specification = new DatadirTestSpecification(
+            __DIR__,
+            0,
+            null,
+            null,
+            null
+        );
+        $tempDatadir = $this->getTempDatadir($specification);
+
+        $data = [
+            'action' => 'useScaffold',
+            'parameters' => [
+                'id' => 'WithRequirementsAndOutputsTest',
+                'inputs' => [
+                    [
+                        'id' => 'connectionWriter',
+                        'values' => [
+                            'parameters' => [
+                                '#token' => 'xxxxx',
+                            ],
+                        ],
+                    ],
+                    [
+                        'id' => 'main',
+                        'values' => null,
+                    ],
+                ],
+            ],
+        ];
+        file_put_contents($tempDatadir->getTmpFolder() . '/config.json', \GuzzleHttp\json_encode($data));
+        $process = $this->runScript($tempDatadir->getTmpFolder());
+        $this->assertMatchesSpecification($specification, $process, $tempDatadir->getTmpFolder());
+
+        $specification = new DatadirTestSpecification(
+            __DIR__,
+            1,
+            null,
+            null,
+            null
+        );
+        $tempDatadir = $this->getTempDatadir($specification);
+
+        $data = [
+            'action' => 'useScaffold',
+            'parameters' => [
+                'id' => 'WithOutputsTest',
+                'inputs' => [
+                    [
+                        'id' => 'connectionExtractor',
+                        'values' => [
+                            'parameters' => [
+                                '#token' => 'xxxxx',
+                            ],
+                        ],
+                    ],
+                    [
+                        'id' => 'transformation',
+                        'values' => null,
+                    ],
+                    [
+                        'id' => 'main',
+                        'values' => null,
+                    ],
+                ],
+            ],
+        ];
+        file_put_contents($tempDatadir->getTmpFolder() . '/config.json', \GuzzleHttp\json_encode($data));
+        $process = $this->runScript($tempDatadir->getTmpFolder());
+        $this->assertMatchesSpecification($specification, $process, $tempDatadir->getTmpFolder());
+    }
+
+    private function cleanUpWorkspace(): void
+    {
+        $store = new ApiClientStore(new NullLogger());
+        $objects = ObjectLister::listObjects($store->getStorageApiClient(), $store->getComponentsApiClient());
+
+        foreach ($objects as $name => $object) {
+            $this->clearWorkspace(new ApiClientStore(new NullLogger()), $name);
+        }
     }
 }

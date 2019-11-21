@@ -20,7 +20,7 @@ class ListScaffoldsActionTest extends BaseOperationTestCase
             __DIR__ . '/../mock/scaffolds',
             $this->getApiClientStore($clientMock, $componentMock)
         );
-        self::assertCount(3, $response);
+        self::assertCount(7, $response);
         foreach ($response as $scaffold) {
             self::assertArrayHasKey('id', $scaffold);
         }

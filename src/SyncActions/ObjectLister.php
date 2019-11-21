@@ -17,7 +17,7 @@ class ObjectLister
     {
         $listOptions = new ListComponentsOptions();
         $listOptions->setInclude(['configurations']);
-        $components = $components->listComponents($listOptions);
+        $components = $components->listComponents($listOptions) ?? [];
         $scaffoldObjects = [];
         foreach ($components as $component) {
             foreach ($component['configurations'] as $configuration) {
@@ -31,7 +31,7 @@ class ObjectLister
         }
         $searchOptions = new SearchTablesOptions();
         $searchOptions->setMetadataKey(DecoratorInterface::SCAFFOLD_ID_TAG);
-        $tables = $storageApiClient->searchTables($searchOptions);
+        $tables = $storageApiClient->searchTables($searchOptions) ?? [];
         $metadata = new Metadata($storageApiClient);
         foreach ($tables as $table) {
             $values = $metadata->listTableMetadata($table['id']);
