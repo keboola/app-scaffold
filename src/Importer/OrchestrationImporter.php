@@ -8,10 +8,12 @@ use Keboola\Component\JsonHelper;
 use Keboola\Component\UserException;
 use Keboola\Orchestrator\Client as OrchestratorClient;
 use Keboola\ScaffoldApp\Component;
+use Keboola\ScaffoldApp\Importer\Decorator\StorageInputTablesDecorator;
 use Keboola\ScaffoldApp\Operation\OperationsConfig;
 use Keboola\StorageApi\Client;
 use Keboola\StorageApi\Components;
 use Symfony\Component\Console\Helper\ProgressBar;
+use Symfony\Component\Console\Output\NullOutput;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Filesystem\Filesystem;
 
@@ -275,10 +277,23 @@ EOT;
             'name' => '',
             'author' => 'Keboola',
             'description' => '',
+            'requirements' => [],
             'inputs' => [],
         ];
 
         foreach ($importedOperations->getImportedOperations() as $operation) {
+//            //@todo
+//            foreach($operation->getConfigurationRowsJsonArray()[0]['configuration']['output'][0]['metadata'] as $metadata) {
+//                if($metadata['key'] === 'bdm.scaffold.table.tag') {
+//                    $manifestTemplate['outputs'][] = $metadata['value'];
+//                }
+//            }
+
+            //@todo
+            foreach ($operation->getPayload()['configuration']['storage']['input']['tables'] as $table) {
+                $manifestTemplate['requirements'][] = $table['source_search']['value'];
+            }
+
             $manifestTemplate['inputs'][] = [
                 'id' => $operation->getOperationId(),
                 'componentId' => $operation->getComponentId(),

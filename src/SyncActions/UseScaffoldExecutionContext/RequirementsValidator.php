@@ -8,25 +8,6 @@ use Keboola\Component\UserException;
 
 class RequirementsValidator
 {
-    public static function validate(
-        array $usedScaffoldManifests,
-        ExecutionContext $executionContext
-    ): void {
-        if ($executionContext->getManifestRequirements()) {
-            RequirementsValidator::validateRequirements(
-                $usedScaffoldManifests,
-                $executionContext
-            );
-        }
-
-        if ($executionContext->getManifestOutputs()) {
-            RequirementsValidator::validateOutputs(
-                $usedScaffoldManifests,
-                $executionContext
-            );
-        }
-    }
-
     public static function validateRequirements(
         array $usedScaffoldManifests,
         ExecutionContext $executionContext

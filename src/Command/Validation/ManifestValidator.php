@@ -35,6 +35,13 @@ final class ManifestValidator
     {
         $validator = Validation::createValidator();
         $this->manifest = JsonHelper::readFile(sprintf('%s/manifest.json', $this->scaffoldDir->getPathname()));
+
+        //@todo
+        $this->validateScaffoldOutputs();
+//        if(isset($this->manifest['outputs'])) {
+//            var_dump($this->manifest['outputs']);die;
+//        }
+
         return $validator->validate($this->manifest, $this->getConstraints());
     }
 
@@ -98,6 +105,36 @@ final class ManifestValidator
             'required' => new Assert\Type('array'),
             'properties' => new Assert\Type('array'),
         ];
+    }
+
+    private function validateScaffoldOutputs(): void {
+
+        if(isset($this->manifest['outputs'])) {
+            $finder = new Finder();
+            $finder->in(sprintf('%s/operations/%s/', $this->scaffoldDir, OperationsConfig::CREATE_CONFIGURATION_ROWS))
+                ->files()->depth(0);
+
+            foreach ($finder as $operationFile) {
+                foreach ($this->manifest['outputs'] as $output) {
+                    preg_match('/('. $output. ')/', $operationFile->getContents(), $outputArray); //@todo do jedneho
+                }
+            }
+        }
+    }
+
+    private function validateScaffoldRequirements(): void
+    {
+        if(isset($this->manifest['requirements'])) {
+            $finder = new Finder();
+            $finder->in(sprintf('%s/operations/%s/', $this->scaffoldDir, OperationsConfig::CREATE_CONFIGURATION))
+                ->files()->depth(0);
+
+            foreach ($finder as $operationFile) {
+                foreach ($this->manifest['requirements'] as $requirement) {
+                    preg_match('/('. $requirement. ')/', $operationFile->getContents(), $outputArray); //@todo do jedneho
+                }
+            }
+        }
     }
 
     private function validateScaffoldInputsOperationListing(
