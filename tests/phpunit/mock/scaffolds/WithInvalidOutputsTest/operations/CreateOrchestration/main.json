@@ -1,0 +1,24 @@
+{
+    "payload": {
+        "name": "Main",
+        "tasks": [
+            {
+                "component": "keboola.ex-storage",
+                "operationReferenceId": "connectionExtractor",
+                "action": "run",
+                "timeoutMinutes": null,
+                "active": true,
+                "continueOnFailure": false,
+                "phase": "Extracting"
+            },
+            {
+                "component": "transformation",
+                "operationReferenceId": "transformation",
+                "action": "run",
+                "timeoutMinutes": null,
+                "active": true,
+                "continueOnFailure": false
+            }
+        ]
+    }
+}

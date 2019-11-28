@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Keboola\ScaffoldApp\Command\Validation;
 
 use Keboola\Component\JsonHelper;
+use Keboola\Component\UserException;
 use Keboola\ScaffoldApp\Operation\OperationsConfig;
 use Swaggest\JsonSchema\Schema;
 use Symfony\Component\Finder\Finder;
@@ -35,6 +36,7 @@ final class ManifestValidator
     {
         $validator = Validation::createValidator();
         $this->manifest = JsonHelper::readFile(sprintf('%s/manifest.json', $this->scaffoldDir->getPathname()));
+
         return $validator->validate($this->manifest, $this->getConstraints());
     }
 
@@ -52,8 +54,24 @@ final class ManifestValidator
                     new Assert\Length(['min' => 20]),
                     new Assert\NotBlank(),
                 ],
-                'outputs' => new Assert\Required(),
-                'requirements' =>  new Assert\Required(),
+                'outputs' => new Assert\Required([
+                    new Assert\Callback(function (
+                        array $object,
+                        ExecutionContextInterface $context,
+                        $payload
+                    ): void {
+                        $this->validateScaffoldOutputs($object, $context);
+                    }),
+                ]),
+                'requirements' =>  new Assert\Required([
+                    new Assert\Callback(function (
+                        array $object,
+                        ExecutionContextInterface $context,
+                        $payload
+                    ): void {
+                        $this->validateScaffoldRequirements($object, $context);
+                    }),
+                ]),
                 'inputs' => [
                     new Assert\All([
                         new Assert\Collection([
@@ -72,6 +90,54 @@ final class ManifestValidator
                 ],
             ],
         ]);
+    }
+
+    private function validateScaffoldOutputs(array $object, ExecutionContextInterface $context): void
+    {
+        $diff = $this->searchForMissingDefinitionDependencies($object);
+        if (count($diff) > 0) {
+            $context->buildViolation(sprintf(
+                'Outputs \'%s\' are not provided by scaffold operations.',
+                implode(', ', $diff)
+            ))->addViolation();
+        }
+    }
+
+    private function validateScaffoldRequirements(array $object, ExecutionContextInterface $context): void
+    {
+        $missingDefinition = $this->searchForMissingDefinitionDependencies($object);
+        if (count($missingDefinition) > 0) {
+            $context->buildViolation(sprintf(
+                'Requirements \'%s\' are not provided by scaffold operations.',
+                implode(', ', $missingDefinition)
+            ))->addViolation();
+        }
+    }
+
+    private function searchForMissingDefinitionDependencies(array $items): array
+    {
+        $found = [];
+        foreach ($this->getOperationConfigRowsFiles() as $operationFile) {
+            foreach ($items as $item) {
+                preg_match('/(' . $item . ')/', $operationFile->getContents(), $outputArray);
+                foreach ($outputArray as $outputItem) {
+                    if (in_array($outputItem, $items)) {
+                        $found[$outputItem] = $outputItem;
+                    }
+                }
+            }
+        }
+
+        return array_diff($items, $found);
+    }
+
+    private function getOperationConfigRowsFiles(): Finder
+    {
+        $finder = new Finder();
+        $finder->in(sprintf('%s/operations/', $this->scaffoldDir))
+            ->files()->depth(1);
+
+        return $finder;
     }
 
     private function getInputConstraints(): array

@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Keboola\ScaffoldApp\Tests\Command\Validation;
 
+use Keboola\Component\UserException;
 use Keboola\ScaffoldApp\Command\Validation\ManifestValidator;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\Finder\SplFileInfo;
@@ -60,5 +61,63 @@ class ManifestValidatorTest extends TestCase
         $violations = $validator->validate();
 
         self::assertCount(0, $violations);
+    }
+
+    public function testValidateOutputs(): void
+    {
+        $validator = new ManifestValidator(new SplFileInfo(__DIR__ . '/../../mock/scaffolds/WithOutputsTest', '', ''));
+        $violations = $validator->validate();
+
+        self::assertCount(0, $violations);
+    }
+
+    public function testValidateRequirements(): void
+    {
+        $validator = new ManifestValidator(
+            new SplFileInfo(__DIR__ . '/../../mock/scaffolds/WithRequirementsTest', '', '')
+        );
+        $violations = $validator->validate();
+
+        self::assertCount(0, $violations);
+    }
+
+    public function testValidateWithInvalidOutputs(): void
+    {
+        $validator = new ManifestValidator(
+            new SplFileInfo(__DIR__ . '/../../mock/scaffolds/WithInvalidOutputsTest', '', '')
+        );
+        $violations = $validator->validate();
+
+        self::assertCount(1, $violations);
+
+        $errorsActual = [];
+        /** @var ConstraintViolation $violation */
+        foreach ($violations as $violation) {
+            $errorsActual[] = $violation->getMessage();
+        }
+
+        self::assertSame([
+            'Outputs \'test.Invalid\' are not provided by scaffold operations.',
+        ], $errorsActual);
+    }
+
+    public function testValidateWithInvalidRequirements(): void
+    {
+        $validator = new ManifestValidator(
+            new SplFileInfo(__DIR__ . '/../../mock/scaffolds/WithInvalidRequirementsTest', '', '')
+        );
+        $violations = $validator->validate();
+
+        self::assertCount(1, $violations);
+
+        $errorsActual = [];
+        /** @var ConstraintViolation $violation */
+        foreach ($violations as $violation) {
+            $errorsActual[] = $violation->getMessage();
+        }
+
+        self::assertSame([
+            'Requirements \'test.Invalid\' are not provided by scaffold operations.',
+        ], $errorsActual);
     }
 }

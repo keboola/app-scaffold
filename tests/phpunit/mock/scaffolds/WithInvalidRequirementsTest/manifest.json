@@ -1,0 +1,34 @@
+{
+    "name": "This is only a test",
+    "author": "John Doe",
+    "description": "Sample Description longer than 20 characters.",
+    "requirements": [
+        "test.Invalid"
+    ],
+    "inputs": [
+        {
+            "id": "connectionWriter",
+            "name": "writer",
+            "required": true,
+            "componentId": "keboola.wr-storage",
+            "schema": {
+                "type": "object",
+                "required": [
+                    "#token"
+                ],
+                "properties": {
+                    "#token": {
+                        "type": "string"
+                    }
+                }
+            }
+        },
+        {
+            "id": "main",
+            "componentId": "orchestration",
+            "name": "Orchestration",
+            "required": false,
+            "schema": null
+        }
+    ]
+}

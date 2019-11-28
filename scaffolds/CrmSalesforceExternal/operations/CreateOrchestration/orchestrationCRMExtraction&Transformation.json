@@ -1,0 +1,25 @@
+{
+    "payload": {
+        "name": "CRM Extraction & Transformation",
+        "tasks": [
+            {
+                "component": "htns.ex-salesforce",
+                "operationReferenceId": "htnsExSalesforceSalesforceCRM",
+                "action": "run",
+                "timeoutMinutes": null,
+                "active": true,
+                "continueOnFailure": false,
+                "phase": null
+            },
+            {
+                "component": "transformation",
+                "operationReferenceId": "transformationSalesforceCRM",
+                "action": "run",
+                "timeoutMinutes": null,
+                "active": true,
+                "continueOnFailure": false,
+                "phase": null
+            }
+        ]
+    }
+}

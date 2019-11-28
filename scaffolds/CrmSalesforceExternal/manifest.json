@@ -1,0 +1,60 @@
+{
+    "name": "Salesforce CRM",
+    "author": "Keboola",
+    "description": "Full workflow to extract and process Salesforce data into a standard CRM data model. Contains extractor and set of transformations. Can be extended by CRM Writer Scaffold.",
+    "outputs": [
+        "bdm.Crm.Company",
+        "bdm.Crm.Employee",
+        "bdm.Crm.Contact",
+        "bdm.Crm.Opportunity",
+        "bdm.Crm.OpportunitySnapshot",
+        "bdm.Crm.OpportunityContact",
+        "bdm.Crm.Activity"
+    ],
+    "inputs": [
+        {
+            "id": "htnsExSalesforceSalesforceCRM",
+            "componentId": "htns.ex-salesforce",
+            "name": "Salesforce CRM",
+            "required": true,
+            "schema": {
+                "type": "object",
+                "required": [
+                    "loginname",
+                    "#password",
+                    "#securitytoken"
+                ],
+                "properties": {
+                    "loginname": {
+                        "title": "Login Name",
+                        "type": "string"
+                    },
+                    "#password": {
+                        "title": "Password",
+                        "type": "string",
+                        "format": "password"
+                    },
+                    "#securitytoken": {
+                        "title": "Security Token",
+                        "type": "string",
+                        "format": "password"
+                    }
+                }
+            }
+        },
+        {
+            "id": "transformationSalesforceCRM",
+            "componentId": "transformation",
+            "name": "Salesforce CRM",
+            "required": true,
+            "schema": null
+        },
+        {
+            "id": "orchestrationCRMExtraction&Transformation",
+            "componentId": "orchestrator",
+            "name": "CRM Extraction & Transformation",
+            "required": true,
+            "schema": null
+        }
+    ]
+}
