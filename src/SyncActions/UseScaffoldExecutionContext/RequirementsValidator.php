@@ -14,14 +14,14 @@ final class RequirementsValidator
         ExecutionContext $executionContext
     ): void {
         if ($executionContext->getManifestRequirements()) {
-            RequirementsValidator::validateRequirements(
+            self::validateRequirements(
                 $usedScaffoldManifestsOutputs,
                 $executionContext
             );
         }
 
         if ($executionContext->getManifestOutputs()) {
-            RequirementsValidator::validateOutputs(
+            self::validateOutputs(
                 $usedScaffoldManifestsOutputs,
                 $executionContext
             );
