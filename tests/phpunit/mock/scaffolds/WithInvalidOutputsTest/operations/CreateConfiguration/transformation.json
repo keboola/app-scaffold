@@ -1,0 +1,7 @@
+{
+    "componentId": "transformation",
+    "payload": {
+        "name": "Extract processed tables",
+        "configuration": []
+    }
+}
