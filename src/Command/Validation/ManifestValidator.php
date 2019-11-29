@@ -54,7 +54,8 @@ final class ManifestValidator
                     new Assert\Length(['min' => 20]),
                     new Assert\NotBlank(),
                 ],
-                'outputs' => new Assert\Required([
+                'outputs' => [
+                    new Assert\Required(),
                     new Assert\Callback(function (
                         array $object,
                         ExecutionContextInterface $context,
@@ -62,8 +63,9 @@ final class ManifestValidator
                     ): void {
                         $this->validateScaffoldOutputs($object, $context);
                     }),
-                ]),
-                'requirements' =>  new Assert\Required([
+                ],
+                'requirements' =>  [
+                    new Assert\Required(),
                     new Assert\Callback(function (
                         array $object,
                         ExecutionContextInterface $context,
@@ -71,7 +73,7 @@ final class ManifestValidator
                     ): void {
                         $this->validateScaffoldRequirements($object, $context);
                     }),
-                ]),
+                ],
                 'inputs' => [
                     new Assert\All([
                         new Assert\Collection([
@@ -117,7 +119,7 @@ final class ManifestValidator
     private function searchForMissingDefinitionDependencies(array $items): array
     {
         $found = [];
-        foreach ($this->getOperationConfigRowsFiles() as $operationFile) {
+        foreach ($this->getOperationsFiles() as $operationFile) {
             foreach ($items as $item) {
                 preg_match('/(' . $item . ')/', $operationFile->getContents(), $outputArray);
                 foreach ($outputArray as $outputItem) {
@@ -131,7 +133,7 @@ final class ManifestValidator
         return array_diff($items, $found);
     }
 
-    private function getOperationConfigRowsFiles(): Finder
+    private function getOperationsFiles(): Finder
     {
         $finder = new Finder();
         $finder->in(sprintf('%s/operations/', $this->scaffoldDir))
