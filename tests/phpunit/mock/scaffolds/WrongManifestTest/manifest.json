@@ -2,6 +2,8 @@
     "name": "",
     "author": "",
     "description": "Sample",
+    "outputs": [],
+    "requirements": [],
     "inputs": [
         {
             "id": "connectionWriter",

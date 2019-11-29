@@ -109,4 +109,19 @@ class ExecutionContext
     {
         return $this->scaffoldId;
     }
+
+    public function getManifestRequirements(): array
+    {
+        return isset($this->manifest['requirements']) ? $this->manifest['requirements'] : [];
+    }
+
+    public function getManifestOutputs(): array
+    {
+        return isset($this->manifest['outputs']) ? $this->manifest['outputs'] : [];
+    }
+
+    public function getScaffoldFolder(): string
+    {
+        return $this->scaffoldFolder->getPath();
+    }
 }

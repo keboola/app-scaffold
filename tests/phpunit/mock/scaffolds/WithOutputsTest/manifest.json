@@ -1,0 +1,41 @@
+{
+    "name": "This is only a test",
+    "author": "John Doe",
+    "description": "Sample Description longer than 20 characters.",
+    "outputs": [
+        "test.Outputs"
+    ],
+    "requirements": [],
+    "inputs": [
+        {
+            "id": "connectionExtractor",
+            "name": "extractor",
+            "required": true,
+            "componentId": "keboola.ex-storage",
+            "schema": {
+                "type": "object",
+                "required": [
+                    "#token"
+                ],
+                "properties": {
+                    "#token": {
+                        "type": "string"
+                    }
+                }
+            }
+        },
+        {
+            "id": "transformation",
+            "componentId": "transformation",
+            "name": "Transformation",
+            "required": true,
+            "schema": null
+        },
+        {
+            "id": "main",
+            "componentId": "orchestration",
+            "name": "Orchestration",
+            "required": false
+        }
+    ]
+}
