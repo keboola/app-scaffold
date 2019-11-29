@@ -2,6 +2,8 @@
     "name": "Reviewtrackers Reviews to Snowflake",
     "author": "Keboola",
     "description": "Complete business application to extract multi-location reviews from Review Trackers (trial account available), NLP processing for entity, relations and sentiment analysis and output of standardized data model into Snowflake.",
+    "outputs": [],
+    "requirements": [],
     "inputs": [
         {
             "id": "kdsTeamExReviewtrackersSurveys",

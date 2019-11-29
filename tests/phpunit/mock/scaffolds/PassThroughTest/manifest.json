@@ -2,6 +2,8 @@
     "name": "This is only a test",
     "author": "John Doe",
     "description": "Sample Description longer than 20 characters.",
+    "outputs": [],
+    "requirements": [],
     "inputs": [
         {
             "id": "connectionWriter",

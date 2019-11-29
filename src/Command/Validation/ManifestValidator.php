@@ -52,8 +52,8 @@ final class ManifestValidator
                     new Assert\Length(['min' => 20]),
                     new Assert\NotBlank(),
                 ],
-                'outputs' =>  new Assert\Optional(new Assert\NotBlank()),
-                'requirements' =>  new Assert\Optional(new Assert\NotBlank()),
+                'outputs' => new Assert\Required(),
+                'requirements' =>  new Assert\Required(),
                 'inputs' => [
                     new Assert\All([
                         new Assert\Collection([

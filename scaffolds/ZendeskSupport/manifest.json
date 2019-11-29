@@ -2,6 +2,8 @@
     "name": "Zendesk Support to Snowflake",
     "author": "Keboola",
     "description": "Basic acquisition of Zendesk data with transformation to standard support data model and output to Snowflake.",
+    "outputs": [],
+    "requirements": [],
     "inputs": [
         {
             "id": "keboolaExZendeskZendeskSupport",

@@ -5,6 +5,7 @@
     "outputs": [
         "test.Require"
     ],
+    "requirements": [],
     "inputs": [
         {
             "id": "connectionWriter",

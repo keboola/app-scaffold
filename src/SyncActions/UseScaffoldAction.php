@@ -81,8 +81,9 @@ class UseScaffoldAction
         $usedScaffoldManifestsOutputs = [];
         foreach ($usedScaffoldObjects as $name => $usedScaffoldObject) {
             $manifestFilePath = sprintf(
-                '%s/manifest.json',
-                $this->executionContext->getScaffoldFolder() . '/' . $name
+                '%s/%s/manifest.json',
+                $this->executionContext->getScaffoldFolder(),
+                $name
             );
 
             if (file_exists($manifestFilePath)) {
@@ -90,13 +91,6 @@ class UseScaffoldAction
                 if (isset($manifest['outputs'])) {
                     $usedScaffoldManifestsOutputs = array_merge($usedScaffoldManifestsOutputs, $manifest['outputs']);
                 }
-            } else {
-                throw new UserException(
-                    sprintf(
-                        'Manifest file for scaffold \'%s\' does not exist',
-                        $this->executionContext->getScaffoldId()
-                    )
-                );
             }
         }
 

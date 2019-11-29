@@ -13,14 +13,14 @@ final class RequirementsValidator
         array $usedScaffoldManifestsOutputs,
         ExecutionContext $executionContext
     ): void {
-        if ($executionContext->getManifestRequirements()) {
+        if (count($executionContext->getManifestRequirements()) !== 0) {
             self::validateRequirements(
                 $usedScaffoldManifestsOutputs,
                 $executionContext
             );
         }
 
-        if ($executionContext->getManifestOutputs()) {
+        if (count($executionContext->getManifestOutputs()) !== 0) {
             self::validateOutputs(
                 $usedScaffoldManifestsOutputs,
                 $executionContext
