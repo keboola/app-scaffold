@@ -47,7 +47,7 @@ class Component extends BaseComponent
     private function getScaffoldConfigurationFolder(
         string $scaffoldId
     ): string {
-        if (getenv('KBC_SCAFFOLDS_DIR') !== '') {
+        if (getenv('KBC_SCAFFOLDS_DIR') !== false && getenv('KBC_SCAFFOLDS_DIR') !== '') {
             $scaffoldFolder = getenv('KBC_SCAFFOLDS_DIR') . '/' . $scaffoldId;
         } else {
             $scaffoldFolder = self::SCAFFOLDS_DIR . '/' . $scaffoldId;
