@@ -94,22 +94,22 @@ final class ManifestValidator
 
     private function validateScaffoldOutputs(array $object, ExecutionContextInterface $context): void
     {
-        $diff = $this->searchForMissingDefinitionDependencies($object);
-        if (count($diff) > 0) {
+        $missingDefinitions = $this->searchForMissingDefinitionDependencies($object);
+        if (count($missingDefinitions) > 0) {
             $context->buildViolation(sprintf(
                 'Outputs \'%s\' are not provided by scaffold operations.',
-                implode(', ', $diff)
+                implode(', ', $missingDefinitions)
             ))->addViolation();
         }
     }
 
     private function validateScaffoldRequirements(array $object, ExecutionContextInterface $context): void
     {
-        $missingDefinition = $this->searchForMissingDefinitionDependencies($object);
-        if (count($missingDefinition) > 0) {
+        $missingDefinitions = $this->searchForMissingDefinitionDependencies($object);
+        if (count($missingDefinitions) > 0) {
             $context->buildViolation(sprintf(
                 'Requirements \'%s\' are not provided by scaffold operations.',
-                implode(', ', $missingDefinition)
+                implode(', ', $missingDefinitions)
             ))->addViolation();
         }
     }

@@ -5,6 +5,7 @@
     "outputs": [
         "test.Invalid"
     ],
+    "requirements": [],
     "inputs": [
         {
             "id": "connectionExtractor",
