@@ -2,6 +2,8 @@
     "name": "Salesforce MRR to Snowflake",
     "author": "Keboola",
     "description": "Recurring Revenue analysis on Salesforce orders (requires use of orders and order items with from-to dates). Generates an \"MRR caledar\" type structure that is easy to analyse with any BI tool. Includes output to Snowflake DWH.",
+    "outputs": [],
+    "requirements": [],
     "inputs": [
         {
             "id": "htnsExSalesforceSalesforceMRR",

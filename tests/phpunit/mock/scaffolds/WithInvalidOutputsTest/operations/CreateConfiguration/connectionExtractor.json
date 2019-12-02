@@ -1,0 +1,11 @@
+{
+    "componentId": "keboola.ex-storage",
+    "payload": {
+        "name": "Extract processed tables",
+        "configuration": {
+            "parameters": {
+                "url": "https://connection.keboola.com/"
+            }
+        }
+    }
+}

@@ -6,11 +6,16 @@ namespace Keboola\ScaffoldApp;
 
 use Exception;
 use Keboola\Component\BaseComponent;
+use Keboola\Component\JsonHelper;
 use Keboola\Component\UserException;
+use Keboola\ScaffoldApp\SyncActions\ObjectLister;
+use Keboola\ScaffoldApp\SyncActions\RequirementsValidator;
 use Keboola\ScaffoldApp\SyncActions\UseScaffoldExecutionContext\ExecutionContextLoader;
 use Keboola\ScaffoldApp\SyncActions\ListScaffoldsAction;
 use Keboola\ScaffoldApp\SyncActions\UseScaffoldAction;
 use Symfony\Component\Filesystem\Filesystem;
+use Symfony\Component\Finder\Finder;
+use Symfony\Component\Finder\SplFileInfo;
 
 class Component extends BaseComponent
 {
@@ -29,9 +34,11 @@ class Component extends BaseComponent
         $scaffoldFolder = $this->getScaffoldConfigurationFolder($config->getScaffoldName());
         $scaffoldInputs = $config->getParsedInputs();
         $loader = new ExecutionContextLoader($scaffoldInputs, $scaffoldFolder);
+        $apiClientStore = new ApiClientStore($this->getLogger());
+
         $action = new UseScaffoldAction(
             $loader->getExecutionContext(),
-            new ApiClientStore($this->getLogger()),
+            $apiClientStore,
             $this->getLogger()
         );
         return $action->run();
@@ -40,7 +47,11 @@ class Component extends BaseComponent
     private function getScaffoldConfigurationFolder(
         string $scaffoldId
     ): string {
-        $scaffoldFolder = self::SCAFFOLDS_DIR . '/' . $scaffoldId;
+        if (getenv('KBC_SCAFFOLDS_DIR') !== '') {
+            $scaffoldFolder = getenv('KBC_SCAFFOLDS_DIR') . '/' . $scaffoldId;
+        } else {
+            $scaffoldFolder = self::SCAFFOLDS_DIR . '/' . $scaffoldId;
+        }
 
         $fs = new Filesystem();
         if (!$fs->exists($scaffoldFolder)) {

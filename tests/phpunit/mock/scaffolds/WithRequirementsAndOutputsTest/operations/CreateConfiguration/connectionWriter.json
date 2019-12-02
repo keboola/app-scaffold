@@ -1,0 +1,11 @@
+{
+    "componentId": "keboola.wr-storage",
+    "payload": {
+        "name": "Write processed tables",
+        "configuration": {
+            "parameters": {
+                "url": "https://connection.keboola.com/"
+            }
+        }
+    }
+}

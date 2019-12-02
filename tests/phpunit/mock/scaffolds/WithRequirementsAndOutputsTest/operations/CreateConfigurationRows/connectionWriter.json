@@ -1,0 +1,24 @@
+[
+    {
+        "name": "user-processed",
+        "configuration": {
+            "storage": {
+                "input": {
+                    "tables": [
+                        {
+                            "source_search": {
+                                "key": "bdm.scaffold.entity.type",
+                                "value": "user"
+                            },
+                            "changed_since": "",
+                            "destination": "user-processed"
+                        }
+                    ]
+                }
+            },
+            "parameters": {
+                "mode": "recreate"
+            }
+        }
+    }
+]

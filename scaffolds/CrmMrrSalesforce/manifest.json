@@ -2,6 +2,8 @@
     "name": "Salesforce CRM & MRR to Snowflake",
     "author": "Keboola",
     "description": "Combines Recurring Revenue with sales/pipeline analysis from SalesForce.",
+    "outputs": [],
+    "requirements": [],
     "inputs": [
         {
             "id": "htnsExSalesforceMRR",

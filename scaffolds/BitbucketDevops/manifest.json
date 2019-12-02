@@ -2,6 +2,8 @@
     "name": "Bitbucket Devops to Snowflake",
     "author": "Keboola",
     "description": "Bitbucket repositories analysis to track progress of your development and activity of your team members. Includes output to Snowflake DWH.",
+    "outputs": [],
+    "requirements": [],
     "inputs": [
         {
             "id": "kdsTeamExBitbucketBitbucket",

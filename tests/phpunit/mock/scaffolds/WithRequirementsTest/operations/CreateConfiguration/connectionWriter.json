@@ -1,0 +1,48 @@
+{
+    "componentId": "keboola.wr-db-snowflake",
+    "authorization": "provisionedSnowflake",
+    "payload": {
+        "name": "CRM",
+        "configuration": {
+            "parameters": {
+                "db": {},
+                "tables": [
+                    {
+                        "dbName": "OUTPUTS",
+                        "export": true,
+                        "tableId": "out.c-test.outputs",
+                        "items": [
+                            {
+                                "name": "outputs_id",
+                                "dbName": "OUTPUTS_ID",
+                                "type": "varchar",
+                                "size": "255",
+                                "nullable": false,
+                                "default": ""
+                            }
+                        ],
+                        "primaryKey": [
+                            "OUTPUTS_ID"
+                        ]
+                    }
+                ]
+            },
+            "storage": {
+                "input": {
+                    "tables": [
+                        {
+                            "destination": "out.c-test.outputs.csv",
+                            "columns": [
+                                "outputs_id"
+                            ],
+                            "source_search": {
+                                "key": "bdm.scaffold.table.tag",
+                                "value": "test.Outputs"
+                            }
+                        }
+                    ]
+                }
+            }
+        }
+    }
+}

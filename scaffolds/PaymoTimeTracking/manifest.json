@@ -2,6 +2,8 @@
     "name": "Paymo Time Tracking to Snowflake",
     "author": "Keboola",
     "description": "Processing of projects, employees, tasks and time entries into simple-to-analyze model including budget monitorin etc., with output to Snowflake.",
+    "outputs": [],
+    "requirements": [],
     "inputs": [
         {
             "id": "kdsTeamExPaymoPaymo",
