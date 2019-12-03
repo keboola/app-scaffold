@@ -26,12 +26,14 @@
                         "properties": {
                             "username": {
                                 "title": "User Name",
-                                "type": "string"
+                                "type": "string",
+                                "description": "Fill in you BitBucket username."
                             },
                             "#password": {
-                                "title": "Password",
+                                "title": "Password/App Password",
                                 "type": "string",
-                                "format": "password"
+                                "format": "password",
+                                "description": "If you're using Multi-factor authentication on Bitbucket (as you should), App Password is necessary (https://confluence.atlassian.com/bitbucket/app-passwords-828781300.html)."
                             }
                         }
                     }
