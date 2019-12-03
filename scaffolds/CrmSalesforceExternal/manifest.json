@@ -2,6 +2,7 @@
     "name": "Salesforce CRM",
     "author": "Keboola",
     "description": "Full workflow to extract and process Salesforce data into a standard CRM data model. Contains extractor and set of transformations. Can be extended by CRM Writer Scaffold.",
+    "requirements": [],
     "outputs": [
         "bdm.Crm.Company",
         "bdm.Crm.Employee",
