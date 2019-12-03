@@ -21,19 +21,24 @@
                     "loginname": {
                         "title": "Login Name",
                         "type": "string",
-                        "descrtiption": "Fill in your Salesforce Login Email."
+                        "description": "Fill in your Salesforce Login Email."
                     },
                     "#password": {
                         "title": "Password",
                         "type": "string",
                         "format": "password",
-                        "descrtiption": "Fill in your Salesforce Password."
+                        "description": "Fill in your Salesforce Password."
                     },
                     "#securitytoken": {
                         "title": "Security Token",
                         "type": "string",
                         "format": "password",
-                        "descrtiption": "Fill in your Salesforce Security Token (https://help.salesforce.com/articleView?id=user_security_token.htm)."
+                        "links": [
+                            {
+                                "rel": "Get Salesforce Security Token",
+                                "href": "https://help.salesforce.com/articleView?id=user_security_token.htm"
+                            }
+                        ]
                     }
                 }
             }

@@ -39,7 +39,12 @@
                                 "title": "Token",
                                 "type": "string",
                                 "format": "password",
-                                "description": "Fill in your Zendesk API Token (https://developer.zendesk.com/rest_api/docs/core/introduction#api-token)."
+                                "links": [
+                                    {
+                                        "rel": "Get Zendesk API Token",
+                                        "href": "https://developer.zendesk.com/rest_api/docs/core/introduction#api-token"
+                                    }
+                                ]
                             }
                         }
                     }
