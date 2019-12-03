@@ -20,7 +20,12 @@
                         "title": "API Token",
                         "type": "string",
                         "format": "password",
-                        "description": "Fill in you Hubspot API Token (https://knowledge.hubspot.com/integrations/how-do-i-get-my-hubspot-api-key)."
+                        "links": [
+                            {
+                                "rel": "Get Hubspot API Token",
+                                "href": "https://knowledge.hubspot.com/integrations/how-do-i-get-my-hubspot-api-key"
+                            }
+                        ]
                     }
                 }
             }
