@@ -27,11 +27,13 @@
                             "#apiToken": {
                                 "title": "API Token",
                                 "type": "string",
-                                "format": "password"
+                                "format": "password",
+                                "descrtiption": "Fill in your Pipedrive API Token (https://pipedrive.readme.io/docs/how-to-find-the-api-token)."
                             },
                             "companyDomain": {
-                                "title": "Company domain",
-                                "type": "string"
+                                "title": "Company Domain",
+                                "type": "string",
+                                "descrtiption": "Fill in your Pipedrive Company Domain (https://pipedrive.readme.io/docs/how-to-get-the-company-domain)."
                             }
                         }
                     }
