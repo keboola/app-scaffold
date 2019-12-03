@@ -27,16 +27,19 @@
                         "properties": {
                             "domain": {
                                 "title": "Your Zendesk domain",
-                                "type": "string"
+                                "type": "string",
+                                "description": "e.g.: 'keboola'"
                             },
                             "usermail": {
                                 "title": "User e-mail",
-                                "type": "string"
+                                "type": "string",
+                                "description": "Your Zendesk user e-mail."
                             },
                             "#password": {
                                 "title": "Token",
                                 "type": "string",
-                                "format": "password"
+                                "format": "password",
+                                "description": "Fill in your Zendesk API Token (https://developer.zendesk.com/rest_api/docs/core/introduction#api-token)."
                             }
                         }
                     }
