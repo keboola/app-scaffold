@@ -28,17 +28,20 @@
                 "properties": {
                     "loginname": {
                         "title": "Login Name",
-                        "type": "string"
+                        "type": "string",
+                        "descrtiption": "Fill in your Salesforce Login Email."
                     },
                     "#password": {
                         "title": "Password",
                         "type": "string",
-                        "format": "password"
+                        "format": "password",
+                        "descrtiption": "Fill in your Salesforce Password."
                     },
                     "#securitytoken": {
                         "title": "Security Token",
                         "type": "string",
-                        "format": "password"
+                        "format": "password",
+                        "descrtiption": "Fill in your Salesforce Security Token (https://help.salesforce.com/articleView?id=user_security_token.htm)."
                     }
                 }
             }
