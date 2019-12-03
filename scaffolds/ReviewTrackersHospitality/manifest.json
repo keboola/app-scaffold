@@ -19,12 +19,14 @@
                 "properties": {
                     "username": {
                         "title": "Username",
-                        "type": "string"
+                        "type": "string",
+                        "description": "Fill in your ReviewTrackers Username."
                     },
                     "#password": {
                         "title": "Password",
                         "type": "string",
-                        "format": "password"
+                        "format": "password",
+                        "description": "Fill in your ReviewTrackers Password."
                     }
                 }
             }
