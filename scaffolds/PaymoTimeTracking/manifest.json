@@ -26,7 +26,8 @@
                             "#username": {
                                 "title": "API Token",
                                 "type": "string",
-                                "format": "password"
+                                "format": "password",
+                                "description": "Fill in your [Paymo API Token](https://github.com/paymoapp/api/blob/master/sections/authentication.md#api-keys)."
                             }
                         }
                     }
@@ -53,7 +54,8 @@
                             "#username": {
                                 "title": "API Token",
                                 "type": "string",
-                                "format": "password"
+                                "format": "password",
+                                "description": "Fill in your [Paymo API Token](https://github.com/paymoapp/api/blob/master/sections/authentication.md#api-keys)."
                             }
                         }
                     }
