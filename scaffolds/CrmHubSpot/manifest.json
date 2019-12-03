@@ -17,9 +17,10 @@
                 ],
                 "properties": {
                     "#api_token": {
-                        "title": "Api token",
+                        "title": "API Token",
                         "type": "string",
-                        "format": "password"
+                        "format": "password",
+                        "description": "Fill in you Hubspot API Token (https://knowledge.hubspot.com/integrations/how-do-i-get-my-hubspot-api-key)."
                     }
                 }
             }
