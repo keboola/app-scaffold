@@ -19,7 +19,7 @@ class ManifestValidatorTest extends TestCase
         );
         $violations = $validator->validate();
 
-        self::assertCount(13, $violations);
+        self::assertCount(14, $violations);
 
         $errorsActual = [];
         /** @var ConstraintViolation $violation */
@@ -35,7 +35,10 @@ class ManifestValidatorTest extends TestCase
         }
         self::assertSame([
             '[author]' => 'This value should not be blank.',
-            '[name]' => 'This value should not be blank.',
+            '[name]' => [
+                'This value is too short. It should have 5 characters or more.',
+                'This value should not be blank.',
+            ],
             '[description]' => 'This value is too short. It should have 20 characters or more.',
             '[inputs][0][schema][type]' => 'This field is missing.',
             '[inputs][0][schema][required]' => 'This field is missing.',
