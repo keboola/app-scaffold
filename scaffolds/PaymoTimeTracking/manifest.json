@@ -27,7 +27,12 @@
                                 "title": "API Token",
                                 "type": "string",
                                 "format": "password",
-                                "description": "Fill in your [Paymo API Token](https://github.com/paymoapp/api/blob/master/sections/authentication.md#api-keys)."
+                                "links": [
+                                    {
+                                        "rel": "Get Paymo API Token",
+                                        "href": "https://github.com/paymoapp/api/blob/master/sections/authentication.md#api-keys"
+                                    }
+                                ]
                             }
                         }
                     }
