@@ -5,8 +5,7 @@
         "name": "Snowflake",
         "configuration": {
             "parameters": {
-                "db": {
-                },
+                "db": {},
                 "tables": [
                     {
                         "dbName": "ACTIVITY",
@@ -56,7 +55,7 @@
                             {
                                 "name": "activity_date",
                                 "dbName": "ACTIVITY_DATE",
-                                "type": "timestamp",
+                                "type": "datetime",
                                 "size": "",
                                 "nullable": true,
                                 "default": ""
