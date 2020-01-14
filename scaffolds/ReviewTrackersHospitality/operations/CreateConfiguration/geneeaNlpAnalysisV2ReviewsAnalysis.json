@@ -41,7 +41,6 @@
                     "sentiment",
                     "relations"
                 ],
-                "domain": "voc-hospitality",
                 "use_beta": false,
                 "correction": "basic",
                 "diacritization": "none",

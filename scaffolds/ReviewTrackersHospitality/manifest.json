@@ -43,7 +43,33 @@
             "componentId": "geneea.nlp-analysis-v2",
             "name": "Reviews analysis",
             "required": true,
-            "schema": null
+            "schema": {
+                "type": "object",
+                "required": [
+                    "domain"
+                ],
+                "properties": {
+                    "domain": {
+                        "title": "Domain",
+                        "type": "string",
+                        "enum": [
+                            "news",
+                            "voc-hospitality",
+                            "voc-banking",
+                            "tcc"
+                        ],
+                        "options": {
+                            "enum_titles": [
+                                "News Articles",
+                                "Voice of the Customer - Hospitality",
+                                "Voice of the Customer - Banking",
+                                "Voice of the Customer - Transportation"
+                            ]
+                        },
+                        "description": "Select preferred Geneea domain to better analyze your text data."
+                    }
+                }
+            }
         },
         {
             "id": "transformation02Reviews(postNLP)",
