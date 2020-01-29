@@ -1,0 +1,55 @@
+{
+    "name": "Asana Project Management to Snowflake",
+    "author": "Keboola",
+    "description": "Full workflow to extract and process Asana data into a standard Project Management data model. Contains extractor, set of transformations and a Snowflake writer.",
+    "outputs": [],
+    "requirements": [],
+    "inputs": [
+        {
+            "id": "leochanExAsanaAsana",
+            "componentId": "leochan.ex-asana",
+            "name": "Asana",
+            "required": true,
+            "schema": {
+                "type": "object",
+                "required": [
+                    "#api_key"
+                ],
+                "properties": {
+                    "#api_key": {
+                        "title": "Personal Access Token",
+                        "type": "string",
+                        "format": "password",
+                        "links": [
+                            {
+                                "rel": "Get You Personal Access Token",
+                                "href": "https://asana.com/guide/help/api/api#personalaccesstokens"
+                            }
+                        ]
+                    }
+                }
+            }
+        },
+        {
+            "id": "transformationProjectManagement",
+            "componentId": "transformation",
+            "name": "Project Management",
+            "required": true,
+            "schema": null
+        },
+        {
+            "id": "keboolaWrDbSnowflakeProjectManagement",
+            "componentId": "keboola.wr-db-snowflake",
+            "name": "Project Management",
+            "required": true,
+            "schema": null
+        },
+        {
+            "id": "orchestrationProjectManagement",
+            "componentId": "orchestrator",
+            "name": "Project Management",
+            "required": true,
+            "schema": null
+        }
+    ]
+}
