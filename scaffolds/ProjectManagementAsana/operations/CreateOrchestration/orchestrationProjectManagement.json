@@ -1,0 +1,34 @@
+{
+    "payload": {
+        "name": "Project Management",
+        "tasks": [
+            {
+                "component": "leochan.ex-asana",
+                "operationReferenceId": "leochanExAsanaAsana",
+                "action": "run",
+                "timeoutMinutes": null,
+                "active": true,
+                "continueOnFailure": false,
+                "phase": null
+            },
+            {
+                "component": "transformation",
+                "operationReferenceId": "transformationProjectManagement",
+                "action": "run",
+                "timeoutMinutes": null,
+                "active": true,
+                "continueOnFailure": false,
+                "phase": null
+            },
+            {
+                "component": "keboola.wr-db-snowflake",
+                "operationReferenceId": "keboolaWrDbSnowflakeProjectManagement",
+                "action": "run",
+                "timeoutMinutes": null,
+                "active": true,
+                "continueOnFailure": false,
+                "phase": null
+            }
+        ]
+    }
+}
