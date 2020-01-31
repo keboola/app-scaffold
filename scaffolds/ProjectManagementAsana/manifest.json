@@ -13,19 +13,26 @@
             "schema": {
                 "type": "object",
                 "required": [
-                    "#api_key"
+                    "config"
                 ],
                 "properties": {
-                    "#api_key": {
-                        "title": "Personal Access Token",
-                        "type": "string",
-                        "format": "password",
-                        "links": [
-                            {
-                                "rel": "Get You Personal Access Token",
-                                "href": "https://asana.com/guide/help/api/api#personalaccesstokens"
+                    "config": {
+                        "type": "object",
+                        "title": "Authorization",
+                        "required": ["#api_key"],
+                        "properties": {
+                            "#api_key": {
+                                "title": "Personal Access Token",
+                                "type": "string",
+                                "format": "password",
+                                "links": [
+                                    {
+                                        "rel": "Get You Personal Access Token",
+                                        "href": "https://asana.com/guide/help/api/api#personalaccesstokens"
+                                    }
+                                ]
                             }
-                        ]
+                        }
                     }
                 }
             }
