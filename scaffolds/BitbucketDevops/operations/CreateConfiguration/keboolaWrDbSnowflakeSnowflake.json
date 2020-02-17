@@ -656,14 +656,6 @@
                                 "default": ""
                             },
                             {
-                                "name": "organization_id",
-                                "dbName": "ORGANIZATION_ID",
-                                "type": "varchar",
-                                "size": "255",
-                                "nullable": false,
-                                "default": ""
-                            },
-                            {
                                 "name": "user",
                                 "dbName": "USER",
                                 "type": "varchar",
@@ -690,14 +682,6 @@
                             {
                                 "name": "is_active",
                                 "dbName": "IS_ACTIVE",
-                                "type": "varchar",
-                                "size": "255",
-                                "nullable": false,
-                                "default": ""
-                            },
-                            {
-                                "name": "is_member",
-                                "dbName": "IS_MEMBER",
                                 "type": "varchar",
                                 "size": "255",
                                 "nullable": false,
