@@ -71,11 +71,30 @@
                         }
                     ],
                     "destination": "out.c-bitbucketDevops.bitbucketUser"
+                },
+                {
+                    "source": "out_organization_user",
+                    "primaryKey": [
+                        "organization_id",
+                        "user_id"
+                    ],
+                    "metadata": [
+                        {
+                            "key": "bdm.scaffold.table.tag",
+                            "value": "BitbucketDevops.internal.outBitbucketOrganizationUser"
+                        },
+                        {
+                            "key": "scaffold.id",
+                            "value": "BitbucketDevops"
+                        }
+                    ],
+                    "destination": "out.c-bitbucketDevops.bitbucketOrganizationUser"
                 }
             ],
             "queries": [
-                "--create output users table\n--format date\n--convert flags to true\/false\nCREATE TABLE \"out_user\"\nAS\n    SELECT\n        \"m\".\"member_id\"                                       AS \"user_id\",\n        ifnull(\"m\".\"team_id\", '0')                            AS \"organization_id\",\n        \"m\".\"display_name\"                                    AS \"user\",\n        replace(left(\"created_on\", 19), 'T', ' ')             AS \"created_on\",\n        \"m\".\"type\",\n        IFF(\"m\".\"account_status\" = 'active', 'true', 'false') AS \"is_active\",\n        'true' :: VARCHAR(20)                                 AS \"is_member\"\n    FROM \"member\" \"m\"\n             LEFT JOIN \"organization\" \"o\"\n                       ON \"m\".\"team_id\" = \"o\".\"organization_id\";",
-                "--add fake row for referential integrity (pull requests\/commits\/issues\/comments without user)\nINSERT INTO \"out_user\"\n    (\"user_id\", \"organization_id\", \"user\", \"created_on\", \"type\", \"is_active\", \"is_member\")\nVALUES\n    ('0', '0', 'External User', '', 'user', 'false', 'false');"
+                "--create output users table\n--format date\n--convert flags to true\/false\nCREATE TABLE \"out_user\"\nAS\n    SELECT\n        \"m\".\"member_id\"                                       AS \"user_id\",\n        \"m\".\"display_name\"                                    AS \"user\",\n        replace(left(\"created_on\", 19), 'T', ' ')             AS \"created_on\",\n        \"m\".\"type\",\n        IFF(\"m\".\"account_status\" = 'active', 'true', 'false') AS \"is_active\"\n    FROM \"member\" \"m\";",
+                "--add fake row for referential integrity (pull requests\/commits\/issues\/comments without user)\nINSERT INTO \"out_user\"\n    (\"user_id\", \"user\", \"created_on\", \"type\", \"is_active\")\nVALUES\n    ('0', 'External User', '', 'user', 'false');",
+                "--create user-organization membership table\n--link member to Unknown org if that mentioned in the data is missing\nCREATE TABLE \"out_organization_user\"\nAS\n    SELECT\n        ifnull(\"o\".\"organization_id\", '0') AS \"organization_id\",\n        \"m\".\"member_id\"                           AS \"user_id\"\n    FROM \"member\" \"m\"\n             LEFT JOIN \"organization\" \"o\"\n                       ON \"m\".\"team_id\" = \"o\".\"organization_id\";"
             ],
             "input": [
                 {

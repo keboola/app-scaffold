@@ -1,12 +1,11 @@
 {
     "componentId": "keboola.wr-db-snowflake",
-    "authorization": "provisionedSnowflake",    
+    "authorization": "provisionedSnowflake",
     "payload": {
         "name": "Snowflake",
         "configuration": {
             "parameters": {
-                "db": {
-                },
+                "db": {},
                 "tables": [
                     {
                         "dbName": "ISSUE",
@@ -220,6 +219,33 @@
                         ],
                         "primaryKey": [
                             "ORGANIZATION_ID"
+                        ]
+                    },
+                    {
+                        "dbName": "ORGANIZATION_USER",
+                        "export": true,
+                        "tableId": "out.c-bitbucket.organization_user",
+                        "items": [
+                            {
+                                "name": "organization_id",
+                                "dbName": "ORGANIZATION_ID",
+                                "type": "string",
+                                "size": "255",
+                                "nullable": false,
+                                "default": ""
+                            },
+                            {
+                                "name": "user_id",
+                                "dbName": "USER_ID",
+                                "type": "string",
+                                "size": "255",
+                                "nullable": false,
+                                "default": ""
+                            }
+                        ],
+                        "primaryKey": [
+                            "ORGANIZATION_ID",
+                            "USER_ID"
                         ]
                     },
                     {
@@ -793,6 +819,17 @@
                             "source_search": {
                                 "key": "bdm.scaffold.table.tag",
                                 "value": "BitbucketDevops.internal.outBitbucketOrganization"
+                            }
+                        },
+                        {
+                            "destination": "out.c-bitbucket.organization_user.csv",
+                            "columns": [
+                                "organization_id",
+                                "user_id"
+                            ],
+                            "source_search": {
+                                "key": "bdm.scaffold.table.tag",
+                                "value": "BitbucketDevops.internal.outBitbucketOrganizationUser"
                             }
                         },
                         {
