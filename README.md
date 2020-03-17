@@ -223,6 +223,16 @@ CreateConfiguration operation path `payload.configuration.parameters` can be ove
 }
 ```
 
+### Scaffold Dependencies
+The manifest file can optionally list `outputs` which is a list of table tags produced by that scaffold (when its orchestration is ran). Then another scaffold may list a list of table tags
+in its `requirements` section of its manifest file. The dependency checking works this way:
+
+- The manifest to be used (A) get's all scaffolds used in the project.
+- The outputs of the used scaffolds (B) are merged together.
+- If B outputs matches A requirements then the scaffold A can be used.
+
+I.e. the logic is that the scaffold can be used when all it's requirements are fullfilled by one or more scaffolds. However the presence of the scaffolds is important, not the presence of actual tables.
+
 ## Development
 
 Clone this repository and init the workspace with following command:
