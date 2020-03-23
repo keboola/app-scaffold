@@ -1,12 +1,11 @@
 {
     "componentId": "keboola.wr-db-snowflake",
-    "authorization": "provisionedSnowflake",    
+    "authorization": "provisionedSnowflake",
     "payload": {
         "name": "Snowflake",
         "configuration": {
             "parameters": {
-                "db": {
-                },
+                "db": {},
                 "tables": [
                     {
                         "dbName": "ISSUE",
@@ -456,14 +455,6 @@
                                 "default": ""
                             },
                             {
-                                "name": "is_looker",
-                                "dbName": "IS_LOOKER",
-                                "type": "varchar",
-                                "size": "255",
-                                "nullable": false,
-                                "default": ""
-                            },
-                            {
                                 "name": "created_on",
                                 "dbName": "CREATED_ON",
                                 "type": "timestamp",
@@ -543,80 +534,6 @@
                         ]
                     },
                     {
-                        "dbName": "REPOSITORY_COMMIT_CHANGE",
-                        "export": true,
-                        "tableId": "out.c-bitbucket.repository_commit_change",
-                        "items": [
-                            {
-                                "name": "repository_commit_change_id",
-                                "dbName": "REPOSITORY_COMMIT_CHANGE_ID",
-                                "type": "varchar",
-                                "size": "255",
-                                "nullable": false,
-                                "default": ""
-                            },
-                            {
-                                "name": "repository_commit_id",
-                                "dbName": "REPOSITORY_COMMIT_ID",
-                                "type": "varchar",
-                                "size": "255",
-                                "nullable": false,
-                                "default": ""
-                            },
-                            {
-                                "name": "status",
-                                "dbName": "STATUS",
-                                "type": "varchar",
-                                "size": "255",
-                                "nullable": false,
-                                "default": ""
-                            },
-                            {
-                                "name": "new_path",
-                                "dbName": "NEW_PATH",
-                                "type": "varchar",
-                                "size": "1000",
-                                "nullable": false,
-                                "default": ""
-                            },
-                            {
-                                "name": "file_type",
-                                "dbName": "FILE_TYPE",
-                                "type": "varchar",
-                                "size": "255",
-                                "nullable": false,
-                                "default": ""
-                            },
-                            {
-                                "name": "old_path",
-                                "dbName": "OLD_PATH",
-                                "type": "varchar",
-                                "size": "1000",
-                                "nullable": false,
-                                "default": ""
-                            },
-                            {
-                                "name": "lines_added",
-                                "dbName": "LINES_ADDED",
-                                "type": "integer",
-                                "size": "",
-                                "nullable": true,
-                                "default": ""
-                            },
-                            {
-                                "name": "lines_removed",
-                                "dbName": "LINES_REMOVED",
-                                "type": "integer",
-                                "size": "",
-                                "nullable": true,
-                                "default": ""
-                            }
-                        ],
-                        "primaryKey": [
-                            "REPOSITORY_COMMIT_CHANGE_ID"
-                        ]
-                    },
-                    {
                         "dbName": "USER",
                         "export": true,
                         "tableId": "out.c-bitbucket.user",
@@ -624,14 +541,6 @@
                             {
                                 "name": "user_id",
                                 "dbName": "USER_ID",
-                                "type": "varchar",
-                                "size": "255",
-                                "nullable": false,
-                                "default": ""
-                            },
-                            {
-                                "name": "organization_id",
-                                "dbName": "ORGANIZATION_ID",
                                 "type": "varchar",
                                 "size": "255",
                                 "nullable": false,
@@ -664,14 +573,6 @@
                             {
                                 "name": "is_active",
                                 "dbName": "IS_ACTIVE",
-                                "type": "varchar",
-                                "size": "255",
-                                "nullable": false,
-                                "default": ""
-                            },
-                            {
-                                "name": "is_member",
-                                "dbName": "IS_MEMBER",
                                 "type": "varchar",
                                 "size": "255",
                                 "nullable": false,
@@ -738,6 +639,33 @@
                         ],
                         "primaryKey": [
                             "EVENT_ID"
+                        ]
+                    },
+                    {
+                        "dbName": "ORGANIZATION_USER",
+                        "export": true,
+                        "tableId": "out.c-bitbucket.organization_user",
+                        "items": [
+                            {
+                                "name": "organization_id",
+                                "dbName": "ORGANIZATION_ID",
+                                "type": "string",
+                                "size": "255",
+                                "nullable": false,
+                                "default": ""
+                            },
+                            {
+                                "name": "user_id",
+                                "dbName": "USER_ID",
+                                "type": "string",
+                                "size": "255",
+                                "nullable": false,
+                                "default": ""
+                            }
+                        ],
+                        "primaryKey": [
+                            "ORGANIZATION_ID",
+                            "USER_ID"
                         ]
                     }
                 ]
@@ -842,7 +770,6 @@
                                 "has_wiki",
                                 "has_issues",
                                 "is_private",
-                                "is_looker",
                                 "created_on",
                                 "url"
                             ],
@@ -867,32 +794,13 @@
                             }
                         },
                         {
-                            "destination": "out.c-bitbucket.repository_commit_change.csv",
-                            "columns": [
-                                "repository_commit_change_id",
-                                "repository_commit_id",
-                                "status",
-                                "new_path",
-                                "file_type",
-                                "old_path",
-                                "lines_added",
-                                "lines_removed"
-                            ],
-                            "source_search": {
-                                "key": "bdm.scaffold.table.tag",
-                                "value": "BitbucketDevops.internal.outBitbucketRepositoryCommitChange"
-                            }
-                        },
-                        {
                             "destination": "out.c-bitbucket.user.csv",
                             "columns": [
                                 "user_id",
-                                "organization_id",
                                 "user",
                                 "created_on",
                                 "type",
-                                "is_active",
-                                "is_member"
+                                "is_active"
                             ],
                             "source_search": {
                                 "key": "bdm.scaffold.table.tag",
@@ -912,6 +820,17 @@
                             "source_search": {
                                 "key": "bdm.scaffold.table.tag",
                                 "value": "BitbucketDevops.internal.outBitbucketEvent"
+                            }
+                        },
+                        {
+                            "destination": "out.c-bitbucket.organization_user.csv",
+                            "columns": [
+                                "organization_id",
+                                "user_id"
+                            ],
+                            "source_search": {
+                                "key": "bdm.scaffold.table.tag",
+                                "value": "BitbucketDevops.internal.outBitbucketOrganizationUser"
                             }
                         }
                     ]
