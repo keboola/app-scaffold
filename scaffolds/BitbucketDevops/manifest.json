@@ -21,7 +21,8 @@
                         "type": "object",
                         "required": [
                             "username",
-                            "#password"
+                            "#password",
+                            "startDate"
                         ],
                         "properties": {
                             "username": {
@@ -34,6 +35,13 @@
                                 "type": "string",
                                 "format": "password",
                                 "description": "If you're using Multi-factor authentication on Bitbucket (as you should), App Password is necessary (https://confluence.atlassian.com/bitbucket/app-passwords-828781300.html)."
+                            },
+                            "startDate": {
+                                "title": "Start Date",
+                                "type": "string",
+                                "default": "-30 days",
+                                "minLength": 1,
+                                "description": "Any date accepted by strtotime (http://php.net/manual/en/function.strtotime.php) function (Example: -10 days, 2018-03-18)"
                             }
                         }
                     }
