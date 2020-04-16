@@ -27,7 +27,7 @@
                                 "format": "password",
                                 "links": [
                                     {
-                                        "rel": "Get You Personal Access Token",
+                                        "rel": "Get Personal Access Token",
                                         "href": "https://asana.com/guide/help/api/api#personalaccesstokens"
                                     }
                                 ]
