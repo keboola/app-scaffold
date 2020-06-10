@@ -25,7 +25,7 @@
                 }
             ],
             "queries": [
-                "--create output table with locations\n--keep location importnat information\n--user-friendly names\nCREATE TABLE \"out_locations\"\nAS\n    SELECT\n        \"id\"      AS \"location_id\",\n        \"name\"    AS \"location\",\n        \"address\" AS \"street\",\n        \"city\",\n        \"zipcode\",\n        \"country\",\n        \"state\",\n        \"latitude\",\n        \"longitude\"\n    FROM \"locations\";"
+                "--create output table with locations\n--keep location importnat information\n--user-friendly names\nCREATE TABLE \"out_locations\"\nAS\n    SELECT\n        \"id\"                                   AS \"location_id\",\n        \"name\" || ' (' || \"external_id\" || ')' AS \"location\",\n        \"address\"                              AS \"street\",\n        \"city\",\n        \"zipcode\",\n        \"country\",\n        \"state\",\n        \"latitude\",\n        \"longitude\"\n    FROM \"locations\";"
             ],
             "input": [
                 {
