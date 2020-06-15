@@ -1,0 +1,60 @@
+{
+    "name": "GitHub Devops to Snowflake",
+    "author": "Keboola",
+    "description": "GitHub repositories analysis to track progress of your development and activity of your team members. Includes output to Snowflake DWH.",
+    "outputs": [],
+    "requirements": [],
+    "inputs": [
+        {
+            "id": "keboolaExGithubGitHub",
+            "componentId": "keboola.ex-github",
+            "name": "GitHub",
+            "required": true,
+            "schema": {
+                "type": "object",
+                "required": [
+                    "config"
+                ],
+                "properties": {
+                    "config": {
+                        "title": "Bitbucket account configuration",
+                        "type": "object",
+                        "required": [
+                            "startDate"
+                        ],
+                        "properties": {
+                            "startDate": {
+                                "title": "Start Date",
+                                "type": "string",
+                                "default": "-10 days",
+                                "minLength": 1,
+                                "description": "Any date accepted by strtotime (http://php.net/manual/en/function.strtotime.php) function (Example: -10 days, 2018-03-18)\\n\\nNote: After deplying the Scaffold, you need to authorize the configuration of the deployed extractor (it can't be done via this wizard)"
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        {
+            "id": "transformationGitHub",
+            "componentId": "transformation",
+            "name": "GitHub",
+            "required": true,
+            "schema": null
+        },
+        {
+            "id": "keboolaWrDbSnowflakeSnowflake",
+            "componentId": "keboola.wr-db-snowflake",
+            "name": "Snowflake",
+            "required": true,
+            "schema": null
+        },
+        {
+            "id": "orchestrationDevops",
+            "componentId": "orchestrator",
+            "name": "Devops",
+            "required": true,
+            "schema": null
+        }
+    ]
+}

@@ -1,0 +1,423 @@
+[
+    {
+        "configuration": {
+            "output": [
+                {
+                    "primaryKey": [
+                        "organization_id"
+                    ],
+                    "source": "out_organization",
+                    "metadata": [
+                        {
+                            "key": "bdm.scaffold.table.tag",
+                            "value": "GitHubDevops.internal.outGithubOrganization"
+                        },
+                        {
+                            "key": "scaffold.id",
+                            "value": "GitHubDevops"
+                        }
+                    ],
+                    "destination": "out.c-gitHubDevops.githubOrganization"
+                }
+            ],
+            "queries": [
+                "--create output organization table\nCREATE TABLE \"out_organization\"\nAS\n    SELECT\n        \"org_id\"   AS \"organization_id\",\n        \"org_name\" AS \"organization\"\n    FROM \"organizations\";",
+                "--add fake row for referential integrity (users without team)\nINSERT INTO \"out_organization\"\n    (\"organization_id\", \"organization\")\nVALUES\n    ('0', 'Unknown');"
+            ],
+            "input": [
+                {
+                    "destination": "organizations",
+                    "datatypes": [],
+                    "whereColumn": "",
+                    "whereValues": [],
+                    "whereOperator": "eq",
+                    "columns": [],
+                    "loadType": "clone",
+                    "source_search": {
+                        "key": "bdm.scaffold.table.tag",
+                        "value": "GitHubDevops.internal.inKeboolaExGithubOrganizations"
+                    }
+                }
+            ],
+            "name": "Organization",
+            "packages": [],
+            "requires": [],
+            "backend": "snowflake",
+            "type": "simple",
+            "id": "572386138",
+            "phase": 1,
+            "disabled": false
+        },
+        "description": "",
+        "name": "Organization"
+    },
+    {
+        "configuration": {
+            "output": [
+                {
+                    "source": "out_user",
+                    "primaryKey": [
+                        "user_id"
+                    ],
+                    "metadata": [
+                        {
+                            "key": "bdm.scaffold.table.tag",
+                            "value": "GitHubDevops.internal.outGithubUser"
+                        },
+                        {
+                            "key": "scaffold.id",
+                            "value": "GitHubDevops"
+                        }
+                    ],
+                    "destination": "out.c-gitHubDevops.githubUser"
+                },
+                {
+                    "source": "out_organization_user",
+                    "primaryKey": [
+                        "organization_id",
+                        "user_id"
+                    ],
+                    "metadata": [
+                        {
+                            "key": "bdm.scaffold.table.tag",
+                            "value": "GitHubDevops.internal.outGithubOrganizationUser"
+                        },
+                        {
+                            "key": "scaffold.id",
+                            "value": "GitHubDevops"
+                        }
+                    ],
+                    "destination": "out.c-gitHubDevops.githubOrganizationUser"
+                }
+            ],
+            "queries": [
+                "--create output users table\n--format date\n--set active status to 'true' - it's not part of GitHub API response, but part of our model\nCREATE TABLE \"out_user\"\nAS\n    SELECT\n        \"m\".\"id\"                                       AS \"user_id\",\n        \"m\".\"login\"                                    AS \"user\",\n        replace(left(\"m2\".\"created_at\", 19), 'T', ' ') AS \"created_on\",\n        \"m\".\"type\",\n        'true' :: VARCHAR(20)                          AS \"is_active\"\n    FROM \"members\" \"m\"\n             LEFT JOIN \"members_detail\" \"m2\"\n                       ON \"m\".\"login\" = \"m2\".\"login\";",
+                "--add fake row for referential integrity (pull requests\/commits\/issues\/comments without user)\nINSERT INTO \"out_user\"\n    (\"user_id\", \"user\", \"created_on\", \"type\", \"is_active\")\nVALUES\n    ('0', 'External User', '', 'User', 'false');",
+                "--create user-organization membership table\n--link member to Unknown org if that mentioned in the data is missing\nCREATE TABLE \"out_organization_user\"\nAS\n    SELECT\n        ifnull(\"o\".\"organization_id\", '0') AS \"organization_id\",\n        \"m\".\"id\"                           AS \"user_id\"\n    FROM \"members\" \"m\"\n             LEFT JOIN \"organization\" \"o\"\n                       ON \"m\".\"org_name\" = \"o\".\"organization\";"
+            ],
+            "input": [
+                {
+                    "destination": "members",
+                    "datatypes": [],
+                    "whereColumn": "",
+                    "whereValues": [],
+                    "whereOperator": "eq",
+                    "columns": [],
+                    "loadType": "clone",
+                    "source_search": {
+                        "key": "bdm.scaffold.table.tag",
+                        "value": "GitHubDevops.internal.inKeboolaExGithubMembers"
+                    }
+                },
+                {
+                    "destination": "organization",
+                    "datatypes": [],
+                    "whereColumn": "",
+                    "whereValues": [],
+                    "whereOperator": "eq",
+                    "columns": [],
+                    "loadType": "clone",
+                    "source": "out.c-gitHubDevops.githubOrganization"
+                },
+                {
+                    "destination": "members_detail",
+                    "datatypes": [],
+                    "whereColumn": "",
+                    "whereValues": [],
+                    "whereOperator": "eq",
+                    "columns": [],
+                    "loadType": "clone",
+                    "source_search": {
+                        "key": "bdm.scaffold.table.tag",
+                        "value": "GitHubDevops.internal.inKeboolaExGithubMembersDetail"
+                    }
+                }
+            ],
+            "name": "User",
+            "packages": [],
+            "requires": [],
+            "backend": "snowflake",
+            "type": "simple",
+            "id": "573073350",
+            "phase": "2",
+            "disabled": false
+        },
+        "description": "",
+        "name": "User"
+    },
+    {
+        "configuration": {
+            "output": [
+                {
+                    "source": "out_repository",
+                    "primaryKey": [
+                        "repository_id"
+                    ],
+                    "metadata": [
+                        {
+                            "key": "bdm.scaffold.table.tag",
+                            "value": "GitHubDevops.internal.outGithubRepository"
+                        },
+                        {
+                            "key": "scaffold.id",
+                            "value": "GitHubDevops"
+                        }
+                    ],
+                    "destination": "out.c-gitHubDevops.githubRepository"
+                },
+                {
+                    "source": "out_pull_request",
+                    "primaryKey": [
+                        "pull_request_id"
+                    ],
+                    "metadata": [
+                        {
+                            "key": "bdm.scaffold.table.tag",
+                            "value": "GitHubDevops.internal.outGithubPullRequest"
+                        },
+                        {
+                            "key": "scaffold.id",
+                            "value": "GitHubDevops"
+                        }
+                    ],
+                    "destination": "out.c-gitHubDevops.githubPullRequest"
+                },
+                {
+                    "source": "out_pull_request_activity",
+                    "primaryKey": [
+                        "pull_request_activity_id"
+                    ],
+                    "metadata": [
+                        {
+                            "key": "bdm.scaffold.table.tag",
+                            "value": "GitHubDevops.internal.outGithubPullRequestActivity"
+                        },
+                        {
+                            "key": "scaffold.id",
+                            "value": "GitHubDevops"
+                        }
+                    ],
+                    "destination": "out.c-gitHubDevops.githubPullRequestActivity"
+                },
+                {
+                    "source": "out_repository_commit",
+                    "primaryKey": [
+                        "repository_commit_id"
+                    ],
+                    "metadata": [
+                        {
+                            "key": "bdm.scaffold.table.tag",
+                            "value": "GitHubDevops.internal.outGithubRepositoryCommit"
+                        },
+                        {
+                            "key": "scaffold.id",
+                            "value": "GitHubDevops"
+                        }
+                    ],
+                    "destination": "out.c-gitHubDevops.githubRepositoryCommit"
+                },
+                {
+                    "source": "out_issue",
+                    "primaryKey": [
+                        "issue_id"
+                    ],
+                    "metadata": [
+                        {
+                            "key": "bdm.scaffold.table.tag",
+                            "value": "GitHubDevops.internal.outGithubIssue"
+                        },
+                        {
+                            "key": "scaffold.id",
+                            "value": "GitHubDevops"
+                        }
+                    ],
+                    "destination": "out.c-gitHubDevops.githubIssue"
+                },
+                {
+                    "source": "out_issue_comment",
+                    "primaryKey": [
+                        "issue_comment_id"
+                    ],
+                    "metadata": [
+                        {
+                            "key": "bdm.scaffold.table.tag",
+                            "value": "GitHubDevops.internal.outGithubIssueComment"
+                        },
+                        {
+                            "key": "scaffold.id",
+                            "value": "GitHubDevops"
+                        }
+                    ],
+                    "destination": "out.c-gitHubDevops.githubIssueComment"
+                },
+                {
+                    "source": "out_event",
+                    "primaryKey": [
+                        "event_id"
+                    ],
+                    "metadata": [
+                        {
+                            "key": "bdm.scaffold.table.tag",
+                            "value": "GitHubDevops.internal.outGithubEvent"
+                        },
+                        {
+                            "key": "scaffold.id",
+                            "value": "GitHubDevops"
+                        }
+                    ],
+                    "destination": "out.c-gitHubDevops.githubEvent"
+                }
+            ],
+            "queries": [
+                "--create output repository table\n--change flags to true\/false\n--format date\n--mark Looker repositories based on changed files\nCREATE TABLE \"out_repository\"\nAS\n    SELECT\n        \"r\".\"id\"                                            AS \"repository_id\",\n        \"r\".\"name\"                                          AS \"repository\",\n        ''                                                  AS \"project\",\n        iff(length(\"r\".\"description\") > 1024, left(\"r\".\"description\", 1021) || '...',\n            \"r\".\"description\")                              AS \"description\",\n        iff(\"r\".\"language\" = '', 'unknown', \"r\".\"language\") AS \"language\",\n        iff(\"r\".\"has_wiki\" = '1', 'true', 'false')          AS \"has_wiki\",\n        iff(\"r\".\"has_issues\" = '1', 'true', 'false')        AS \"has_issues\",\n        iff(\"r\".\"private\" = '1', 'true', 'false')           AS \"is_private\",\n        replace(left(\"r\".\"created_at\", 19), 'T', ' ')       AS \"created_on\",\n        \"r\".\"html_url\"                                      AS \"url\"\n    FROM \"repos\" \"r\";",
+                "--format dates\n--referential integrity check\n--define if closed pull request is declined or merged\nCREATE TABLE \"out_pull_request\"\nAS\n    SELECT\n        \"p\".\"id\"                                      AS \"pull_request_id\",\n        \"r\".\"repository_id\",\n        ifnull(\"u\".\"user_id\", '0')                    AS \"user_id\",\n        \"p\".\"title\",\n        iff(length(\"p\".\"body\") > 1024, left(\"p\".\"body\", 1021) || '...',\n            \"p\".\"body\")                               AS \"description\",\n        (CASE\n             WHEN \"p\".\"state\" = 'closed' AND \"p\".\"merged_at\" = ''\n                 THEN 'declined'\n             WHEN \"p\".\"state\" = 'closed' AND \"p\".\"merged_at\" <> ''\n                 THEN 'merged'\n             ELSE \"p\".\"state\"\n         END)                                         AS \"state\",\n        replace(left(\"p\".\"created_at\", 19), 'T', ' ') AS \"created_on\",\n        replace(left(\"p\".\"updated_at\", 19), 'T', ' ') AS \"updated_on\",\n        \"p\".\"html_url\"                                AS \"url\"\n    FROM \"pulls\" \"p\"\n             INNER JOIN \"out_repository\" \"r\"\n                        ON \"p\".\"repo_name\" = \"r\".\"repository\"\n             LEFT JOIN \"user\" \"u\"\n                       ON \"p\".\"user_id\" = \"u\".\"user_id\";",
+                "--easy deduplication of activity (there is no state which can change during time)\n--format columns\nCREATE TABLE \"out_pull_request_activity\"\nAS\n    SELECT DISTINCT\n            \"opr\".\"repository_id\" || '_' || \"opr\".\"pull_request_id\" || '_' || \"pr\".\"state\" || '_' ||\n            left(\"pr\".\"submitted_at\", 19)                                             AS \"pull_request_activity_id\",\n            \"opr\".\"pull_request_id\",\n            ifnull(\"u\".\"user_id\", '0')                                                AS \"user_id\",\n            ifnull(\"u\".\"user\", 'External User')                                       AS \"user\",\n            replace(left(\"pr\".\"submitted_at\", 19), 'T', ' ')                          AS \"date\",\n            \"pr\".\"state\",\n            left(coalesce(\"pc\".\"body\", \"pr\".\"body\"), 255)                             AS \"title\",\n            iff(length(coalesce(\"pc\".\"body\", \"pr\".\"body\")) > 1024,\n                left(coalesce(\"pc\".\"body\", \"pr\".\"body\"), 1021) || '...', \"pr\".\"body\") AS \"description\",\n            '' :: VARCHAR(1024)                                                       AS \"reason\"\n    FROM \"pull_reviews\" \"pr\"\n             INNER JOIN \"out_pull_request\" \"opr\"\n                        ON split_part(\"pr\".\"html_url\", '#', 1) = \"opr\".\"url\"\n             LEFT JOIN \"user\" \"u\"\n                       ON \"pr\".\"user_id\" = \"u\".\"user_id\"\n             LEFT JOIN \"pull_comments\" \"pc\"\n                       ON \"pr\".\"id\" = \"pc\".\"pull_review_id\"\n    WHERE \"pr\".\"state\" <> '';",
+                "--insert comments on pull request (those are gathered from issues endpoint)\n--check if the timestamp is same as closing the request (GitHub action \"comment and close\") and mark such activity as 'DECLINED'\n--format dates\nINSERT INTO \"out_pull_request_activity\"\n    (\"pull_request_activity_id\", \"pull_request_id\", \"user_id\", \"user\", \"date\", \"state\", \"title\", \"description\",\n     \"reason\")\nSELECT\n        \"opr\".\"repository_id\" || '_' || \"opr\".\"pull_request_id\" || '_COMMENTED_' ||\n        left(\"pic\".\"created_at\", 19)                    AS \"pull_request_activity_id\",\n        \"opr\".\"pull_request_id\",\n        ifnull(\"u\".\"user_id\", '0')                      AS \"user_id\",\n        ifnull(\"u\".\"user\", 'External User')             AS \"user\",\n        replace(left(\"pic\".\"created_at\", 19), 'T', ' ') AS \"date\",\n        iff(\"p\".\"id\" IS NULL, 'COMMENTED', 'DECLINED')  AS \"state\",\n        left(\"pic\".\"body\", 255)                         AS \"title\",\n        iff(length(\"pic\".\"body\") > 1024, left(\"pic\".\"body\", 1021) || '...',\n            \"pic\".\"body\")                               AS \"description\",\n        iff(\"p\".\"id\" IS NULL, '', iff(length(\"pic\".\"body\") > 1024, left(\"pic\".\"body\", 1021) || '...',\n                                      \"pic\".\"body\"))    AS \"reason\"\nFROM \"pull_issue_comments\" \"pic\"\n         INNER JOIN \"out_pull_request\" \"opr\"\n                    ON split_part(\"pic\".\"html_url\", '#', 1) = \"opr\".\"url\"\n         LEFT JOIN \"user\" \"u\"\n                   ON \"pic\".\"user_id\" = \"u\".\"user_id\"\n         LEFT JOIN \"pulls\" \"p\"\n                   ON \"opr\".\"pull_request_id\" = \"p\".\"id\"\n                       AND \"pic\".\"created_at\" = \"p\".\"closed_at\";",
+                "--add merge activity\nINSERT INTO \"out_pull_request_activity\"\n    (\"pull_request_activity_id\", \"pull_request_id\", \"user_id\", \"user\", \"date\", \"state\", \"title\", \"description\",\n     \"reason\")\nSELECT\n        \"r\".\"repository_id\" || '_' || \"p\".\"id\" || '_MERGED_' ||\n        left(\"p\".\"merged_at\", 19)                    AS \"pull_request_activity_id\",\n        \"p\".\"id\"                                     AS \"pull_request_id\",\n        ifnull(\"u\".\"user_id\", '0')                   AS \"user_id\",\n        ifnull(\"u\".\"user\", 'External User')          AS \"user\",\n        replace(left(\"p\".\"merged_at\", 19), 'T', ' ') AS \"date\",\n        'MERGED'                                     AS \"state\",\n        \"p\".\"title\",\n        iff(length(\"p\".\"body\") > 1024, left(\"p\".\"body\", 1021) || '...',\n            \"p\".\"body\")                              AS \"description\",\n        ''                                           AS \"reason\"\nFROM \"pulls\" \"p\"\n         INNER JOIN \"out_repository\" \"r\"\n                    ON \"p\".\"repo_name\" = \"r\".\"repository\"\n         LEFT JOIN \"user\" \"u\"\n                   ON \"p\".\"user_id\" = \"u\".\"user_id\"\nWHERE \"p\".\"merged_at\" <> '';",
+                "--create output commits table\nCREATE TABLE \"out_repository_commit\"\nAS\n    SELECT\n        \"c\".\"sha\"                                             AS \"repository_commit_id\",\n        \"or\".\"repository_id\",\n        ifnull(\"u\".\"user_id\", '0')                            AS \"user_id\",\n        replace(left(\"c\".\"commit_author_date\", 19), 'T', ' ') AS \"date\",\n        \"c\".\"html_url\"                                        AS \"url\",\n        iff(length(\"c\".\"commit_message\") > 1024, left(\"c\".\"commit_message\", 1021) || '...',\n            \"c\".\"commit_message\")                             AS \"message\"\n    FROM \"commits\" \"c\"\n             INNER JOIN \"out_repository\" \"or\"\n                        ON \"c\".\"repo_name\" = \"or\".\"repository\"\n             LEFT JOIN \"user\" \"u\"\n                       ON \"c\".\"author_id\" = \"u\".\"user_id\";",
+                "--create output issues table\nCREATE TABLE \"out_issue\"\nAS\n    SELECT\n        \"i\".\"id\"                                                                    AS \"issue_id\",\n        \"r\".\"repository_id\"                                                         AS \"repository_id\",\n        ifnull(\"u\".\"user_id\", '0')                                                  AS \"user_id\",\n        \"i\".\"user_login\"                                                            AS \"reporter\",\n        \"i\".\"id\"                                                                    AS \"number\",\n        \"i\".\"title\",\n        IFF(LENGTH(\"i\".\"body\") > 1024, LEFT(\"i\".\"body\", 1021) || '...', \"i\".\"body\") AS \"description\",\n        \"i\".\"state\",\n        ''                                                                          AS \"priority\",\n        ''                                                                          AS \"kind\",\n        replace(left(\"i\".\"created_at\", 19), 'T', ' ')                               AS \"created_on\",\n        replace(left(\"i\".\"updated_at\", 19), 'T', ' ')                               AS \"updated_on\",\n        \"i\".\"html_url\"                                                              AS \"url\"\n    FROM \"issues\" \"i\"\n             INNER JOIN \"out_repository\" \"r\"\n                        ON \"i\".\"repo_name\" = \"r\".\"repository\"\n             LEFT JOIN \"user\" \"u\"\n                       ON \"i\".\"assignee_id\" = \"u\".\"user_id\";",
+                "--create output issue comments table\n--bit confusing join, but we don't have issue id in comments, so we need to get it first by joining to raw issues table and then deal with referential integrity\nCREATE TABLE \"out_issue_comment\"\nAS\n    SELECT\n        \"ic\".\"id\"                                                                      AS \"issue_comment_id\",\n        \"i\".\"issue_id\",\n        ifnull(\"u\".\"user_id\", '0')                                                     AS \"user_id\",\n        ifnull(\"u\".\"user\", 'External User')                                            AS \"user\",\n        IFF(LENGTH(\"ic\".\"body\") > 1024, LEFT(\"ic\".\"body\", 1021) || '...', \"ic\".\"body\") AS \"description\",\n        replace(left(\"i\".\"created_on\", 19), 'T', ' ')                                  AS \"created_on\",\n        replace(left(\"i\".\"updated_on\", 19), 'T', ' ')                                  AS \"updated_on\",\n        \"ic\".\"html_url\"                                                                AS \"url\"\n    FROM \"issue_comments\" \"ic\"\n             LEFT JOIN \"out_repository\" \"r\"\n                       ON \"ic\".\"repo_name\" = \"r\".\"repository\"\n             LEFT JOIN \"issues\" \"i2\"\n                       ON \"ic\".\"repo_name\" = \"i2\".\"repo_name\"\n                           AND \"ic\".\"issue_number\" = \"i2\".\"number\"\n             INNER JOIN \"out_issue\" \"i\"\n                        ON \"i2\".\"id\" = \"i\".\"issue_id\"\n             LEFT JOIN \"user\" \"u\"\n                       ON \"ic\".\"user_id\" = \"u\".\"user_id\";",
+                "--creating output events table from previously created tables, so it's possible to measure user's overall activity\nCREATE TABLE \"out_event\"\nAS\n    SELECT\n        \"pull_request_id\" || '_prc' AS \"event_id\",\n        \"repository_id\",\n        \"user_id\",\n        'Pull Request Created'      AS \"event\",\n        \"created_on\"                AS \"date\",\n        \"url\"\n    FROM \"out_pull_request\"\n    WHERE \"created_on\" <> ''\n    UNION ALL\n    SELECT\n        \"a\".\"pull_request_activity_id\" || '_pra' AS \"event_id\",\n        \"r\".\"repository_id\",\n        \"a\".\"user_id\",\n        'Pull Request ' || initcap(\"a\".\"state\")  AS \"event\",\n        \"a\".\"date\"                               AS \"date\",\n        ''                                       AS \"url\"\n    FROM \"out_pull_request_activity\" \"a\"\n             LEFT JOIN \"out_pull_request\" \"r\"\n                       ON \"a\".\"pull_request_id\" = \"r\".\"pull_request_id\"\n    WHERE \"a\".\"date\" <> ''\n    UNION ALL\n    SELECT\n        \"repository_commit_id\" || '_c' AS \"event_id\",\n        \"repository_id\",\n        \"user_id\",\n        'Commit'                       AS \"event\",\n        \"date\"                         AS \"date\",\n        \"url\"\n    FROM \"out_repository_commit\"\n    WHERE \"date\" <> ''\n    UNION ALL\n    SELECT\n        \"issue_id\" || '_icr' AS \"event_id\",\n        \"repository_id\",\n        \"user_id\",\n        'Issue Created'      AS \"event\",\n        \"created_on\"         AS \"date\",\n        \"url\"\n    FROM \"out_issue\"\n    WHERE \"created_on\" <> ''\n    UNION ALL\n    SELECT\n        \"c\".\"issue_comment_id\" || '_ico' AS \"event_id\",\n        \"i\".\"repository_id\",\n        \"c\".\"user_id\",\n        'Issue Comment'                  AS \"event\",\n        \"c\".\"created_on\"                 AS \"date\",\n        \"c\".\"url\"\n    FROM \"out_issue_comment\" \"c\"\n             LEFT JOIN \"out_issue\" \"i\"\n                       ON \"c\".\"issue_id\" = \"i\".\"issue_id\"\n    WHERE \"c\".\"created_on\" <> '';"
+            ],
+            "input": [
+                {
+                    "destination": "issues",
+                    "datatypes": [],
+                    "whereColumn": "",
+                    "whereValues": [],
+                    "whereOperator": "eq",
+                    "columns": [],
+                    "loadType": "clone",
+                    "source_search": {
+                        "key": "bdm.scaffold.table.tag",
+                        "value": "GitHubDevops.internal.inKeboolaExGithubIssues"
+                    }
+                },
+                {
+                    "destination": "issue_comments",
+                    "datatypes": [],
+                    "whereColumn": "",
+                    "whereValues": [],
+                    "whereOperator": "eq",
+                    "columns": [],
+                    "loadType": "clone",
+                    "source_search": {
+                        "key": "bdm.scaffold.table.tag",
+                        "value": "GitHubDevops.internal.inKeboolaExGithubIssueComments"
+                    }
+                },
+                {
+                    "destination": "repos",
+                    "datatypes": [],
+                    "whereColumn": "",
+                    "whereValues": [],
+                    "whereOperator": "eq",
+                    "columns": [],
+                    "loadType": "clone",
+                    "source_search": {
+                        "key": "bdm.scaffold.table.tag",
+                        "value": "GitHubDevops.internal.inKeboolaExGithubRepos"
+                    }
+                },
+                {
+                    "destination": "commits",
+                    "datatypes": [],
+                    "whereColumn": "",
+                    "whereValues": [],
+                    "whereOperator": "eq",
+                    "columns": [],
+                    "loadType": "clone",
+                    "source_search": {
+                        "key": "bdm.scaffold.table.tag",
+                        "value": "GitHubDevops.internal.inKeboolaExGithubCommits"
+                    }
+                },
+                {
+                    "destination": "pulls",
+                    "datatypes": [],
+                    "whereColumn": "",
+                    "whereValues": [],
+                    "whereOperator": "eq",
+                    "columns": [],
+                    "loadType": "clone",
+                    "source_search": {
+                        "key": "bdm.scaffold.table.tag",
+                        "value": "GitHubDevops.internal.inKeboolaExGithubPulls"
+                    }
+                },
+                {
+                    "destination": "pull_reviews",
+                    "datatypes": [],
+                    "whereColumn": "",
+                    "whereValues": [],
+                    "whereOperator": "eq",
+                    "columns": [],
+                    "loadType": "clone",
+                    "source_search": {
+                        "key": "bdm.scaffold.table.tag",
+                        "value": "GitHubDevops.internal.inKeboolaExGithubPullReviews"
+                    }
+                },
+                {
+                    "destination": "pulls_reviewers",
+                    "datatypes": [],
+                    "whereColumn": "",
+                    "whereValues": [],
+                    "whereOperator": "eq",
+                    "columns": [],
+                    "loadType": "clone",
+                    "source_search": {
+                        "key": "bdm.scaffold.table.tag",
+                        "value": "GitHubDevops.internal.inKeboolaExGithubPullsReviewers"
+                    }
+                },
+                {
+                    "destination": "user",
+                    "datatypes": [],
+                    "whereColumn": "",
+                    "whereValues": [],
+                    "whereOperator": "eq",
+                    "columns": [],
+                    "loadType": "clone",
+                    "source": "out.c-gitHubDevops.githubUser"
+                },
+                {
+                    "destination": "pull_comments",
+                    "datatypes": [],
+                    "whereColumn": "",
+                    "whereValues": [],
+                    "whereOperator": "eq",
+                    "columns": [],
+                    "loadType": "clone",
+                    "source_search": {
+                        "key": "bdm.scaffold.table.tag",
+                        "value": "GitHubDevops.internal.inKeboolaExGithubPullComments"
+                    }
+                },
+                {
+                    "destination": "pull_issue_comments",
+                    "datatypes": [],
+                    "whereColumn": "",
+                    "whereValues": [],
+                    "whereOperator": "eq",
+                    "columns": [],
+                    "loadType": "clone",
+                    "source_search": {
+                        "key": "bdm.scaffold.table.tag",
+                        "value": "GitHubDevops.internal.inKeboolaExGithubPullIssueComments"
+                    }
+                }
+            ],
+            "name": "Repository, Pulls, Commits, Issues, Events",
+            "packages": [],
+            "requires": [],
+            "backend": "snowflake",
+            "type": "simple",
+            "id": "573125459",
+            "phase": "3",
+            "disabled": false
+        },
+        "description": "",
+        "name": "Repository, Pulls, Commits, Issues, Events"
+    }
+]
