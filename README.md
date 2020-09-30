@@ -53,6 +53,7 @@ To use the import command, you need to clone the repository first:
 ```
 git clone https://github.com/keboola/app-scaffold
 cd app-scaffold
+docker-compose run --rm dev composer install
 ```
 
 Import command:
