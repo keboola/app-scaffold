@@ -207,6 +207,7 @@ class ObjectListerTest extends TestCase
         foreach ($objects as $scaffold) {
             $ids[] = $scaffold['id'];
         }
+        sort($ids);
         self::assertEquals(
             ['BitbucketDevops', 'CrmHubSpot', 'CrmMrrSalesforce', 'CrmPipedrive', 'CrmSalesforce',
             'CrmSalesforceExternal', 'CrmSnowflakeWriterExternal', 'GitHubDevops', 'MrrSalesforce',
