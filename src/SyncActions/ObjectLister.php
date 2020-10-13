@@ -15,8 +15,8 @@ use Symfony\Component\Finder\Finder;
 
 class ObjectLister
 {
-    private const NEW_TRANSFORMATION_COMPONENTS = ['keboola.python-transformation-v2', 'keboola.snowflake-transformation',
-        'keboola.synapse-transformation', 'keboola.csas-python-transformation-v2'];
+    private const NEW_TRANSFORMATION_COMPONENTS = ['keboola.python-transformation-v2',
+        'keboola.snowflake-transformation', 'keboola.synapse-transformation', 'keboola.csas-python-transformation-v2'];
     private const LEGACY_TRANSFORMATION_COMPONENTS = ['transformation'];
 
     public static function listObjects(StorageApiClient $storageApiClient, Components $components): array
@@ -55,9 +55,11 @@ class ObjectLister
         bool $hasLegacyTransformations,
         bool $hasNewTransformations,
         array $componentIds
-    ) {
+    ): array {
         foreach ($manifest['inputs'] as $input) {
-            if (!$hasLegacyTransformations && (in_array($input['componentId'], self::LEGACY_TRANSFORMATION_COMPONENTS))) {
+            if (!$hasLegacyTransformations &&
+                (in_array($input['componentId'], self::LEGACY_TRANSFORMATION_COMPONENTS))
+            ) {
                 return false;
             }
             if (!$hasNewTransformations && (in_array($input['componentId'], self::NEW_TRANSFORMATION_COMPONENTS))) {

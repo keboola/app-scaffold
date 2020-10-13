@@ -132,9 +132,9 @@ class ObjectListerTest extends TestCase
                         'id' => '456',
                         'name' => 'Test',
                         'features' => [
-                            'new-transformations-only'
-                        ]
-                    ]
+                            'new-transformations-only',
+                        ],
+                    ],
                 ]
             );
         $client->method('getApiUrl')
@@ -173,8 +173,8 @@ class ObjectListerTest extends TestCase
                     'owner' => [
                         'id' => '456',
                         'name' => 'Test',
-                        'features' => []
-                    ]
+                        'features' => [],
+                    ],
                 ]
             );
         $client->method('getApiUrl')
