@@ -57,6 +57,9 @@ class ObjectLister
         array $componentIds
     ): bool {
         foreach ($manifest['inputs'] as $input) {
+            if (empty($input['componentId'])) {
+                return false;
+            }
             if (!$hasLegacyTransformations &&
                 (in_array($input['componentId'], self::LEGACY_TRANSFORMATION_COMPONENTS))
             ) {
