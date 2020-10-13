@@ -116,4 +116,102 @@ class ObjectListerTest extends TestCase
             $objects
         );
     }
+
+    public function testListScaffolds(): void
+    {
+        /** @var Client|MockObject $client */
+        $client = self::getMockBuilder(Client::class)
+            ->disableOriginalConstructor()
+            ->setMethods(['verifyToken', 'getApiUrl', 'indexAction'])
+            ->getMock();
+        $client->method('verifyToken')
+            ->willReturn(
+                [
+                    'id' => '123',
+                    'owner' => [
+                        'id' => '456',
+                        'name' => 'Test',
+                        'features' => [
+                            'new-transformations-only'
+                        ]
+                    ]
+                ]
+            );
+        $client->method('getApiUrl')
+            ->willReturn('https://connection.north-europe.azure.keboola.com/');
+        $client->method('indexAction')
+            ->willReturn([
+                'host' => 'whatever',
+                'api' => 'storage',
+                'components' => [
+                    ['id' => 'kds-team.ex-bitbucket'],
+                    ['id' => 'keboola.snowflake-transformation'],
+                    ['id' => 'keboola.wr-snowflake-blob-storage'],
+                    ['id' => 'orchestrator'],
+                ],
+            ]);
+
+        $objects = ObjectLister::listScaffolds($client, __DIR__ . '/../../../scaffolds/');
+        $ids = [];
+        foreach ($objects as $scaffold) {
+            $ids[] = $scaffold['id'];
+        }
+        self::assertEquals(['AzBitbucketDevops'], $ids);
+    }
+
+    public function testListScaffoldsLegacy(): void
+    {
+        /** @var Client|MockObject $client */
+        $client = self::getMockBuilder(Client::class)
+            ->disableOriginalConstructor()
+            ->setMethods(['verifyToken', 'getApiUrl', 'indexAction'])
+            ->getMock();
+        $client->method('verifyToken')
+            ->willReturn(
+                [
+                    'id' => '123',
+                    'owner' => [
+                        'id' => '456',
+                        'name' => 'Test',
+                        'features' => []
+                    ]
+                ]
+            );
+        $client->method('getApiUrl')
+            ->willReturn('https://connection.keboola.com/');
+        $client->method('indexAction')
+            ->willReturn([
+                'host' => 'whatever',
+                'api' => 'storage',
+                'components' => [
+                    ['id' => 'kds-team.ex-bitbucket'],
+                    ['id' => 'kds-team.ex-hubspot-crm'],
+                    ['id' => 'htns.ex-salesforce'],
+                    ['id' => 'keboola.ex-pipedrive'],
+                    ['id' => 'htns.ex-salesforce'],
+                    ['id' => 'keboola.ex-github'],
+                    ['id' => 'kds-team.ex-paymo'],
+                    ['id' => 'leochan.ex-asana'],
+                    ['id' => 'kds-team.ex-reviewtrackers'],
+                    ['id' => 'keboola.ex-zendesk'],
+                    ['id' => 'keboola.snowflake-transformation'],
+                    ['id' => 'keboola.wr-db-snowflake'],
+                    ['id' => 'orchestrator'],
+                    ['id' => 'transformation'],
+                    ['id' => 'geneea.nlp-analysis-v2'],
+                ],
+            ]);
+
+        $objects = ObjectLister::listScaffolds($client, __DIR__ . '/../../../scaffolds/');
+        $ids = [];
+        foreach ($objects as $scaffold) {
+            $ids[] = $scaffold['id'];
+        }
+        self::assertEquals(
+            ['BitbucketDevops', 'CrmHubSpot', 'CrmMrrSalesforce', 'CrmPipedrive', 'CrmSalesforce',
+            'CrmSalesforceExternal', 'CrmSnowflakeWriterExternal', 'GitHubDevops', 'MrrSalesforce',
+            'PaymoTimeTracking', 'ProjectManagementAsana', 'ReviewTrackersHospitality', 'ZendeskSupport'],
+            $ids
+        );
+    }
 }

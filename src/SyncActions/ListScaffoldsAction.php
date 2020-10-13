@@ -14,25 +14,19 @@ class ListScaffoldsAction
 
     public function run(string $scaffoldsDir, ApiClientStore $apiClientStore): array
     {
-        $scaffolds = (new Finder())->in($scaffoldsDir)
-            ->directories()->depth(0);
-
-        $response = [];
         $scaffoldObjects = ObjectLister::listObjects(
             $apiClientStore->getStorageApiClient(),
             $apiClientStore->getComponentsApiClient()
         );
-
-        foreach ($scaffolds->getIterator() as $directory) {
-            $manifest = JsonHelper::readFile(sprintf(
-                '%s/manifest.json',
-                $directory->getPathname()
-            ));
-            $manifest['id'] = $directory->getFilename();
-            $manifest['objects'] = $scaffoldObjects[$manifest['id']] ?? [];
-            $response[] = $manifest;
+        $scaffolds = ObjectLister::listScaffolds(
+            $apiClientStore->getStorageApiClient(),
+            $scaffoldsDir
+        );
+        $response = [];
+        foreach ($scaffolds as $scaffold) {
+            $scaffold['objects'] = $scaffoldObjects[$scaffold['id']] ?? [];
+            $response[] = $scaffold;
         }
-
         return $response;
     }
 }

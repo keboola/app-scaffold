@@ -1,0 +1,73 @@
+{
+    "name": "Bitbucket Devops to Snowflake",
+    "author": "Keboola",
+    "description": "Bitbucket repositories analysis to track progress of your development and activity of your team members. Includes output to Snowflake DWH.",
+    "outputs": [],
+    "requirements": [],
+    "inputs": [
+        {
+            "id": "kdsTeamExBitbucketBitbucket",
+            "componentId": "kds-team.ex-bitbucket",
+            "name": "Bitbucket",
+            "required": true,
+            "schema": {
+                "type": "object",
+                "required": [
+                    "config"
+                ],
+                "properties": {
+                    "config": {
+                        "title": "Bitbucket account configuration",
+                        "type": "object",
+                        "required": [
+                            "username",
+                            "#password",
+                            "startDate"
+                        ],
+                        "properties": {
+                            "username": {
+                                "title": "User Name",
+                                "type": "string",
+                                "description": "Fill in you BitBucket username."
+                            },
+                            "#password": {
+                                "title": "Password/App Password",
+                                "type": "string",
+                                "format": "password",
+                                "description": "If you're using Multi-factor authentication on Bitbucket (as you should), App Password is necessary (https://confluence.atlassian.com/bitbucket/app-passwords-828781300.html)."
+                            },
+                            "startDate": {
+                                "title": "Start Date",
+                                "type": "string",
+                                "default": "-30 days",
+                                "minLength": 1,
+                                "description": "Any date accepted by strtotime (http://php.net/manual/en/function.strtotime.php) function (Example: -10 days, 2018-03-18)"
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        {
+            "id": "keboolaSnowflakeTransformationBitbucket",
+            "componentId": "keboola.snowflake-transformation",
+            "name": "Bitbucket",
+            "required": true,
+            "schema": null
+        },
+        {
+            "id": "keboolaWrDbSnowflakeSnowflake",
+            "componentId": "keboola.wr-snowflake-blob-storage",
+            "name": "Snowflake",
+            "required": true,
+            "schema": null
+        },
+        {
+            "id": "orchestrationDevops",
+            "componentId": "orchestrator",
+            "name": "Devops",
+            "required": true,
+            "schema": null
+        }
+    ]
+}
