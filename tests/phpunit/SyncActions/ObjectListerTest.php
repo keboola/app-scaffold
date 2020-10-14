@@ -157,7 +157,7 @@ class ObjectListerTest extends TestCase
         }
         self::assertEquals(
             ['WithInvalidRequirementsTest', 'WithRequirementsAndOutputsTest', 'WithRequirementsTest',
-                'WithRequireOutputsTest'
+                'WithRequireOutputsTest',
             ],
             $ids
         );
