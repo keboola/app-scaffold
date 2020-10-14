@@ -52,23 +52,23 @@
             }
         },
         {
-            "id": "keboolaSnowflakeTransformation01SalesforceInputTablesCreation",
+            "id": "keboolaSnowflakeTransformationSalesforceCRM01InputTablesCreation",
             "componentId": "keboola.snowflake-transformation",
-            "name": "01 Salesforce Input Tables Creation",
+            "name": "Salesforce CRM 01 Input Tables Creation",
             "required": true,
             "schema": null
         },
         {
-            "id": "keboolaSnowflakeTransformation02SalesforceCRM",
+            "id": "keboolaSnowflakeTransformationSalesforceCRM02Main",
             "componentId": "keboola.snowflake-transformation",
-            "name": "02 Salesforce CRM",
+            "name": "Salesforce CRM 02 Main",
             "required": true,
             "schema": null
         },
         {
-            "id": "keboolaSnowflakeTransformation03SalesforceCRMSnapshots",
+            "id": "keboolaSnowflakeTransformationSalesforceCRM03Snapshots",
             "componentId": "keboola.snowflake-transformation",
-            "name": "03 Salesforce CRM Snapshots",
+            "name": "Salesforce CRM 03 Snapshots",
             "required": true,
             "schema": null
         },
