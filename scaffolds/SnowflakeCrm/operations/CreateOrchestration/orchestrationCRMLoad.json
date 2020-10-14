@@ -1,0 +1,16 @@
+{
+    "payload": {
+        "name": "CRM Load",
+        "tasks": [
+            {
+                "component": "keboola.wr-snowflake-blob-storage",
+                "operationReferenceId": "keboolaWrSnowflakeBlobStorageCRM",
+                "action": "run",
+                "timeoutMinutes": null,
+                "active": true,
+                "continueOnFailure": false,
+                "phase": null
+            }
+        ]
+    }
+}
