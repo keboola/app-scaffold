@@ -116,4 +116,96 @@ class ObjectListerTest extends TestCase
             $objects
         );
     }
+
+    public function testListScaffolds(): void
+    {
+        /** @var Client|MockObject $client */
+        $client = self::getMockBuilder(Client::class)
+            ->disableOriginalConstructor()
+            ->setMethods(['verifyToken', 'getApiUrl', 'indexAction'])
+            ->getMock();
+        $client->method('verifyToken')
+            ->willReturn(
+                [
+                    'id' => '123',
+                    'owner' => [
+                        'id' => '456',
+                        'name' => 'Test',
+                        'features' => [
+                            'new-transformations-only',
+                        ],
+                    ],
+                ]
+            );
+        $client->method('getApiUrl')
+            ->willReturn('https://connection.north-europe.azure.keboola.com/');
+        $client->method('indexAction')
+            ->willReturn([
+                'host' => 'whatever',
+                'api' => 'storage',
+                'components' => [
+                    ['id' => 'keboola.wr-storage'],
+                    ['id' => 'orchestration'],
+                    ['id' => 'transformation'],
+                ],
+            ]);
+
+        $objects = ObjectLister::listScaffolds($client, __DIR__ . '/../mock/scaffolds/');
+        $ids = [];
+        foreach ($objects as $scaffold) {
+            $ids[] = $scaffold['id'];
+        }
+        sort($ids);
+        self::assertEquals(
+            ['WithInvalidRequirementsTest', 'WithRequireOutputsTest', 'WithRequirementsAndOutputsTest',
+                'WithRequirementsTest',
+            ],
+            $ids
+        );
+    }
+
+    public function testListScaffoldsLegacy(): void
+    {
+        /** @var Client|MockObject $client */
+        $client = self::getMockBuilder(Client::class)
+            ->disableOriginalConstructor()
+            ->setMethods(['verifyToken', 'getApiUrl', 'indexAction'])
+            ->getMock();
+        $client->method('verifyToken')
+            ->willReturn(
+                [
+                    'id' => '123',
+                    'owner' => [
+                        'id' => '456',
+                        'name' => 'Test',
+                        'features' => [],
+                    ],
+                ]
+            );
+        $client->method('getApiUrl')
+            ->willReturn('https://connection.keboola.com/');
+        $client->method('indexAction')
+            ->willReturn([
+                'host' => 'whatever',
+                'api' => 'storage',
+                'components' => [
+                    ['id' => 'keboola.ex-storage'],
+                    ['id' => 'keboola.wr-storage'],
+                    ['id' => 'orchestration'],
+                    ['id' => 'transformation'],
+                ],
+            ]);
+
+        $objects = ObjectLister::listScaffolds($client, __DIR__ . '/../mock/scaffolds/');
+        $ids = [];
+        foreach ($objects as $scaffold) {
+            $ids[] = $scaffold['id'];
+        }
+        sort($ids);
+        self::assertEquals(
+            ['WithInvalidOutputsTest', 'WithInvalidRequirementsTest', 'WithOutputsTest', 'WithRequireOutputsTest',
+            'WithRequirementsAndOutputsTest', 'WithRequirementsTest'],
+            $ids
+        );
+    }
 }
