@@ -1,7 +1,7 @@
 {
     "componentId": "keboola.snowflake-transformation",
     "payload": {
-        "name": "01 Salesforce Input Tables Creation",
+        "name": "Salesforce CRM 01 Input Tables Creation",
         "configuration": {
             "parameters": {
                 "blocks": [

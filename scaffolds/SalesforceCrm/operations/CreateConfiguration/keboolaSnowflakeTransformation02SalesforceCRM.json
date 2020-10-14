@@ -1,7 +1,7 @@
 {
     "componentId": "keboola.snowflake-transformation",
     "payload": {
-        "name": "02 Salesforce CRM",
+        "name": "Salesforce CRM 02 Main",
         "configuration": {
             "parameters": {
                 "blocks": [

@@ -1,7 +1,7 @@
 {
     "componentId": "keboola.snowflake-transformation",
     "payload": {
-        "name": "03 Salesforce CRM Snapshots",
+        "name": "Salesforce CRM 03 Snapshots",
         "configuration": {
             "parameters": {
                 "blocks": [
