@@ -1,0 +1,12 @@
+{
+    "componentId": "keboola.wr-snowflake-blob-storage",
+    "authorization": "provisionedSnowflake",
+    "payload": {
+        "name": "CRM",
+        "configuration": {
+            "parameters": {
+                "db": {}
+            }
+        }
+    }
+}
