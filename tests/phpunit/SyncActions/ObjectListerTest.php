@@ -144,19 +144,23 @@ class ObjectListerTest extends TestCase
                 'host' => 'whatever',
                 'api' => 'storage',
                 'components' => [
-                    ['id' => 'kds-team.ex-bitbucket'],
-                    ['id' => 'keboola.snowflake-transformation'],
-                    ['id' => 'keboola.wr-snowflake-blob-storage'],
-                    ['id' => 'orchestrator'],
+                    ['id' => 'keboola.wr-storage'],
+                    ['id' => 'orchestration'],
+                    ['id' => 'transformation'],
                 ],
             ]);
 
-        $objects = ObjectLister::listScaffolds($client, __DIR__ . '/../../../scaffolds/');
+        $objects = ObjectLister::listScaffolds($client, __DIR__ . '/../mock/scaffolds/');
         $ids = [];
         foreach ($objects as $scaffold) {
             $ids[] = $scaffold['id'];
         }
-        self::assertEquals(['AzBitbucketDevops'], $ids);
+        self::assertEquals(
+            ['WithInvalidRequirementsTest', 'WithRequirementsAndOutputsTest', 'WithRequirementsTest',
+                'WithRequireOutputsTest'
+            ],
+            $ids
+        );
     }
 
     public function testListScaffoldsLegacy(): void
@@ -184,34 +188,22 @@ class ObjectListerTest extends TestCase
                 'host' => 'whatever',
                 'api' => 'storage',
                 'components' => [
-                    ['id' => 'kds-team.ex-bitbucket'],
-                    ['id' => 'kds-team.ex-hubspot-crm'],
-                    ['id' => 'htns.ex-salesforce'],
-                    ['id' => 'keboola.ex-pipedrive'],
-                    ['id' => 'htns.ex-salesforce'],
-                    ['id' => 'keboola.ex-github'],
-                    ['id' => 'kds-team.ex-paymo'],
-                    ['id' => 'leochan.ex-asana'],
-                    ['id' => 'kds-team.ex-reviewtrackers'],
-                    ['id' => 'keboola.ex-zendesk'],
-                    ['id' => 'keboola.snowflake-transformation'],
-                    ['id' => 'keboola.wr-db-snowflake'],
-                    ['id' => 'orchestrator'],
+                    ['id' => 'keboola.ex-storage'],
+                    ['id' => 'keboola.wr-storage'],
+                    ['id' => 'orchestration'],
                     ['id' => 'transformation'],
-                    ['id' => 'geneea.nlp-analysis-v2'],
                 ],
             ]);
 
-        $objects = ObjectLister::listScaffolds($client, __DIR__ . '/../../../scaffolds/');
+        $objects = ObjectLister::listScaffolds($client, __DIR__ . '/../mock/scaffolds/');
         $ids = [];
         foreach ($objects as $scaffold) {
             $ids[] = $scaffold['id'];
         }
         sort($ids);
         self::assertEquals(
-            ['BitbucketDevops', 'CrmHubSpot', 'CrmMrrSalesforce', 'CrmPipedrive', 'CrmSalesforce',
-            'CrmSalesforceExternal', 'CrmSnowflakeWriterExternal', 'GitHubDevops', 'MrrSalesforce',
-            'PaymoTimeTracking', 'ProjectManagementAsana', 'ReviewTrackersHospitality', 'ZendeskSupport'],
+            ['WithInvalidOutputsTest', 'WithInvalidRequirementsTest', 'WithOutputsTest', 'WithRequireOutputsTest',
+            'WithRequirementsAndOutputsTest', 'WithRequirementsTest'],
             $ids
         );
     }
