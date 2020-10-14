@@ -1,0 +1,321 @@
+{
+    "componentId": "keboola.snowflake-transformation",
+    "payload": {
+        "name": "02 Salesforce CRM",
+        "configuration": {
+            "parameters": {
+                "blocks": [
+                    {
+                        "name": "Phase 1",
+                        "codes": [
+                            {
+                                "name": "Company",
+                                "script": [
+                                    "--create output table with companies\n--cast timestamp to date\nCREATE TABLE \"out_company\"\nAS\n  SELECT DISTINCT\n    \"Id\"                                  AS \"company_id\",\n    \"Name\"                                AS \"company\",\n    \"Website\"                             AS \"website\",\n    to_date(\"CreatedDate\") :: VARCHAR(10) AS \"date_created\"\n  FROM \"account\"\n  WHERE lower(\"IsDeleted\") = 'false';",
+                                    "--fake row to keep referential integrity if child tables are missing existing company ids\nINSERT INTO \"out_company\"\n  (\"company_id\", \"company\", \"website\", \"date_created\")\nVALUES\n  ('0', 'Unknown', '', '');"
+                                ]
+                            },
+                            {
+                                "name": "Contact",
+                                "script": [
+                                    "--create output table with contacts\nCREATE TABLE \"out_contact\"\nAS\n  SELECT\n    \"Id\"                                  AS \"contact_id\",\n    \"Name\"                                AS \"contact\",\n    \"Email\"                               AS \"email\",\n    'Contact'                             AS \"contact_type\",\n    to_date(\"CreatedDate\") :: VARCHAR(10) AS \"date_created\",\n    \"LeadSource\"                          AS \"lead_source\",\n    'Is Contact'                          AS \"lead_converted\"\n  FROM \"contact\"\n  WHERE lower(\"IsDeleted\") = 'false'\n  UNION ALL\n  --insert leads and mark if they are already converted\n  SELECT\n    \"Id\"                                      AS \"contact_id\",\n    \"Name\"                                    AS \"contact\",\n    \"Email\"                                   AS \"email\",\n    'Lead'                                    AS \"contact_type\",\n    to_date(\"CreatedDate\") :: VARCHAR(10)     AS \"date_created\",\n    \"LeadSource\"                              AS \"lead_source\",\n    iff(\"IsConverted\" = 'false', 'No', 'Yes') AS \"lead_converted\"\n  FROM \"lead\"\n  WHERE lower(\"IsDeleted\") = 'false';",
+                                    "--fake row to keep referential integrity if child tables are missing existing contact ids\nINSERT INTO \"out_contact\"\n  (\"contact_id\", \"contact\", \"email\", \"contact_type\", \"date_created\", \"lead_source\", \"lead_converted\")\nVALUES\n  ('0', 'Unknown', '', 'Lead', '', '', 'No');"
+                                ]
+                            },
+                            {
+                                "name": "Employee",
+                                "script": [
+                                    "--create output table with employees\nCREATE TABLE \"out_employee\"\nAS\n  SELECT\n    \"Id\"    AS \"employee_id\",\n    \"Name\"  AS \"employee\",\n    \"Email\" AS \"email\",\n    \"Title\" AS \"position\"\n  FROM \"user\";",
+                                    "--fake row to keep referential integrity if child tables are missing existing employee ids\nINSERT INTO \"out_employee\"\n  (\"employee_id\", \"employee\", \"email\", \"position\")\nVALUES\n  ('0', 'Unknown', '', '');"
+                                ]
+                            }
+                        ]
+                    },
+                    {
+                        "name": "Phase 2",
+                        "codes": [
+                            {
+                                "name": "Opportunity & auxiliary snapshot",
+                                "script": [
+                                    "--create output table with opportunities\n--change timestamps to date\n--if there is no amount set, place 0 instead of empty value\n--check referential integrity with employees and companies\n--change boolean values to commonly used format in KBC scaffolds\nCREATE TABLE \"out_opportunity\"\nAS\n    SELECT\n        \"o\".\"Id\"                                    AS \"opportunity_id\",\n        ifnull(\"c\".\"company_id\", '0')               AS \"company_id\",\n        ifnull(\"e\".\"employee_id\", '0')              AS \"employee_id\",\n        \"o\".\"Name\"                                  AS \"opportunity\",\n        left(\"o\".\"CreatedDate\", 10)                 AS \"date_created\",\n        \"o\".\"CloseDate\"                             AS \"date_closed\",\n        iff(\"o\".\"IsClosed\" = 'false', 'No', 'Yes')  AS \"is_closed\",\n        iff(\"o\".\"IsWon\" = 'false', 'No', 'Yes')     AS \"is_won\",\n        'N\/A in Salesforce'                         AS \"pipeline\",\n        \"o\".\"StageName\"                             AS \"stage\",\n        ifnull(\"s\".\"SortOrder\", '0')                AS \"stage_order\",\n        \"o\".\"Type\"                                  AS \"opportunity_type\",\n        iff(\"o\".\"Amount\" = '', '0.0', \"o\".\"Amount\") AS \"opportunity_value\",\n        \"o\".\"CurrencyIsoCode\"                       AS \"currency\",\n        \"o\".\"LeadSource\"                            AS \"lead_source\",\n        \"o\".\"Probability\"                           AS \"probability\"\n    FROM \"opportunity\" \"o\"\n             LEFT JOIN \"out_company\" \"c\"\n                       ON \"o\".\"AccountId\" = \"c\".\"company_id\"\n             LEFT JOIN \"out_employee\" \"e\"\n                       ON \"o\".\"OwnerId\" = \"e\".\"employee_id\"\n             LEFT JOIN \"opportunitystage\" \"s\"\n                       ON \"o\".\"StageName\" = \"s\".\"MasterLabel\"\n    WHERE lower(\"IsDeleted\") = 'false';",
+                                    "--set timezone to UTC (!!!CHANGE ACCORDINGLY TO YOUR REGION!!!)\nALTER SESSION\n    SET TIMEZONE = 'UTC';",
+                                    "--create snapshot of the output table to track changes throughout time\n--snapshot will be used in another transformation where it will be adjusted for a better final analysis\nCREATE TABLE \"out_opportunity_snapshot\"\nAS\n    SELECT\n        current_date AS \"snapshot_date\",\n        \"o\".*\n    FROM \"out_opportunity\" \"o\";",
+                                    "--fake row to keep referential integrity if child tables are missing existing opportunity ids\n--adding row after snapshot, so we're not unnecessary snapshoting it\nINSERT INTO \"out_opportunity\"\n    (\"opportunity_id\", \"company_id\", \"employee_id\", \"opportunity\", \"is_closed\", \"is_won\",\n     \"pipeline\", \"stage\", \"stage_order\", \"opportunity_value\", \"currency\")\nVALUES\n    ('0', '0', '0', 'Unknown', 'No', 'No', 'N\/A in Salesforce', '', '0', '0.0', 'USD');"
+                                ]
+                            }
+                        ]
+                    },
+                    {
+                        "name": "Phase 3",
+                        "codes": [
+                            {
+                                "name": "Activities",
+                                "script": [
+                                    "--create output activity table\n--use only activity related to either contact\/lead or opportunity\n--format datetime\nCREATE TABLE \"out_activity\"\nAS\n  SELECT\n    \"a\".\"Id\"                                                      AS \"activity_id\",\n    ifnull(\"e\".\"employee_id\", '0')                                AS \"employee_id\",\n    ifnull(\"c\".\"contact_id\", '0')                                 AS \"contact_id\",\n    ifnull(\"o\".\"opportunity_id\", '0')                             AS \"opportunity_id\",\n    \"a\".\"Subject\"                                                 AS \"activity\",\n    replace(split_part(\"a\".\"ActivityDateTime\", '.', 1), 'T', ' ') AS \"activity_date\",\n    \"a\".\"DurationInMinutes\"                                       AS \"activity_duration_m\"\n  FROM \"event\" \"a\"\n         LEFT JOIN \"out_contact\" \"c\"\n                   ON \"a\".\"WhoId\" = \"c\".\"contact_id\"\n         LEFT JOIN \"out_opportunity\" \"o\"\n                   ON \"a\".\"WhatId\" = \"o\".\"opportunity_id\"\n         LEFT JOIN \"out_employee\" \"e\"\n                   ON \"a\".\"OwnerId\" = \"e\".\"employee_id\"\n  WHERE (\"c\".\"contact_id\" IS NOT NULL OR \"o\".\"opportunity_id\" IS NOT NULL)\n    AND lower(\"a\".\"IsDeleted\") = 'false';"
+                                ]
+                            },
+                            {
+                                "name": "Opportunity & Contact",
+                                "script": [
+                                    "--create output paring table for opportunities and contacts\n--merge both tables ids as paring table id\n--use inner joins and ids from referring tables to make sure referential integrity is intact\n--change boolean values to commonly used format in KBC scaffolds\nCREATE TABLE \"out_opportunity_contact\"\nAS\n  SELECT\n    \"o\".\"opportunity_id\" || '-' || \"c\".\"contact_id\" AS \"opportunity_contact_id\",\n    \"o\".\"opportunity_id\",\n    \"c\".\"contact_id\",\n    iff(\"r\".\"IsPrimary\" = 'false', 'No', 'Yes')     AS \"is_primary_contact\",\n    \"r\".\"Role\"                                      AS \"role\"\n  FROM \"opportunity_contact_role\" \"r\"\n         INNER JOIN \"out_opportunity\" \"o\"\n                    ON \"r\".\"OpportunityId\" = \"o\".\"opportunity_id\"\n         INNER JOIN \"out_contact\" \"c\"\n                    ON \"r\".\"ContactId\" = \"c\".\"contact_id\"\n  WHERE lower(\"r\".\"IsDeleted\") = 'false';"
+                                ]
+                            }
+                        ]
+                    }
+                ]
+            },
+            "storage": {
+                "input": {
+                    "tables": [
+                        {
+                            "destination": "contact",
+                            "where_column": "",
+                            "where_values": [],
+                            "where_operator": "eq",
+                            "columns": [],
+                            "source": "out.c-SalesforceCrm.salesforceContact"
+                        },
+                        {
+                            "destination": "user",
+                            "where_column": "",
+                            "where_values": [],
+                            "where_operator": "eq",
+                            "columns": [],
+                            "source": "out.c-SalesforceCrm.salesforceUser"
+                        },
+                        {
+                            "destination": "opportunitystage",
+                            "where_column": "",
+                            "where_values": [],
+                            "where_operator": "eq",
+                            "columns": [],
+                            "source": "out.c-SalesforceCrm.salesforceOpportunitystage"
+                        },
+                        {
+                            "destination": "account",
+                            "where_column": "",
+                            "where_values": [],
+                            "where_operator": "eq",
+                            "columns": [],
+                            "source": "out.c-SalesforceCrm.salesforceAccount"
+                        },
+                        {
+                            "destination": "opportunity",
+                            "where_column": "",
+                            "where_values": [],
+                            "where_operator": "eq",
+                            "columns": [],
+                            "source": "out.c-SalesforceCrm.salesforceOpportunity"
+                        },
+                        {
+                            "destination": "lead",
+                            "where_column": "",
+                            "where_values": [],
+                            "where_operator": "eq",
+                            "columns": [],
+                            "source": "out.c-SalesforceCrm.salesforceLead"
+                        },
+                        {
+                            "destination": "event",
+                            "where_column": "",
+                            "where_values": [],
+                            "where_operator": "eq",
+                            "columns": [],
+                            "source": "out.c-SalesforceCrm.salesforceEvent"
+                        },
+                        {
+                            "destination": "opportunity_contact_role",
+                            "where_column": "",
+                            "where_values": [],
+                            "where_operator": "eq",
+                            "columns": [],
+                            "source": "out.c-SalesforceCrm.salesforceOpportunitycontactrole"
+                        }
+                    ]
+                },
+                "output": {
+                    "tables": [
+                        {
+                            "destination": "out.c-SalesforceCrm.crmCompany",
+                            "source": "out_company",
+                            "primary_key": [
+                                "company_id"
+                            ],
+                            "incremental": true,
+                            "delete_where_column": "",
+                            "delete_where_operator": "eq",
+                            "delete_where_values": []
+                        },
+                        {
+                            "destination": "out.c-SalesforceCrm.crmContact",
+                            "source": "out_contact",
+                            "primary_key": [
+                                "contact_id"
+                            ],
+                            "incremental": true,
+                            "delete_where_column": "",
+                            "delete_where_operator": "eq",
+                            "delete_where_values": []
+                        },
+                        {
+                            "destination": "out.c-SalesforceCrm.crmEmployee",
+                            "source": "out_employee",
+                            "primary_key": [
+                                "employee_id"
+                            ],
+                            "incremental": true,
+                            "delete_where_column": "",
+                            "delete_where_operator": "eq",
+                            "delete_where_values": []
+                        },
+                        {
+                            "destination": "out.c-SalesforceCrm.crmOpportunity",
+                            "source": "out_opportunity",
+                            "primary_key": [
+                                "opportunity_id"
+                            ],
+                            "incremental": true,
+                            "delete_where_column": "",
+                            "delete_where_operator": "eq",
+                            "delete_where_values": []
+                        },
+                        {
+                            "destination": "out.c-SalesforceCrm.crmAuxiliaryTablesOpportunitySnapshot",
+                            "source": "out_opportunity_snapshot",
+                            "primary_key": [
+                                "opportunity_id",
+                                "snapshot_date"
+                            ],
+                            "incremental": true,
+                            "delete_where_column": "",
+                            "delete_where_operator": "eq",
+                            "delete_where_values": []
+                        },
+                        {
+                            "destination": "out.c-SalesforceCrm.crmActivity",
+                            "source": "out_activity",
+                            "primary_key": [
+                                "activity_id"
+                            ],
+                            "incremental": true,
+                            "delete_where_column": "",
+                            "delete_where_operator": "eq",
+                            "delete_where_values": []
+                        },
+                        {
+                            "destination": "out.c-SalesforceCrm.crmOpportunityContact",
+                            "source": "out_opportunity_contact",
+                            "primary_key": [
+                                "opportunity_contact_id"
+                            ]
+                        }
+                    ]
+                }
+            },
+            "processors": {
+                "after": [
+                    {
+                        "definition": {
+                            "component": "keboola.processor-add-metadata"
+                        },
+                        "parameters": {
+                            "tables": [
+                                {
+                                    "table": "out_company",
+                                    "metadata": [
+                                        {
+                                            "key": "bdm.scaffold.table.tag",
+                                            "value": "bdm.Crm.Company"
+                                        },
+                                        {
+                                            "key": "scaffold.id",
+                                            "value": "SalesforceCrm"
+                                        }
+                                    ]
+                                },
+                                {
+                                    "table": "out_contact",
+                                    "metadata": [
+                                        {
+                                            "key": "bdm.scaffold.table.tag",
+                                            "value": "bdm.Crm.Contact"
+                                        },
+                                        {
+                                            "key": "scaffold.id",
+                                            "value": "SalesforceCrm"
+                                        }
+                                    ]
+                                },
+                                {
+                                    "table": "out_employee",
+                                    "metadata": [
+                                        {
+                                            "key": "bdm.scaffold.table.tag",
+                                            "value": "bdm.Crm.Employee"
+                                        },
+                                        {
+                                            "key": "scaffold.id",
+                                            "value": "SalesforceCrm"
+                                        }
+                                    ]
+                                },
+                                {
+                                    "table": "out_opportunity",
+                                    "metadata": [
+                                        {
+                                            "key": "bdm.scaffold.table.tag",
+                                            "value": "bdm.Crm.Opportunity"
+                                        },
+                                        {
+                                            "key": "scaffold.id",
+                                            "value": "SalesforceCrm"
+                                        }
+                                    ]
+                                },
+                                {
+                                    "table": "out_opportunity_snapshot",
+                                    "metadata": [
+                                        {
+                                            "key": "bdm.scaffold.table.tag",
+                                            "value": "SalesforceCrm.internal.outCrmAuxiliaryTablesOpportunitySnapshot"
+                                        },
+                                        {
+                                            "key": "scaffold.id",
+                                            "value": "SalesforceCrm"
+                                        }
+                                    ]
+                                },
+                                {
+                                    "table": "out_activity",
+                                    "metadata": [
+                                        {
+                                            "key": "bdm.scaffold.table.tag",
+                                            "value": "bdm.Crm.Activity"
+                                        },
+                                        {
+                                            "key": "scaffold.id",
+                                            "value": "SalesforceCrm"
+                                        }
+                                    ]
+                                },
+                                {
+                                    "table": "out_opportunity_contact",
+                                    "metadata": [
+                                        {
+                                            "key": "bdm.scaffold.table.tag",
+                                            "value": "bdm.Crm.OpportunityContact"
+                                        },
+                                        {
+                                            "key": "scaffold.id",
+                                            "value": "SalesforceCrm"
+                                        }
+                                    ]
+                                }
+                            ]
+                        }
+                    }
+                ]
+            }
+        }
+    }
+}

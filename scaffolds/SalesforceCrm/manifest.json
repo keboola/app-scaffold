@@ -1,0 +1,83 @@
+{
+    "name": "Salesforce CRM",
+    "author": "Keboola",
+    "description": "Full workflow to extract and process Salesforce data into a standard CRM data model. Contains extractor and set of transformations. Can be extended by CRM Writer Scaffold.",
+    "requirements": [],
+    "outputs": [
+        "bdm.Crm.Company",
+        "bdm.Crm.Employee",
+        "bdm.Crm.Contact",
+        "bdm.Crm.Opportunity",
+        "bdm.Crm.OpportunitySnapshot",
+        "bdm.Crm.OpportunityContact",
+        "bdm.Crm.Activity"
+    ],
+    "inputs": [
+        {
+            "id": "htnsExSalesforceSalesforceCRM",
+            "componentId": "htns.ex-salesforce",
+            "name": "Salesforce CRM",
+            "required": true,
+            "schema": {
+                "type": "object",
+                "required": [
+                    "loginname",
+                    "#password",
+                    "#securitytoken"
+                ],
+                "properties": {
+                    "loginname": {
+                        "title": "Login Name",
+                        "type": "string",
+                        "description": "Fill in your Salesforce Login Email."
+                    },
+                    "#password": {
+                        "title": "Password",
+                        "type": "string",
+                        "format": "password",
+                        "description": "Fill in your Salesforce Password."
+                    },
+                    "#securitytoken": {
+                        "title": "Security Token",
+                        "type": "string",
+                        "format": "password",
+                        "links": [
+                            {
+                                "rel": "Get Salesforce Security Token",
+                                "href": "https://help.salesforce.com/articleView?id=user_security_token.htm"
+                            }
+                        ]
+                    }
+                }
+            }
+        },
+        {
+            "id": "keboolaSnowflakeTransformation01SalesforceInputTablesCreation",
+            "componentId": "keboola.snowflake-transformation",
+            "name": "01 Salesforce Input Tables Creation",
+            "required": true,
+            "schema": null
+        },
+        {
+            "id": "keboolaSnowflakeTransformation02SalesforceCRM",
+            "componentId": "keboola.snowflake-transformation",
+            "name": "02 Salesforce CRM",
+            "required": true,
+            "schema": null
+        },
+        {
+            "id": "keboolaSnowflakeTransformation03SalesforceCRMSnapshots",
+            "componentId": "keboola.snowflake-transformation",
+            "name": "03 Salesforce CRM Snapshots",
+            "required": true,
+            "schema": null
+        },
+        {
+            "id": "orchestrationCRMExtraction&Transformation",
+            "componentId": "orchestrator",
+            "name": "CRM Extraction & Transformation",
+            "required": true,
+            "schema": null
+        }
+    ]
+}

@@ -1,0 +1,43 @@
+{
+    "payload": {
+        "name": "CRM Extraction & Transformation",
+        "tasks": [
+            {
+                "component": "htns.ex-salesforce",
+                "operationReferenceId": "htnsExSalesforceSalesforceCRM",
+                "action": "run",
+                "timeoutMinutes": null,
+                "active": true,
+                "continueOnFailure": false,
+                "phase": null
+            },
+            {
+                "component": "keboola.snowflake-transformation",
+                "operationReferenceId": "keboolaSnowflakeTransformation01SalesforceInputTablesCreation",
+                "action": "run",
+                "timeoutMinutes": null,
+                "active": true,
+                "continueOnFailure": false,
+                "phase": null
+            },
+            {
+                "component": "keboola.snowflake-transformation",
+                "operationReferenceId": "keboolaSnowflakeTransformation02SalesforceCRM",
+                "action": "run",
+                "timeoutMinutes": null,
+                "active": true,
+                "continueOnFailure": false,
+                "phase": null
+            },
+            {
+                "component": "keboola.snowflake-transformation",
+                "operationReferenceId": "keboolaSnowflakeTransformation03SalesforceCRMSnapshots",
+                "action": "run",
+                "timeoutMinutes": null,
+                "active": true,
+                "continueOnFailure": false,
+                "phase": null
+            }
+        ]
+    }
+}
