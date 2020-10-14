@@ -1,0 +1,341 @@
+{
+    "componentId": "keboola.snowflake-transformation",
+    "payload": {
+        "name": "01 Salesforce Input Tables Creation",
+        "configuration": {
+            "parameters": {
+                "blocks": [
+                    {
+                        "name": "Phase 1",
+                        "codes": [
+                            {
+                                "name": "Input Tables Creation",
+                                "script": [
+                                    "--account table\nCREATE TABLE \"account_tmp\"\nAS\n    SELECT\n        OBJECT_CONSTRUCT(*) AS \"obj\"\n    FROM \"account\";",
+                                    "CREATE TABLE \"out_account\"\nAS\n    SELECT\n        trim(\"obj\":\"Id\", '\"')          AS \"Id\",\n        trim(\"obj\":\"IsDeleted\", '\"')   AS \"IsDeleted\",\n        trim(\"obj\":\"Name\", '\"')        AS \"Name\",\n        trim(\"obj\":\"Website\", '\"')     AS \"Website\",\n        trim(\"obj\":\"CreatedDate\", '\"') AS \"CreatedDate\"\n    FROM \"account_tmp\";",
+                                    "--contact table\nCREATE TABLE \"contact_tmp\"\nAS\n    SELECT\n        OBJECT_CONSTRUCT(*) AS \"obj\"\n    FROM \"contact\";",
+                                    "CREATE TABLE \"out_contact\"\nAS\n    SELECT\n        trim(\"obj\":\"Id\", '\"')          AS \"Id\",\n        trim(\"obj\":\"IsDeleted\", '\"')   AS \"IsDeleted\",\n        trim(\"obj\":\"Name\", '\"')        AS \"Name\",\n        trim(\"obj\":\"Email\", '\"')       AS \"Email\",\n        trim(\"obj\":\"CreatedDate\", '\"') AS \"CreatedDate\",\n        trim(\"obj\":\"LeadSource\", '\"')  AS \"LeadSource\"\n    FROM \"contact_tmp\";",
+                                    "--lead table\nCREATE TABLE \"lead_tmp\"\nAS\n    SELECT\n        OBJECT_CONSTRUCT(*) AS \"obj\"\n    FROM \"lead\";",
+                                    "CREATE TABLE \"out_lead\"\nAS\n    SELECT\n        trim(\"obj\":\"Id\", '\"')          AS \"Id\",\n        trim(\"obj\":\"IsDeleted\", '\"')   AS \"IsDeleted\",\n        trim(\"obj\":\"Name\", '\"')        AS \"Name\",\n        trim(\"obj\":\"Email\", '\"')       AS \"Email\",\n        trim(\"obj\":\"CreatedDate\", '\"') AS \"CreatedDate\",\n        trim(\"obj\":\"LeadSource\", '\"')  AS \"LeadSource\",\n        trim(\"obj\":\"IsConverted\", '\"') AS \"IsConverted\"\n    FROM \"lead_tmp\";",
+                                    "--user table\nCREATE TABLE \"user_tmp\"\nAS\n    SELECT\n        OBJECT_CONSTRUCT(*) AS \"obj\"\n    FROM \"user\";",
+                                    "CREATE TABLE \"out_user\"\nAS\n    SELECT\n        trim(\"obj\":\"Id\", '\"')    AS \"Id\",\n        trim(\"obj\":\"Name\", '\"')  AS \"Name\",\n        trim(\"obj\":\"Email\", '\"') AS \"Email\",\n        trim(\"obj\":\"Title\", '\"') AS \"Title\"\n    FROM \"user_tmp\";",
+                                    "--opportunity table\nCREATE TABLE \"opportunity_tmp\"\nAS\n    SELECT\n        OBJECT_CONSTRUCT(*) AS \"obj\"\n    FROM \"opportunity\";",
+                                    "CREATE TABLE \"out_opportunity\"\nAS\n    SELECT\n        trim(\"obj\":\"Id\", '\"')              AS \"Id\",\n        trim(\"obj\":\"IsDeleted\", '\"')       AS \"IsDeleted\",\n        trim(\"obj\":\"AccountId\", '\"')       AS \"AccountId\",\n        trim(\"obj\":\"OwnerId\", '\"')         AS \"OwnerId\",\n        trim(\"obj\":\"Name\", '\"')            AS \"Name\",\n        trim(\"obj\":\"CreatedDate\", '\"')     AS \"CreatedDate\",\n        trim(\"obj\":\"CloseDate\", '\"')       AS \"CloseDate\",\n        trim(\"obj\":\"IsClosed\", '\"')        AS \"IsClosed\",\n        trim(\"obj\":\"IsWon\", '\"')           AS \"IsWon\",\n        trim(\"obj\":\"StageName\", '\"')       AS \"StageName\",\n        trim(\"obj\":\"Type\", '\"')            AS \"Type\",\n        trim(\"obj\":\"Amount\", '\"')          AS \"Amount\",\n        trim(\"obj\":\"CurrencyIsoCode\", '\"') AS \"CurrencyIsoCode\",\n        trim(\"obj\":\"LeadSource\", '\"') \t   AS \"LeadSource\",\n        trim(\"obj\":\"Probability\", '\"')\t   AS \"Probability\"\n    FROM \"opportunity_tmp\";",
+                                    "--opportunitystage table\nCREATE TABLE \"opportunitystage_tmp\"\nAS\n    SELECT\n        OBJECT_CONSTRUCT(*) AS \"obj\"\n    FROM \"opportunitystage\";",
+                                    "CREATE TABLE \"out_opportunitystage\"\nAS\n    SELECT\n        trim(\"obj\":\"Id\", '\"')              AS \"Id\",\n        trim(\"obj\":\"MasterLabel\", '\"')     AS \"MasterLabel\",\n        trim(\"obj\":\"SortOrder\", '\"')       AS \"SortOrder\"\n    FROM \"opportunitystage_tmp\";",
+                                    "--event table\nCREATE TABLE \"event_tmp\"\nAS\n    SELECT\n        OBJECT_CONSTRUCT(*) AS \"obj\"\n    FROM \"event\";",
+                                    "CREATE TABLE \"out_event\"\nAS\n    SELECT\n        trim(\"obj\":\"Id\", '\"')                AS \"Id\",\n        trim(\"obj\":\"IsDeleted\", '\"')         AS \"IsDeleted\",\n        trim(\"obj\":\"WhoId\", '\"')             AS \"WhoId\",\n        trim(\"obj\":\"WhatId\", '\"')            AS \"WhatId\",\n        trim(\"obj\":\"OwnerId\", '\"')           AS \"OwnerId\",\n        trim(\"obj\":\"Subject\", '\"')           AS \"Subject\",\n        trim(\"obj\":\"ActivityDateTime\", '\"')  AS \"ActivityDateTime\",\n        trim(\"obj\":\"DurationInMinutes\", '\"') AS \"DurationInMinutes\"\n    FROM \"event_tmp\";",
+                                    "--opportunity contact role table\nCREATE TABLE \"opportunitycontactrole_tmp\"\nAS\n    SELECT\n        OBJECT_CONSTRUCT(*) AS \"obj\"\n    FROM \"opportunitycontactrole\";",
+                                    "CREATE TABLE \"out_opportunitycontactrole\"\nAS\n    SELECT\n        trim(\"obj\":\"Id\", '\"')            AS \"Id\",\n        trim(\"obj\":\"IsDeleted\", '\"')     AS \"IsDeleted\",\n        trim(\"obj\":\"OpportunityId\", '\"') AS \"OpportunityId\",\n        trim(\"obj\":\"ContactId\", '\"')     AS \"ContactId\",\n        trim(\"obj\":\"IsPrimary\", '\"')     AS \"IsPrimary\",\n        trim(\"obj\":\"Role\", '\"')          AS \"Role\"\n    FROM \"opportunitycontactrole_tmp\";"
+                                ]
+                            }
+                        ]
+                    }
+                ]
+            },
+            "storage": {
+                "input": {
+                    "tables": [
+                        {
+                            "destination": "account",
+                            "where_column": "",
+                            "where_values": [],
+                            "where_operator": "eq",
+                            "columns": [],
+                            "source_search": {
+                                "key": "bdm.scaffold.table.tag",
+                                "value": "SalesforceCrm.internal.inHtnsExSalesforceAccount"
+                            }
+                        },
+                        {
+                            "destination": "contact",
+                            "where_column": "",
+                            "where_values": [],
+                            "where_operator": "eq",
+                            "columns": [],
+                            "source_search": {
+                                "key": "bdm.scaffold.table.tag",
+                                "value": "SalesforceCrm.internal.inHtnsExSalesforceContact"
+                            }
+                        },
+                        {
+                            "destination": "event",
+                            "where_column": "",
+                            "where_values": [],
+                            "where_operator": "eq",
+                            "columns": [],
+                            "source_search": {
+                                "key": "bdm.scaffold.table.tag",
+                                "value": "SalesforceCrm.internal.inHtnsExSalesforceEvent"
+                            }
+                        },
+                        {
+                            "destination": "lead",
+                            "where_column": "",
+                            "where_values": [],
+                            "where_operator": "eq",
+                            "columns": [],
+                            "source_search": {
+                                "key": "bdm.scaffold.table.tag",
+                                "value": "SalesforceCrm.internal.inHtnsExSalesforceLead"
+                            }
+                        },
+                        {
+                            "destination": "opportunity",
+                            "where_column": "",
+                            "where_values": [],
+                            "where_operator": "eq",
+                            "columns": [],
+                            "source_search": {
+                                "key": "bdm.scaffold.table.tag",
+                                "value": "SalesforceCrm.internal.inHtnsExSalesforceOpportunity"
+                            }
+                        },
+                        {
+                            "destination": "opportunitycontactrole",
+                            "where_column": "",
+                            "where_values": [],
+                            "where_operator": "eq",
+                            "columns": [],
+                            "source_search": {
+                                "key": "bdm.scaffold.table.tag",
+                                "value": "SalesforceCrm.internal.inHtnsExSalesforceOpportunitycontactrole"
+                            }
+                        },
+                        {
+                            "destination": "opportunitystage",
+                            "where_column": "",
+                            "where_values": [],
+                            "where_operator": "eq",
+                            "columns": [],
+                            "source_search": {
+                                "key": "bdm.scaffold.table.tag",
+                                "value": "SalesforceCrm.internal.inHtnsExSalesforceOpportunitystage"
+                            }
+                        },
+                        {
+                            "destination": "user",
+                            "where_column": "",
+                            "where_values": [],
+                            "where_operator": "eq",
+                            "columns": [],
+                            "source_search": {
+                                "key": "bdm.scaffold.table.tag",
+                                "value": "SalesforceCrm.internal.inHtnsExSalesforceUser"
+                            }
+                        }
+                    ]
+                },
+                "output": {
+                    "tables": [
+                        {
+                            "destination": "out.c-SalesforceCrm.salesforceAccount",
+                            "source": "out_account",
+                            "primary_key": [
+                                "Id"
+                            ],
+                            "incremental": true,
+                            "delete_where_column": "",
+                            "delete_where_operator": "eq",
+                            "delete_where_values": []
+                        },
+                        {
+                            "destination": "out.c-SalesforceCrm.salesforceContact",
+                            "source": "out_contact",
+                            "primary_key": [
+                                "Id"
+                            ],
+                            "incremental": true,
+                            "delete_where_column": "",
+                            "delete_where_operator": "eq",
+                            "delete_where_values": []
+                        },
+                        {
+                            "destination": "out.c-SalesforceCrm.salesforceLead",
+                            "source": "out_lead",
+                            "primary_key": [
+                                "Id"
+                            ],
+                            "incremental": true,
+                            "delete_where_column": "",
+                            "delete_where_operator": "eq",
+                            "delete_where_values": []
+                        },
+                        {
+                            "destination": "out.c-SalesforceCrm.salesforceUser",
+                            "source": "out_user",
+                            "primary_key": [
+                                "Id"
+                            ],
+                            "incremental": true,
+                            "delete_where_column": "",
+                            "delete_where_operator": "eq",
+                            "delete_where_values": []
+                        },
+                        {
+                            "destination": "out.c-SalesforceCrm.salesforceOpportunity",
+                            "source": "out_opportunity",
+                            "primary_key": [
+                                "Id"
+                            ],
+                            "incremental": true,
+                            "delete_where_column": "",
+                            "delete_where_operator": "eq",
+                            "delete_where_values": []
+                        },
+                        {
+                            "destination": "out.c-SalesforceCrm.salesforceOpportunitycontactrole",
+                            "source": "out_opportunitycontactrole",
+                            "primary_key": [
+                                "Id"
+                            ],
+                            "incremental": true,
+                            "delete_where_column": "",
+                            "delete_where_operator": "eq",
+                            "delete_where_values": []
+                        },
+                        {
+                            "destination": "out.c-SalesforceCrm.salesforceEvent",
+                            "source": "out_event",
+                            "primary_key": [
+                                "Id"
+                            ],
+                            "incremental": true,
+                            "delete_where_column": "",
+                            "delete_where_operator": "eq",
+                            "delete_where_values": []
+                        },
+                        {
+                            "destination": "out.c-SalesforceCrm.salesforceOpportunitystage",
+                            "source": "out_opportunitystage",
+                            "primary_key": [
+                                "Id"
+                            ],
+                            "incremental": true,
+                            "delete_where_column": "",
+                            "delete_where_operator": "eq",
+                            "delete_where_values": []
+                        }
+                    ]
+                }
+            },
+            "processors": {
+                "after": [
+                    {
+                        "definition": {
+                            "component": "keboola.processor-add-metadata"
+                        },
+                        "parameters": {
+                            "tables": [
+                                {
+                                    "table": "out_account",
+                                    "metadata": [
+                                        {
+                                            "key": "bdm.scaffold.table.tag",
+                                            "value": "SalesforceCrm.internal.inSalesforceAccount"
+                                        },
+                                        {
+                                            "key": "scaffold.id",
+                                            "value": "SalesforceCrm"
+                                        }
+                                    ]
+                                },
+                                {
+                                    "table": "out_contact",
+                                    "metadata": [
+                                        {
+                                            "key": "bdm.scaffold.table.tag",
+                                            "value": "SalesforceCrm.internal.inSalesforceContact"
+                                        },
+                                        {
+                                            "key": "scaffold.id",
+                                            "value": "SalesforceCrm"
+                                        }
+                                    ]
+                                },
+                                {
+                                    "table": "out_lead",
+                                    "metadata": [
+                                        {
+                                            "key": "bdm.scaffold.table.tag",
+                                            "value": "SalesforceCrm.internal.inSalesforceLead"
+                                        },
+                                        {
+                                            "key": "scaffold.id",
+                                            "value": "SalesforceCrm"
+                                        }
+                                    ]
+                                },
+                                {
+                                    "table": "out_user",
+                                    "metadata": [
+                                        {
+                                            "key": "bdm.scaffold.table.tag",
+                                            "value": "SalesforceCrm.internal.inSalesforceUser"
+                                        },
+                                        {
+                                            "key": "scaffold.id",
+                                            "value": "SalesforceCrm"
+                                        }
+                                    ]
+                                },
+                                {
+                                    "table": "out_opportunity",
+                                    "metadata": [
+                                        {
+                                            "key": "bdm.scaffold.table.tag",
+                                            "value": "SalesforceCrm.internal.inSalesforceOpportunity"
+                                        },
+                                        {
+                                            "key": "scaffold.id",
+                                            "value": "SalesforceCrm"
+                                        }
+                                    ]
+                                },
+                                {
+                                    "table": "out_opportunitycontactrole",
+                                    "metadata": [
+                                        {
+                                            "key": "bdm.scaffold.table.tag",
+                                            "value": "SalesforceCrm.internal.inSalesforceOpportunitycontactrole"
+                                        },
+                                        {
+                                            "key": "scaffold.id",
+                                            "value": "SalesforceCrm"
+                                        }
+                                    ]
+                                },
+                                {
+                                    "table": "out_event",
+                                    "metadata": [
+                                        {
+                                            "key": "bdm.scaffold.table.tag",
+                                            "value": "SalesforceCrm.internal.inSalesforceEvent"
+                                        },
+                                        {
+                                            "key": "scaffold.id",
+                                            "value": "SalesforceCrm"
+                                        }
+                                    ]
+                                },
+                                {
+                                    "table": "out_opportunitystage",
+                                    "metadata": [
+                                        {
+                                            "key": "bdm.scaffold.table.tag",
+                                            "value": "SalesforceCrm.internal.inSalesforceOpportunitystage"
+                                        },
+                                        {
+                                            "key": "scaffold.id",
+                                            "value": "SalesforceCrm"
+                                        }
+                                    ]
+                                }
+                            ]
+                        }
+                    }
+                ]
+            }
+        }
+    }
+}
