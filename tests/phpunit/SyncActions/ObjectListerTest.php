@@ -155,6 +155,7 @@ class ObjectListerTest extends TestCase
         foreach ($objects as $scaffold) {
             $ids[] = $scaffold['id'];
         }
+        sort($ids);
         self::assertEquals(
             ['WithInvalidRequirementsTest', 'WithRequirementsAndOutputsTest', 'WithRequirementsTest',
                 'WithRequireOutputsTest',
