@@ -1,0 +1,77 @@
+{
+    "name": "Bitbucket Git",
+    "author": "Keboola",
+    "description": "Full workflow to extract and process Bitbucket data into a standard Git data model. Contains extractor and set of transformations. Can be extended by Git Writer Scaffold.",
+    "requirements": [],
+    "outputs": [
+        "bdm.Git.Organization",
+        "bdm.Git.User",
+        "bdm.Git.Repository",
+        "bdm.Git.PullRequest",
+        "bdm.Git.PullRequestActivity",
+        "bdm.Git.RepositoryCommit",
+        "bdm.Git.Issue",
+        "bdm.Git.IssueComment",
+        "bdm.Git.Event",
+        "bdm.Git.OrganizationUser"
+    ],
+    "inputs": [
+        {
+            "id": "kdsTeamExBitbucketBitbucketGit",
+            "componentId": "kds-team.ex-bitbucket",
+            "name": "Bitbucket Git",
+            "required": true,
+            "schema": {
+                "type": "object",
+                "required": [
+                    "config"
+                ],
+                "properties": {
+                    "config": {
+                        "title": "Parameters",
+                        "type": "object",
+                        "required": [
+                            "username",
+                            "#password",
+                            "startDate"
+                        ],
+                        "properties": {
+                            "username": {
+                                "title": "Username",
+                                "type": "string",
+                                "description": "Fill in you Bitbucket username."
+                            },
+                            "#password": {
+                                "title": "Password/App Password",
+                                "type": "string",
+                                "format": "password",
+                                "description": "If you're using Multi-factor authentication on Bitbucket (as you should), App Password is necessary (https://confluence.atlassian.com/bitbucket/app-passwords-828781300.html)"
+                            },
+                            "startDate": {
+                                "title": "Security Token",
+                                "default": "-10 days",
+                                "type": "string",
+                                "format": "password",
+                                "description": "Any date accepted by strtotime (http://php.net/manual/en/function.strtotime.php) function (Example: -10 days, 2018-03-18)"
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        {
+            "id": "keboolaSnowflakeTransformationBitbucketGit",
+            "componentId": "keboola.snowflake-transformation",
+            "name": "Bitbucket Git",
+            "required": true,
+            "schema": null
+        },
+        {
+            "id": "orchestrationGitExtraction&Transformation",
+            "componentId": "orchestrator",
+            "name": "Git Extraction & Transformation",
+            "required": true,
+            "schema": null
+        }
+    ]
+}
