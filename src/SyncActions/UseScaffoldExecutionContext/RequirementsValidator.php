@@ -20,12 +20,18 @@ final class RequirementsValidator
             );
         }
 
+        /*
+         * With the introduction of new transformation and Azure stacks, we have to create new scaffolds.
+         * There are now the same Scaffolds for Azure and AWS stacks because they have incompatible transformations.
+         * This means that we have to allow (hopefully temporarily) scaffolds with same outputs and disable
+         * the following check:
         if (count($executionContext->getManifestOutputs()) !== 0) {
             self::validateOutputs(
                 $usedScaffoldManifestsOutputs,
                 $executionContext
             );
         }
+        */
     }
 
     public static function validateRequirements(
