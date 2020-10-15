@@ -67,7 +67,7 @@
             "schema": null
         },
         {
-            "id": "orchestrationGitExtraction&Transformation",
+            "id": "orchestrationGitExtractionTransformation",
             "componentId": "orchestrator",
             "name": "Git Extraction & Transformation",
             "required": true,
