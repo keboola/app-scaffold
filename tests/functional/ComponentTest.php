@@ -298,6 +298,7 @@ class ComponentTest extends AbstractDatadirTestCase
 
     public function testCantCreateScaffoldWithTheSameOutputs(): void
     {
+        $this->markTestSkipped('We have to enable scaffolds with same outputs for different stacks (AWS/Azure).');
         $this->cleanUpWorkspace();
 
         $specification = new DatadirTestSpecification(
