@@ -1,0 +1,25 @@
+{
+    "payload": {
+        "name": "Bitbucket Extraction & Transformation",
+        "tasks": [
+            {
+                "component": "kds-team.ex-bitbucket",
+                "operationReferenceId": "kdsTeamExBitbucketBitbucketGit",
+                "action": "run",
+                "timeoutMinutes": null,
+                "active": true,
+                "continueOnFailure": false,
+                "phase": null
+            },
+            {
+                "component": "keboola.snowflake-transformation",
+                "operationReferenceId": "keboolaSnowflakeTransformationBitbucketGit",
+                "action": "run",
+                "timeoutMinutes": null,
+                "active": true,
+                "continueOnFailure": false,
+                "phase": null
+            }
+        ]
+    }
+}
