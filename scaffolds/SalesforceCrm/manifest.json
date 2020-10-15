@@ -73,9 +73,9 @@
             "schema": null
         },
         {
-            "id": "orchestrationCRMExtraction&Transformation",
+            "id": "orchestrationSalesforceExtractionTransformation",
             "componentId": "orchestrator",
-            "name": "CRM Extraction & Transformation",
+            "name": "Salesforce Extraction & Transformation",
             "required": true,
             "schema": null
         }
