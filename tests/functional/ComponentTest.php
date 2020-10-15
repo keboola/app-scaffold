@@ -424,7 +424,7 @@ class ComponentTest extends AbstractDatadirTestCase
 
         $specification = new DatadirTestSpecification(
             __DIR__,
-            1,
+            0,
             null,
             null,
             null
