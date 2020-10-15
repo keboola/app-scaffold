@@ -67,9 +67,9 @@
             "schema": null
         },
         {
-            "id": "orchestrationGitExtraction&Transformation",
+            "id": "orchestrationBitbucketExtractionTransformation",
             "componentId": "orchestrator",
-            "name": "Git Extraction & Transformation",
+            "name": "Bitbucket Extraction & Transformation",
             "required": true,
             "schema": null
         }
