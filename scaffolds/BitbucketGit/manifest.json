@@ -48,10 +48,10 @@
                                 "description": "If you're using Multi-factor authentication on Bitbucket (as you should), App Password is necessary (https://confluence.atlassian.com/bitbucket/app-passwords-828781300.html)"
                             },
                             "startDate": {
-                                "title": "Security Token",
+                                "title": "Start Date",
                                 "default": "-10 days",
                                 "type": "string",
-                                "format": "password",
+                                "minLength": 1,
                                 "description": "Any date accepted by strtotime (http://php.net/manual/en/function.strtotime.php) function (Example: -10 days, 2018-03-18)"
                             }
                         }
