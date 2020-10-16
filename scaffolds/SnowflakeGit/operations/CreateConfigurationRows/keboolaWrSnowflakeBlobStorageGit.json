@@ -1,0 +1,952 @@
+[
+    {
+        "configuration": {
+            "parameters": {
+                "tableId": "out.c-git.event",
+                "dbName": "EVENT",
+                "incremental": true,
+                "primaryKey": [
+                    "EVENT_ID"
+                ],
+                "items": [
+                    {
+                        "name": "event_id",
+                        "dbName": "EVENT_ID",
+                        "type": "varchar",
+                        "nullable": false,
+                        "default": "",
+                        "size": "255"
+                    },
+                    {
+                        "name": "repository_id",
+                        "dbName": "REPOSITORY_ID",
+                        "type": "varchar",
+                        "nullable": false,
+                        "default": "",
+                        "size": "255"
+                    },
+                    {
+                        "name": "user_id",
+                        "dbName": "USER_ID",
+                        "type": "varchar",
+                        "nullable": false,
+                        "default": "",
+                        "size": "255"
+                    },
+                    {
+                        "name": "event",
+                        "dbName": "EVENT",
+                        "type": "varchar",
+                        "nullable": false,
+                        "default": "",
+                        "size": "255"
+                    },
+                    {
+                        "name": "date",
+                        "dbName": "DATE",
+                        "type": "datetime",
+                        "nullable": true,
+                        "default": "",
+                        "size": ""
+                    },
+                    {
+                        "name": "url",
+                        "dbName": "URL",
+                        "type": "varchar",
+                        "nullable": false,
+                        "default": "",
+                        "size": "1000"
+                    }
+                ]
+            },
+            "storage": {
+                "input": {
+                    "tables": [
+                        {
+                            "source_search": {
+                                "key": "bdm.scaffold.table.tag",
+                                "value": "bdm.Git.Event"
+                            },
+                            "destination": "out.c-git.event.csv",
+                            "columns": [
+                                "event_id",
+                                "repository_id",
+                                "user_id",
+                                "event",
+                                "date",
+                                "url"
+                            ],
+                            "changed_since": "adaptive"
+                        }
+                    ]
+                }
+            }
+        },
+        "description": "",
+        "name": "event"
+    },
+    {
+        "configuration": {
+            "parameters": {
+                "tableId": "out.c-git.issue",
+                "dbName": "ISSUE",
+                "incremental": true,
+                "primaryKey": [
+                    "ISSUE_ID"
+                ],
+                "items": [
+                    {
+                        "name": "issue_id",
+                        "dbName": "ISSUE_ID",
+                        "type": "varchar",
+                        "nullable": false,
+                        "default": "",
+                        "size": "255"
+                    },
+                    {
+                        "name": "repository_id",
+                        "dbName": "REPOSITORY_ID",
+                        "type": "varchar",
+                        "nullable": false,
+                        "default": "",
+                        "size": "255"
+                    },
+                    {
+                        "name": "user_id",
+                        "dbName": "USER_ID",
+                        "type": "varchar",
+                        "nullable": false,
+                        "default": "",
+                        "size": "255"
+                    },
+                    {
+                        "name": "reporter",
+                        "dbName": "REPORTER",
+                        "type": "varchar",
+                        "nullable": false,
+                        "default": "",
+                        "size": "255"
+                    },
+                    {
+                        "name": "number",
+                        "dbName": "NUMBER",
+                        "type": "integer",
+                        "nullable": true,
+                        "default": "",
+                        "size": ""
+                    },
+                    {
+                        "name": "title",
+                        "dbName": "TITLE",
+                        "type": "varchar",
+                        "nullable": false,
+                        "default": "",
+                        "size": "255"
+                    },
+                    {
+                        "name": "description",
+                        "dbName": "DESCRIPTION",
+                        "type": "varchar",
+                        "nullable": false,
+                        "default": "",
+                        "size": "1024"
+                    },
+                    {
+                        "name": "state",
+                        "dbName": "STATE",
+                        "type": "varchar",
+                        "nullable": false,
+                        "default": "",
+                        "size": "255"
+                    },
+                    {
+                        "name": "priority",
+                        "dbName": "PRIORITY",
+                        "type": "varchar",
+                        "nullable": false,
+                        "default": "",
+                        "size": "255"
+                    },
+                    {
+                        "name": "kind",
+                        "dbName": "KIND",
+                        "type": "varchar",
+                        "nullable": false,
+                        "default": "",
+                        "size": "255"
+                    },
+                    {
+                        "name": "created_on",
+                        "dbName": "CREATED_ON",
+                        "type": "datetime",
+                        "nullable": true,
+                        "default": "",
+                        "size": ""
+                    },
+                    {
+                        "name": "updated_on",
+                        "dbName": "UPDATED_ON",
+                        "type": "datetime",
+                        "nullable": true,
+                        "default": "",
+                        "size": ""
+                    },
+                    {
+                        "name": "url",
+                        "dbName": "URL",
+                        "type": "varchar",
+                        "nullable": false,
+                        "default": "",
+                        "size": "1000"
+                    }
+                ]
+            },
+            "storage": {
+                "input": {
+                    "tables": [
+                        {
+                            "source_search": {
+                                "key": "bdm.scaffold.table.tag",
+                                "value": "bdm.Git.Issue"
+                            },
+                            "destination": "out.c-git.issue.csv",
+                            "columns": [
+                                "issue_id",
+                                "repository_id",
+                                "user_id",
+                                "reporter",
+                                "number",
+                                "title",
+                                "description",
+                                "state",
+                                "priority",
+                                "kind",
+                                "created_on",
+                                "updated_on",
+                                "url"
+                            ],
+                            "changed_since": "adaptive"
+                        }
+                    ]
+                }
+            }
+        },
+        "description": "",
+        "name": "issue"
+    },
+    {
+        "configuration": {
+            "parameters": {
+                "tableId": "out.c-git.issue_comment",
+                "dbName": "ISSUE_COMMENT",
+                "incremental": true,
+                "primaryKey": [
+                    "ISSUE_COMMENT_ID"
+                ],
+                "items": [
+                    {
+                        "name": "issue_comment_id",
+                        "dbName": "ISSUE_COMMENT_ID",
+                        "type": "varchar",
+                        "nullable": false,
+                        "default": "",
+                        "size": "255"
+                    },
+                    {
+                        "name": "issue_id",
+                        "dbName": "ISSUE_ID",
+                        "type": "varchar",
+                        "nullable": false,
+                        "default": "",
+                        "size": "255"
+                    },
+                    {
+                        "name": "user_id",
+                        "dbName": "USER_ID",
+                        "type": "varchar",
+                        "nullable": false,
+                        "default": "",
+                        "size": "255"
+                    },
+                    {
+                        "name": "user",
+                        "dbName": "USER",
+                        "type": "varchar",
+                        "nullable": false,
+                        "default": "",
+                        "size": "255"
+                    },
+                    {
+                        "name": "description",
+                        "dbName": "DESCRIPTION",
+                        "type": "varchar",
+                        "nullable": false,
+                        "default": "",
+                        "size": "1024"
+                    },
+                    {
+                        "name": "created_on",
+                        "dbName": "CREATED_ON",
+                        "type": "datetime",
+                        "nullable": true,
+                        "default": "",
+                        "size": ""
+                    },
+                    {
+                        "name": "updated_on",
+                        "dbName": "UPDATED_ON",
+                        "type": "datetime",
+                        "nullable": true,
+                        "default": "",
+                        "size": ""
+                    },
+                    {
+                        "name": "url",
+                        "dbName": "URL",
+                        "type": "varchar",
+                        "nullable": false,
+                        "default": "",
+                        "size": "1000"
+                    }
+                ]
+            },
+            "storage": {
+                "input": {
+                    "tables": [
+                        {
+                            "source_search": {
+                                "key": "bdm.scaffold.table.tag",
+                                "value": "bdm.Git.IssueComment"
+                            },
+                            "destination": "out.c-git.issue_comment.csv",
+                            "columns": [
+                                "issue_comment_id",
+                                "issue_id",
+                                "user_id",
+                                "user",
+                                "description",
+                                "created_on",
+                                "updated_on",
+                                "url"
+                            ],
+                            "changed_since": "adaptive"
+                        }
+                    ]
+                }
+            }
+        },
+        "description": "",
+        "name": "issue_comment"
+    },
+    {
+        "configuration": {
+            "parameters": {
+                "tableId": "out.c-git.organization",
+                "dbName": "ORGANIZATION",
+                "incremental": true,
+                "primaryKey": [
+                    "ORGANIZATION_ID"
+                ],
+                "items": [
+                    {
+                        "name": "organization_id",
+                        "dbName": "ORGANIZATION_ID",
+                        "type": "varchar",
+                        "nullable": false,
+                        "default": "",
+                        "size": "255"
+                    },
+                    {
+                        "name": "organization",
+                        "dbName": "ORGANIZATION",
+                        "type": "varchar",
+                        "nullable": false,
+                        "default": "",
+                        "size": "255"
+                    }
+                ]
+            },
+            "storage": {
+                "input": {
+                    "tables": [
+                        {
+                            "source_search": {
+                                "key": "bdm.scaffold.table.tag",
+                                "value": "bdm.Git.Organization"
+                            },
+                            "destination": "out.c-git.organization.csv",
+                            "columns": [
+                                "organization_id",
+                                "organization"
+                            ],
+                            "changed_since": "adaptive"
+                        }
+                    ]
+                }
+            }
+        },
+        "description": "",
+        "name": "organization"
+    },
+    {
+        "configuration": {
+            "parameters": {
+                "tableId": "out.c-git.organization_user",
+                "dbName": "ORGANIZATION_USER",
+                "incremental": false,
+                "primaryKey": [
+                    "ORGANIZATION_ID",
+                    "USER_ID"
+                ],
+                "items": [
+                    {
+                        "name": "organization_id",
+                        "dbName": "ORGANIZATION_ID",
+                        "type": "varchar",
+                        "nullable": false,
+                        "default": "",
+                        "size": "255"
+                    },
+                    {
+                        "name": "user_id",
+                        "dbName": "USER_ID",
+                        "type": "varchar",
+                        "nullable": false,
+                        "default": "",
+                        "size": "255"
+                    }
+                ]
+            },
+            "storage": {
+                "input": {
+                    "tables": [
+                        {
+                            "source_search": {
+                                "key": "bdm.scaffold.table.tag",
+                                "value": "bdm.Git.OrganizationUser"
+                            },
+                            "destination": "out.c-git.organization_user.csv",
+                            "columns": [
+                                "organization_id",
+                                "user_id"
+                            ]
+                        }
+                    ]
+                }
+            }
+        },
+        "description": "",
+        "name": "organization_user"
+    },
+    {
+        "configuration": {
+            "parameters": {
+                "tableId": "out.c-git.pull_request",
+                "dbName": "PULL_REQUEST",
+                "incremental": true,
+                "primaryKey": [
+                    "PULL_REQUEST_ID"
+                ],
+                "items": [
+                    {
+                        "name": "pull_request_id",
+                        "dbName": "PULL_REQUEST_ID",
+                        "type": "varchar",
+                        "nullable": false,
+                        "default": "",
+                        "size": "255"
+                    },
+                    {
+                        "name": "repository_id",
+                        "dbName": "REPOSITORY_ID",
+                        "type": "varchar",
+                        "nullable": false,
+                        "default": "",
+                        "size": "255"
+                    },
+                    {
+                        "name": "user_id",
+                        "dbName": "USER_ID",
+                        "type": "varchar",
+                        "nullable": false,
+                        "default": "",
+                        "size": "255"
+                    },
+                    {
+                        "name": "title",
+                        "dbName": "TITLE",
+                        "type": "varchar",
+                        "nullable": false,
+                        "default": "",
+                        "size": "255"
+                    },
+                    {
+                        "name": "description",
+                        "dbName": "DESCRIPTION",
+                        "type": "varchar",
+                        "nullable": false,
+                        "default": "",
+                        "size": "1024"
+                    },
+                    {
+                        "name": "state",
+                        "dbName": "STATE",
+                        "type": "varchar",
+                        "nullable": false,
+                        "default": "",
+                        "size": "255"
+                    },
+                    {
+                        "name": "created_on",
+                        "dbName": "CREATED_ON",
+                        "type": "datetime",
+                        "nullable": true,
+                        "default": "",
+                        "size": ""
+                    },
+                    {
+                        "name": "updated_on",
+                        "dbName": "UPDATED_ON",
+                        "type": "datetime",
+                        "nullable": true,
+                        "default": "",
+                        "size": ""
+                    },
+                    {
+                        "name": "url",
+                        "dbName": "URL",
+                        "type": "varchar",
+                        "nullable": false,
+                        "default": "",
+                        "size": "1000"
+                    }
+                ]
+            },
+            "storage": {
+                "input": {
+                    "tables": [
+                        {
+                            "source_search": {
+                                "key": "bdm.scaffold.table.tag",
+                                "value": "bdm.Git.PullRequest"
+                            },
+                            "destination": "out.c-git.pull_request.csv",
+                            "columns": [
+                                "pull_request_id",
+                                "repository_id",
+                                "user_id",
+                                "title",
+                                "description",
+                                "state",
+                                "created_on",
+                                "updated_on",
+                                "url"
+                            ],
+                            "changed_since": "adaptive"
+                        }
+                    ]
+                }
+            }
+        },
+        "description": "",
+        "name": "pull_request"
+    },
+    {
+        "configuration": {
+            "parameters": {
+                "tableId": "out.c-git.pull_request_activity",
+                "dbName": "PULL_REQUEST_ACTIVITY",
+                "incremental": true,
+                "primaryKey": [
+                    "PULL_REQUEST_ACTIVITY_ID"
+                ],
+                "items": [
+                    {
+                        "name": "pull_request_activity_id",
+                        "dbName": "PULL_REQUEST_ACTIVITY_ID",
+                        "type": "varchar",
+                        "nullable": false,
+                        "default": "",
+                        "size": "255"
+                    },
+                    {
+                        "name": "pull_request_id",
+                        "dbName": "PULL_REQUEST_ID",
+                        "type": "varchar",
+                        "nullable": false,
+                        "default": "",
+                        "size": "255"
+                    },
+                    {
+                        "name": "user_id",
+                        "dbName": "USER_ID",
+                        "type": "varchar",
+                        "nullable": false,
+                        "default": "",
+                        "size": "255"
+                    },
+                    {
+                        "name": "user",
+                        "dbName": "USER",
+                        "type": "varchar",
+                        "nullable": false,
+                        "default": "",
+                        "size": "255"
+                    },
+                    {
+                        "name": "date",
+                        "dbName": "DATE",
+                        "type": "datetime",
+                        "nullable": true,
+                        "default": "",
+                        "size": ""
+                    },
+                    {
+                        "name": "state",
+                        "dbName": "STATE",
+                        "type": "varchar",
+                        "nullable": false,
+                        "default": "",
+                        "size": "255"
+                    },
+                    {
+                        "name": "title",
+                        "dbName": "TITLE",
+                        "type": "varchar",
+                        "nullable": false,
+                        "default": "",
+                        "size": "255"
+                    },
+                    {
+                        "name": "description",
+                        "dbName": "DESCRIPTION",
+                        "type": "varchar",
+                        "nullable": false,
+                        "default": "",
+                        "size": "1024"
+                    },
+                    {
+                        "name": "reason",
+                        "dbName": "REASON",
+                        "type": "varchar",
+                        "nullable": false,
+                        "default": "",
+                        "size": "255"
+                    }
+                ]
+            },
+            "storage": {
+                "input": {
+                    "tables": [
+                        {
+                            "source_search": {
+                                "key": "bdm.scaffold.table.tag",
+                                "value": "bdm.Git.PullRequestActivity"
+                            },
+                            "destination": "out.c-git.pull_request_activity.csv",
+                            "columns": [
+                                "pull_request_activity_id",
+                                "pull_request_id",
+                                "user_id",
+                                "user",
+                                "date",
+                                "state",
+                                "title",
+                                "description",
+                                "reason"
+                            ],
+                            "changed_since": "adaptive"
+                        }
+                    ]
+                }
+            }
+        },
+        "description": "",
+        "name": "pull_request_activity"
+    },
+    {
+        "configuration": {
+            "parameters": {
+                "tableId": "out.c-git.repository",
+                "dbName": "REPOSITORY",
+                "incremental": true,
+                "primaryKey": [
+                    "REPOSITORY_ID"
+                ],
+                "items": [
+                    {
+                        "name": "repository_id",
+                        "dbName": "REPOSITORY_ID",
+                        "type": "varchar",
+                        "nullable": false,
+                        "default": "",
+                        "size": "255"
+                    },
+                    {
+                        "name": "repository",
+                        "dbName": "REPOSITORY",
+                        "type": "varchar",
+                        "nullable": false,
+                        "default": "",
+                        "size": "255"
+                    },
+                    {
+                        "name": "project",
+                        "dbName": "PROJECT",
+                        "type": "varchar",
+                        "nullable": false,
+                        "default": "",
+                        "size": "255"
+                    },
+                    {
+                        "name": "description",
+                        "dbName": "DESCRIPTION",
+                        "type": "varchar",
+                        "nullable": false,
+                        "default": "",
+                        "size": "1024"
+                    },
+                    {
+                        "name": "language",
+                        "dbName": "LANGUAGE",
+                        "type": "varchar",
+                        "nullable": false,
+                        "default": "",
+                        "size": "255"
+                    },
+                    {
+                        "name": "has_wiki",
+                        "dbName": "HAS_WIKI",
+                        "type": "varchar",
+                        "nullable": false,
+                        "default": "",
+                        "size": "255"
+                    },
+                    {
+                        "name": "has_issues",
+                        "dbName": "HAS_ISSUES",
+                        "type": "varchar",
+                        "nullable": false,
+                        "default": "",
+                        "size": "255"
+                    },
+                    {
+                        "name": "is_private",
+                        "dbName": "IS_PRIVATE",
+                        "type": "varchar",
+                        "nullable": false,
+                        "default": "",
+                        "size": "255"
+                    },
+                    {
+                        "name": "created_on",
+                        "dbName": "CREATED_ON",
+                        "type": "datetime",
+                        "nullable": true,
+                        "default": "",
+                        "size": ""
+                    },
+                    {
+                        "name": "url",
+                        "dbName": "URL",
+                        "type": "varchar",
+                        "nullable": false,
+                        "default": "",
+                        "size": "1000"
+                    }
+                ]
+            },
+            "storage": {
+                "input": {
+                    "tables": [
+                        {
+                            "source_search": {
+                                "key": "bdm.scaffold.table.tag",
+                                "value": "bdm.Git.Repository"
+                            },
+                            "destination": "out.c-git.repository.csv",
+                            "columns": [
+                                "repository_id",
+                                "repository",
+                                "project",
+                                "description",
+                                "language",
+                                "has_wiki",
+                                "has_issues",
+                                "is_private",
+                                "created_on",
+                                "url"
+                            ],
+                            "changed_since": "adaptive"
+                        }
+                    ]
+                }
+            }
+        },
+        "description": "",
+        "name": "repository"
+    },
+    {
+        "configuration": {
+            "parameters": {
+                "tableId": "out.c-git.repository_commit",
+                "dbName": "REPOSITORY_COMMIT",
+                "incremental": true,
+                "primaryKey": [
+                    "REPOSITORY_COMMIT_ID"
+                ],
+                "items": [
+                    {
+                        "name": "repository_commit_id",
+                        "dbName": "REPOSITORY_COMMIT_ID",
+                        "type": "varchar",
+                        "nullable": false,
+                        "default": "",
+                        "size": "255"
+                    },
+                    {
+                        "name": "repository_id",
+                        "dbName": "REPOSITORY_ID",
+                        "type": "varchar",
+                        "nullable": false,
+                        "default": "",
+                        "size": "255"
+                    },
+                    {
+                        "name": "user_id",
+                        "dbName": "USER_ID",
+                        "type": "varchar",
+                        "nullable": false,
+                        "default": "",
+                        "size": "255"
+                    },
+                    {
+                        "name": "date",
+                        "dbName": "DATE",
+                        "type": "datetime",
+                        "nullable": true,
+                        "default": "",
+                        "size": ""
+                    },
+                    {
+                        "name": "url",
+                        "dbName": "URL",
+                        "type": "varchar",
+                        "nullable": false,
+                        "default": "",
+                        "size": "1000"
+                    },
+                    {
+                        "name": "message",
+                        "dbName": "MESSAGE",
+                        "type": "varchar",
+                        "nullable": false,
+                        "default": "",
+                        "size": "1024"
+                    }
+                ]
+            },
+            "storage": {
+                "input": {
+                    "tables": [
+                        {
+                            "source_search": {
+                                "key": "bdm.scaffold.table.tag",
+                                "value": "bdm.Git.RepositoryCommit"
+                            },
+                            "destination": "out.c-git.repository_commit.csv",
+                            "columns": [
+                                "repository_commit_id",
+                                "repository_id",
+                                "user_id",
+                                "date",
+                                "url",
+                                "message"
+                            ],
+                            "changed_since": "adaptive"
+                        }
+                    ]
+                }
+            }
+        },
+        "description": "",
+        "name": "repository_commit"
+    },
+    {
+        "configuration": {
+            "parameters": {
+                "tableId": "out.c-git.user",
+                "dbName": "USER",
+                "incremental": true,
+                "primaryKey": [
+                    "USER_ID"
+                ],
+                "items": [
+                    {
+                        "name": "user_id",
+                        "dbName": "USER_ID",
+                        "type": "varchar",
+                        "nullable": false,
+                        "default": "",
+                        "size": "255"
+                    },
+                    {
+                        "name": "user",
+                        "dbName": "USER",
+                        "type": "varchar",
+                        "nullable": false,
+                        "default": "",
+                        "size": "255"
+                    },
+                    {
+                        "name": "created_on",
+                        "dbName": "CREATED_ON",
+                        "type": "datetime",
+                        "nullable": true,
+                        "default": "",
+                        "size": ""
+                    },
+                    {
+                        "name": "type",
+                        "dbName": "TYPE",
+                        "type": "varchar",
+                        "nullable": false,
+                        "default": "",
+                        "size": "255"
+                    },
+                    {
+                        "name": "is_active",
+                        "dbName": "IS_ACTIVE",
+                        "type": "varchar",
+                        "nullable": false,
+                        "default": "",
+                        "size": "255"
+                    }
+                ]
+            },
+            "storage": {
+                "input": {
+                    "tables": [
+                        {
+                            "source_search": {
+                                "key": "bdm.scaffold.table.tag",
+                                "value": "bdm.Git.User"
+                            },
+                            "destination": "out.c-git.user.csv",
+                            "columns": [
+                                "user_id",
+                                "user",
+                                "created_on",
+                                "type",
+                                "is_active"
+                            ],
+                            "changed_since": "adaptive"
+                        }
+                    ]
+                }
+            }
+        },
+        "description": "",
+        "name": "user"
+    }
+]

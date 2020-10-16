@@ -1,0 +1,34 @@
+{
+    "name": "Git Model to Snowflake",
+    "author": "Keboola",
+    "description": "Sets up Keboola provisioned Snowflake DB Writer for writing Git model data. Usage of one of the available Git Scaffolds is required for this Scaffold to work.",
+    "requirements": [
+        "bdm.Git.Organization",
+        "bdm.Git.User",
+        "bdm.Git.Repository",
+        "bdm.Git.PullRequest",
+        "bdm.Git.PullRequestActivity",
+        "bdm.Git.RepositoryCommit",
+        "bdm.Git.Issue",
+        "bdm.Git.IssueComment",
+        "bdm.Git.Event",
+        "bdm.Git.OrganizationUser"
+    ],
+    "outputs": [],
+    "inputs": [
+        {
+            "id": "keboolaWrSnowflakeBlobStorageGit",
+            "componentId": "keboola.wr-snowflake-blob-storage",
+            "name": "Git",
+            "required": true,
+            "schema": null
+        },
+        {
+            "id": "orchestrationGitLoad",
+            "componentId": "orchestrator",
+            "name": "Git Load",
+            "required": true,
+            "schema": null
+        }
+    ]
+}
