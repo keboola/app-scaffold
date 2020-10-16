@@ -1,0 +1,16 @@
+{
+    "payload": {
+        "name": "Git Load",
+        "tasks": [
+            {
+                "component": "keboola.wr-snowflake-blob-storage",
+                "operationReferenceId": "keboolaWrSnowflakeBlobStorageGit",
+                "action": "run",
+                "timeoutMinutes": null,
+                "active": true,
+                "continueOnFailure": false,
+                "phase": null
+            }
+        ]
+    }
+}
