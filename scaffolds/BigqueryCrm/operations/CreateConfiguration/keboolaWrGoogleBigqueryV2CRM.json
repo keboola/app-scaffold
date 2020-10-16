@@ -1,0 +1,12 @@
+{
+    "componentId": "keboola.wr-google-bigquery-v2",
+    "payload": {
+        "name": "CRM",
+        "configuration": {
+            "parameters": {
+                "service_account": {},
+                "dataset": {}
+            }
+        }
+    }
+}

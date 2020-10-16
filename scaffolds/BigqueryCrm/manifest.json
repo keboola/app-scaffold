@@ -1,0 +1,103 @@
+{
+    "name": "CRM Model to Your BigQuery",
+    "author": "Keboola",
+    "description": "Sets up Writer to client's BigQuery for writing CRM model data. Usage of one of the available CRM Scaffolds is required for this Scaffold to work.",
+    "requirements": [
+        "bdm.Crm.Company",
+        "bdm.Crm.Employee",
+        "bdm.Crm.Contact",
+        "bdm.Crm.Opportunity",
+        "bdm.Crm.OpportunitySnapshot",
+        "bdm.Crm.OpportunityContact",
+        "bdm.Crm.Activity"
+    ],
+    "outputs": [],
+    "inputs": [
+        {
+            "id": "keboolaWrGoogleBigqueryV2CRM",
+            "componentId": "keboola.wr-google-bigquery-v2",
+            "name": "CRM",
+            "required": true,
+            "schema": {
+                "type": "object",
+                "required": [
+                    "service_account",
+                    "dataset"
+                ],
+                "properties": {
+                    "service_account": {
+                        "title": "Google Service Account",
+                        "type": "object",
+                        "description": "Copy & paste parts of the JSON of the Google service account key file. For instructions on how to create the service account, see documentation (https://help.keboola.com/components/writers/database/bigquery/#create-service-account).",
+                        "required": [
+                            "#private_key",
+                            "project_id",
+                            "token_uri",
+                            "client_email",
+                            "client_id",
+                            "auth_uri",
+                            "auth_provider_x509_cert_url",
+                            "private_key_id",
+                            "client_x509_cert_url",
+                            "type"
+                        ],
+                        "properties": {
+                            "#private_key": {
+                                "title": "private_key",
+                                "type": "string"
+                            },
+                            "project_id": {
+                                "title": "project_id",
+                                "type": "string"
+                            },
+                            "token_uri": {
+                                "title": "token_uri",
+                                "type": "string"
+                            },
+                            "client_email": {
+                                "title": "client_email",
+                                "type": "string"
+                            },
+                            "client_id": {
+                                "title": "client_id",
+                                "type": "string"
+                            },
+                            "auth_uri": {
+                                "title": "auth_uri",
+                                "type": "string"
+                            },
+                            "auth_provider_x509_cert_url": {
+                                "title": "auth_provider_x509_cert_url",
+                                "type": "string"
+                            },
+                            "private_key_id": {
+                                "title": "private_key_id",
+                                "type": "string"
+                            },
+                            "client_x509_cert_url": {
+                                "title": "client_x509_cert_url",
+                                "type": "string"
+                            },
+                            "type": {
+                                "title": "type",
+                                "type": "string"
+                            }
+                        }
+                    },
+                    "dataset": {
+                        "title": "Dataset",
+                        "type": "string",
+                        "description": "Google BigQuery dataset name."
+                    }
+                }
+            }
+        },
+        {
+            "id": "orchestrationCRMLoad",
+            "componentId": "orchestrator",
+            "name": "CRM Load",
+            "required": true,
+            "schema": null
+        }
+    ]
+}

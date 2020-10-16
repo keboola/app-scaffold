@@ -1,0 +1,16 @@
+{
+    "payload": {
+        "name": "CRM Load",
+        "tasks": [
+            {
+                "component": "keboola.wr-google-bigquery-v2",
+                "operationReferenceId": "keboolaWrGoogleBigqueryV2CRM",
+                "action": "run",
+                "timeoutMinutes": null,
+                "active": true,
+                "continueOnFailure": false,
+                "phase": null
+            }
+        ]
+    }
+}

@@ -1,0 +1,605 @@
+[
+    {
+        "configuration": {
+            "storage": {
+                "input": {
+                    "tables": [
+                        {
+                            "source_search": {
+                                "key": "bdm.scaffold.table.tag",
+                                "value": "bdm.Crm.Activity"
+                            },
+                            "destination": "out.c-crm.activity.csv",
+                            "changed_since": "",
+                            "columns": [
+                                "activity_id",
+                                "employee_id",
+                                "contact_id",
+                                "opportunity_id",
+                                "activity",
+                                "activity_date",
+                                "activity_duration_m"
+                            ]
+                        }
+                    ]
+                }
+            },
+            "parameters": {
+                "tables": [
+                    {
+                        "dbName": "ACTIVITY",
+                        "tableId": "out.c-crm.activity",
+                        "incremental": false,
+                        "items": [
+                            {
+                                "name": "activity_id",
+                                "dbName": "ACTIVITY_ID",
+                                "type": "STRING"
+                            },
+                            {
+                                "name": "employee_id",
+                                "dbName": "EMPLOYEE_ID",
+                                "type": "STRING"
+                            },
+                            {
+                                "name": "contact_id",
+                                "dbName": "CONTACT_ID",
+                                "type": "STRING"
+                            },
+                            {
+                                "name": "opportunity_id",
+                                "dbName": "OPPORTUNITY_ID",
+                                "type": "STRING"
+                            },
+                            {
+                                "name": "activity",
+                                "dbName": "ACTIVITY",
+                                "type": "STRING"
+                            },
+                            {
+                                "name": "activity_date",
+                                "dbName": "ACTIVITY_DATE",
+                                "type": "TIMESTAMP"
+                            },
+                            {
+                                "name": "activity_duration_m",
+                                "dbName": "ACTIVITY_DURATION_M",
+                                "type": "INTEGER"
+                            }
+                        ]
+                    }
+                ]
+            }
+        },
+        "description": "",
+        "name": "activity"
+    },
+    {
+        "configuration": {
+            "storage": {
+                "input": {
+                    "tables": [
+                        {
+                            "source_search": {
+                                "key": "bdm.scaffold.table.tag",
+                                "value": "bdm.Crm.Company"
+                            },
+                            "destination": "out.c-crm.company.csv",
+                            "changed_since": "",
+                            "columns": [
+                                "company_id",
+                                "company",
+                                "website",
+                                "date_created"
+                            ]
+                        }
+                    ]
+                }
+            },
+            "parameters": {
+                "tables": [
+                    {
+                        "dbName": "COMPANY",
+                        "tableId": "out.c-crm.company",
+                        "incremental": false,
+                        "items": [
+                            {
+                                "name": "company_id",
+                                "dbName": "COMPANY_ID",
+                                "type": "STRING"
+                            },
+                            {
+                                "name": "company",
+                                "dbName": "COMPANY",
+                                "type": "STRING"
+                            },
+                            {
+                                "name": "website",
+                                "dbName": "WEBSITE",
+                                "type": "STRING"
+                            },
+                            {
+                                "name": "date_created",
+                                "dbName": "DATE_CREATED",
+                                "type": "STRING"
+                            }
+                        ]
+                    }
+                ]
+            }
+        },
+        "description": "",
+        "name": "company"
+    },
+    {
+        "configuration": {
+            "storage": {
+                "input": {
+                    "tables": [
+                        {
+                            "source_search": {
+                                "key": "bdm.scaffold.table.tag",
+                                "value": "bdm.Crm.Contact"
+                            },
+                            "destination": "out.c-crm.contact.csv",
+                            "changed_since": "",
+                            "columns": [
+                                "contact_id",
+                                "contact",
+                                "email",
+                                "contact_type",
+                                "date_created",
+                                "lead_source",
+                                "lead_converted"
+                            ]
+                        }
+                    ]
+                }
+            },
+            "parameters": {
+                "tables": [
+                    {
+                        "dbName": "CONTACT",
+                        "tableId": "out.c-crm.contact",
+                        "incremental": false,
+                        "items": [
+                            {
+                                "name": "contact_id",
+                                "dbName": "CONTACT_ID",
+                                "type": "STRING"
+                            },
+                            {
+                                "name": "contact",
+                                "dbName": "CONTACT",
+                                "type": "STRING"
+                            },
+                            {
+                                "name": "email",
+                                "dbName": "EMAIL",
+                                "type": "STRING"
+                            },
+                            {
+                                "name": "contact_type",
+                                "dbName": "CONTACT_TYPE",
+                                "type": "STRING"
+                            },
+                            {
+                                "name": "date_created",
+                                "dbName": "DATE_CREATED",
+                                "type": "STRING"
+                            },
+                            {
+                                "name": "lead_source",
+                                "dbName": "LEAD_SOURCE",
+                                "type": "STRING"
+                            },
+                            {
+                                "name": "lead_converted",
+                                "dbName": "LEAD_CONVERTED",
+                                "type": "STRING"
+                            }
+                        ]
+                    }
+                ]
+            }
+        },
+        "description": "",
+        "name": "contact"
+    },
+    {
+        "configuration": {
+            "storage": {
+                "input": {
+                    "tables": [
+                        {
+                            "source_search": {
+                                "key": "bdm.scaffold.table.tag",
+                                "value": "bdm.Crm.Employee"
+                            },
+                            "destination": "out.c-crm.employee.csv",
+                            "changed_since": "",
+                            "columns": [
+                                "employee_id",
+                                "employee",
+                                "email",
+                                "position"
+                            ]
+                        }
+                    ]
+                }
+            },
+            "parameters": {
+                "tables": [
+                    {
+                        "dbName": "EMPLOYEE",
+                        "tableId": "out.c-crm.employee",
+                        "incremental": false,
+                        "items": [
+                            {
+                                "name": "employee_id",
+                                "dbName": "EMPLOYEE_ID",
+                                "type": "STRING"
+                            },
+                            {
+                                "name": "employee",
+                                "dbName": "EMPLOYEE",
+                                "type": "STRING"
+                            },
+                            {
+                                "name": "email",
+                                "dbName": "EMAIL",
+                                "type": "STRING"
+                            },
+                            {
+                                "name": "position",
+                                "dbName": "POSITION",
+                                "type": "STRING"
+                            }
+                        ]
+                    }
+                ]
+            }
+        },
+        "description": "",
+        "name": "employee"
+    },
+    {
+        "configuration": {
+            "storage": {
+                "input": {
+                    "tables": [
+                        {
+                            "source_search": {
+                                "key": "bdm.scaffold.table.tag",
+                                "value": "bdm.Crm.Opportunity"
+                            },
+                            "destination": "out.c-crm.opportunity.csv",
+                            "changed_since": "",
+                            "columns": [
+                                "opportunity_id",
+                                "company_id",
+                                "employee_id",
+                                "opportunity",
+                                "date_created",
+                                "date_closed",
+                                "is_closed",
+                                "is_won",
+                                "pipeline",
+                                "stage",
+                                "stage_order",
+                                "opportunity_type",
+                                "opportunity_value",
+                                "currency",
+                                "lead_source",
+                                "probability"
+                            ]
+                        }
+                    ]
+                }
+            },
+            "parameters": {
+                "tables": [
+                    {
+                        "dbName": "OPPORTUNITY",
+                        "tableId": "out.c-crm.opportunity",
+                        "incremental": false,
+                        "items": [
+                            {
+                                "name": "opportunity_id",
+                                "dbName": "OPPORTUNITY_ID",
+                                "type": "STRING"
+                            },
+                            {
+                                "name": "company_id",
+                                "dbName": "COMPANY_ID",
+                                "type": "STRING"
+                            },
+                            {
+                                "name": "employee_id",
+                                "dbName": "EMPLOYEE_ID",
+                                "type": "STRING"
+                            },
+                            {
+                                "name": "opportunity",
+                                "dbName": "OPPORTUNITY",
+                                "type": "STRING"
+                            },
+                            {
+                                "name": "date_created",
+                                "dbName": "DATE_CREATED",
+                                "type": "STRING"
+                            },
+                            {
+                                "name": "date_closed",
+                                "dbName": "DATE_CLOSED",
+                                "type": "STRING"
+                            },
+                            {
+                                "name": "is_closed",
+                                "dbName": "IS_CLOSED",
+                                "type": "STRING"
+                            },
+                            {
+                                "name": "is_won",
+                                "dbName": "IS_WON",
+                                "type": "STRING"
+                            },
+                            {
+                                "name": "pipeline",
+                                "dbName": "PIPELINE",
+                                "type": "STRING"
+                            },
+                            {
+                                "name": "stage",
+                                "dbName": "STAGE",
+                                "type": "STRING"
+                            },
+                            {
+                                "name": "stage_order",
+                                "dbName": "STAGE_ORDER",
+                                "type": "INTEGER"
+                            },
+                            {
+                                "name": "opportunity_type",
+                                "dbName": "OPPORTUNITY_TYPE",
+                                "type": "STRING"
+                            },
+                            {
+                                "name": "opportunity_value",
+                                "dbName": "OPPORTUNITY_VALUE",
+                                "type": "FLOAT"
+                            },
+                            {
+                                "name": "currency",
+                                "dbName": "CURRENCY",
+                                "type": "STRING"
+                            },
+                            {
+                                "name": "lead_source",
+                                "dbName": "LEAD_SOURCE",
+                                "type": "STRING"
+                            },
+                            {
+                                "name": "probability",
+                                "dbName": "PROBABILITY",
+                                "type": "FLOAT"
+                            }
+                        ]
+                    }
+                ]
+            }
+        },
+        "description": "",
+        "name": "opportunity"
+    },
+    {
+        "configuration": {
+            "storage": {
+                "input": {
+                    "tables": [
+                        {
+                            "source_search": {
+                                "key": "bdm.scaffold.table.tag",
+                                "value": "bdm.Crm.OpportunityContact"
+                            },
+                            "destination": "out.c-crm.opportunity_contact.csv",
+                            "changed_since": "",
+                            "columns": [
+                                "opportunity_contact_id",
+                                "opportunity_id",
+                                "contact_id",
+                                "is_primary_contact",
+                                "role"
+                            ]
+                        }
+                    ]
+                }
+            },
+            "parameters": {
+                "tables": [
+                    {
+                        "dbName": "OPPORTUNITY_CONTACT",
+                        "tableId": "out.c-crm.opportunity_contact",
+                        "incremental": false,
+                        "items": [
+                            {
+                                "name": "opportunity_contact_id",
+                                "dbName": "OPPORTUNITY_CONTACT_ID",
+                                "type": "STRING"
+                            },
+                            {
+                                "name": "opportunity_id",
+                                "dbName": "OPPORTUNITY_ID",
+                                "type": "STRING"
+                            },
+                            {
+                                "name": "contact_id",
+                                "dbName": "CONTACT_ID",
+                                "type": "STRING"
+                            },
+                            {
+                                "name": "is_primary_contact",
+                                "dbName": "IS_PRIMARY_CONTACT",
+                                "type": "STRING"
+                            },
+                            {
+                                "name": "role",
+                                "dbName": "ROLE",
+                                "type": "STRING"
+                            }
+                        ]
+                    }
+                ]
+            }
+        },
+        "description": "",
+        "name": "opportunity_contact"
+    },
+    {
+        "configuration": {
+            "storage": {
+                "input": {
+                    "tables": [
+                        {
+                            "source_search": {
+                                "key": "bdm.scaffold.table.tag",
+                                "value": "bdm.Crm.OpportunitySnapshot"
+                            },
+                            "destination": "out.c-crm.opportunity_snapshot.csv",
+                            "changed_since": "",
+                            "columns": [
+                                "opportunity_id",
+                                "snapshot_date",
+                                "employee_id",
+                                "company_id",
+                                "pipeline",
+                                "previous_pipeline",
+                                "pipeline_change",
+                                "stage",
+                                "stage_order",
+                                "previous_stage",
+                                "previous_stage_order",
+                                "stage_change",
+                                "opportunity_value",
+                                "previous_opportunity_value",
+                                "opportunity_value_change",
+                                "probability",
+                                "previous_probability",
+                                "probability_change",
+                                "max_date_in_month"
+                            ]
+                        }
+                    ]
+                }
+            },
+            "parameters": {
+                "tables": [
+                    {
+                        "dbName": "OPPORTUNITY_SNAPSHOT",
+                        "tableId": "out.c-crm.opportunity_snapshot",
+                        "incremental": false,
+                        "items": [
+                            {
+                                "name": "opportunity_id",
+                                "dbName": "OPPORTUNITY_ID",
+                                "type": "STRING"
+                            },
+                            {
+                                "name": "snapshot_date",
+                                "dbName": "SNAPSHOT_DATE",
+                                "type": "STRING"
+                            },
+                            {
+                                "name": "employee_id",
+                                "dbName": "EMPLOYEE_ID",
+                                "type": "STRING"
+                            },
+                            {
+                                "name": "company_id",
+                                "dbName": "COMPANY_ID",
+                                "type": "STRING"
+                            },
+                            {
+                                "name": "pipeline",
+                                "dbName": "PIPELINE",
+                                "type": "STRING"
+                            },
+                            {
+                                "name": "previous_pipeline",
+                                "dbName": "PREVIOUS_PIPELINE",
+                                "type": "STRING"
+                            },
+                            {
+                                "name": "pipeline_change",
+                                "dbName": "PIPELINE_CHANGE",
+                                "type": "STRING"
+                            },
+                            {
+                                "name": "stage",
+                                "dbName": "STAGE",
+                                "type": "STRING"
+                            },
+                            {
+                                "name": "stage_order",
+                                "dbName": "STAGE_ORDER",
+                                "type": "INTEGER"
+                            },
+                            {
+                                "name": "previous_stage",
+                                "dbName": "PREVIOUS_STAGE",
+                                "type": "STRING"
+                            },
+                            {
+                                "name": "previous_stage_order",
+                                "dbName": "PREVIOUS_STAGE_ORDER",
+                                "type": "INTEGER"
+                            },
+                            {
+                                "name": "stage_change",
+                                "dbName": "STAGE_CHANGE",
+                                "type": "STRING"
+                            },
+                            {
+                                "name": "opportunity_value",
+                                "dbName": "OPPORTUNITY_VALUE",
+                                "type": "FLOAT"
+                            },
+                            {
+                                "name": "previous_opportunity_value",
+                                "dbName": "PREVIOUS_OPPORTUNITY_VALUE",
+                                "type": "FLOAT"
+                            },
+                            {
+                                "name": "opportunity_value_change",
+                                "dbName": "OPPORTUNITY_VALUE_CHANGE",
+                                "type": "STRING"
+                            },
+                            {
+                                "name": "probability",
+                                "dbName": "PROBABILITY",
+                                "type": "FLOAT"
+                            },
+                            {
+                                "name": "previous_probability",
+                                "dbName": "PREVIOUS_PROBABILITY",
+                                "type": "FLOAT"
+                            },
+                            {
+                                "name": "probability_change",
+                                "dbName": "PROBABILITY_CHANGE",
+                                "type": "STRING"
+                            },
+                            {
+                                "name": "max_date_in_month",
+                                "dbName": "MAX_DATE_IN_MONTH",
+                                "type": "STRING"
+                            }
+                        ]
+                    }
+                ]
+            }
+        },
+        "description": "",
+        "name": "opportunity_snapshot"
+    }
+]
