@@ -1,0 +1,242 @@
+{
+    "componentId": "keboola.snowflake-transformation",
+    "payload": {
+        "name": "Hubspot CRM 01 Input Tables Creation",
+        "configuration": {
+            "parameters": {
+                "blocks": [
+                    {
+                        "name": "Phase 1",
+                        "codes": [
+                            {
+                                "name": "Input Tables Creation",
+                                "script": [
+                                    "--account table\nCREATE TABLE \"companies_tmp\"\nAS\n    SELECT\n        OBJECT_CONSTRUCT(*) AS \"obj\"\n    FROM \"companies\";",
+                                    "CREATE TABLE \"out_companies\"\nAS\n    SELECT\n        trim(\"obj\":\"companyId\", '\"')  AS \"companyId\",\n        trim(\"obj\":\"name\", '\"')       AS \"name\",\n        trim(\"obj\":\"website\", '\"')    AS \"website\",\n        trim(\"obj\":\"createdate\", '\"') AS \"createdate\",\n        trim(\"obj\":\"isDeleted\", '\"')  AS \"isDeleted\"\n    FROM \"companies_tmp\";",
+                                    "--contacts table\nCREATE TABLE \"contacts_tmp\"\nAS\n    SELECT\n        OBJECT_CONSTRUCT(*) AS \"obj\"\n    FROM \"contacts\";",
+                                    "CREATE TABLE \"out_contacts\"\nAS\n    SELECT\n        trim(\"obj\":\"canonical_vid\", '\"')       AS \"canonical_vid\",\n        trim(\"obj\":\"firstname\", '\"')           AS \"firstname\",\n        trim(\"obj\":\"lastname\", '\"')            AS \"lastname\",\n        trim(\"obj\":\"email\", '\"')               AS \"email\",\n        trim(\"obj\":\"createdate\", '\"')          AS \"createdate\",\n        trim(\"obj\":\"email_source\", '\"')        AS \"email_source\",\n        trim(\"obj\":\"associatedcompanyid\", '\"') AS \"associatedcompanyid\",\n        trim(\"obj\":\"lifecyclestage\", '\"')      AS \"lifecyclestage\"\n    FROM \"contacts_tmp\";",
+                                    "--owners table\nCREATE TABLE \"owners_tmp\"\nAS\n    SELECT\n        OBJECT_CONSTRUCT(*) AS \"obj\"\n    FROM \"owners\";",
+                                    "CREATE TABLE \"out_owners\"\nAS\n    SELECT\n        trim(\"obj\":\"ownerId\", '\"')   AS \"ownerId\",\n        trim(\"obj\":\"firstName\", '\"') AS \"firstName\",\n        trim(\"obj\":\"lastName\", '\"')  AS \"lastName\",\n        trim(\"obj\":\"email\", '\"')     AS \"email\"\n    FROM \"owners_tmp\";",
+                                    "--deals table\nCREATE TABLE \"deals_tmp\"\nAS\n    SELECT\n        OBJECT_CONSTRUCT(*) AS \"obj\"\n    FROM \"deals\";",
+                                    "CREATE TABLE \"out_deals\"\nAS\n    SELECT\n        trim(\"obj\":\"dealId\", '\"')               AS \"dealId\",\n        trim(\"obj\":\"isDeleted\", '\"')            AS \"isDeleted\",\n        trim(\"obj\":\"dealname\", '\"')             AS \"dealname\",\n        trim(\"obj\":\"createdate\", '\"')           AS \"createdate\",\n        trim(\"obj\":\"closedate\", '\"')            AS \"closedate\",\n        trim(\"obj\":\"dealtype\", '\"')             AS \"dealtype\",\n        trim(\"obj\":\"amount\", '\"')               AS \"amount\",\n        trim(\"obj\":\"pipeline\", '\"')             AS \"pipeline\",\n        trim(\"obj\":\"dealstage\", '\"')            AS \"dealstage\",\n        trim(\"obj\":\"hubspot_owner_id\", '\"')     AS \"hubspot_owner_id\",\n        trim(\"obj\":\"hs_analytics_source\", '\"')  AS \"hs_analytics_source\"\n    FROM \"deals_tmp\";",
+                                    "--deals companies table\nCREATE TABLE \"deals_companies_tmp\"\nAS\n    SELECT\n        OBJECT_CONSTRUCT(*) AS \"obj\"\n    FROM \"deals_assoc_companies_list\";",
+                                    "CREATE TABLE \"out_deals_companies\"\nAS\n    SELECT\n        trim(\"obj\":\"dealId\", '\"')               AS \"dealId\",\n        trim(\"obj\":\"associated_companyId\", '\"') AS \"associated_companyId\"\n    FROM \"deals_companies_tmp\";",
+                                    "--pipelines table\nCREATE TABLE \"pipelines_tmp\"\nAS\n    SELECT\n        OBJECT_CONSTRUCT(*) AS \"obj\"\n    FROM \"pipelines\";",
+                                    "CREATE TABLE \"out_pipelines\"\nAS\n    SELECT\n        trim(\"obj\":\"pipelineId\", '\"') AS \"pipelineId\",\n        trim(\"obj\":\"label\", '\"')      AS \"label\"\n    FROM \"pipelines_tmp\";",
+                                    "--stages table\nCREATE TABLE \"stages_tmp\"\nAS\n    SELECT\n        OBJECT_CONSTRUCT(*) AS \"obj\"\n    FROM \"pipeline_stages\";",
+                                    "CREATE TABLE \"out_stages\"\nAS\n    SELECT\n        trim(\"obj\":\"stageId\", '\"') \t\tAS \"stageId\",\n        trim(\"obj\":\"label\", '\"')   \t\tAS \"label\",\n        trim(\"obj\":\"displayOrder\", '\"') AS \"displayOrder\",\n        trim(\"obj\":\"probability\", '\"')\tAS \"probability\",\n        trim(\"obj\":\"closedWon\", '\"')\tAS \"closedWon\"\n    FROM \"stages_tmp\";",
+                                    "--deals_contacts_list table\nCREATE TABLE \"deals_contacts_list_tmp\"\nAS\n    SELECT\n        OBJECT_CONSTRUCT(*) AS \"obj\"\n    FROM \"deals_contacts_list\";",
+                                    "CREATE TABLE \"out_deals_contacts_list\"\nAS\n    SELECT\n        trim(\"obj\":\"contact_vid\", '\"') AS \"contact_vid\",\n        trim(\"obj\":\"dealId\", '\"')      AS \"dealId\"\n    FROM \"deals_contacts_list_tmp\";",
+                                    "--activities table\nCREATE TABLE \"activities_tmp\"\nAS\n    SELECT\n        OBJECT_CONSTRUCT(*) AS \"obj\"\n    FROM \"activities\";",
+                                    "CREATE TABLE \"out_activities\"\nAS\n    SELECT\n        trim(\"obj\":\"engagement_id\", '\"')                 AS \"engagement_id\",\n        trim(\"obj\":\"metadata_subject\", '\"')              AS \"metadata_subject\",\n        trim(\"obj\":\"engagement_createdAt\", '\"')          AS \"engagement_createdAt\",\n        trim(\"obj\":\"metadata_durationMilliseconds\", '\"') AS \"metadata_durationMilliseconds\",\n        trim(\"obj\":\"associations_contactIds\", '\"')       AS \"associations_contactIds\",\n        trim(\"obj\":\"associations_dealIds\", '\"')          AS \"associations_dealIds\",\n        trim(\"obj\":\"associations_ownerIds\", '\"')         AS \"associations_ownerIds\"\n    FROM \"activities_tmp\";"
+                                ]
+                            }
+                        ]
+                    }
+                ]
+            },
+            "storage": {
+                "input": {
+                    "tables": [
+                        {
+                            "destination": "contacts",
+                            "where_column": "",
+                            "where_values": [],
+                            "where_operator": "eq",
+                            "columns": [],
+                            "source_search": {
+                                "key": "bdm.scaffold.table.tag",
+                                "value": "HubspotCrm.internal.inKdsTeamExHubspotCrmContacts"
+                            }
+                        },
+                        {
+                            "destination": "pipelines",
+                            "where_column": "",
+                            "where_values": [],
+                            "where_operator": "eq",
+                            "columns": [],
+                            "source_search": {
+                                "key": "bdm.scaffold.table.tag",
+                                "value": "HubspotCrm.internal.inKdsTeamExHubspotCrmPipelines"
+                            }
+                        },
+                        {
+                            "destination": "pipeline_stages",
+                            "where_column": "",
+                            "where_values": [],
+                            "where_operator": "eq",
+                            "columns": [],
+                            "source_search": {
+                                "key": "bdm.scaffold.table.tag",
+                                "value": "HubspotCrm.internal.inKdsTeamExHubspotCrmPipelineStages"
+                            }
+                        },
+                        {
+                            "destination": "deals_contacts_list",
+                            "where_column": "",
+                            "where_values": [],
+                            "where_operator": "eq",
+                            "columns": [],
+                            "source_search": {
+                                "key": "bdm.scaffold.table.tag",
+                                "value": "HubspotCrm.internal.inKdsTeamExHubspotCrmDealsContactsList"
+                            }
+                        },
+                        {
+                            "destination": "companies",
+                            "where_column": "",
+                            "where_values": [],
+                            "where_operator": "eq",
+                            "columns": [],
+                            "source_search": {
+                                "key": "bdm.scaffold.table.tag",
+                                "value": "HubspotCrm.internal.inKdsTeamExHubspotCrmCompanies"
+                            }
+                        },
+                        {
+                            "destination": "owners",
+                            "where_column": "",
+                            "where_values": [],
+                            "where_operator": "eq",
+                            "columns": [],
+                            "source_search": {
+                                "key": "bdm.scaffold.table.tag",
+                                "value": "HubspotCrm.internal.inKdsTeamExHubspotCrmOwners"
+                            }
+                        },
+                        {
+                            "destination": "deals",
+                            "where_column": "",
+                            "where_values": [],
+                            "where_operator": "eq",
+                            "columns": [],
+                            "source_search": {
+                                "key": "bdm.scaffold.table.tag",
+                                "value": "HubspotCrm.internal.inKdsTeamExHubspotCrmDeals"
+                            }
+                        },
+                        {
+                            "destination": "activities",
+                            "where_column": "",
+                            "where_values": [],
+                            "where_operator": "eq",
+                            "columns": [],
+                            "source_search": {
+                                "key": "bdm.scaffold.table.tag",
+                                "value": "HubspotCrm.internal.inKdsTeamExHubspotCrmActivities"
+                            }
+                        },
+                        {
+                            "destination": "deals_assoc_companies_list",
+                            "where_column": "",
+                            "where_values": [],
+                            "where_operator": "eq",
+                            "columns": [],
+                            "source_search": {
+                                "key": "bdm.scaffold.table.tag",
+                                "value": "HubspotCrm.internal.inKdsTeamExHubspotCrmDealsAssocCompaniesList"
+                            }
+                        }
+                    ]
+                },
+                "output": {
+                    "tables": [
+                        {
+                            "primary_key": [
+                                "companyId"
+                            ],
+                            "destination": "out.c-HubspotCrm.hubspotCompanies",
+                            "source": "out_companies",
+                            "incremental": true,
+                            "delete_where_column": "",
+                            "delete_where_operator": "eq",
+                            "delete_where_values": []
+                        },
+                        {
+                            "destination": "out.c-HubspotCrm.hubspotContacts",
+                            "source": "out_contacts",
+                            "primary_key": [
+                                "canonical_vid"
+                            ],
+                            "incremental": true,
+                            "delete_where_column": "",
+                            "delete_where_operator": "eq",
+                            "delete_where_values": []
+                        },
+                        {
+                            "destination": "out.c-HubspotCrm.hubspotOwners",
+                            "source": "out_owners",
+                            "primary_key": [
+                                "ownerId"
+                            ],
+                            "incremental": true,
+                            "delete_where_column": "",
+                            "delete_where_operator": "eq",
+                            "delete_where_values": []
+                        },
+                        {
+                            "destination": "out.c-HubspotCrm.hubspotDeals",
+                            "source": "out_deals",
+                            "primary_key": [
+                                "dealId"
+                            ],
+                            "incremental": true,
+                            "delete_where_column": "",
+                            "delete_where_operator": "eq",
+                            "delete_where_values": []
+                        },
+                        {
+                            "destination": "out.c-HubspotCrm.hubspotDealsCompanies",
+                            "source": "out_deals_companies",
+                            "primary_key": [
+                                "dealId",
+                                "associated_companyId"
+                            ]
+                        },
+                        {
+                            "destination": "out.c-HubspotCrm.hubspotPipelines",
+                            "source": "out_pipelines",
+                            "primary_key": [
+                                "pipelineId"
+                            ],
+                            "incremental": true,
+                            "delete_where_column": "",
+                            "delete_where_operator": "eq",
+                            "delete_where_values": []
+                        },
+                        {
+                            "destination": "out.c-HubspotCrm.hubspotStages",
+                            "source": "out_stages",
+                            "primary_key": [
+                                "stageId"
+                            ],
+                            "incremental": true,
+                            "delete_where_column": "",
+                            "delete_where_operator": "eq",
+                            "delete_where_values": []
+                        },
+                        {
+                            "destination": "out.c-HubspotCrm.hubspotDealsContactsList",
+                            "source": "out_deals_contacts_list",
+                            "primary_key": [
+                                "dealId",
+                                "contact_vid"
+                            ]
+                        },
+                        {
+                            "destination": "out.c-HubspotCrm.hubspotActivities",
+                            "source": "out_activities",
+                            "primary_key": [
+                                "engagement_id"
+                            ],
+                            "incremental": true,
+                            "delete_where_column": "",
+                            "delete_where_operator": "eq",
+                            "delete_where_values": []
+                        }
+                    ]
+                }
+            }
+        }
+    }
+}

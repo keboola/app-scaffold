@@ -1,0 +1,329 @@
+{
+    "componentId": "keboola.snowflake-transformation",
+    "payload": {
+        "name": "Hubspot CRM 02 Main",
+        "configuration": {
+            "parameters": {
+                "blocks": [
+                    {
+                        "name": "Phase 1",
+                        "codes": [
+                            {
+                                "name": "Company",
+                                "script": [
+                                    "--create output table with companies\n--cast timestamp to date\nCREATE TABLE \"out_company\"\nAS\nSELECT DISTINCT \"companyId\"                          AS \"company_id\",\n                \"name\"                               AS \"company\",\n                \"website\"                            AS \"website\",\n                to_date(\"createdate\") :: VARCHAR(10) AS \"date_created\"\nFROM \"companies\"\nWHERE lower(\"isDeleted\") = 'false';",
+                                    "--fake row to keep referential integrity if child tables are missing existing company ids\nINSERT INTO \"out_company\"\n    (\"company_id\", \"company\", \"website\", \"date_created\")\nVALUES ('0', 'Unknown', '', '');"
+                                ]
+                            },
+                            {
+                                "name": "Contact",
+                                "script": [
+                                    "--create output table with leads and contacts\n--concatenate first and last name to get full name\n--leads are identified as contacts\/converted if they have and associatedcompanyid filled\nCREATE TABLE \"out_contact\"\nAS\nSELECT \"canonical_vid\" || '_contact'                                    AS \"contact_id\",\n       \"firstname\" || ' ' || \"lastname\"                                 AS \"contact\",\n       \"email\"                                                          AS \"email\",\n       'Contact'                                                        AS \"contact_type\",\n       iff(\"createdate\" = '', '', to_date(\"createdate\") :: VARCHAR(10)) AS \"date_created\",\n       \"email_source\"                                                   AS \"lead_source\",\n       'Is Contact'                                                     AS \"lead_converted\"\nFROM \"contacts\"\nWHERE \"associatedcompanyid\" != ''\nUNION ALL\n--insert leads and mark if they are already converted (\"associatedcompanyid\" != '')\nSELECT \"canonical_vid\" || '_lead'                                       AS \"contact_id\",\n       \"firstname\" || ' ' || \"lastname\"                                 AS \"contact\",\n       \"email\"                                                          AS \"email\",\n       'Lead'                                                           AS \"contact_type\",\n       iff(\"createdate\" = '', '', to_date(\"createdate\") :: VARCHAR(10)) AS \"date_created\",\n       \"email_source\"                                                   AS \"lead_source\",\n       iff(\"associatedcompanyid\" != '', 'Yes', 'No')                    AS \"lead_converted\"\nFROM \"contacts\";",
+                                    "--fake row to keep referential integrity if child tables are missing existing contact ids\nINSERT INTO \"out_contact\"\n(\"contact_id\", \"contact\", \"email\", \"contact_type\", \"date_created\", \"lead_source\", \"lead_converted\")\nVALUES ('0', 'Unknown', '', 'Lead', '', '', 'No');"
+                                ]
+                            },
+                            {
+                                "name": "Employee",
+                                "script": [
+                                    "--create output table with employees\n--concatenate first and last name to get full name of the employee\nCREATE TABLE \"out_employee\"\nAS\nSELECT \"ownerId\"                        AS \"employee_id\",\n       \"firstName\" || ' ' || \"lastName\" AS \"employee\",\n       \"email\",\n       ''                               AS \"position\"\nFROM \"owners\";",
+                                    "--fake row to keep referential integrity if child tables are missing existing employee ids\nINSERT INTO \"out_employee\"\n    (\"employee_id\", \"employee\", \"email\", \"position\")\nVALUES ('0', 'Unknown', '', '');"
+                                ]
+                            }
+                        ]
+                    },
+                    {
+                        "name": "Phase 2",
+                        "codes": [
+                            {
+                                "name": "Opportunity & Auxiliary Snapshot",
+                                "script": [
+                                    "--create output table with opportunities\n--cast timestamps to human-readable date format\n--if there is no amount set, place 0 instead of empty value\n--opportunities with stage label 'closed won' are marked as won\n--check referential integrity with employees and companies\nCREATE TABLE \"out_opportunity\"\nAS\n    SELECT\n        \"d\".\"dealId\"                                                             AS \"opportunity_id\",\n        coalesce(\"c\".\"company_id\", '0')                                          AS \"company_id\",\n        coalesce(\"e\".\"employee_id\", '0')                                         AS \"employee_id\",\n        \"d\".\"dealname\"                                                           AS \"opportunity\",\n        iff(\"d\".\"createdate\" = '', '', to_date(\"d\".\"createdate\") :: VARCHAR(10)) AS \"date_created\",\n        iff(\"d\".\"closedate\" = '', '', to_date(\"d\".\"closedate\") :: VARCHAR(10))   AS \"date_closed\",\n        iff(\"d\".\"closedate\" = '', 'No', 'Yes')                                   AS \"is_closed\",\n        iff(\"s\".\"closedWon\" = 'True', 'Yes', 'No')                               AS \"is_won\",\n        \"p\".\"label\"                                                              AS \"pipeline\",\n        \"s\".\"label\"                                                              AS \"stage\",\n        \"s\".\"displayOrder\"                                                       AS \"stage_order\",\n        \"d\".\"dealtype\"                                                           AS \"opportunity_type\",\n        iff(\"d\".\"amount\" = '', '0', \"d\".\"amount\")                                AS \"opportunity_value\",\n        ''                                                                       AS \"currency\",\n        \"d\".\"hs_analytics_source\"                                                AS \"lead_source\",\n        \"s\".\"probability\"\t\t\t                                             AS \"probability\"\n    FROM \"deals\" \"d\"\n             LEFT JOIN \"pipelines\" \"p\"\n                       ON \"d\".\"pipeline\" = \"p\".\"pipelineId\"\n             LEFT JOIN \"stages\" \"s\"\n                       ON \"d\".\"dealstage\" = \"s\".\"stageId\"\n             LEFT JOIN \"out_employee\" \"e\"\n                       ON \"d\".\"hubspot_owner_id\" = \"e\".\"employee_id\"\n             LEFT JOIN \"deals_companies\" \"dc\"\n                       ON \"d\".\"dealId\" = \"dc\".\"dealId\"\n             LEFT JOIN \"out_company\" \"c\"\n                       ON \"dc\".\"associated_companyId\" = \"c\".\"company_id\"\n    WHERE lower(\"d\".\"isDeleted\") = 'false';",
+                                    "--set timezone to UTC (!!!CHANGE ACCORDINGLY TO YOUR REGION!!!)\nALTER\n    SESSION\n    SET TIMEZONE = 'UTC';",
+                                    "--create snapshot of the output table to track changes throughout time\n--snapshot will be used in another transformation where it will be adjusted for a better final analysis\nCREATE TABLE \"out_opportunity_snapshot\"\nAS\n    SELECT\n        current_date AS \"snapshot_date\",\n        \"o\".*\n    FROM \"out_opportunity\" \"o\";",
+                                    "--fake row to keep referential integrity if child tables are missing existing opportunity ids\n--adding row after snapshot, so we're not unnecessary snapshoting it\nINSERT INTO \"out_opportunity\"\n    (\"opportunity_id\", \"company_id\", \"employee_id\", \"opportunity\", \"date_created\", \"date_closed\", \"is_closed\", \"is_won\",\n     \"pipeline\", \"stage\", \"opportunity_type\", \"opportunity_value\", \"currency\", \"lead_source\")\nVALUES\n    ('0', '0', '0', 'Unknown', '', '', 'No', 'No', '', '', '', '0.0', '', '');"
+                                ]
+                            }
+                        ]
+                    },
+                    {
+                        "name": "Phase 3",
+                        "codes": [
+                            {
+                                "name": "Activities",
+                                "script": [
+                                    "--create output activity table\n--use only activity related to either contact\/lead or opportunity\n--format datetime\n--convert duration to minutes\n--using the first contact\/opportunity\/employee ID in array from activities table for joins\nCREATE OR REPLACE TABLE \"out_activity\"\nAS\nSELECT \"a\".\"engagement_id\"                              AS \"activity_id\",\n       ifnull(\"e\".\"employee_id\", '0')                   AS \"employee_id\",\n       ifnull(\"c\".\"contact_id\", '0')                    AS \"contact_id\",\n       ifnull(\"o\".\"opportunity_id\", '0')                AS \"opportunity_id\",\n       iff(length(\"a\".\"metadata_subject\") > 1028, left(\"a\".\"metadata_subject\", 1025) || '...', \"a\".\"metadata_subject\")\t\t                          AS \"activity\",\n       TO_CHAR(TO_TIMESTAMP_NTZ(\"a\".\"engagement_createdAt\"),\n               'YYYY-MM-DD hh24:mi:ss')                 AS \"activity_date\",\n       iff(\"a\".\"metadata_durationMilliseconds\" = '', NULL,\n           \"a\".\"metadata_durationMilliseconds\" \/ 60000) AS \"activity_duration_m\"\nFROM \"activities\" \"a\"\n         LEFT JOIN \"out_contact\" \"c\"\n                   ON SPLIT_PART(REPLACE(REPLACE(\"a\".\"associations_contactIds\", ']', ''), '[', ''), ',', 0) ||\n                      '_contact' = \"c\".\"contact_id\"\n         LEFT JOIN \"out_opportunity\" \"o\"\n                   ON SPLIT_PART(REPLACE(REPLACE(\"a\".\"associations_dealIds\", ']', ''), '[', ''), ',', 0) =\n                      \"o\".\"opportunity_id\"\n         LEFT JOIN \"out_employee\" \"e\"\n                   ON SPLIT_PART(REPLACE(REPLACE(\"a\".\"associations_ownerIds\", ']', ''), '[', ''), ',', 0) =\n                      \"e\".\"employee_id\"\nWHERE (\"c\".\"contact_id\" IS NOT NULL OR \"o\".\"opportunity_id\" IS NOT NULL)\n;"
+                                ]
+                            },
+                            {
+                                "name": "Opportunity Contact",
+                                "script": [
+                                    "--create output paring table for opportunities and contacts\n--merge both tables ids as paring table id\n--use inner joins and ids from referring tables to make sure referential integrity is intact\nCREATE TABLE \"out_opportunity_contact\"\nAS\nSELECT \"o\".\"opportunity_id\" || '-' || \"c\".\"contact_id\" AS \"opportunity_contact_id\",\n       \"o\".\"opportunity_id\",\n       \"c\".\"contact_id\",\n       ''                                              AS \"is_primary_contact\",\n       ''                                              AS \"role\"\nFROM \"deals_contacts_list\" \"dc\"\n         INNER JOIN \"out_opportunity\" \"o\"\n                    ON \"dc\".\"dealId\" = \"o\".\"opportunity_id\"\n         INNER JOIN \"out_contact\" \"c\"\n                    ON \"dc\".\"contact_vid\" || '_contact' = \"c\".\"contact_id\";"
+                                ]
+                            }
+                        ]
+                    }
+                ]
+            },
+            "storage": {
+                "input": {
+                    "tables": [
+                        {
+                            "destination": "pipelines",
+                            "where_column": "",
+                            "where_values": [],
+                            "where_operator": "eq",
+                            "columns": [],
+                            "source": "out.c-HubspotCrm.hubspotPipelines"
+                        },
+                        {
+                            "destination": "deals_contacts_list",
+                            "where_column": "",
+                            "where_values": [],
+                            "where_operator": "eq",
+                            "columns": [],
+                            "source": "out.c-HubspotCrm.hubspotDealsContactsList"
+                        },
+                        {
+                            "destination": "owners",
+                            "where_column": "",
+                            "where_values": [],
+                            "where_operator": "eq",
+                            "columns": [],
+                            "source": "out.c-HubspotCrm.hubspotOwners"
+                        },
+                        {
+                            "destination": "companies",
+                            "where_column": "",
+                            "where_values": [],
+                            "where_operator": "eq",
+                            "columns": [],
+                            "source": "out.c-HubspotCrm.hubspotCompanies"
+                        },
+                        {
+                            "destination": "activities",
+                            "where_column": "",
+                            "where_values": [],
+                            "where_operator": "eq",
+                            "columns": [],
+                            "source": "out.c-HubspotCrm.hubspotActivities"
+                        },
+                        {
+                            "destination": "deals_companies",
+                            "where_column": "",
+                            "where_values": [],
+                            "where_operator": "eq",
+                            "columns": [],
+                            "source": "out.c-HubspotCrm.hubspotDealsCompanies"
+                        },
+                        {
+                            "destination": "contacts",
+                            "where_column": "",
+                            "where_values": [],
+                            "where_operator": "eq",
+                            "columns": [],
+                            "source": "out.c-HubspotCrm.hubspotContacts"
+                        },
+                        {
+                            "destination": "deals",
+                            "where_column": "",
+                            "where_values": [],
+                            "where_operator": "eq",
+                            "columns": [],
+                            "source": "out.c-HubspotCrm.hubspotDeals"
+                        },
+                        {
+                            "destination": "stages",
+                            "where_column": "",
+                            "where_values": [],
+                            "where_operator": "eq",
+                            "columns": [],
+                            "source": "out.c-HubspotCrm.hubspotStages"
+                        }
+                    ]
+                },
+                "output": {
+                    "tables": [
+                        {
+                            "destination": "out.c-HubspotCrm.crmCompany",
+                            "source": "out_company",
+                            "primary_key": [
+                                "company_id"
+                            ],
+                            "incremental": true,
+                            "delete_where_column": "",
+                            "delete_where_operator": "eq",
+                            "delete_where_values": []
+                        },
+                        {
+                            "destination": "out.c-HubspotCrm.crmContact",
+                            "source": "out_contact",
+                            "primary_key": [
+                                "contact_id"
+                            ],
+                            "incremental": true,
+                            "delete_where_column": "",
+                            "delete_where_operator": "eq",
+                            "delete_where_values": []
+                        },
+                        {
+                            "destination": "out.c-HubspotCrm.crmEmployee",
+                            "source": "out_employee",
+                            "primary_key": [
+                                "employee_id"
+                            ],
+                            "incremental": true,
+                            "delete_where_column": "",
+                            "delete_where_operator": "eq",
+                            "delete_where_values": []
+                        },
+                        {
+                            "destination": "out.c-HubspotCrm.crmOpportunity",
+                            "source": "out_opportunity",
+                            "primary_key": [
+                                "opportunity_id"
+                            ],
+                            "incremental": true,
+                            "delete_where_column": "",
+                            "delete_where_operator": "eq",
+                            "delete_where_values": []
+                        },
+                        {
+                            "destination": "out.c-HubspotCrm.crmAuxiliaryTablesOpportunitySnapshot",
+                            "source": "out_opportunity_snapshot",
+                            "primary_key": [
+                                "opportunity_id",
+                                "snapshot_date"
+                            ],
+                            "incremental": true,
+                            "delete_where_column": "",
+                            "delete_where_operator": "eq",
+                            "delete_where_values": []
+                        },
+                        {
+                            "destination": "out.c-HubspotCrm.crmActivity",
+                            "source": "out_activity",
+                            "primary_key": [
+                                "activity_id"
+                            ],
+                            "incremental": true,
+                            "delete_where_column": "",
+                            "delete_where_operator": "eq",
+                            "delete_where_values": []
+                        },
+                        {
+                            "destination": "out.c-HubspotCrm.crmOpportunityContact",
+                            "source": "out_opportunity_contact",
+                            "primary_key": [
+                                "opportunity_contact_id"
+                            ]
+                        }
+                    ]
+                }
+            },
+            "processors": {
+                "after": [
+                    {
+                        "definition": {
+                            "component": "keboola.processor-add-metadata"
+                        },
+                        "parameters": {
+                            "tables": [
+                                {
+                                    "table": "out_company",
+                                    "metadata": [
+                                        {
+                                            "key": "bdm.scaffold.table.tag",
+                                            "value": "bdm.Crm.Company"
+                                        },
+                                        {
+                                            "key": "scaffold.id",
+                                            "value": "HubspotCrm"
+                                        }
+                                    ]
+                                },
+                                {
+                                    "table": "out_contact",
+                                    "metadata": [
+                                        {
+                                            "key": "bdm.scaffold.table.tag",
+                                            "value": "bdm.Crm.Contact"
+                                        },
+                                        {
+                                            "key": "scaffold.id",
+                                            "value": "HubspotCrm"
+                                        }
+                                    ]
+                                },
+                                {
+                                    "table": "out_employee",
+                                    "metadata": [
+                                        {
+                                            "key": "bdm.scaffold.table.tag",
+                                            "value": "bdm.Crm.Employee"
+                                        },
+                                        {
+                                            "key": "scaffold.id",
+                                            "value": "HubspotCrm"
+                                        }
+                                    ]
+                                },
+                                {
+                                    "table": "out_opportunity",
+                                    "metadata": [
+                                        {
+                                            "key": "bdm.scaffold.table.tag",
+                                            "value": "bdm.Crm.Opportunity"
+                                        },
+                                        {
+                                            "key": "scaffold.id",
+                                            "value": "HubspotCrm"
+                                        }
+                                    ]
+                                },
+                                {
+                                    "table": "out_opportunity_snapshot",
+                                    "metadata": [
+                                        {
+                                            "key": "bdm.scaffold.table.tag",
+                                            "value": "HubspotCrm.internal.outCrmAuxiliaryTablesOpportunitySnapshot"
+                                        },
+                                        {
+                                            "key": "scaffold.id",
+                                            "value": "HubspotCrm"
+                                        }
+                                    ]
+                                },
+                                {
+                                    "table": "out_activity",
+                                    "metadata": [
+                                        {
+                                            "key": "bdm.scaffold.table.tag",
+                                            "value": "bdm.Crm.Activity"
+                                        },
+                                        {
+                                            "key": "scaffold.id",
+                                            "value": "HubspotCrm"
+                                        }
+                                    ]
+                                },
+                                {
+                                    "table": "out_opportunity_contact",
+                                    "metadata": [
+                                        {
+                                            "key": "bdm.scaffold.table.tag",
+                                            "value": "bdm.Crm.OpportunityContact"
+                                        },
+                                        {
+                                            "key": "scaffold.id",
+                                            "value": "HubspotCrm"
+                                        }
+                                    ]
+                                }
+                            ]
+                        }
+                    }
+                ]
+            }
+        }
+    }
+}

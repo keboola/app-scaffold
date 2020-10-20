@@ -1,0 +1,70 @@
+{
+    "name": "Hubspot CRM",
+    "author": "Keboola",
+    "description": "Full workflow to extract and process Hubspot data into a standard CRM data model. Contains extractor and set of transformations. Can be extended by CRM Writer Scaffold.",
+    "requirements": [],
+    "outputs": [
+        "bdm.Crm.Company",
+        "bdm.Crm.Employee",
+        "bdm.Crm.Contact",
+        "bdm.Crm.Opportunity",
+        "bdm.Crm.OpportunitySnapshot",
+        "bdm.Crm.OpportunityContact",
+        "bdm.Crm.Activity"
+    ],
+    "inputs": [
+        {
+            "id": "kdsTeamExHubspotCrmHubspotCRM",
+            "componentId": "kds-team.ex-hubspot-crm",
+            "name": "Hubspot CRM",
+            "required": true,
+            "schema": {
+                "type": "object",
+                "required": [
+                    "#api_token"
+                ],
+                "properties": {
+                    "#api_token": {
+                        "title": "API Token",
+                        "type": "string",
+                        "format": "password",
+                        "links": [
+                            {
+                                "rel": "Get Hubspot API Token",
+                                "href": "https://knowledge.hubspot.com/integrations/how-do-i-get-my-hubspot-api-key"
+                            }
+                        ]
+                    }
+                }
+            }
+        },
+        {
+            "id": "keboolaSnowflakeTransformationHubspotCRM01InputTablesCreation",
+            "componentId": "keboola.snowflake-transformation",
+            "name": "Hubspot CRM 01 Input Tables Creation",
+            "required": true,
+            "schema": null
+        },
+        {
+            "id": "keboolaSnowflakeTransformationHubspotCRM02Main",
+            "componentId": "keboola.snowflake-transformation",
+            "name": "Hubspot CRM 02 Main",
+            "required": true,
+            "schema": null
+        },
+        {
+            "id": "keboolaSnowflakeTransformationHubspotCRM03Snapshots",
+            "componentId": "keboola.snowflake-transformation",
+            "name": "Hubspot CRM 03 Snapshots",
+            "required": true,
+            "schema": null
+        },
+        {
+            "id": "orchestrationHubspotExtractionTransformation",
+            "componentId": "orchestrator",
+            "name": "Hubspot Extraction & Transformation",
+            "required": true,
+            "schema": null
+        }
+    ]
+}
