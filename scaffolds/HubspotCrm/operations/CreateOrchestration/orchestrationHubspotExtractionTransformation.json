@@ -1,0 +1,43 @@
+{
+    "payload": {
+        "name": "Hubspot Extraction & Transformation",
+        "tasks": [
+            {
+                "component": "kds-team.ex-hubspot-crm",
+                "operationReferenceId": "kdsTeamExHubspotCrmHubspotCRM",
+                "action": "run",
+                "timeoutMinutes": null,
+                "active": true,
+                "continueOnFailure": false,
+                "phase": null
+            },
+            {
+                "component": "keboola.snowflake-transformation",
+                "operationReferenceId": "keboolaSnowflakeTransformationHubspotCRM01InputTablesCreation",
+                "action": "run",
+                "timeoutMinutes": null,
+                "active": true,
+                "continueOnFailure": false,
+                "phase": null
+            },
+            {
+                "component": "keboola.snowflake-transformation",
+                "operationReferenceId": "keboolaSnowflakeTransformationHubspotCRM02Main",
+                "action": "run",
+                "timeoutMinutes": null,
+                "active": true,
+                "continueOnFailure": false,
+                "phase": null
+            },
+            {
+                "component": "keboola.snowflake-transformation",
+                "operationReferenceId": "keboolaSnowflakeTransformationHubspotCRM03Snapshots",
+                "action": "run",
+                "timeoutMinutes": null,
+                "active": true,
+                "continueOnFailure": false,
+                "phase": null
+            }
+        ]
+    }
+}

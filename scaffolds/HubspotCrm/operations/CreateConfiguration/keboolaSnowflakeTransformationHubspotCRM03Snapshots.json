@@ -1,0 +1,80 @@
+{
+    "componentId": "keboola.snowflake-transformation",
+    "payload": {
+        "name": "Hubspot CRM 03 Snapshots",
+        "configuration": {
+            "parameters": {
+                "blocks": [
+                    {
+                        "name": "Phase 1",
+                        "codes": [
+                            {
+                                "name": "Opportunity Snapshot",
+                                "script": [
+                                    "--create temporary table for additional calculations\n--add previous values of pipeline, stage and value, so we can define if there has been any change\nCREATE TABLE \"opportunity_snapshot_tmp\"\nAS\n    SELECT\n        \"opportunity_id\",\n        \"snapshot_date\",\n        \"employee_id\",\n        \"company_id\",\n        \"pipeline\",\n        ifnull(lag(\"pipeline\") OVER (PARTITION BY \"opportunity_id\" ORDER BY \"snapshot_date\"),\n               \"pipeline\")          AS \"previous_pipeline\",\n        \"stage\",\n        \"stage_order\",\n        ifnull(lag(\"stage\") OVER (PARTITION BY \"opportunity_id\" ORDER BY \"snapshot_date\"),\n               \"stage\")             AS \"previous_stage\",\n        ifnull(lag(\"stage_order\") OVER (PARTITION BY \"opportunity_id\" ORDER BY \"snapshot_date\"),\n               \"stage_order\")       AS \"previous_stage_order\",\n        \"opportunity_value\",\n        ifnull(lag(\"opportunity_value\") OVER (PARTITION BY \"opportunity_id\" ORDER BY \"snapshot_date\"),\n               \"opportunity_value\") AS \"previous_opportunity_value\",\n        \"probability\",\n        ifnull(lag(\"probability\") OVER (PARTITION BY \"opportunity_id\" ORDER BY \"snapshot_date\"),\n               \"probability\")       AS \"previous_probability\"\n    FROM \"opportunity_snapshot\";",
+                                    "--create opportunity snapshot table\n--define if there has been change of pipeline, stage or value\nCREATE TABLE \"out_opportunity_snapshot\"\nAS\n    SELECT\n        \"s\".\"opportunity_id\",\n        \"s\".\"snapshot_date\",\n        \"s\".\"employee_id\",\n        \"s\".\"company_id\",\n        \"s\".\"pipeline\",\n        \"s\".\"previous_pipeline\",\n        iff(\"s\".\"pipeline\" <> \"s\".\"previous_pipeline\", 'Yes', 'No')                   AS \"pipeline_change\",\n        \"s\".\"stage\",\n        \"s\".\"stage_order\",\n        \"s\".\"previous_stage\",\n        \"s\".\"previous_stage_order\",\n        iff(\"s\".\"stage\" <> \"s\".\"previous_stage\", 'Yes', 'No')                         AS \"stage_change\",\n        \"s\".\"opportunity_value\",\n        \"s\".\"previous_opportunity_value\",\n        iff(\"s\".\"opportunity_value\" <> \"s\".\"previous_opportunity_value\", 'Yes', 'No') AS \"opportunity_value_change\",\n        \"s\".\"probability\",\n        \"s\".\"previous_probability\",\n        iff(\"s\".\"probability\" <> \"s\".\"previous_probability\", 'Yes', 'No')             AS \"probability_change\",\n        iff(\"m\".\"max_date_in_month\" IS NULL, 'false', 'true')                         AS \"max_date_in_month\"\n    FROM \"opportunity_snapshot_tmp\" \"s\"\n             LEFT JOIN (SELECT\n                            \"opportunity_id\",\n                            left(\"snapshot_date\", 7) AS \"month\",\n                            max(\"snapshot_date\")     AS \"max_date_in_month\"\n                        FROM \"opportunity_snapshot_tmp\"\n                        GROUP BY 1, 2) \"m\"\n                       ON \"s\".\"opportunity_id\" = \"m\".\"opportunity_id\"\n                           AND \"s\".\"snapshot_date\" = \"m\".\"max_date_in_month\";"
+                                ]
+                            }
+                        ]
+                    }
+                ]
+            },
+            "storage": {
+                "output": {
+                    "tables": [
+                        {
+                            "destination": "out.c-HubspotCrm.crmOportunitySnapshot",
+                            "source": "out_opportunity_snapshot",
+                            "primary_key": [
+                                "opportunity_id",
+                                "snapshot_date"
+                            ],
+                            "incremental": true,
+                            "delete_where_column": "",
+                            "delete_where_operator": "eq",
+                            "delete_where_values": []
+                        }
+                    ]
+                },
+                "input": {
+                    "tables": [
+                        {
+                            "destination": "opportunity_snapshot",
+                            "where_column": "",
+                            "where_values": [],
+                            "where_operator": "eq",
+                            "columns": [],
+                            "source": "out.c-HubspotCrm.crmAuxiliaryTablesOpportunitySnapshot"
+                        }
+                    ]
+                }
+            },
+            "processors": {
+                "after": [
+                    {
+                        "definition": {
+                            "component": "keboola.processor-add-metadata"
+                        },
+                        "parameters": {
+                            "tables": [
+                                {
+                                    "table": "out_opportunity_snapshot",
+                                    "metadata": [
+                                        {
+                                            "key": "bdm.scaffold.table.tag",
+                                            "value": "bdm.Crm.OpportunitySnapshot"
+                                        },
+                                        {
+                                            "key": "scaffold.id",
+                                            "value": "HubspotCrm"
+                                        }
+                                    ]
+                                }
+                            ]
+                        }
+                    }
+                ]
+            }
+        }
+    }
+}
