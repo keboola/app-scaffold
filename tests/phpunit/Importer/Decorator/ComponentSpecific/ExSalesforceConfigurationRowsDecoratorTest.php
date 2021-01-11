@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Keboola\ScaffoldApp\Tests\Importer\Decorator;
+namespace Keboola\ScaffoldApp\Tests\Importer\Decorator\ComponentSpecific;
 
 use Keboola\ScaffoldApp\Importer\Decorator\ComponentSpecific\ExSalesforceConfigurationRowsDecorator;
 use Keboola\ScaffoldApp\Importer\OperationImportFactory;
