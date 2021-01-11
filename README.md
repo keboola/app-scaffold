@@ -163,6 +163,8 @@ Place the configuration in a `config.json` file inside a data directory and run 
 docker-compose run -e KBC_URL=https://connection.keboola.com -e KBC_TOKEN=xxxx-xxxxxx-xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx dev
 ```
 
+*Note*: You must use your "master" SAPI token, otherwise you will not be able to create orchestrations.
+
 ## Internals
 
 Each task from orchestration is processed by decorators.
