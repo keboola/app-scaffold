@@ -9,7 +9,6 @@ use Keboola\ScaffoldApp\Importer\Decorator\DecoratorInterface;
 use Keboola\StorageApi\Client as StorageApiClient;
 use Keboola\StorageApi\Components;
 use Keboola\StorageApi\Metadata;
-use Keboola\StorageApi\Options\Components\ListComponentsOptions;
 use Keboola\StorageApi\Options\SearchTablesOptions;
 use Symfony\Component\Finder\Finder;
 
