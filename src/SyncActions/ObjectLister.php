@@ -21,7 +21,7 @@ class ObjectLister
 
     public static function listObjects(StorageApiClient $storageApiClient, Components $components): array
     {
-        $components = $components->listComponents();
+        $components = $components->listComponents() ?? [];
         $scaffoldObjects = [];
         foreach ($components as $component) {
             foreach ($component['configurations'] as $configuration) {
