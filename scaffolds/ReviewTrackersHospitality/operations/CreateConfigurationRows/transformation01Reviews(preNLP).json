@@ -47,8 +47,7 @@
             "requires": [],
             "backend": "snowflake",
             "type": "simple",
-            "id": "492076531",
-            "phase": 1,
+            "phase": "1",
             "disabled": false,
             "description": ""
         },
@@ -126,7 +125,6 @@
             "requires": [],
             "backend": "snowflake",
             "type": "simple",
-            "id": "503497028",
             "phase": "2",
             "disabled": false,
             "description": ""

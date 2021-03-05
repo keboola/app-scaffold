@@ -185,8 +185,7 @@
             "requires": [],
             "backend": "snowflake",
             "type": "simple",
-            "id": "505080955",
-            "phase": 1,
+            "phase": "1",
             "disabled": false
         },
         "description": "Combining processed data with Geneea app output.",
