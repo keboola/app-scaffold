@@ -746,7 +746,7 @@
             "requires": [],
             "backend": "snowflake",
             "type": "simple",
-            "phase": 1,
+            "phase": "1",
             "disabled": false
         },
         "description": "This Transformation checks for missing columns needed in the following Transformations, adding them to the output tables a populating them with NULL values if missing.",

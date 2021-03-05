@@ -879,7 +879,7 @@
             "requires": [],
             "backend": "snowflake",
             "type": "simple",
-            "phase": 1,
+            "phase": "1",
             "disabled": false,
             "description": ""
         },
