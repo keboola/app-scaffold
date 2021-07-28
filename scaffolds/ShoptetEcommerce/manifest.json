@@ -43,8 +43,7 @@
                 "type": "object",
                 "title": "Sklik Extractor Configuration",
                 "required": [
-                    "#token",
-                    "accounts"
+                    "#token"
                 ],
                 "properties": {
                     "#token": {
