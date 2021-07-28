@@ -1,0 +1,171 @@
+{
+    "name": "Shoptet Ecommerce",
+    "author": "Keboola",
+    "description": "Full workflow to extract and process Shoptet data alongside data from Facebook Ads, Google Ads and Sklik to final data model. The model is then uploaded to Snowflake DB which is used as a source for Power BI dashboards. Contains extractors, set of transformations and Snowflake writer. Note: Google Ads and Facebook Ads extractor configurations need to be authorized after the initial Scaffold set up.",
+    "requirements": [],
+    "outputs": [],
+    "inputs": [
+        {
+            "id": "keboolaExFacebookAdsFacebookAds",
+            "componentId": "keboola.ex-facebook-ads",
+            "name": "Facebook Ads",
+            "required": true,
+            "schema": null
+        },
+        {
+            "id": "keboolaExGoogleAdwordsReportsV201809GoogleAds",
+            "componentId": "keboola.ex-google-adwords-reports-v201809",
+            "name": "Google Ads",
+            "required": true,
+            "schema": {
+                "type": "object",
+                "title": "Google AdWords Reports Extractor configuration",
+                "required": [
+                    "customerId"
+                ],
+                "properties": {
+                    "customerId": {
+                        "type": "string",
+                        "title": "Google Ads customer ID",
+                        "description": "Follow this guide to find your Google Ads customer ID: https://support.google.com/google-ads/answer/1704344?hl=en. You need to go directly to the extractor configuration after the initial Scaffold set up to authorize it.",
+                        "default": "",
+                        "propertyOrder": 1
+                    }
+                }
+            }
+        },
+        {
+            "id": "keboolaExSklikSklik",
+            "componentId": "keboola.ex-sklik",
+            "name": "Sklik",
+            "required": true,
+            "schema": {
+                "type": "object",
+                "title": "Sklik Extractor Configuration",
+                "required": [
+                    "#token",
+                    "accounts"
+                ],
+                "properties": {
+                    "#token": {
+                        "type": "string",
+                        "title": "Sklik API token. You will find it under the Account settings in Sklik.",
+                        "default": "",
+                        "propertyOrder": 1
+                    },
+                    "accounts": {
+                        "type": "string",
+                        "title": "Comma separated list of accounts ids to download. You will get all accounts if empty.",
+                        "default": "",
+                        "propertyOrder": 4
+                    }
+                }
+            }
+        },
+        {
+            "id": "kdsTeamExShoptetPermalinkShoptetPermalinkScraper",
+            "componentId": "kds-team.ex-shoptet-permalink",
+            "name": "Shoptet permalink scraper",
+            "required": true,
+            "schema": {
+                "type": "object",
+                "title": "extractor configuration",
+                "required": [
+                    "shop_name",
+                    "base_url",
+                    "orders_url",
+                    "products_url",
+                    "customers_url",
+                    "stock_url"
+                ],
+                "properties": {
+                    "shop_name": {
+                        "type": "string",
+                        "title": "Shop Name",
+                        "description": "Insert the name of your shop. It will be used in Power BI.",
+                        "propertyOrder": 1
+                    },
+                    "base_url": {
+                        "type": "string",
+                        "title": "Base URL",
+                        "description": "Insert the base URL of your shop. It will be used for hyperlinks in Power BI.",
+                        "propertyOrder": 2
+                    },
+                    "orders_url": {
+                        "type": "string",
+                        "title": "Orders URL",
+                        "description": "You can find the URL by going to https://www.yourshop.cz/admin/objednavky-export/ (replace www.yourshop.cz with your shop's URL).",
+                        "propertyOrder": 10
+                    },
+                    "products_url": {
+                        "type": "string",
+                        "title": "Products URL",
+                        "description": "You can find the URL by going to https://www.yourshop.cz/admin/export-produktu/ (replace www.yourshop.cz with your shop's URL).",
+                        "propertyOrder": 20
+                    },
+                    "customers_url": {
+                        "type": "string",
+                        "title": "Customers URL",
+                        "description": "You can find the URL by going to https://www.yourshop.cz/admin/export-zakazniku/ (replace www.yourshop.cz with your shop's URL).",
+                        "propertyOrder": 30
+                    },
+                    "stock_url": {
+                        "type": "string",
+                        "title": "Stock URL",
+                        "description": "You can find the URL by going to https://www.yourshop.cz/admin/export-stavu-skladu/ (replace www.yourshop.cz with your shop's URL).",
+                        "propertyOrder": 40
+                    }
+                }
+            }
+        },
+        {
+            "id": "keboolaSnowflakeTransformationMarketingFacebookAds",
+            "componentId": "keboola.snowflake-transformation",
+            "name": "Marketing - Facebook Ads",
+            "required": true,
+            "schema": null
+        },
+        {
+            "id": "keboolaSnowflakeTransformationMarketingGoogleAds",
+            "componentId": "keboola.snowflake-transformation",
+            "name": "Marketing - GoogleAds",
+            "required": true,
+            "schema": null
+        },
+        {
+            "id": "keboolaSnowflakeTransformationMarketingSklik",
+            "componentId": "keboola.snowflake-transformation",
+            "name": "Marketing - Sklik",
+            "required": true,
+            "schema": null
+        },
+        {
+            "id": "keboolaSnowflakeTransformationShoptet",
+            "componentId": "keboola.snowflake-transformation",
+            "name": "Shoptet",
+            "required": true,
+            "schema": null
+        },
+        {
+            "id": "keboolaSnowflakeTransformationShoptetRFM",
+            "componentId": "keboola.snowflake-transformation",
+            "name": "Shoptet RFM",
+            "required": true,
+            "schema": null
+        },
+        {
+            "id": "keboolaWrSnowflakeBlobStoragePowerBIWorkspaceUpload",
+            "componentId": "keboola.wr-snowflake-blob-storage",
+            "name": "Power BI workspace - upload",
+            "required": true,
+            "schema": null
+        },
+        {
+            "id": "orchestrationShoptetEcommerce",
+            "componentId": "orchestrator",
+            "name": "Shoptet ecommerce",
+            "required": true,
+            "schema": null
+        }
+    ]
+}

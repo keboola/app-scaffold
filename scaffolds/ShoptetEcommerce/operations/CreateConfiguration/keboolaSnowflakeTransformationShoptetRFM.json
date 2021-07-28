@@ -1,0 +1,87 @@
+{
+    "componentId": "keboola.snowflake-transformation",
+    "payload": {
+        "name": "Shoptet RFM",
+        "configuration": {
+            "parameters": {
+                "blocks": [
+                    {
+                        "name": "Prepare RFM",
+                        "codes": [
+                            {
+                                "name": "Mapping Segments",
+                                "script": [
+                                    "CREATE OR REPLACE TABLE MAPPING_SEGMENT_RFM\n(\n    SCORE      VARCHAR,\n    SEGMENT    VARCHAR,\n    SEGMENT_NR NUMBER(38, 0)\n);",
+                                    "INSERT INTO MAPPING_SEGMENT_RFM\nVALUES ('555', 'Champions', 10),\n       ('554', 'Champions', 10),\n       ('544', 'Champions', 10),\n       ('545', 'Champions', 10),\n       ('454', 'Champions', 10),\n       ('455', 'Champions', 10),\n       ('445', 'Champions', 10),\n       ('543', 'Loyal', 9),\n       ('444', 'Loyal', 9),\n       ('435', 'Loyal', 9),\n       ('355', 'Loyal', 9),\n       ('354', 'Loyal', 9),\n       ('345', 'Loyal', 9),\n       ('344', 'Loyal', 9),\n       ('335', 'Loyal', 9),\n       ('553', 'Potential Loyalist', 8),\n       ('551', 'Potential Loyalist', 8),\n       ('552', 'Potential Loyalist', 8),\n       ('541', 'Potential Loyalist', 8),\n       ('542', 'Potential Loyalist', 8),\n       ('533', 'Potential Loyalist', 8),\n       ('532', 'Potential Loyalist', 8),\n       ('531', 'Potential Loyalist', 8),\n       ('452', 'Potential Loyalist', 8),\n       ('451', 'Potential Loyalist', 8),\n       ('442', 'Potential Loyalist', 8),\n       ('441', 'Potential Loyalist', 8),\n       ('431', 'Potential Loyalist', 8),\n       ('453', 'Potential Loyalist', 8),\n       ('433', 'Potential Loyalist', 8),\n       ('432', 'Potential Loyalist', 8),\n       ('423', 'Potential Loyalist', 8),\n       ('353', 'Potential Loyalist', 8),\n       ('352', 'Potential Loyalist', 8),\n       ('351', 'Potential Loyalist', 8),\n       ('342', 'Potential Loyalist', 8),\n       ('341', 'Potential Loyalist', 8),\n       ('333', 'Potential Loyalist', 8),\n       ('323', 'Potential Loyalist', 8),\n       ('512', 'New Customers', 7),\n       ('511', 'New Customers', 7),\n       ('422', 'New Customers', 7),\n       ('421', 'New Customers', 7),\n       ('412', 'New Customers', 7),\n       ('411', 'New Customers', 7),\n       ('311', 'New Customers', 7),\n       ('525', 'Promising', 6),\n       ('524', 'Promising', 6),\n       ('523', 'Promising', 6),\n       ('522', 'Promising', 6),\n       ('521', 'Promising', 6),\n       ('515', 'Promising', 6),\n       ('514', 'Promising', 6),\n       ('513', 'Promising', 6),\n       ('425', 'Promising', 6),\n       ('424', 'Promising', 6),\n       ('413', 'Promising', 6),\n       ('414', 'Promising', 6),\n       ('415', 'Promising', 6),\n       ('315', 'Promising', 6),\n       ('314', 'Promising', 6),\n       ('313', 'Promising', 6),\n       ('535', 'Need Attention', 5),\n       ('534', 'Need Attention', 5),\n       ('443', 'Need Attention', 5),\n       ('434', 'Need Attention', 5),\n       ('343', 'Need Attention', 5),\n       ('334', 'Need Attention', 5),\n       ('325', 'Need Attention', 5),\n       ('324', 'Need Attention', 5),\n       ('331', 'About To Sleep', 4),\n       ('321', 'About To Sleep', 4),\n       ('312', 'About To Sleep', 4),\n       ('221', 'About To Sleep', 4),\n       ('213', 'About To Sleep', 4),\n       ('231', 'About To Sleep', 4),\n       ('241', 'About To Sleep', 4),\n       ('251', 'About To Sleep', 4),\n       ('255', 'At Risk', 3),\n       ('254', 'At Risk', 3),\n       ('245', 'At Risk', 3),\n       ('244', 'At Risk', 3),\n       ('253', 'At Risk', 3),\n       ('252', 'At Risk', 3),\n       ('243', 'At Risk', 3),\n       ('242', 'At Risk', 3),\n       ('235', 'At Risk', 3),\n       ('234', 'At Risk', 3),\n       ('225', 'At Risk', 3),\n       ('224', 'At Risk', 3),\n       ('153', 'At Risk', 3),\n       ('152', 'At Risk', 3),\n       ('145', 'At Risk', 3),\n       ('143', 'At Risk', 3),\n       ('142', 'At Risk', 3),\n       ('135', 'At Risk', 3),\n       ('134', 'At Risk', 3),\n       ('133', 'At Risk', 3),\n       ('125', 'At Risk', 3),\n       ('124', 'At Risk', 3),\n       ('155', 'Cannot Lose Them', 2),\n       ('154', 'Cannot Lose Them', 2),\n       ('144', 'Cannot Lose Them', 2),\n       ('214', 'Cannot Lose Them', 2),\n       ('215', 'Cannot Lose Them', 2),\n       ('115', 'Cannot Lose Them', 2),\n       ('114', 'Cannot Lose Them', 2),\n       ('113', 'Cannot Lose Them', 2),\n       ('332', 'Hibernating customers', 1),\n       ('322', 'Hibernating customers', 1),\n       ('231', 'Hibernating customers', 1),\n       ('241', 'Hibernating customers', 1),\n       ('251', 'Hibernating customers', 1),\n       ('233', 'Hibernating customers', 1),\n       ('232', 'Hibernating customers', 1),\n       ('223', 'Hibernating customers', 1),\n       ('222', 'Hibernating customers', 1),\n       ('132', 'Hibernating customers', 1),\n       ('123', 'Hibernating customers', 1),\n       ('122', 'Hibernating customers', 1),\n       ('212', 'Hibernating customers', 1),\n       ('211', 'Hibernating customers', 1),\n       ('111', 'Hibernating customers', 1),\n       ('112', 'Hibernating customers', 1),\n       ('121', 'Hibernating customers', 1),\n       ('131', 'Hibernating customers', 1),\n       ('141', 'Hibernating customers', 1),\n       ('151', 'Hibernating customers', 1);"
+                                ]
+                            },
+                            {
+                                "name": "RFM",
+                                "script": [
+                                    "SET M_REVENUE_MONTHS = -3;",
+                                    "SET R_MONTHS = -6;",
+                                    "----------------------------------------------------------------------------------------------------------------------------------------------------------\n--- 2 YEAR SNAPSHOT: create a calendar and filling it up with the customer\n----------------------------------------------------------------------------------------------------------------------------------------------------------\n\n--- CLEANUP ORDERS TO INCLUDE ONLY SUCESSFUL\nDELETE\nFROM \"bdm_orders\"\nWHERE IS_SUCESSFUL::BOOLEAN = FALSE\n  AND ORDER_CUSTOMER_EMAIL = '';",
+                                    "CREATE OR REPLACE TABLE CALENDAR AS\n    (SELECT DATEADD(DAY, SEQ4(), DATEADD('year', -1, CURRENT_DATE)) AS SNAPSHOT_DATE\n     FROM TABLE (GENERATOR(ROWCOUNT => 2 * 365)));",
+                                    "CREATE OR REPLACE TEMPORARY TABLE CALENDAR_DAILY AS\n    (SELECT CLIENT.*\n          , SNAPSHOT_DATE\n     FROM CALENDAR\n              LEFT JOIN (SELECT DISTINCT C.ORDER_CUSTOMER_EMAIL AS CUSTOMER_ID\n                         FROM \"bdm_orders\" C) CLIENT);",
+                                    "----------------------------------------------------------------------------------------------------------------------------------------------------------\n--- RFM\n----------------------------------------------------------------------------------------------------------------------------------------------------------\n\nCREATE OR REPLACE TABLE RFM_TEMPORARY\nAS\nWITH SC AS\n         (SELECT SNAP.CUSTOMER_ID\n               , SNAP.SNAPSHOT_DATE\n               , MIN(MA.ORDER_DATE::DATE)                                            AS FIRST_SUCCEEDED_TRANSACTION_DATE\n               , MAX(MA.ORDER_DATE::DATE)                                            AS LAST_SUCCEEDED_TRANSACTION_DATE\n               --- Raw R\n               , DATEDIFF(DAY, LAST_SUCCEEDED_TRANSACTION_DATE, SNAPSHOT_DATE)       AS DAYS_SINCE\n               --- Raw F\n               , COUNT(CASE\n                           WHEN MA.ORDER_DATE::DATE >= ADD_MONTHS(SNAPSHOT_DATE, $M_REVENUE_MONTHS) AND\n                                (MA.ORDER_DATE::DATE < SNAPSHOT_DATE)\n                               THEN MA.ORDER_ID\n                 END)                                                                AS TX_COUNT_3M\n               --- Raw M\n               , SUM(CASE\n                         WHEN MA.ORDER_DATE::DATE >= ADD_MONTHS(SNAPSHOT_DATE, $M_REVENUE_MONTHS) AND\n                              (MA.ORDER_DATE::DATE < SNAPSHOT_DATE)\n                             THEN MA.ORDER_TOTAL_PRICE_WITHOUT_WAT\n                         ELSE 0\n                 END)                                                                AS REVENUE_SUM_3M\n\n               --- RFM score with quintile\n               , NTILE(5) OVER (PARTITION BY SNAPSHOT_DATE ORDER BY DAYS_SINCE DESC) AS RECENCY_NTILE_3M\n               , NTILE(5) OVER (PARTITION BY SNAPSHOT_DATE ORDER BY TX_COUNT_3M)     AS TX_COUNT_NTILE_3M\n               , NTILE(5) OVER (PARTITION BY SNAPSHOT_DATE ORDER BY REVENUE_SUM_3M)  AS REVENUE_SUM_NTILE_3M\n\n               --- Final Score\n               , TO_VARCHAR(RECENCY_NTILE_3M) || TO_VARCHAR(TX_COUNT_NTILE_3M) ||\n                 TO_VARCHAR(REVENUE_SUM_NTILE_3M)                                    AS FINAL_SCORE\n\n          FROM \"bdm_orders\" MA\n                   INNER JOIN CALENDAR_DAILY SNAP\n                              ON MA.ORDER_CUSTOMER_EMAIL = SNAP.CUSTOMER_ID AND MA.ORDER_DATE::DATE < SNAP.SNAPSHOT_DATE\n          GROUP BY SNAP.CUSTOMER_ID, SNAP.SNAPSHOT_DATE\n          HAVING LAST_SUCCEEDED_TRANSACTION_DATE >= DATEADD(MONTH, $R_MONTHS, SNAP.SNAPSHOT_DATE)\n         )\nSELECT S.CUSTOMER_ID\n     , S.SNAPSHOT_DATE\n     , S.FIRST_SUCCEEDED_TRANSACTION_DATE\n     , S.LAST_SUCCEEDED_TRANSACTION_DATE\n     , S.DAYS_SINCE           --- raw r\n     , S.TX_COUNT_3M          --- raw f\n     , S.REVENUE_SUM_3M       --- raw m\n     , S.RECENCY_NTILE_3M     --- r quantile\n     , S.TX_COUNT_NTILE_3M    --- quantile f\n     , S.REVENUE_SUM_NTILE_3M --- quantile m\n     , S.FINAL_SCORE\n     , MAP.SEGMENT\n     , MAP.SEGMENT_NR\n     , LEAD(SEGMENT) OVER (PARTITION BY S.CUSTOMER_ID ORDER BY S.SNAPSHOT_DATE DESC)    AS PRE_SEG_1\n     , LEAD(SEGMENT_NR) OVER (PARTITION BY S.CUSTOMER_ID ORDER BY S.SNAPSHOT_DATE DESC) AS PRE_SEG_NUMBER_1\nFROM SC S\n         LEFT JOIN MAPPING_SEGMENT_RFM MAP\n                   ON S.FINAL_SCORE = MAP.SCORE;",
+                                    "CREATE OR REPLACE TABLE RFM_FINAL\nAS\nWITH RFM AS\n         (SELECT *\n          FROM RFM_TEMPORARY\n          WHERE SEGMENT != PRE_SEG_1\n          ORDER BY CUSTOMER_ID, SNAPSHOT_DATE DESC)\nSELECT CUSTOMER_ID\n     , SNAPSHOT_DATE\n     , DAYS_SINCE                           AS R_RAW\n     , RECENCY_NTILE_3M                     AS R_SCORE\n     , TX_COUNT_3M                          AS F_RAW\n     , TX_COUNT_NTILE_3M                    AS F_SCORE\n     , REVENUE_SUM_3M                       AS M_RAW\n     , REVENUE_SUM_NTILE_3M                 AS M_SCORE\n     , FINAL_SCORE\n     , SEGMENT\n     , SEGMENT_NR\n     , PRE_SEG_1\n     , PRE_SEG_NUMBER_1\n     , IFNULL(LEAD(RFM.SNAPSHOT_DATE) OVER (PARTITION BY RFM.CUSTOMER_ID ORDER BY RFM.SNAPSHOT_DATE) - SNAPSHOT_DATE,\n              CURRENT_DATE - SNAPSHOT_DATE) AS TIME_AS\n     , FIRST_SUCCEEDED_TRANSACTION_DATE\nFROM RFM;"
+                                ]
+                            }
+                        ]
+                    }
+                ]
+            },
+            "storage": {
+                "input": {
+                    "tables": [
+                        {
+                            "destination": "bdm_orders",
+                            "where_column": "",
+                            "where_values": [],
+                            "where_operator": "eq",
+                            "columns": [],
+                            "source_search": {
+                                "key": "bdm.scaffold.table.tag",
+                                "value": "ShoptetEcommerce.internal.outBdmOrders"
+                            }
+                        }
+                    ]
+                },
+                "output": {
+                    "tables": [
+                        {
+                            "destination": "out.c-ShoptetEcommerce.bdmRfm",
+                            "source": "RFM_FINAL"
+                        }
+                    ]
+                }
+            },
+            "processors": {
+                "after": [
+                    {
+                        "definition": {
+                            "component": "keboola.processor-add-metadata"
+                        },
+                        "parameters": {
+                            "tables": [
+                                {
+                                    "table": "RFM_FINAL",
+                                    "metadata": [
+                                        {
+                                            "key": "bdm.scaffold.table.tag",
+                                            "value": "ShoptetEcommerce.internal.outBdmRfm"
+                                        },
+                                        {
+                                            "key": "scaffold.id",
+                                            "value": "ShoptetEcommerce"
+                                        }
+                                    ]
+                                }
+                            ]
+                        }
+                    }
+                ]
+            }
+        }
+    }
+}

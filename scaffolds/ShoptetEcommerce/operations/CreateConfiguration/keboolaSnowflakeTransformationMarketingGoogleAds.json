@@ -1,0 +1,106 @@
+{
+    "componentId": "keboola.snowflake-transformation",
+    "payload": {
+        "name": "Marketing - GoogleAds",
+        "configuration": {
+            "parameters": {
+                "blocks": [
+                    {
+                        "name": "Transform data",
+                        "codes": [
+                            {
+                                "name": "Prepare google ads data in BDM_MARKETING_COSTS format",
+                                "script": [
+                                    "--GoogleAds campaigns source data\nCREATE TABLE \"bdm_marketing_campaign_costs\"\nAS\n    SELECT\n        \"Day\" || '-' || 'GoogleAds' || '-' || \"Campaign\" \"MARKETING_CAMPAIGN_COSTS_ID\"\n      , 'GoogleAds'                                      \"SOURCE\"\n      , \"Day\"                                            \"DATE\"\n      , \"Campaign\"                                       \"CAMPAIGN\"\n      , SUM(\"Impressions\")                               \"IMPRESSIONS\"\n      , SUM(\"Clicks\")                                    \"CLICKS\"\n      , SUM(\"Cost\") \/ 1000000                            \"COST\"\n    FROM \"CAMPAIGN_PERFORMANCE_REPORT\"\n    GROUP BY 1, 2, 3, 4;",
+                                    "--GoogleAds campaigns source data grouped by month\nCREATE TABLE \"bdm_marketing_campaign_costs_monthly\"\nAS\n    SELECT\n        LEFT(\"Day\", 7) || '-01-' || 'GoogleAds' || '-' || \"Campaign\" \"MARKETING_CAMPAIGN_COSTS_ID\"\n      , 'GoogleAds'                                                  \"SOURCE\"\n      , LEFT(\"Day\", 7) || '-01'                                      \"DATE\"\n      , \"Campaign\"                                                   \"CAMPAIGN\"\n      , SUM(\"Impressions\")                                           \"IMPRESSIONS\"\n      , SUM(\"Clicks\")                                                \"CLICKS\"\n      , SUM(\"Cost\") \/ 1000000                                        \"COST\"\n    FROM \"CAMPAIGN_PERFORMANCE_REPORT\"\n    GROUP BY 1, 2, 3, 4;"
+                                ]
+                            }
+                        ]
+                    }
+                ]
+            },
+            "storage": {
+                "input": {
+                    "tables": [
+                        {
+                            "destination": "CAMPAIGN_PERFORMANCE_REPORT",
+                            "where_column": "",
+                            "where_values": [],
+                            "where_operator": "eq",
+                            "columns": [],
+                            "source_search": {
+                                "key": "bdm.scaffold.table.tag",
+                                "value": "ShoptetEcommerce.internal.inKeboolaExAdwordsV201809CampaignPerformanceReport"
+                            }
+                        }
+                    ]
+                },
+                "output": {
+                    "tables": [
+                        {
+                            "destination": "out.c-ShoptetEcommerce.bdmMarketingCampaignCosts",
+                            "source": "bdm_marketing_campaign_costs",
+                            "primary_key": [
+                                "MARKETING_CAMPAIGN_COSTS_ID"
+                            ],
+                            "incremental": true,
+                            "delete_where_column": "",
+                            "delete_where_operator": "eq",
+                            "delete_where_values": []
+                        },
+                        {
+                            "destination": "out.c-ShoptetEcommerce.bdmMarketingCampaignCostsMonthly",
+                            "source": "bdm_marketing_campaign_costs_monthly",
+                            "primary_key": [
+                                "MARKETING_CAMPAIGN_COSTS_ID"
+                            ],
+                            "incremental": true,
+                            "delete_where_column": "",
+                            "delete_where_operator": "eq",
+                            "delete_where_values": []
+                        }
+                    ]
+                }
+            },
+            "processors": {
+                "after": [
+                    {
+                        "definition": {
+                            "component": "keboola.processor-add-metadata"
+                        },
+                        "parameters": {
+                            "tables": [
+                                {
+                                    "table": "bdm_marketing_campaign_costs",
+                                    "metadata": [
+                                        {
+                                            "key": "bdm.scaffold.table.tag",
+                                            "value": "ShoptetEcommerce.internal.outBdmMarketingCampaignCosts"
+                                        },
+                                        {
+                                            "key": "scaffold.id",
+                                            "value": "ShoptetEcommerce"
+                                        }
+                                    ]
+                                },
+                                {
+                                    "table": "bdm_marketing_campaign_costs_monthly",
+                                    "metadata": [
+                                        {
+                                            "key": "bdm.scaffold.table.tag",
+                                            "value": "ShoptetEcommerce.internal.outBdmMarketingCampaignCostsMonthly"
+                                        },
+                                        {
+                                            "key": "scaffold.id",
+                                            "value": "ShoptetEcommerce"
+                                        }
+                                    ]
+                                }
+                            ]
+                        }
+                    }
+                ]
+            }
+        }
+    }
+}

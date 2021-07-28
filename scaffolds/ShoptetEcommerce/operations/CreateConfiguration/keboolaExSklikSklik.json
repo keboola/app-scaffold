@@ -1,0 +1,106 @@
+{
+    "componentId": "keboola.ex-sklik",
+    "payload": {
+        "name": "Sklik",
+        "configuration": {
+            "parameters": {
+                "reports": [
+                    {
+                        "name": "sklik-campaigns",
+                        "resource": "campaigns",
+                        "displayColumns": "id, name, clicks, impressions, totalMoney, createDate, budget.name, budget.name, startDate",
+                        "displayOptions": "{ \"statGranularity\": \"daily\" }",
+                        "restrictionFilter": "{ \"dateFrom\": \"2020-01-01\" }"
+                    },
+                    {
+                        "name": "sklik-campaigns-monthly",
+                        "resource": "campaigns",
+                        "displayColumns": "id, name, clicks, impressions, totalMoney, createDate, budget.name, budget.name, startDate",
+                        "displayOptions": "{ \"statGranularity\": \"monthly\" }",
+                        "restrictionFilter": "{ \"dateFrom\": \"2018-01-01\" }"
+                    }
+                ],
+                "username": "",
+                "#password": ""
+            },
+            "processors": {
+                "after": [
+                    {
+                        "definition": {
+                            "component": "keboola.processor-add-metadata"
+                        },
+                        "parameters": {
+                            "tables": [
+                                {
+                                    "table": "accounts.csv",
+                                    "metadata": [
+                                        {
+                                            "key": "bdm.scaffold.table.tag",
+                                            "value": "ShoptetEcommerce.internal.inKeboolaExSklikAccounts"
+                                        },
+                                        {
+                                            "key": "scaffold.id",
+                                            "value": "ShoptetEcommerce"
+                                        }
+                                    ]
+                                },
+                                {
+                                    "table": "sklik-campaigns.csv",
+                                    "metadata": [
+                                        {
+                                            "key": "bdm.scaffold.table.tag",
+                                            "value": "ShoptetEcommerce.internal.inKeboolaExSklikSklikCampaigns"
+                                        },
+                                        {
+                                            "key": "scaffold.id",
+                                            "value": "ShoptetEcommerce"
+                                        }
+                                    ]
+                                },
+                                {
+                                    "table": "sklik-campaigns-stats.csv",
+                                    "metadata": [
+                                        {
+                                            "key": "bdm.scaffold.table.tag",
+                                            "value": "ShoptetEcommerce.internal.inKeboolaExSklikSklikCampaignsStats"
+                                        },
+                                        {
+                                            "key": "scaffold.id",
+                                            "value": "ShoptetEcommerce"
+                                        }
+                                    ]
+                                },
+                                {
+                                    "table": "sklik-campaigns-monthly.csv",
+                                    "metadata": [
+                                        {
+                                            "key": "bdm.scaffold.table.tag",
+                                            "value": "ShoptetEcommerce.internal.inKeboolaExSklikSklikCampaignsMonthly"
+                                        },
+                                        {
+                                            "key": "scaffold.id",
+                                            "value": "ShoptetEcommerce"
+                                        }
+                                    ]
+                                },
+                                {
+                                    "table": "sklik-campaigns-monthly-stats.csv",
+                                    "metadata": [
+                                        {
+                                            "key": "bdm.scaffold.table.tag",
+                                            "value": "ShoptetEcommerce.internal.inKeboolaExSklikSklikCampaignsMonthlyStats"
+                                        },
+                                        {
+                                            "key": "scaffold.id",
+                                            "value": "ShoptetEcommerce"
+                                        }
+                                    ]
+                                }
+                            ]
+                        }
+                    }
+                ]
+            }
+        }
+    }
+}
