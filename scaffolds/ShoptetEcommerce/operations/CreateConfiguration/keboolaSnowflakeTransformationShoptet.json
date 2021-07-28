@@ -1,0 +1,375 @@
+{
+    "componentId": "keboola.snowflake-transformation",
+    "payload": {
+        "name": "Shoptet",
+        "configuration": {
+            "parameters": {
+                "blocks": [
+                    {
+                        "name": "Gather data",
+                        "codes": [
+                            {
+                                "name": "Orders, Order lines",
+                                "script": [
+                                    "--BDM_ORDERS\n\nCREATE TABLE \"order_totals\" AS\nSELECT O.\"code\"                                             AS ORDER_ID\n     , SUM(REPLACE(O.\"itemTotalPriceWithVat\", ',', '.'))    AS ORDER_LINE_PRICE_WITH_VAT\n     , SUM(REPLACE(O.\"itemTotalPriceWithoutVat\", ',', '.')) AS ORDER_LINE_PRICE_WITHOUT_VAT\n     , SUM(REPLACE(O.\"itemTotalPriceVat\", ',', '.'))        AS ORDER_LINE_PRICE_VAT\n     , SUM(REPLACE(O.\"itemVatRate\", ',', '.'))              AS ORDER_LINE_VAT_RATE\nFROM \"orders\" O\nGROUP BY 1;",
+                                    "CREATE TABLE \"bdm_orders\" AS\nSELECT DISTINCT O.\"code\"                                       AS ORDER_ID\n              , O.\"date\"                                       AS ORDER_DATE\n              , O.\"statusName\"                                 AS ORDER_STATUS\n              , IFF(O.\"statusName\" = 'Dokon\u010deno', TRUE, FALSE) AS IS_SUCESSFUL\n              , FALSE                                          AS IS_FIRST_PURCHASE\n              , O.\"currency\"                                   AS ORDER_CURRENCY\n              , O.\"exchangeRate\"                               AS ORDER_CURRENCY_FX_RATE\n              , O.\"email\"                                      AS ORDER_CUSTOMER_EMAIL\n              -- to be added later\n              , ''::TEXT                                       AS CUSTOMER_ID\n              , ''::TEXT                                       AS CUSTOMER_REGULARITY_TYPE\n              , 0::INT                                         AS DAYS_SINCE_PREVIOUS_ORDER\n\n              , O.\"remark\"                                     AS ORDER_REMARK\n              , O.\"shopRemark\"                                 AS ORDER_SHOP_REMARK\n              , O.\"packageNumber\"                              AS ORDER_PACKAGE_NUMBER\n              , O.\"varchar1\"                                   AS ORDER_NOTE1\n              , O.\"varchar2\"                                   AS ORDER_NOTE2\n              , O.\"varchar3\"                                   AS ORDER_NOTE3\n              , O.\"text1\"                                      AS ORDER_NOTE4\n              , O.\"text2\"                                      AS ORDER_NOTE5\n              , O.\"text3\"                                      AS ORDER_NOTE6\n              , O.\"weight\"                                     AS ORDER_WEIGHT\n              -- If email is empty it is order made directly by cashier\n              , IFF(O.\"email\" = '', NULL, O.\"referer\")         AS REFERER\n              , PARSE_URL(O.\"referer\"):host                    AS CHANNEL\n              , CASE\n                    WHEN CONTAINS(CHANNEL, 'google')\n                        THEN 'Google'\n                    WHEN CONTAINS(CHANNEL, 'seznam')\n                        THEN 'Seznam'\n                    WHEN CONTAINS(CHANNEL, 'facebook')\n                        THEN 'Facebook'\n                    ELSE CHANNEL END                           AS SOURCE\n              , O.\"customerGroupName\"                          AS CUSTOMER_GROUP_NAME\n              , O.\"customerGroupType\"                          AS CUSTOMER_GROUP_TYPE\n              , O.\"customerType\"                               AS CUSTOMER_TYPE\n              , O.\"billCity\"                                   AS BILLING_CITY\n              , O.\"billCountryName\"                            AS BILLING_COUNTRY\n              , O.\"billZip\"                                    AS BILLING_ZIP\n              , O.\"deliveryCity\"                               AS SHIPPING_CITY\n              , O.\"deliveryCountryName\"                        AS SHIPPING_COUNTRY\n              , O.\"deliveryZip\"                                AS SHIPPING_ZIP\n              -- to be added later\n              , ''::STRING                                     AS BILLING_TYPE\n              , ''::STRING                                     AS SHIPPING_TYPE\n              , REPLACE(O.\"totalPriceWithVat\", ',', '.')       AS ORDER_TOTAL_PRICE_WITH_WAT\n              , REPLACE(O.\"totalPriceWithoutVat\", ',', '.')    AS ORDER_TOTAL_PRICE_WITHOUT_WAT\n              , REPLACE(O.\"totalPriceVat\", ',', '.')           AS ORDER_TOTAL_PRICE_VAT\n              , REPLACE(O.\"rounding\", ',', '.')                AS ORDER_PRICE_ROUNDING\n              , REPLACE(O.\"priceToPay\", ',', '.')              AS ORDER_TOTAL_PRICE_TO_PAY\n              , REPLACE(O.\"paid\", ',', '.')                    AS ORDER_TOTAL_PRICE_PAID\n\n              , OT.ORDER_LINE_PRICE_WITH_VAT                   AS ORDER_LINE_PRICE_WITH_VAT\n              , OT.ORDER_LINE_PRICE_WITHOUT_VAT                AS ORDER_LINE_PRICE_WITHOUT_VAT\n              , OT.ORDER_LINE_PRICE_VAT                        AS ORDER_LINE_PRICE_VAT\n              , OT.ORDER_LINE_VAT_RATE                         AS ORDER_LINE_VAT_RATE\nFROM \"orders\" O\n         JOIN \"order_totals\" OT ON O.\"code\" = OT.ORDER_ID;",
+                                    "--BDM_ORDER_LINES\nCREATE TABLE \"bdm_order_lines\" AS\nSELECT O.\"code\"                                                                          AS ORDER_ID\n     -- TODO: review the logic, what if there's product change or what if there's more than 1000 items? What if price changes?\n     -- Or what if there's 10 items with the same price.\n     , O.\"code\" || '-' || RIGHT('000' || ROW_NUMBER() OVER (PARTITION BY O.\"code\" ORDER BY \"itemAmount\" DESC),\n                                4)                                                       AS ORDER_LINE_ID\n     , O.\"date\"                                                                          AS ORDER_DATE\n     , O.\"itemCode\"                                                                      AS ORDER_LINE_PRODUCT_ID\n     , O.\"orderItemType\"                                                                 AS ORDER_ITEM_TYPE\n     , \"itemName\"\n     , O.\"orderItemDiscountPercent\"                                                      AS DISCOUNT_PERCENT\n     , REPLACE(IFNULL(NULLIF(O.\"itemAmount\", ''), '0'), ',',\n               '.')::DECIMAL(22, 5)                                                      AS ORDER_LINE_AMOUNT\n     , REPLACE(IFNULL(NULLIF(O.\"itemTotalPriceWithVat\", ''), '0'), ',',\n               '.')::DECIMAL(22, 5)                                                      AS ORDER_LINE_PRICE_WITH_VAT\n     , REPLACE(IFNULL(NULLIF(O.\"itemTotalPriceWithoutVat\", ''), '0'), ',',\n               '.')::DECIMAL(22, 5)                                                      AS ORDER_LINE_PRICE_WITHOUT_VAT\n     , REPLACE(IFNULL(NULLIF(O.\"itemTotalPriceVat\", ''), '0'), ',', '.')::DECIMAL(22, 5) AS ORDER_LINE_PRICE_VAT\n     , REPLACE(IFNULL(NULLIF(O.\"itemVatRate\", ''), '0'), ',', '.')::DECIMAL(22, 5)       AS ORDER_LINE_VAT_RATE\n     , REPLACE(IFNULL(NULLIF(O.\"orderItemTotalPurchasePrice\", ''), '0'), ',',\n               '.')::DECIMAL(22, 5)                                                      AS LINE_PURCHASE_PRICE\nFROM \"orders\" O;",
+                                    "--- Get billing and shipping details\n\nCREATE TABLE \"bdm_shipping_type\" AS\nSELECT DISTINCT \"itemCode\" AS SHIPPING_TYPE_ID\n              , \"itemName\" AS NAME\nFROM \"orders\"\nWHERE \"orderItemType\" = 'shipping';",
+                                    "CREATE TABLE \"bdm_billing_type\" AS\nSELECT DISTINCT \"itemCode\" AS BILLING_TYPE_ID\n              , \"itemName\" AS NAME\nFROM \"orders\"\nWHERE \"orderItemType\" = 'billing';",
+                                    "--- remove product ids for billing shipping\nUPDATE \"bdm_order_lines\"\nSET ORDER_LINE_PRODUCT_ID='BILLING'\nWHERE ORDER_ITEM_TYPE = 'billing';",
+                                    "UPDATE \"bdm_order_lines\"\nSET ORDER_LINE_PRODUCT_ID='SHIPPING'\nWHERE ORDER_ITEM_TYPE = 'shipping';",
+                                    "--- assign shipping, billing to order level\nCREATE TABLE \"order_billing_types\" AS\nSELECT DISTINCT \"code\"                   AS ORDER_ID\n              , LISTAGG(\"itemName\", ';') AS BILLING_TYPE\nFROM \"orders\"\nWHERE \"orderItemType\" IN ('billing')\nGROUP BY 1;",
+                                    "CREATE TABLE \"order_shipping_types\" AS\nSELECT DISTINCT \"code\"                   AS ORDER_ID\n              , LISTAGG(\"itemName\", ';') AS SHIPPING_TYPE\nFROM \"orders\"\nWHERE \"orderItemType\" IN ('shipping')\nGROUP BY 1;",
+                                    "UPDATE \"bdm_orders\" O\nSET O.SHIPPING_TYPE = ST.SHIPPING_TYPE\nFROM \"order_shipping_types\" ST\nWHERE O.ORDER_ID = ST.ORDER_ID;",
+                                    "UPDATE \"bdm_orders\" O\nSET O.BILLING_TYPE = ST.BILLING_TYPE\nFROM \"order_billing_types\" ST\nWHERE O.ORDER_ID = ST.ORDER_ID;"
+                                ]
+                            },
+                            {
+                                "name": "Customers",
+                                "script": [
+                                    "--BDM_CUSTOMERS\nCREATE TABLE \"bdm_customers\" AS\nSELECT C.\"accountGuid\"      AS CUSTOMER_ID\n     , SHA2(C.\"email\", 224) AS CUSTOMER_EMAIL_HASH\n     , C.\"email\"            AS CUSTOMER_EMAIL\n     , C.\"accountGuid\"      AS CUSTOMER_ACCOUNT_GUID\n     , C.\"billingCity\"      AS CUSTOMER_BILLING_CITY\n     , C.\"billingCountry\"   AS CUSTOMER_BILLING_COUNTRY\n     , C.\"shippingCity\"     AS CUSTOMER_SHIPPING_CITY\n     , C.\"shippingCountry\"  AS CUSTOMER_SHIPPING_COUNTRY\n     , C.\"pricelistName\"    AS CUSTOMER_PRICE_LIST\n     , C.\"customerGroup\"    AS CUSTOMER_GROUP\nFROM \"customers\" C;",
+                                    "--- try to match customars based on email\nCREATE TABLE \"customer_ids\" AS\nSELECT DISTINCT O.\"email\"\n              , C.CUSTOMER_ID\nFROM \"orders\" O\n         JOIN \"bdm_customers\" C\n              ON O.\"email\" = C.CUSTOMER_EMAIL\n    QUALIFY ROW_NUMBER() OVER (PARTITION BY \"email\" ORDER BY C.CUSTOMER_ID) = 1\n;",
+                                    "-- UPDATE ORDERS\n\nUPDATE \"bdm_orders\" O\nSET O.CUSTOMER_ID = C.CUSTOMER_ID\nFROM \"customer_ids\" C\nWHERE O.ORDER_CUSTOMER_EMAIL = C.\"email\";",
+                                    "CREATE TABLE \"order_customer_categories\" AS\nSELECT O.ORDER_ID\n     , MIN(O.ORDER_DATE::DATE) OVER (PARTITION BY O.ORDER_CUSTOMER_EMAIL)                                                        AS FIRST_ORDER_DATE\n     , MAX(O.ORDER_DATE::DATE) OVER (PARTITION BY O.ORDER_CUSTOMER_EMAIL)                                                        AS LAST_ORDER_DATE\n     , DATEDIFF(DAY, FIRST_ORDER_DATE, O.ORDER_DATE::DATE)                                                                       AS DAYS_SINCE_FIRST_ORDER\n\n     , DATEDIFF(DAY,\n                LAG(O.ORDER_DATE) OVER (PARTITION BY O.ORDER_CUSTOMER_EMAIL ORDER BY O.ORDER_DATE),\n                O.ORDER_DATE\n    )                                                                                                                            AS DIFF\n     , CASE\n           WHEN DIFF > 90 THEN '110_Q+ since previous order'\n           WHEN DIFF > 60 THEN '100_2M-Q since previous order'\n           WHEN DIFF > 30 THEN '090_1M-2M since previous order'\n           WHEN DIFF > 7 THEN '080_7D-1M since previous order'\n           WHEN DIFF > 6 THEN '070_7D since previous order'\n           WHEN DIFF > 5 THEN '060_6D since previous order'\n           WHEN DIFF > 4 THEN '050_5D since previous order'\n           WHEN DIFF > 3 THEN '040_4D since previous order'\n           WHEN DIFF > 2 THEN '030_3D since previous order'\n           WHEN DIFF > 1 THEN '020_2D since previous order'\n           WHEN DIFF > 0 THEN '010_1D since previous order'\n           ELSE 'N\/A'\n    END                                                                                                                          AS PREVIOUS_ORDER\n     , (SELECT COUNT(1)\n        FROM \"bdm_orders\" IO\n        WHERE IO.ORDER_CUSTOMER_EMAIL = O.ORDER_CUSTOMER_EMAIL)                                                                  AS ORDER_COUNT\n     , COUNT(*)\n             OVER (PARTITION BY ORDER_CUSTOMER_EMAIL ORDER BY ORDER_DATE::DATE ROWS BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW) AS ORDER_COUNT_ROLL\n     , SUM(ORDER_TOTAL_PRICE_WITHOUT_WAT)\n           OVER (PARTITION BY ORDER_CUSTOMER_EMAIL ORDER BY ORDER_DATE::DATE ROWS BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW)   AS ORDER_PRICE_ROLL\n     , CASE\n           WHEN ORDER_COUNT_ROLL >= 14 THEN '15+ total orders'\n           WHEN ORDER_COUNT_ROLL > 9 THEN '10-14 total orders'\n           WHEN ORDER_COUNT_ROLL > 5 THEN '6-9 total orders'\n           WHEN ORDER_COUNT_ROLL > 3 THEN '4-5 total orders'\n           WHEN ORDER_COUNT_ROLL = 3 THEN '3 total orders'\n           WHEN ORDER_COUNT_ROLL = 2 THEN '2 total orders'\n           WHEN ORDER_COUNT_ROLL = 1 THEN 'New Customer'\n           ELSE 'new_customer' END                                                                                               AS CATEGORY_BY_ORDER_COUNT\n     , ORDER_CUSTOMER_EMAIL\n     , ORDER_TOTAL_PRICE_VAT\nFROM \"bdm_orders\" O\nWHERE ORDER_CUSTOMER_EMAIL <> ''\nORDER BY ORDER_CUSTOMER_EMAIL, ORDER_DATE\n;",
+                                    "UPDATE \"order_customer_categories\"\nSET DIFF=0\nWHERE DIFF IS NULL;",
+                                    "--- UPDATE CUSTOMER CATEGORIES AT THE TIME OF TRANSACTION\nUPDATE \"bdm_orders\" O\nSET O.CUSTOMER_REGULARITY_TYPE = C.CATEGORY_BY_ORDER_COUNT\nFROM \"order_customer_categories\" C\nWHERE O.ORDER_ID = C.ORDER_ID;",
+                                    "UPDATE \"bdm_orders\" O\nSET O.DAYS_SINCE_PREVIOUS_ORDER = C.DIFF\nFROM \"order_customer_categories\" C\nWHERE O.ORDER_ID = C.ORDER_ID;",
+                                    "UPDATE \"bdm_orders\" O\nSET O.IS_FIRST_PURCHASE = TRUE\nFROM \"order_customer_categories\" C\nWHERE O.ORDER_ID = C.ORDER_ID\n  AND C.ORDER_COUNT_ROLL = 1;"
+                                ]
+                            },
+                            {
+                                "name": "Products",
+                                "script": [
+                                    "--BDM_PRODUCTS\n\nCREATE TABLE \"bdm_products\" AS\nSELECT P.\"code\"                                                                            AS PRODUCT_ID\n     , P.\"code\"                                                                            AS PRODUCT_CODE\n     , P.\"pairCode\"                                                                        AS PRODUCT_CODE_2\n     , P.\"guid\"                                                                            AS PRODUCT_GUID\n     , P.\"name\"                                                                            AS PRODUCT_NAME\n     , P.\"manufacturer\"                                                                    AS PRODUCT_MANUFACTURER\n     , P.\"itemType\"                                                                        AS PRODUCT_TYPE\n     , P.\"ean\"                                                                             AS PRODUCT_EAN\n     , REPLACE(NULLIF(P.\"price\", ''), ',', '.')::DECIMAL(19, 2)                            AS PRODUCT_PRICE\n     , REPLACE(NULLIF(P.\"standardPrice\", ''), ',', '.')::DECIMAL(19, 2)                    AS PRODUCT_STANDARD_PRICE\n     , REPLACE(NULLIF(P.\"purchasePrice\", ''), ',', '.')::DECIMAL(19, 2)                    AS PRODUCT_PURCHASE_PRICE\n     , P.\"variantBarva\"                                                                   AS PRODUCT_COLOR\n     , P.\"variantVelikost\"                                                                AS PRODUCT_SIZE\n     , P.\"stock\"                                                                           AS PRODUCT_STOCK_AMOUNT\n     , P.\"defaultCategory\"                                                                 AS CATEGORY\n     , P.\"categoryText\"                                                                    AS CATEGORY_TEXT\n     , (SELECT \"shop_base_url\" FROM \"shoptet\" LIMIT 1) || '\/admin\/produkty-detail\/?id=' || P.\"code\" AS PRODUCT_URL\n     , 'false'                                                                             AS IS_DELETED\nFROM \"products\" P;",
+                                    "--- ADD artificial\nINSERT INTO \"bdm_products\"\nSELECT 'BILLING'      AS PRODUCT_ID\n     , 'BILLING'      AS PRODUCT_CODE\n     , 'N\/A'          AS PRODUCT_CODE_2\n     , 'N\/A'          AS PRODUCT_GUID\n     , 'billing item' AS PRODUCT_NAME\n     , 'N\/A'          AS PRODUCT_MANUFACTURER\n     , 'billing'      AS PRODUCT_TYPE\n     , 'N\/A'          AS PRODUCT_EAN\n     , NULL           AS PRODUCT_PRICE\n     , NULL           AS PRODUCT_STANDARD_PRICE\n     , NULL           AS PRODUCT_PURCHASE_PRICE\n     , 'N\/A'          AS PRODUCT_COLOR\n     , 'N\/A'          AS PRODUCT_SIZE\n     , NULL           AS PRODUCT_STOCK_AMOUNT\n     , 'N\/A'          AS CATEGORY\n     , 'N\/A'          AS CATEGORY_TEXT\n     , 'N\/A'          AS PRODUCT_URL\n     , 'false'        AS IS_DELETED;",
+                                    "INSERT INTO \"bdm_products\"\nSELECT 'SHIPPING'      AS PRODUCT_ID\n     , 'SHIPPING'      AS PRODUCT_CODE\n     , 'N\/A'           AS PRODUCT_CODE_2\n     , 'N\/A'           AS PRODUCT_GUID\n     , 'shipping item' AS PRODUCT_NAME\n     , 'N\/A'           AS PRODUCT_MANUFACTURER\n     , 'shipping'      AS PRODUCT_TYPE\n     , 'N\/A'           AS PRODUCT_EAN\n     , NULL            AS PRODUCT_PRICE\n     , NULL            AS PRODUCT_STANDARD_PRICE\n     , NULL            AS PRODUCT_PURCHASE_PRICE\n     , 'N\/A'           AS PRODUCT_COLOR\n     , 'N\/A'           AS PRODUCT_SIZE\n     , NULL            AS PRODUCT_STOCK_AMOUNT\n     , 'N\/A'           AS CATEGORY\n     , 'N\/A'           AS CATEGORY_TEXT\n     , 'N\/A'           AS PRODUCT_URL\n     , 'false'         AS IS_DELETED;",
+                                    "--- ADD missing \/ deleted items\n\nCREATE TABLE \"deleted_products\" AS\nSELECT DISTINCT \"itemCode\"            AS PRODUCT_ID\n              , \"orderItemType\"       AS PRODUCT_TYPE\n              , ANY_VALUE(\"itemName\") AS PRODUCT_NAME\nFROM \"orders\" O\n         LEFT JOIN \"products\" P\n                   ON O.\"itemCode\" = P.\"code\"\nWHERE O.\"orderItemType\" NOT IN ('shipping', 'billing')\n  AND P.\"code\" IS NULL\nGROUP BY 1, 2\n;",
+                                    "INSERT INTO \"bdm_products\"\nSELECT DP.PRODUCT_ID   AS PRODUCT_ID\n     , DP.PRODUCT_ID   AS PRODUCT_CODE\n     , 'N\/A'           AS PRODUCT_CODE_2\n     , 'N\/A'           AS PRODUCT_GUID\n     , DP.PRODUCT_NAME AS PRODUCT_NAME\n     , 'N\/A'           AS PRODUCT_MANUFACTURER\n     , DP.PRODUCT_TYPE AS PRODUCT_TYPE\n     , 'N\/A'           AS PRODUCT_EAN\n     , NULL            AS PRODUCT_PRICE\n     , NULL            AS PRODUCT_STANDARD_PRICE\n     , NULL            AS PRODUCT_PURCHASE_PRICE\n     , 'N\/A'           AS PRODUCT_COLOR\n     , 'N\/A'           AS PRODUCT_SIZE\n     , NULL            AS PRODUCT_STOCK_AMOUNT\n     , 'N\/A'           AS CATEGORY\n     , 'N\/A'           AS CATEGORY_TEXT\n     , 'N\/A'           AS PRODUCT_URL\n     , 'true'          AS IS_DELETED\nFROM \"deleted_products\" DP\n    QUALIFY ROW_NUMBER() OVER (PARTITION BY DP.PRODUCT_ID ORDER BY DP.PRODUCT_TYPE) = 1;",
+                                    "-- some do not have code\nUPDATE \"bdm_products\"\nSET PRODUCT_ID = 'N\/A'\nWHERE PRODUCT_ID = '';"
+                                ]
+                            }
+                        ]
+                    },
+                    {
+                        "name": "Standalone Analysis",
+                        "codes": [
+                            {
+                                "name": "CLV by count of orders (ANALYZE_CLV_BY_ORDER_COUNT)",
+                                "script": [
+                                    "-- rozpeti objednavek 2\nCREATE TABLE \"analyze_clv_by_order_count\" AS\nWITH PREVIOUS_ORDER_CATEGORY AS (\n    SELECT O.ORDER_ID,\n           DATEDIFF(DAY,\n                    LAG(O.ORDER_DATE) OVER (PARTITION BY O.ORDER_CUSTOMER_EMAIL ORDER BY O.ORDER_DATE),\n                    O.ORDER_DATE\n               )   AS                                                                                  DIFF,\n           CASE\n               WHEN DIFF > 90 THEN '110_Q+ since previous order'\n               WHEN DIFF > 60 THEN '100_2M-Q since previous order'\n               WHEN DIFF > 30 THEN '090_1M-2M since previous order'\n               WHEN DIFF > 7 THEN '080_7D-1M since previous order'\n               WHEN DIFF > 6 THEN '070_7D since previous order'\n               WHEN DIFF > 5 THEN '060_6D since previous order'\n               WHEN DIFF > 4 THEN '050_5D since previous order'\n               WHEN DIFF > 3 THEN '040_4D since previous order'\n               WHEN DIFF > 2 THEN '030_3D since previous order'\n               WHEN DIFF > 1 THEN '020_2D since previous order'\n               WHEN DIFF > 0 THEN '010_1D since previous order'\n               ELSE 'N\/A'\n               END AS                                                                                  PREVIOUS_ORDER,\n           (SELECT COUNT(1) FROM \"bdm_orders\" IO WHERE IO.ORDER_CUSTOMER_EMAIL = O.ORDER_CUSTOMER_EMAIL) ORDER_COUNT,\n           ORDER_CUSTOMER_EMAIL,\n           ORDER_TOTAL_PRICE_VAT\n    FROM \"bdm_orders\" O\n    WHERE ORDER_CUSTOMER_EMAIL <> '')\n\nSELECT CASE\n           WHEN ORDER_COUNT >= 14 THEN '07   15+ total orders'\n           WHEN ORDER_COUNT > 9 THEN '06 10-14 total orders'\n           WHEN ORDER_COUNT > 5 THEN '05   6-9 total orders'\n           WHEN ORDER_COUNT > 3 THEN '04   4-5 total orders'\n           WHEN ORDER_COUNT = 3 THEN '03     3 total orders'\n           WHEN ORDER_COUNT = 2 THEN '02     2 total orders'\n           ELSE '01     1 order only' END                                CUSTOMER_CATEGORY_BY_ORDER_COUNT\n     , COUNT(1)                                                          ORDERS\n     , COUNT(DISTINCT ORDER_CUSTOMER_EMAIL)                              UNIQUE_CUTOMERS\n     , SUM(ORDER_TOTAL_PRICE_VAT) \/ COUNT(DISTINCT ORDER_CUSTOMER_EMAIL) AVG_CLV\n     , SUM(ORDER_TOTAL_PRICE_VAT)                                        ORDER_TOTAL_PRICE_VAT\n     , AVG(ORDER_TOTAL_PRICE_VAT)                                        AVG_ORDER_PRICE\nFROM PREVIOUS_ORDER_CATEGORY\nGROUP BY CUSTOMER_CATEGORY_BY_ORDER_COUNT\nORDER BY CUSTOMER_CATEGORY_BY_ORDER_COUNT;"
+                                ]
+                            },
+                            {
+                                "name": "CLV by time from previous order (ANALYZE_CLV_BY_TIME_FROM_PREVIOUS_ORDER)",
+                                "script": [
+                                    "create or replace table \"analyze_clv_by_time_from_previous_order\" as\nwith previous_order_category as (\nselect o.ORDER_ID,\n       datediff(day,\n                lag(o.ORDER_DATE) over (partition by o.ORDER_CUSTOMER_EMAIL order by o.ORDER_DATE),\n                o.ORDER_DATE\n               ) as diff,\n       case when diff > 90 then '110_Q+ since previous order'\n            when diff > 60 then '100_2M-Q since previous order'\n            when diff > 30 then '090_1M-2M since previous order'\n            when diff >  7 then '080_7D-1M since previous order'\n            when diff >  6 then '070_7D since previous order'\n            when diff >  5 then '060_6D since previous order'\n            when diff >  4 then '050_5D since previous order'\n            when diff >  3 then '040_4D since previous order'\n            when diff >  2 then '030_3D since previous order'\n            when diff >  1 then '020_2D since previous order'\n            when diff >  0 then '010_1D since previous order'\n            ELSE 'N\/A'\n        end as previous_order,\n       (select count(1) from \"bdm_orders\" io where io.ORDER_CUSTOMER_EMAIL = o.ORDER_CUSTOMER_EMAIL) order_count,\n       ORDER_CUSTOMER_EMAIL,\n        ORDER_TOTAL_PRICE_VAT\nfrom \"bdm_orders\" o\nwhere ORDER_CUSTOMER_EMAIL <> '')\n\nselect\n       previous_order time_from_previous_order\n     , count(1) orders\n     , count(distinct ORDER_CUSTOMER_EMAIL) unique_cutomers\n     , sum(ORDER_TOTAL_PRICE_VAT) \/ count(distinct ORDER_CUSTOMER_EMAIL) AVG_CLV\n     , sum(ORDER_TOTAL_PRICE_VAT) ORDER_TOTAL_PRICE_VAT\n     , avg(ORDER_TOTAL_PRICE_VAT) AVG_ORDER_PRICE\nfrom previous_order_category\ngroup by previous_order\norder by previous_order;"
+                                ]
+                            }
+                        ]
+                    },
+                    {
+                        "name": "Data Helth Checks",
+                        "codes": [
+                            {
+                                "name": "Duplicities",
+                                "script": [
+                                    "CREATE OR REPLACE TABLE \"data_quality_check\"\n(\n    DATA_SOURCE STRING,\n    ENTITY      STRING,\n    ERROR_TYPE  STRING,\n    DESCRIPTION STRING\n);",
+                                    "INSERT INTO \"data_quality_check\"\n    (DATA_SOURCE, ENTITY, ERROR_TYPE, DESCRIPTION)\nSELECT 'sklad'                                                       AS DATA_SOURCE\n     , 'stocks'                                                      AS ENTITY\n     , 'duplicities'                                                 AS ERROR_TYPE\n     , 'Duplicated itemName:' || S1.\"itemName\" || ' found in sklad.' AS DESCRIPTION\nFROM \"stocks\" S1\nWHERE \"itemName\" IN\n      (\n          SELECT S2.\"itemName\"\n          FROM \"stocks\" S2\n          GROUP BY S2.\"itemName\"\n          HAVING COUNT(1) > 1\n      );",
+                                    "INSERT INTO \"data_quality_check\"\n    (DATA_SOURCE, ENTITY, ERROR_TYPE, DESCRIPTION)\nSELECT 'sklad'                                                       AS DATA_SOURCE\n     , 'stocks'                                                      AS ENTITY\n     , 'duplicities'                                                 AS ERROR_TYPE\n     , 'Duplicated itemCode:' || S1.\"itemCode\" || ' found in sklad.' AS DESCRIPTION\nFROM \"stocks\" S1\nWHERE \"itemCode\" IN\n      (\n          SELECT S2.\"itemCode\"\n          FROM \"stocks\" S2\n          GROUP BY S2.\"itemCode\"\n          HAVING COUNT(1) > 1\n      );"
+                                ]
+                            }
+                        ]
+                    },
+                    {
+                        "name": "Analytics",
+                        "codes": [
+                            {
+                                "name": "Compute margin per product over time",
+                                "script": [
+                                    "create table \"bdm_product_margin_over_time\" as\nselect ORDER_DATE::date ORDER_DATE\n     , ORDER_LINE_PRODUCT_ID PRODUCT_ID\n     , avg((ORDER_LINE_PRICE_WITH_VAT - LINE_PURCHASE_PRICE)\/ORDER_LINE_AMOUNT) AVG_ORDER_LINE_MARGIN\nfrom \"bdm_order_lines\"\nwhere ORDER_LINE_PRICE_WITH_VAT - LINE_PURCHASE_PRICE <> 0\ngroup by 1,2\norder by ORDER_DATE, PRODUCT_ID;"
+                                ]
+                            }
+                        ]
+                    },
+                    {
+                        "name": "Block 5",
+                        "codes": [
+                            {
+                                "name": "create shoptet",
+                                "script": [
+                                    "CREATE TABLE \"out_shoptet\" AS\nSELECT \"shop_name\" NAME, \"shop_base_url\" BASE_URL, NULL DOMAIN\nFROM \"shoptet\";"
+                                ]
+                            }
+                        ]
+                    }
+                ]
+            },
+            "storage": {
+                "input": {
+                    "tables": [
+                        {
+                            "destination": "shoptet",
+                            "where_column": "",
+                            "where_values": [],
+                            "where_operator": "eq",
+                            "columns": [],
+                            "source_search": {
+                                "key": "bdm.scaffold.table.tag",
+                                "value": "ShoptetEcommerce.internal.inKdsTeamExShoptetPermalinkShoptet"
+                            }
+                        },
+                        {
+                            "destination": "customers",
+                            "where_column": "",
+                            "where_values": [],
+                            "where_operator": "eq",
+                            "columns": [],
+                            "source_search": {
+                                "key": "bdm.scaffold.table.tag",
+                                "value": "ShoptetEcommerce.internal.inKdsTeamExShoptetPermalinkCustomers"
+                            }
+                        },
+                        {
+                            "destination": "stocks",
+                            "where_column": "",
+                            "where_values": [],
+                            "where_operator": "eq",
+                            "columns": [],
+                            "source_search": {
+                                "key": "bdm.scaffold.table.tag",
+                                "value": "ShoptetEcommerce.internal.inKdsTeamExShoptetPermalinkStocks"
+                            }
+                        },
+                        {
+                            "destination": "products",
+                            "where_column": "",
+                            "where_values": [],
+                            "where_operator": "eq",
+                            "columns": [],
+                            "source_search": {
+                                "key": "bdm.scaffold.table.tag",
+                                "value": "ShoptetEcommerce.internal.inKdsTeamExShoptetPermalinkProducts"
+                            }
+                        },
+                        {
+                            "destination": "orders",
+                            "where_column": "",
+                            "where_values": [],
+                            "where_operator": "eq",
+                            "columns": [],
+                            "source_search": {
+                                "key": "bdm.scaffold.table.tag",
+                                "value": "ShoptetEcommerce.internal.inKdsTeamExShoptetPermalinkOrders"
+                            }
+                        }
+                    ]
+                },
+                "output": {
+                    "tables": [
+                        {
+                            "destination": "out.c-ShoptetEcommerce.bdmCustomers",
+                            "source": "bdm_customers",
+                            "primary_key": [
+                                "CUSTOMER_ACCOUNT_GUID"
+                            ]
+                        },
+                        {
+                            "destination": "out.c-ShoptetEcommerce.bdmOrders",
+                            "source": "bdm_orders",
+                            "primary_key": [
+                                "ORDER_ID"
+                            ]
+                        },
+                        {
+                            "destination": "out.c-ShoptetEcommerce.bdmOrderLines",
+                            "source": "bdm_order_lines",
+                            "primary_key": [
+                                "ORDER_LINE_ID"
+                            ]
+                        },
+                        {
+                            "destination": "out.c-ShoptetEcommerce.bdmProducts",
+                            "source": "bdm_products",
+                            "primary_key": [
+                                "PRODUCT_ID"
+                            ]
+                        },
+                        {
+                            "destination": "out.c-ShoptetEcommerce.bdmAnalyzeClvByOrderCount",
+                            "source": "analyze_clv_by_order_count"
+                        },
+                        {
+                            "destination": "out.c-ShoptetEcommerce.bdmAnalyzeClvByTimeFromPreviousOrder",
+                            "source": "analyze_clv_by_time_from_previous_order"
+                        },
+                        {
+                            "destination": "out.c-ShoptetEcommerce.bdmBillingType",
+                            "source": "bdm_billing_type",
+                            "primary_key": [
+                                "BILLING_TYPE_ID"
+                            ]
+                        },
+                        {
+                            "destination": "out.c-ShoptetEcommerce.bdmShippingType",
+                            "source": "bdm_shipping_type",
+                            "primary_key": [
+                                "SHIPPING_TYPE_ID"
+                            ]
+                        },
+                        {
+                            "destination": "out.c-ShoptetEcommerce.bdmProductMarginOverTime",
+                            "source": "bdm_product_margin_over_time"
+                        },
+                        {
+                            "destination": "out.c-ShoptetEcommerce.bdmShoptet",
+                            "source": "out_shoptet"
+                        }
+                    ]
+                }
+            },
+            "processors": {
+                "after": [
+                    {
+                        "definition": {
+                            "component": "keboola.processor-add-metadata"
+                        },
+                        "parameters": {
+                            "tables": [
+                                {
+                                    "table": "bdm_customers",
+                                    "metadata": [
+                                        {
+                                            "key": "bdm.scaffold.table.tag",
+                                            "value": "ShoptetEcommerce.internal.outBdmCustomers"
+                                        },
+                                        {
+                                            "key": "scaffold.id",
+                                            "value": "ShoptetEcommerce"
+                                        }
+                                    ]
+                                },
+                                {
+                                    "table": "bdm_orders",
+                                    "metadata": [
+                                        {
+                                            "key": "bdm.scaffold.table.tag",
+                                            "value": "ShoptetEcommerce.internal.outBdmOrders"
+                                        },
+                                        {
+                                            "key": "scaffold.id",
+                                            "value": "ShoptetEcommerce"
+                                        }
+                                    ]
+                                },
+                                {
+                                    "table": "bdm_order_lines",
+                                    "metadata": [
+                                        {
+                                            "key": "bdm.scaffold.table.tag",
+                                            "value": "ShoptetEcommerce.internal.outBdmOrderLines"
+                                        },
+                                        {
+                                            "key": "scaffold.id",
+                                            "value": "ShoptetEcommerce"
+                                        }
+                                    ]
+                                },
+                                {
+                                    "table": "bdm_products",
+                                    "metadata": [
+                                        {
+                                            "key": "bdm.scaffold.table.tag",
+                                            "value": "ShoptetEcommerce.internal.outBdmProducts"
+                                        },
+                                        {
+                                            "key": "scaffold.id",
+                                            "value": "ShoptetEcommerce"
+                                        }
+                                    ]
+                                },
+                                {
+                                    "table": "analyze_clv_by_order_count",
+                                    "metadata": [
+                                        {
+                                            "key": "bdm.scaffold.table.tag",
+                                            "value": "ShoptetEcommerce.internal.outBdmAnalyzeClvByOrderCount"
+                                        },
+                                        {
+                                            "key": "scaffold.id",
+                                            "value": "ShoptetEcommerce"
+                                        }
+                                    ]
+                                },
+                                {
+                                    "table": "analyze_clv_by_time_from_previous_order",
+                                    "metadata": [
+                                        {
+                                            "key": "bdm.scaffold.table.tag",
+                                            "value": "ShoptetEcommerce.internal.outBdmAnalyzeClvByTimeFromPreviousOrder"
+                                        },
+                                        {
+                                            "key": "scaffold.id",
+                                            "value": "ShoptetEcommerce"
+                                        }
+                                    ]
+                                },
+                                {
+                                    "table": "bdm_billing_type",
+                                    "metadata": [
+                                        {
+                                            "key": "bdm.scaffold.table.tag",
+                                            "value": "ShoptetEcommerce.internal.outBdmBillingType"
+                                        },
+                                        {
+                                            "key": "scaffold.id",
+                                            "value": "ShoptetEcommerce"
+                                        }
+                                    ]
+                                },
+                                {
+                                    "table": "bdm_shipping_type",
+                                    "metadata": [
+                                        {
+                                            "key": "bdm.scaffold.table.tag",
+                                            "value": "ShoptetEcommerce.internal.outBdmShippingType"
+                                        },
+                                        {
+                                            "key": "scaffold.id",
+                                            "value": "ShoptetEcommerce"
+                                        }
+                                    ]
+                                },
+                                {
+                                    "table": "bdm_product_margin_over_time",
+                                    "metadata": [
+                                        {
+                                            "key": "bdm.scaffold.table.tag",
+                                            "value": "ShoptetEcommerce.internal.outBdmProductMarginOverTime"
+                                        },
+                                        {
+                                            "key": "scaffold.id",
+                                            "value": "ShoptetEcommerce"
+                                        }
+                                    ]
+                                },
+                                {
+                                    "table": "out_shoptet",
+                                    "metadata": [
+                                        {
+                                            "key": "bdm.scaffold.table.tag",
+                                            "value": "ShoptetEcommerce.internal.outBdmShoptet"
+                                        },
+                                        {
+                                            "key": "scaffold.id",
+                                            "value": "ShoptetEcommerce"
+                                        }
+                                    ]
+                                }
+                            ]
+                        }
+                    }
+                ]
+            }
+        }
+    }
+}

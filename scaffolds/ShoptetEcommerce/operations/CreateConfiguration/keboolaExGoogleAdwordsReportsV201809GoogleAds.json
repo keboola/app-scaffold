@@ -1,0 +1,90 @@
+{
+    "componentId": "keboola.ex-google-adwords-reports-v201809",
+    "payload": {
+        "name": "Google Ads",
+        "configuration": {
+            "authorization": {
+                "oauth_api": {
+                    "id": "2208064",
+                    "version": 3
+                }
+            },
+            "parameters": {
+                "since": "-720 days",
+                "until": "now",
+                "bucket": "",
+                "queries": [
+                    {
+                        "name": "CAMPAIGN_PERFORMANCE_REPORT",
+                        "query": "SELECT CampaignName, Clicks, Impressions, Cost, Date FROM CAMPAIGN_PERFORMANCE_REPORT",
+                        "primary": [
+                            "Day",
+                            "Campaign"
+                        ]
+                    }
+                ]
+            },
+            "processors": {
+                "after": [
+                    {
+                        "definition": {
+                            "component": "kds-team.processor-rename-files"
+                        },
+                        "parameters": {
+                            "pattern": "^((?:[^\\.]*\\.|){2})([^\\.]+)",
+                            "replacement": "$1"
+                        }
+                    },
+                    {
+                        "definition": {
+                            "component": "keboola.processor-add-metadata"
+                        },
+                        "parameters": {
+                            "tables": [
+                                {
+                                    "table": "report-CAMPAIGN_PERFORMANCE_REPORT",
+                                    "metadata": [
+                                        {
+                                            "key": "bdm.scaffold.table.tag",
+                                            "value": "ShoptetEcommerce.internal.inKeboolaExAdwordsV201809CampaignPerformanceReport"
+                                        },
+                                        {
+                                            "key": "scaffold.id",
+                                            "value": "ShoptetEcommerce"
+                                        }
+                                    ]
+                                },
+                                {
+                                    "table": "campaigns",
+                                    "metadata": [
+                                        {
+                                            "key": "bdm.scaffold.table.tag",
+                                            "value": "ShoptetEcommerce.internal.inKeboolaExAdwordsV201809Campaigns"
+                                        },
+                                        {
+                                            "key": "scaffold.id",
+                                            "value": "ShoptetEcommerce"
+                                        }
+                                    ]
+                                },
+                                {
+                                    "table": "customers",
+                                    "metadata": [
+                                        {
+                                            "key": "bdm.scaffold.table.tag",
+                                            "value": "ShoptetEcommerce.internal.inKeboolaExAdwordsV201809Customers"
+                                        },
+                                        {
+                                            "key": "scaffold.id",
+                                            "value": "ShoptetEcommerce"
+                                        }
+                                    ]
+                                }
+                            ]
+                        }
+                    }
+                ]
+            }
+        }
+    }
+}

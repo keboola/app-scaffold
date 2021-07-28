@@ -1,0 +1,97 @@
+{
+    "payload": {
+        "name": "Shoptet Ecommerce",
+        "tasks": [
+            {
+                "component": "keboola.ex-facebook-ads",
+                "operationReferenceId": "keboolaExFacebookAdsFacebookAds",
+                "action": "run",
+                "timeoutMinutes": null,
+                "active": true,
+                "continueOnFailure": false,
+                "phase": "Pull data"
+            },
+            {
+                "component": "keboola.ex-google-adwords-reports-v201809",
+                "operationReferenceId": "keboolaExGoogleAdwordsReportsV201809GoogleAds",
+                "action": "run",
+                "timeoutMinutes": null,
+                "active": true,
+                "continueOnFailure": false,
+                "phase": "Pull data"
+            },
+            {
+                "component": "keboola.ex-sklik",
+                "operationReferenceId": "keboolaExSklikSklik",
+                "action": "run",
+                "timeoutMinutes": null,
+                "active": true,
+                "continueOnFailure": false,
+                "phase": "Pull data"
+            },
+            {
+                "component": "kds-team.ex-shoptet-permalink",
+                "operationReferenceId": "kdsTeamExShoptetPermalinkShoptetPermalinkScraper",
+                "action": "run",
+                "timeoutMinutes": null,
+                "active": true,
+                "continueOnFailure": false,
+                "phase": "Pull data"
+            },
+            {
+                "component": "keboola.snowflake-transformation",
+                "operationReferenceId": "keboolaSnowflakeTransformationMarketingFacebookAds",
+                "action": "run",
+                "timeoutMinutes": null,
+                "active": true,
+                "continueOnFailure": false,
+                "phase": "Create BDM"
+            },
+            {
+                "component": "keboola.snowflake-transformation",
+                "operationReferenceId": "keboolaSnowflakeTransformationMarketingGoogleAds",
+                "action": "run",
+                "timeoutMinutes": null,
+                "active": true,
+                "continueOnFailure": false,
+                "phase": "Create BDM"
+            },
+            {
+                "component": "keboola.snowflake-transformation",
+                "operationReferenceId": "keboolaSnowflakeTransformationMarketingSklik",
+                "action": "run",
+                "timeoutMinutes": null,
+                "active": true,
+                "continueOnFailure": false,
+                "phase": "Create BDM"
+            },
+            {
+                "component": "keboola.snowflake-transformation",
+                "operationReferenceId": "keboolaSnowflakeTransformationShoptet",
+                "action": "run",
+                "timeoutMinutes": null,
+                "active": true,
+                "continueOnFailure": false,
+                "phase": "Create BDM"
+            },
+            {
+                "component": "keboola.snowflake-transformation",
+                "operationReferenceId": "keboolaSnowflakeTransformationShoptetRFM",
+                "action": "run",
+                "timeoutMinutes": null,
+                "active": true,
+                "continueOnFailure": false,
+                "phase": "RFM Segmentation"
+            },
+            {
+                "component": "keboola.wr-snowflake-blob-storage",
+                "operationReferenceId": "keboolaWrSnowflakeBlobStoragePowerBIWorkspaceUpload",
+                "action": "run",
+                "timeoutMinutes": null,
+                "active": true,
+                "continueOnFailure": false,
+                "phase": "Act On Data"
+            }
+        ]
+    }
+}

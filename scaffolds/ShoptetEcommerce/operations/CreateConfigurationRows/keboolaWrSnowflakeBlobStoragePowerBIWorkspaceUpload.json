@@ -1,0 +1,1409 @@
+[
+    {
+        "configuration": {
+            "parameters": {
+                "tableId": "out.c-BDM.BDM_MARKETING_CAMPAIGN_COSTS",
+                "dbName": "marketing_campaign_cost",
+                "incremental": true,
+                "primaryKey": [
+                    "MARKETING_CAMPAIGN_COSTS_ID"
+                ],
+                "items": [
+                    {
+                        "name": "MARKETING_CAMPAIGN_COSTS_ID",
+                        "dbName": "MARKETING_CAMPAIGN_COSTS_ID",
+                        "type": "varchar",
+                        "nullable": false,
+                        "default": "",
+                        "size": "10000"
+                    },
+                    {
+                        "name": "SOURCE",
+                        "dbName": "SOURCE",
+                        "type": "varchar",
+                        "nullable": true,
+                        "default": "",
+                        "size": "10000"
+                    },
+                    {
+                        "name": "DATE",
+                        "dbName": "DATE",
+                        "type": "date",
+                        "nullable": true,
+                        "default": "",
+                        "size": ""
+                    },
+                    {
+                        "name": "CAMPAIGN",
+                        "dbName": "CAMPAIGN",
+                        "type": "varchar",
+                        "nullable": true,
+                        "default": "",
+                        "size": "10000"
+                    },
+                    {
+                        "name": "IMPRESSIONS",
+                        "dbName": "IMPRESSIONS",
+                        "type": "int",
+                        "nullable": true,
+                        "default": "",
+                        "size": ""
+                    },
+                    {
+                        "name": "CLICKS",
+                        "dbName": "CLICKS",
+                        "type": "int",
+                        "nullable": true,
+                        "default": "",
+                        "size": ""
+                    },
+                    {
+                        "name": "COST",
+                        "dbName": "COST",
+                        "type": "float",
+                        "nullable": true,
+                        "default": "",
+                        "size": ""
+                    }
+                ]
+            },
+            "storage": {
+                "input": {
+                    "tables": [
+                        {
+                            "source_search": {
+                                "key": "bdm.scaffold.table.tag",
+                                "value": "ShoptetEcommerce.internal.outBdmMarketingCampaignCosts"
+                            },
+                            "destination": "out.c-BDM.BDM_MARKETING_CAMPAIGN_COSTS.csv",
+                            "columns": [
+                                "MARKETING_CAMPAIGN_COSTS_ID",
+                                "SOURCE",
+                                "DATE",
+                                "CAMPAIGN",
+                                "IMPRESSIONS",
+                                "CLICKS",
+                                "COST"
+                            ],
+                            "changed_since": "adaptive"
+                        }
+                    ]
+                }
+            }
+        },
+        "description": "Table with unified data from all used marketing sources (extractors).",
+        "name": "BDM_MARKETING_CAMPAIGN_COSTS"
+    },
+    {
+        "configuration": {
+            "parameters": {
+                "tableId": "out.c-BDM.BDM_MARKETING_CAMPAIGN_COSTS_MONTHLY",
+                "dbName": "marketing_campaign_cost_monthly",
+                "incremental": false,
+                "primaryKey": [
+                    "MARKETING_CAMPAIGN_COSTS_ID"
+                ],
+                "items": [
+                    {
+                        "name": "MARKETING_CAMPAIGN_COSTS_ID",
+                        "dbName": "MARKETING_CAMPAIGN_COSTS_ID",
+                        "type": "varchar",
+                        "nullable": true,
+                        "default": "",
+                        "size": "1000"
+                    },
+                    {
+                        "name": "SOURCE",
+                        "dbName": "SOURCE",
+                        "type": "varchar",
+                        "nullable": true,
+                        "default": "",
+                        "size": "1000"
+                    },
+                    {
+                        "name": "DATE",
+                        "dbName": "DATE",
+                        "type": "date",
+                        "nullable": true,
+                        "default": "",
+                        "size": ""
+                    },
+                    {
+                        "name": "CAMPAIGN",
+                        "dbName": "CAMPAIGN",
+                        "type": "varchar",
+                        "nullable": true,
+                        "default": "",
+                        "size": "16777216"
+                    },
+                    {
+                        "name": "IMPRESSIONS",
+                        "dbName": "IMPRESSIONS",
+                        "type": "int",
+                        "nullable": true,
+                        "default": "",
+                        "size": ""
+                    },
+                    {
+                        "name": "CLICKS",
+                        "dbName": "CLICKS",
+                        "type": "int",
+                        "nullable": true,
+                        "default": "",
+                        "size": ""
+                    },
+                    {
+                        "name": "COST",
+                        "dbName": "COST",
+                        "type": "float",
+                        "nullable": true,
+                        "default": "",
+                        "size": ""
+                    }
+                ]
+            },
+            "storage": {
+                "input": {
+                    "tables": [
+                        {
+                            "source_search": {
+                                "key": "bdm.scaffold.table.tag",
+                                "value": "ShoptetEcommerce.internal.outBdmMarketingCampaignCostsMonthly"
+                            },
+                            "destination": "out.c-BDM.BDM_MARKETING_CAMPAIGN_COSTS_MONTHLY.csv",
+                            "columns": [
+                                "MARKETING_CAMPAIGN_COSTS_ID",
+                                "SOURCE",
+                                "DATE",
+                                "CAMPAIGN",
+                                "IMPRESSIONS",
+                                "CLICKS",
+                                "COST"
+                            ]
+                        }
+                    ]
+                }
+            }
+        },
+        "description": "",
+        "name": "BDM_MARKETING_CAMPAIGN_COSTS_MONTHLY"
+    },
+    {
+        "configuration": {
+            "parameters": {
+                "tableId": "out.c-BDM.bdm_order_lines",
+                "dbName": "order_line",
+                "incremental": false,
+                "primaryKey": [
+                    "ORDER_LINE_ID"
+                ],
+                "items": [
+                    {
+                        "name": "ORDER_ID",
+                        "dbName": "ORDER_ID",
+                        "type": "varchar",
+                        "nullable": true,
+                        "default": "",
+                        "size": "16777216"
+                    },
+                    {
+                        "name": "ORDER_LINE_ID",
+                        "dbName": "ORDER_LINE_ID",
+                        "type": "varchar",
+                        "nullable": true,
+                        "default": "",
+                        "size": "16777216"
+                    },
+                    {
+                        "name": "ORDER_DATE",
+                        "dbName": "ORDER_DATE",
+                        "type": "varchar",
+                        "nullable": true,
+                        "default": "",
+                        "size": "16777216"
+                    },
+                    {
+                        "name": "ORDER_LINE_PRODUCT_ID",
+                        "dbName": "ORDER_LINE_PRODUCT_ID",
+                        "type": "varchar",
+                        "nullable": true,
+                        "default": "",
+                        "size": "16777216"
+                    },
+                    {
+                        "name": "ORDER_ITEM_TYPE",
+                        "dbName": "ORDER_ITEM_TYPE",
+                        "type": "varchar",
+                        "nullable": true,
+                        "default": "",
+                        "size": "16777216"
+                    },
+                    {
+                        "name": "itemName",
+                        "dbName": "itemName",
+                        "type": "varchar",
+                        "nullable": true,
+                        "default": "",
+                        "size": "16777216"
+                    },
+                    {
+                        "name": "DISCOUNT_PERCENT",
+                        "dbName": "DISCOUNT_PERCENT",
+                        "type": "varchar",
+                        "nullable": true,
+                        "default": "",
+                        "size": "16777216"
+                    },
+                    {
+                        "name": "ORDER_LINE_AMOUNT",
+                        "dbName": "ORDER_LINE_AMOUNT",
+                        "type": "number",
+                        "nullable": true,
+                        "default": "",
+                        "size": "22,5"
+                    },
+                    {
+                        "name": "ORDER_LINE_PRICE_WITH_VAT",
+                        "dbName": "ORDER_LINE_PRICE_WITH_VAT",
+                        "type": "number",
+                        "nullable": true,
+                        "default": "",
+                        "size": "22,5"
+                    },
+                    {
+                        "name": "ORDER_LINE_PRICE_WITHOUT_VAT",
+                        "dbName": "ORDER_LINE_PRICE_WITHOUT_VAT",
+                        "type": "number",
+                        "nullable": true,
+                        "default": "",
+                        "size": "22,5"
+                    },
+                    {
+                        "name": "ORDER_LINE_PRICE_VAT",
+                        "dbName": "ORDER_LINE_PRICE_VAT",
+                        "type": "number",
+                        "nullable": true,
+                        "default": "",
+                        "size": "22,5"
+                    },
+                    {
+                        "name": "ORDER_LINE_VAT_RATE",
+                        "dbName": "ORDER_LINE_VAT_RATE",
+                        "type": "number",
+                        "nullable": true,
+                        "default": "",
+                        "size": "22,5"
+                    },
+                    {
+                        "name": "LINE_PURCHASE_PRICE",
+                        "dbName": "LINE_PURCHASE_PRICE",
+                        "type": "number",
+                        "nullable": true,
+                        "default": "",
+                        "size": "22,5"
+                    }
+                ]
+            },
+            "storage": {
+                "input": {
+                    "tables": [
+                        {
+                            "source_search": {
+                                "key": "bdm.scaffold.table.tag",
+                                "value": "ShoptetEcommerce.internal.outBdmOrderLines"
+                            },
+                            "destination": "out.c-BDM.bdm_order_lines.csv",
+                            "columns": [
+                                "ORDER_ID",
+                                "ORDER_LINE_ID",
+                                "ORDER_DATE",
+                                "ORDER_LINE_PRODUCT_ID",
+                                "ORDER_ITEM_TYPE",
+                                "itemName",
+                                "DISCOUNT_PERCENT",
+                                "ORDER_LINE_AMOUNT",
+                                "ORDER_LINE_PRICE_WITH_VAT",
+                                "ORDER_LINE_PRICE_WITHOUT_VAT",
+                                "ORDER_LINE_PRICE_VAT",
+                                "ORDER_LINE_VAT_RATE",
+                                "LINE_PURCHASE_PRICE"
+                            ]
+                        }
+                    ]
+                }
+            }
+        },
+        "description": "",
+        "name": "bdm_order_lines"
+    },
+    {
+        "configuration": {
+            "parameters": {
+                "tableId": "out.c-BDM.bdm_orders",
+                "dbName": "order",
+                "incremental": false,
+                "primaryKey": [
+                    "ORDER_ID"
+                ],
+                "items": [
+                    {
+                        "name": "ORDER_ID",
+                        "dbName": "ORDER_ID",
+                        "type": "varchar",
+                        "nullable": true,
+                        "default": "",
+                        "size": "16777216"
+                    },
+                    {
+                        "name": "ORDER_DATE",
+                        "dbName": "ORDER_DATE",
+                        "type": "varchar",
+                        "nullable": true,
+                        "default": "",
+                        "size": "16777216"
+                    },
+                    {
+                        "name": "ORDER_STATUS",
+                        "dbName": "ORDER_STATUS",
+                        "type": "varchar",
+                        "nullable": true,
+                        "default": "",
+                        "size": "16777216"
+                    },
+                    {
+                        "name": "IS_SUCESSFUL",
+                        "dbName": "IS_SUCESSFUL",
+                        "type": "boolean",
+                        "nullable": true,
+                        "default": "",
+                        "size": ""
+                    },
+                    {
+                        "name": "IS_FIRST_PURCHASE",
+                        "dbName": "IS_FIRST_PURCHASE",
+                        "type": "boolean",
+                        "nullable": true,
+                        "default": "",
+                        "size": ""
+                    },
+                    {
+                        "name": "ORDER_CURRENCY",
+                        "dbName": "ORDER_CURRENCY",
+                        "type": "varchar",
+                        "nullable": true,
+                        "default": "",
+                        "size": "16777216"
+                    },
+                    {
+                        "name": "ORDER_CURRENCY_FX_RATE",
+                        "dbName": "ORDER_CURRENCY_FX_RATE",
+                        "type": "varchar",
+                        "nullable": true,
+                        "default": "",
+                        "size": "16777216"
+                    },
+                    {
+                        "name": "ORDER_CUSTOMER_EMAIL",
+                        "dbName": "ORDER_CUSTOMER_EMAIL",
+                        "type": "varchar",
+                        "nullable": true,
+                        "default": "",
+                        "size": "16777216"
+                    },
+                    {
+                        "name": "CUSTOMER_ID",
+                        "dbName": "CUSTOMER_ID",
+                        "type": "varchar",
+                        "nullable": true,
+                        "default": "",
+                        "size": "16777216"
+                    },
+                    {
+                        "name": "CUSTOMER_REGULARITY_TYPE",
+                        "dbName": "CUSTOMER_REGULARITY_TYPE",
+                        "type": "varchar",
+                        "nullable": true,
+                        "default": "",
+                        "size": "16777216"
+                    },
+                    {
+                        "name": "DAYS_SINCE_PREVIOUS_ORDER",
+                        "dbName": "DAYS_SINCE_PREVIOUS_ORDER",
+                        "type": "number",
+                        "nullable": true,
+                        "default": "",
+                        "size": "38,0"
+                    },
+                    {
+                        "name": "ORDER_REMARK",
+                        "dbName": "ORDER_REMARK",
+                        "type": "varchar",
+                        "nullable": true,
+                        "default": "",
+                        "size": "16777216"
+                    },
+                    {
+                        "name": "ORDER_SHOP_REMARK",
+                        "dbName": "ORDER_SHOP_REMARK",
+                        "type": "varchar",
+                        "nullable": true,
+                        "default": "",
+                        "size": "16777216"
+                    },
+                    {
+                        "name": "ORDER_PACKAGE_NUMBER",
+                        "dbName": "ORDER_PACKAGE_NUMBER",
+                        "type": "varchar",
+                        "nullable": true,
+                        "default": "",
+                        "size": "16777216"
+                    },
+                    {
+                        "name": "ORDER_NOTE1",
+                        "dbName": "ORDER_NOTE1",
+                        "type": "varchar",
+                        "nullable": true,
+                        "default": "",
+                        "size": "16777216"
+                    },
+                    {
+                        "name": "ORDER_NOTE2",
+                        "dbName": "ORDER_NOTE2",
+                        "type": "varchar",
+                        "nullable": true,
+                        "default": "",
+                        "size": "16777216"
+                    },
+                    {
+                        "name": "ORDER_NOTE3",
+                        "dbName": "ORDER_NOTE3",
+                        "type": "varchar",
+                        "nullable": true,
+                        "default": "",
+                        "size": "16777216"
+                    },
+                    {
+                        "name": "ORDER_NOTE4",
+                        "dbName": "ORDER_NOTE4",
+                        "type": "varchar",
+                        "nullable": true,
+                        "default": "",
+                        "size": "16777216"
+                    },
+                    {
+                        "name": "ORDER_NOTE5",
+                        "dbName": "ORDER_NOTE5",
+                        "type": "varchar",
+                        "nullable": true,
+                        "default": "",
+                        "size": "16777216"
+                    },
+                    {
+                        "name": "ORDER_NOTE6",
+                        "dbName": "ORDER_NOTE6",
+                        "type": "varchar",
+                        "nullable": true,
+                        "default": "",
+                        "size": "16777216"
+                    },
+                    {
+                        "name": "ORDER_WEIGHT",
+                        "dbName": "ORDER_WEIGHT",
+                        "type": "varchar",
+                        "nullable": true,
+                        "default": "",
+                        "size": "16777216"
+                    },
+                    {
+                        "name": "REFERER",
+                        "dbName": "REFERER",
+                        "type": "varchar",
+                        "nullable": true,
+                        "default": "",
+                        "size": "16777216"
+                    },
+                    {
+                        "name": "CHANNEL",
+                        "dbName": "CHANNEL",
+                        "type": "varchar",
+                        "nullable": true,
+                        "default": "",
+                        "size": ""
+                    },
+                    {
+                        "name": "SOURCE",
+                        "dbName": "SOURCE",
+                        "type": "varchar",
+                        "nullable": true,
+                        "default": "",
+                        "size": "16777216"
+                    },
+                    {
+                        "name": "CUSTOMER_GROUP_NAME",
+                        "dbName": "CUSTOMER_GROUP_NAME",
+                        "type": "varchar",
+                        "nullable": true,
+                        "default": "",
+                        "size": "16777216"
+                    },
+                    {
+                        "name": "CUSTOMER_GROUP_TYPE",
+                        "dbName": "CUSTOMER_GROUP_TYPE",
+                        "type": "varchar",
+                        "nullable": true,
+                        "default": "",
+                        "size": "16777216"
+                    },
+                    {
+                        "name": "CUSTOMER_TYPE",
+                        "dbName": "CUSTOMER_TYPE",
+                        "type": "varchar",
+                        "nullable": true,
+                        "default": "",
+                        "size": "16777216"
+                    },
+                    {
+                        "name": "BILLING_CITY",
+                        "dbName": "BILLING_CITY",
+                        "type": "varchar",
+                        "nullable": true,
+                        "default": "",
+                        "size": "16777216"
+                    },
+                    {
+                        "name": "BILLING_COUNTRY",
+                        "dbName": "BILLING_COUNTRY",
+                        "type": "varchar",
+                        "nullable": true,
+                        "default": "",
+                        "size": "16777216"
+                    },
+                    {
+                        "name": "BILLING_ZIP",
+                        "dbName": "BILLING_ZIP",
+                        "type": "varchar",
+                        "nullable": true,
+                        "default": "",
+                        "size": "16777216"
+                    },
+                    {
+                        "name": "SHIPPING_CITY",
+                        "dbName": "SHIPPING_CITY",
+                        "type": "varchar",
+                        "nullable": true,
+                        "default": "",
+                        "size": "16777216"
+                    },
+                    {
+                        "name": "SHIPPING_COUNTRY",
+                        "dbName": "SHIPPING_COUNTRY",
+                        "type": "varchar",
+                        "nullable": true,
+                        "default": "",
+                        "size": "16777216"
+                    },
+                    {
+                        "name": "SHIPPING_ZIP",
+                        "dbName": "SHIPPING_ZIP",
+                        "type": "varchar",
+                        "nullable": true,
+                        "default": "",
+                        "size": "16777216"
+                    },
+                    {
+                        "name": "BILLING_TYPE",
+                        "dbName": "BILLING_TYPE",
+                        "type": "varchar",
+                        "nullable": true,
+                        "default": "",
+                        "size": "16777216"
+                    },
+                    {
+                        "name": "SHIPPING_TYPE",
+                        "dbName": "SHIPPING_TYPE",
+                        "type": "varchar",
+                        "nullable": true,
+                        "default": "",
+                        "size": "16777216"
+                    },
+                    {
+                        "name": "ORDER_TOTAL_PRICE_WITH_WAT",
+                        "dbName": "ORDER_TOTAL_PRICE_WITH_WAT",
+                        "type": "varchar",
+                        "nullable": true,
+                        "default": "",
+                        "size": "16777216"
+                    },
+                    {
+                        "name": "ORDER_TOTAL_PRICE_WITHOUT_WAT",
+                        "dbName": "ORDER_TOTAL_PRICE_WITHOUT_WAT",
+                        "type": "varchar",
+                        "nullable": true,
+                        "default": "",
+                        "size": "16777216"
+                    },
+                    {
+                        "name": "ORDER_TOTAL_PRICE_VAT",
+                        "dbName": "ORDER_TOTAL_PRICE_VAT",
+                        "type": "varchar",
+                        "nullable": true,
+                        "default": "",
+                        "size": "16777216"
+                    },
+                    {
+                        "name": "ORDER_PRICE_ROUNDING",
+                        "dbName": "ORDER_PRICE_ROUNDING",
+                        "type": "varchar",
+                        "nullable": true,
+                        "default": "",
+                        "size": "16777216"
+                    },
+                    {
+                        "name": "ORDER_TOTAL_PRICE_TO_PAY",
+                        "dbName": "ORDER_TOTAL_PRICE_TO_PAY",
+                        "type": "varchar",
+                        "nullable": true,
+                        "default": "",
+                        "size": "16777216"
+                    },
+                    {
+                        "name": "ORDER_TOTAL_PRICE_PAID",
+                        "dbName": "ORDER_TOTAL_PRICE_PAID",
+                        "type": "varchar",
+                        "nullable": true,
+                        "default": "",
+                        "size": "16777216"
+                    },
+                    {
+                        "name": "ORDER_LINE_PRICE_WITH_VAT",
+                        "dbName": "ORDER_LINE_PRICE_WITH_VAT",
+                        "type": "float",
+                        "nullable": true,
+                        "default": "",
+                        "size": ""
+                    },
+                    {
+                        "name": "ORDER_LINE_PRICE_WITHOUT_VAT",
+                        "dbName": "ORDER_LINE_PRICE_WITHOUT_VAT",
+                        "type": "float",
+                        "nullable": true,
+                        "default": "",
+                        "size": ""
+                    },
+                    {
+                        "name": "ORDER_LINE_PRICE_VAT",
+                        "dbName": "ORDER_LINE_PRICE_VAT",
+                        "type": "float",
+                        "nullable": true,
+                        "default": "",
+                        "size": ""
+                    },
+                    {
+                        "name": "ORDER_LINE_VAT_RATE",
+                        "dbName": "ORDER_LINE_VAT_RATE",
+                        "type": "float",
+                        "nullable": true,
+                        "default": "",
+                        "size": ""
+                    }
+                ]
+            },
+            "storage": {
+                "input": {
+                    "tables": [
+                        {
+                            "source_search": {
+                                "key": "bdm.scaffold.table.tag",
+                                "value": "ShoptetEcommerce.internal.outBdmOrders"
+                            },
+                            "destination": "out.c-BDM.bdm_orders.csv",
+                            "columns": [
+                                "ORDER_ID",
+                                "ORDER_DATE",
+                                "ORDER_STATUS",
+                                "IS_SUCESSFUL",
+                                "IS_FIRST_PURCHASE",
+                                "ORDER_CURRENCY",
+                                "ORDER_CURRENCY_FX_RATE",
+                                "ORDER_CUSTOMER_EMAIL",
+                                "CUSTOMER_ID",
+                                "CUSTOMER_REGULARITY_TYPE",
+                                "DAYS_SINCE_PREVIOUS_ORDER",
+                                "ORDER_REMARK",
+                                "ORDER_SHOP_REMARK",
+                                "ORDER_PACKAGE_NUMBER",
+                                "ORDER_NOTE1",
+                                "ORDER_NOTE2",
+                                "ORDER_NOTE3",
+                                "ORDER_NOTE4",
+                                "ORDER_NOTE5",
+                                "ORDER_NOTE6",
+                                "ORDER_WEIGHT",
+                                "REFERER",
+                                "CHANNEL",
+                                "SOURCE",
+                                "CUSTOMER_GROUP_NAME",
+                                "CUSTOMER_GROUP_TYPE",
+                                "CUSTOMER_TYPE",
+                                "BILLING_CITY",
+                                "BILLING_COUNTRY",
+                                "BILLING_ZIP",
+                                "SHIPPING_CITY",
+                                "SHIPPING_COUNTRY",
+                                "SHIPPING_ZIP",
+                                "BILLING_TYPE",
+                                "SHIPPING_TYPE",
+                                "ORDER_TOTAL_PRICE_WITH_WAT",
+                                "ORDER_TOTAL_PRICE_WITHOUT_WAT",
+                                "ORDER_TOTAL_PRICE_VAT",
+                                "ORDER_PRICE_ROUNDING",
+                                "ORDER_TOTAL_PRICE_TO_PAY",
+                                "ORDER_TOTAL_PRICE_PAID",
+                                "ORDER_LINE_PRICE_WITH_VAT",
+                                "ORDER_LINE_PRICE_WITHOUT_VAT",
+                                "ORDER_LINE_PRICE_VAT",
+                                "ORDER_LINE_VAT_RATE"
+                            ]
+                        }
+                    ]
+                }
+            }
+        },
+        "description": "",
+        "name": "bdm_orders"
+    },
+    {
+        "configuration": {
+            "parameters": {
+                "tableId": "out.c-BDM.bdm_billing_type",
+                "dbName": "billing_type",
+                "incremental": false,
+                "primaryKey": [
+                    "BILLING_TYPE_ID"
+                ],
+                "items": [
+                    {
+                        "name": "BILLING_TYPE_ID",
+                        "dbName": "BILLING_TYPE_ID",
+                        "type": "varchar",
+                        "nullable": true,
+                        "default": "",
+                        "size": "16777216"
+                    },
+                    {
+                        "name": "NAME",
+                        "dbName": "NAME",
+                        "type": "varchar",
+                        "nullable": true,
+                        "default": "",
+                        "size": "16777216"
+                    }
+                ]
+            },
+            "storage": {
+                "input": {
+                    "tables": [
+                        {
+                            "source_search": {
+                                "key": "bdm.scaffold.table.tag",
+                                "value": "ShoptetEcommerce.internal.outBdmBillingType"
+                            },
+                            "destination": "out.c-BDM.bdm_billing_type.csv",
+                            "columns": [
+                                "BILLING_TYPE_ID",
+                                "NAME"
+                            ]
+                        }
+                    ]
+                }
+            }
+        },
+        "description": "",
+        "name": "bdm_billing_type"
+    },
+    {
+        "configuration": {
+            "parameters": {
+                "tableId": "out.c-BDM.bdm_shipping_type",
+                "dbName": "shipping_type",
+                "incremental": false,
+                "primaryKey": [
+                    "SHIPPING_TYPE_ID"
+                ],
+                "items": [
+                    {
+                        "name": "SHIPPING_TYPE_ID",
+                        "dbName": "SHIPPING_TYPE_ID",
+                        "type": "varchar",
+                        "nullable": true,
+                        "default": "",
+                        "size": "16777216"
+                    },
+                    {
+                        "name": "NAME",
+                        "dbName": "NAME",
+                        "type": "varchar",
+                        "nullable": true,
+                        "default": "",
+                        "size": "16777216"
+                    }
+                ]
+            },
+            "storage": {
+                "input": {
+                    "tables": [
+                        {
+                            "source_search": {
+                                "key": "bdm.scaffold.table.tag",
+                                "value": "ShoptetEcommerce.internal.outBdmShippingType"
+                            },
+                            "destination": "out.c-BDM.bdm_shipping_type.csv",
+                            "columns": [
+                                "SHIPPING_TYPE_ID",
+                                "NAME"
+                            ]
+                        }
+                    ]
+                }
+            }
+        },
+        "description": "",
+        "name": "bdm_shipping_type"
+    },
+    {
+        "configuration": {
+            "parameters": {
+                "tableId": "out.c-BDM.bdm_products",
+                "dbName": "product",
+                "incremental": false,
+                "primaryKey": [
+                    "PRODUCT_ID"
+                ],
+                "items": [
+                    {
+                        "name": "PRODUCT_ID",
+                        "dbName": "PRODUCT_ID",
+                        "type": "varchar",
+                        "nullable": true,
+                        "default": "",
+                        "size": "16777216"
+                    },
+                    {
+                        "name": "PRODUCT_CODE",
+                        "dbName": "PRODUCT_CODE",
+                        "type": "varchar",
+                        "nullable": true,
+                        "default": "",
+                        "size": "16777216"
+                    },
+                    {
+                        "name": "PRODUCT_CODE_2",
+                        "dbName": "PRODUCT_CODE_2",
+                        "type": "varchar",
+                        "nullable": true,
+                        "default": "",
+                        "size": "16777216"
+                    },
+                    {
+                        "name": "PRODUCT_GUID",
+                        "dbName": "PRODUCT_GUID",
+                        "type": "varchar",
+                        "nullable": true,
+                        "default": "",
+                        "size": "16777216"
+                    },
+                    {
+                        "name": "PRODUCT_NAME",
+                        "dbName": "PRODUCT_NAME",
+                        "type": "varchar",
+                        "nullable": true,
+                        "default": "",
+                        "size": "16777216"
+                    },
+                    {
+                        "name": "PRODUCT_MANUFACTURER",
+                        "dbName": "PRODUCT_MANUFACTURER",
+                        "type": "varchar",
+                        "nullable": true,
+                        "default": "",
+                        "size": "16777216"
+                    },
+                    {
+                        "name": "PRODUCT_TYPE",
+                        "dbName": "PRODUCT_TYPE",
+                        "type": "varchar",
+                        "nullable": true,
+                        "default": "",
+                        "size": "16777216"
+                    },
+                    {
+                        "name": "PRODUCT_EAN",
+                        "dbName": "PRODUCT_EAN",
+                        "type": "varchar",
+                        "nullable": true,
+                        "default": "",
+                        "size": "16777216"
+                    },
+                    {
+                        "name": "PRODUCT_PRICE",
+                        "dbName": "PRODUCT_PRICE",
+                        "type": "number",
+                        "nullable": true,
+                        "default": "",
+                        "size": "19,2"
+                    },
+                    {
+                        "name": "PRODUCT_STANDARD_PRICE",
+                        "dbName": "PRODUCT_STANDARD_PRICE",
+                        "type": "number",
+                        "nullable": true,
+                        "default": "",
+                        "size": "19,2"
+                    },
+                    {
+                        "name": "PRODUCT_PURCHASE_PRICE",
+                        "dbName": "PRODUCT_PURCHASE_PRICE",
+                        "type": "number",
+                        "nullable": true,
+                        "default": "",
+                        "size": "19,2"
+                    },
+                    {
+                        "name": "PRODUCT_COLOR",
+                        "dbName": "PRODUCT_COLOR",
+                        "type": "varchar",
+                        "nullable": true,
+                        "default": "",
+                        "size": "16777216"
+                    },
+                    {
+                        "name": "PRODUCT_SIZE",
+                        "dbName": "PRODUCT_SIZE",
+                        "type": "varchar",
+                        "nullable": true,
+                        "default": "",
+                        "size": "16777216"
+                    },
+                    {
+                        "name": "PRODUCT_STOCK_AMOUNT",
+                        "dbName": "PRODUCT_STOCK_AMOUNT",
+                        "type": "varchar",
+                        "nullable": true,
+                        "default": "",
+                        "size": "16777216"
+                    },
+                    {
+                        "name": "CATEGORY",
+                        "dbName": "CATEGORY",
+                        "type": "varchar",
+                        "nullable": true,
+                        "default": "",
+                        "size": "16777216"
+                    },
+                    {
+                        "name": "CATEGORY_TEXT",
+                        "dbName": "CATEGORY_TEXT",
+                        "type": "varchar",
+                        "nullable": true,
+                        "default": "",
+                        "size": "16777216"
+                    },
+                    {
+                        "name": "PRODUCT_URL",
+                        "dbName": "PRODUCT_URL",
+                        "type": "varchar",
+                        "nullable": true,
+                        "default": "",
+                        "size": "16777216"
+                    },
+                    {
+                        "name": "IS_DELETED",
+                        "dbName": "IS_DELETED",
+                        "type": "varchar",
+                        "nullable": true,
+                        "default": "",
+                        "size": "5"
+                    }
+                ]
+            },
+            "storage": {
+                "input": {
+                    "tables": [
+                        {
+                            "source_search": {
+                                "key": "bdm.scaffold.table.tag",
+                                "value": "ShoptetEcommerce.internal.outBdmProducts"
+                            },
+                            "destination": "out.c-BDM.bdm_products.csv",
+                            "columns": [
+                                "PRODUCT_ID",
+                                "PRODUCT_CODE",
+                                "PRODUCT_CODE_2",
+                                "PRODUCT_GUID",
+                                "PRODUCT_NAME",
+                                "PRODUCT_MANUFACTURER",
+                                "PRODUCT_TYPE",
+                                "PRODUCT_EAN",
+                                "PRODUCT_PRICE",
+                                "PRODUCT_STANDARD_PRICE",
+                                "PRODUCT_PURCHASE_PRICE",
+                                "PRODUCT_COLOR",
+                                "PRODUCT_SIZE",
+                                "PRODUCT_STOCK_AMOUNT",
+                                "CATEGORY",
+                                "CATEGORY_TEXT",
+                                "PRODUCT_URL",
+                                "IS_DELETED"
+                            ]
+                        }
+                    ]
+                }
+            }
+        },
+        "description": "",
+        "name": "bdm_products"
+    },
+    {
+        "configuration": {
+            "parameters": {
+                "tableId": "out.c-BDM.bdm_customers",
+                "dbName": "customer",
+                "incremental": false,
+                "primaryKey": [
+                    "CUSTOMER_ACCOUNT_GUID"
+                ],
+                "items": [
+                    {
+                        "name": "CUSTOMER_ID",
+                        "dbName": "CUSTOMER_ID",
+                        "type": "varchar",
+                        "nullable": true,
+                        "default": "",
+                        "size": "16777216"
+                    },
+                    {
+                        "name": "CUSTOMER_EMAIL_HASH",
+                        "dbName": "CUSTOMER_EMAIL_HASH",
+                        "type": "varchar",
+                        "nullable": true,
+                        "default": "",
+                        "size": "128"
+                    },
+                    {
+                        "name": "CUSTOMER_EMAIL",
+                        "dbName": "CUSTOMER_EMAIL",
+                        "type": "varchar",
+                        "nullable": true,
+                        "default": "",
+                        "size": "16777216"
+                    },
+                    {
+                        "name": "CUSTOMER_ACCOUNT_GUID",
+                        "dbName": "CUSTOMER_ACCOUNT_GUID",
+                        "type": "varchar",
+                        "nullable": true,
+                        "default": "",
+                        "size": "16777216"
+                    },
+                    {
+                        "name": "CUSTOMER_BILLING_CITY",
+                        "dbName": "CUSTOMER_BILLING_CITY",
+                        "type": "varchar",
+                        "nullable": true,
+                        "default": "",
+                        "size": "16777216"
+                    },
+                    {
+                        "name": "CUSTOMER_BILLING_COUNTRY",
+                        "dbName": "CUSTOMER_BILLING_COUNTRY",
+                        "type": "varchar",
+                        "nullable": true,
+                        "default": "",
+                        "size": "16777216"
+                    },
+                    {
+                        "name": "CUSTOMER_SHIPPING_CITY",
+                        "dbName": "CUSTOMER_SHIPPING_CITY",
+                        "type": "varchar",
+                        "nullable": true,
+                        "default": "",
+                        "size": "16777216"
+                    },
+                    {
+                        "name": "CUSTOMER_SHIPPING_COUNTRY",
+                        "dbName": "CUSTOMER_SHIPPING_COUNTRY",
+                        "type": "varchar",
+                        "nullable": true,
+                        "default": "",
+                        "size": "16777216"
+                    },
+                    {
+                        "name": "CUSTOMER_PRICE_LIST",
+                        "dbName": "CUSTOMER_PRICE_LIST",
+                        "type": "varchar",
+                        "nullable": true,
+                        "default": "",
+                        "size": "16777216"
+                    },
+                    {
+                        "name": "CUSTOMER_GROUP",
+                        "dbName": "CUSTOMER_GROUP",
+                        "type": "varchar",
+                        "nullable": true,
+                        "default": "",
+                        "size": "16777216"
+                    }
+                ]
+            },
+            "storage": {
+                "input": {
+                    "tables": [
+                        {
+                            "source_search": {
+                                "key": "bdm.scaffold.table.tag",
+                                "value": "ShoptetEcommerce.internal.outBdmCustomers"
+                            },
+                            "destination": "out.c-BDM.bdm_customers.csv",
+                            "columns": [
+                                "CUSTOMER_ID",
+                                "CUSTOMER_EMAIL_HASH",
+                                "CUSTOMER_EMAIL",
+                                "CUSTOMER_ACCOUNT_GUID",
+                                "CUSTOMER_BILLING_CITY",
+                                "CUSTOMER_BILLING_COUNTRY",
+                                "CUSTOMER_SHIPPING_CITY",
+                                "CUSTOMER_SHIPPING_COUNTRY",
+                                "CUSTOMER_PRICE_LIST",
+                                "CUSTOMER_GROUP"
+                            ]
+                        }
+                    ]
+                }
+            }
+        },
+        "description": "",
+        "name": "bdm_customers"
+    },
+    {
+        "configuration": {
+            "parameters": {
+                "tableId": "out.c-BDM.analyze_clv_by_order_count",
+                "dbName": "analyze_clv_by_order_count",
+                "incremental": false,
+                "primaryKey": [],
+                "items": [
+                    {
+                        "name": "CUSTOMER_CATEGORY_BY_ORDER_COUNT",
+                        "dbName": "CUSTOMER_CATEGORY_BY_ORDER_COUNT",
+                        "type": "varchar",
+                        "nullable": true,
+                        "default": "",
+                        "size": "21"
+                    },
+                    {
+                        "name": "ORDERS",
+                        "dbName": "ORDERS",
+                        "type": "number",
+                        "nullable": true,
+                        "default": "",
+                        "size": "18,0"
+                    },
+                    {
+                        "name": "UNIQUE_CUTOMERS",
+                        "dbName": "UNIQUE_CUTOMERS",
+                        "type": "number",
+                        "nullable": true,
+                        "default": "",
+                        "size": "18,0"
+                    },
+                    {
+                        "name": "AVG_CLV",
+                        "dbName": "AVG_CLV",
+                        "type": "float",
+                        "nullable": true,
+                        "default": "",
+                        "size": ""
+                    },
+                    {
+                        "name": "ORDER_TOTAL_PRICE_VAT",
+                        "dbName": "ORDER_TOTAL_PRICE_VAT",
+                        "type": "float",
+                        "nullable": true,
+                        "default": "",
+                        "size": ""
+                    },
+                    {
+                        "name": "AVG_ORDER_PRICE",
+                        "dbName": "AVG_ORDER_PRICE",
+                        "type": "float",
+                        "nullable": true,
+                        "default": "",
+                        "size": ""
+                    }
+                ]
+            },
+            "storage": {
+                "input": {
+                    "tables": [
+                        {
+                            "source_search": {
+                                "key": "bdm.scaffold.table.tag",
+                                "value": "ShoptetEcommerce.internal.outBdmAnalyzeClvByOrderCount"
+                            },
+                            "destination": "out.c-BDM.analyze_clv_by_order_count.csv",
+                            "columns": [
+                                "CUSTOMER_CATEGORY_BY_ORDER_COUNT",
+                                "ORDERS",
+                                "UNIQUE_CUTOMERS",
+                                "AVG_CLV",
+                                "ORDER_TOTAL_PRICE_VAT",
+                                "AVG_ORDER_PRICE"
+                            ]
+                        }
+                    ]
+                }
+            }
+        },
+        "description": "",
+        "name": "analyze_clv_by_order_count"
+    },
+    {
+        "configuration": {
+            "parameters": {
+                "tableId": "out.c-BDM.analyze_clv_by_time_from_previous_order",
+                "dbName": "analyze_clv_by_time_from_previous_order",
+                "incremental": false,
+                "primaryKey": [],
+                "items": [
+                    {
+                        "name": "TIME_FROM_PREVIOUS_ORDER",
+                        "dbName": "TIME_FROM_PREVIOUS_ORDER",
+                        "type": "varchar",
+                        "nullable": true,
+                        "default": "",
+                        "size": "30"
+                    },
+                    {
+                        "name": "ORDERS",
+                        "dbName": "ORDERS",
+                        "type": "number",
+                        "nullable": true,
+                        "default": "",
+                        "size": "18,0"
+                    },
+                    {
+                        "name": "UNIQUE_CUTOMERS",
+                        "dbName": "UNIQUE_CUTOMERS",
+                        "type": "number",
+                        "nullable": true,
+                        "default": "",
+                        "size": "18,0"
+                    },
+                    {
+                        "name": "AVG_CLV",
+                        "dbName": "AVG_CLV",
+                        "type": "float",
+                        "nullable": true,
+                        "default": "",
+                        "size": ""
+                    },
+                    {
+                        "name": "ORDER_TOTAL_PRICE_VAT",
+                        "dbName": "ORDER_TOTAL_PRICE_VAT",
+                        "type": "float",
+                        "nullable": true,
+                        "default": "",
+                        "size": ""
+                    },
+                    {
+                        "name": "AVG_ORDER_PRICE",
+                        "dbName": "AVG_ORDER_PRICE",
+                        "type": "float",
+                        "nullable": true,
+                        "default": "",
+                        "size": ""
+                    }
+                ]
+            },
+            "storage": {
+                "input": {
+                    "tables": [
+                        {
+                            "source_search": {
+                                "key": "bdm.scaffold.table.tag",
+                                "value": "ShoptetEcommerce.internal.outBdmAnalyzeClvByTimeFromPreviousOrder"
+                            },
+                            "destination": "out.c-BDM.analyze_clv_by_time_from_previous_order.csv",
+                            "columns": [
+                                "TIME_FROM_PREVIOUS_ORDER",
+                                "ORDERS",
+                                "UNIQUE_CUTOMERS",
+                                "AVG_CLV",
+                                "ORDER_TOTAL_PRICE_VAT",
+                                "AVG_ORDER_PRICE"
+                            ]
+                        }
+                    ]
+                }
+            }
+        },
+        "description": "",
+        "name": "analyze_clv_by_time_from_previous_order"
+    },
+    {
+        "configuration": {
+            "parameters": {
+                "tableId": "out.c-BDM.shoptet",
+                "dbName": "shoptet",
+                "incremental": false,
+                "primaryKey": [],
+                "items": [
+                    {
+                        "name": "NAME",
+                        "dbName": "NAME",
+                        "type": "varchar",
+                        "nullable": true,
+                        "default": "",
+                        "size": "16777216"
+                    },
+                    {
+                        "name": "BASE_URL",
+                        "dbName": "BASE_URL",
+                        "type": "varchar",
+                        "nullable": true,
+                        "default": "",
+                        "size": "16777216"
+                    },
+                    {
+                        "name": "DOMAIN",
+                        "dbName": "DOMAIN",
+                        "type": "varchar",
+                        "nullable": true,
+                        "default": "",
+                        "size": "16777216"
+                    }
+                ]
+            },
+            "storage": {
+                "input": {
+                    "tables": [
+                        {
+                            "source_search": {
+                                "key": "bdm.scaffold.table.tag",
+                                "value": "ShoptetEcommerce.internal.outBdmShoptet"
+                            },
+                            "destination": "out.c-BDM.shoptet.csv",
+                            "columns": [
+                                "NAME",
+                                "BASE_URL",
+                                "DOMAIN"
+                            ]
+                        }
+                    ]
+                }
+            }
+        },
+        "description": "",
+        "name": "shoptet"
+    }
+]
