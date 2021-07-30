@@ -81,37 +81,37 @@
                     "shop_name": {
                         "type": "string",
                         "title": "Shop Name",
-                        "description": "Insert the name of your shop. It will be used in Power BI.",
+                        "description": "Insert the name of your shop. It will be used in Power BI. (e.g. Your Shop)",
                         "propertyOrder": 1
                     },
                     "base_url": {
                         "type": "string",
                         "title": "Base URL",
-                        "description": "Insert the base URL of your shop. It will be used for hyperlinks in Power BI.",
+                        "description": "Insert the base URL of your shop. It will be used for hyperlinks in Power BI. (e.g. https://www.yourshop.cz)",
                         "propertyOrder": 2
                     },
                     "orders_url": {
                         "type": "string",
                         "title": "Orders URL",
-                        "description": "You can find the URL by going to https://www.yourshop.cz/admin/objednavky-export/ (replace www.yourshop.cz with your shop's URL).",
+                        "description": "This is the URL of your custom shoptet export of orders. You can find the URL by going to https://www.yourshop.cz/admin/objednavky-export/ (replace www.yourshop.cz with your shop's URL).",
                         "propertyOrder": 10
                     },
                     "products_url": {
                         "type": "string",
                         "title": "Products URL",
-                        "description": "You can find the URL by going to https://www.yourshop.cz/admin/export-produktu/ (replace www.yourshop.cz with your shop's URL).",
+                        "description": "This is the URL of your custom shoptet export of products.You can find the URL by going to https://www.yourshop.cz/admin/export-produktu/ (replace www.yourshop.cz with your shop's URL).",
                         "propertyOrder": 20
                     },
                     "customers_url": {
                         "type": "string",
                         "title": "Customers URL",
-                        "description": "You can find the URL by going to https://www.yourshop.cz/admin/export-zakazniku/ (replace www.yourshop.cz with your shop's URL).",
+                        "description": "This is the URL of your export of registered customers. You can find the URL by going to https://www.yourshop.cz/admin/export-zakazniku/ (replace www.yourshop.cz with your shop's URL).",
                         "propertyOrder": 30
                     },
                     "stock_url": {
                         "type": "string",
                         "title": "Stock URL",
-                        "description": "You can find the URL by going to https://www.yourshop.cz/admin/export-stavu-skladu/ (replace www.yourshop.cz with your shop's URL).",
+                        "description": "This is the URL of your stock export. You can find the URL by going to https://www.yourshop.cz/admin/export-stavu-skladu/ (replace www.yourshop.cz with your shop's URL).",
                         "propertyOrder": 40
                     }
                 }
