@@ -3,12 +3,6 @@
     "payload": {
         "name": "Facebook Ads",
         "configuration": {
-            "authorization": {
-                "oauth_api": {
-                    "id": "2079381",
-                    "version": 3
-                }
-            },
             "parameters": {
                 "accounts": {},
                 "api-version": "v10.0",
