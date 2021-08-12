@@ -35,18 +35,6 @@
                 "after": [
                     {
                         "definition": {
-                            "component": "keboola.processor-create-manifest"
-                        },
-                        "parameters": {
-                            "delimiter": ",",
-                            "enclosure": "\"",
-                            "incremental": false,
-                            "primary_key": [],
-                            "columns_from": "header"
-                        }
-                    },
-                    {
-                        "definition": {
                             "component": "keboola.processor-add-metadata"
                         },
                         "parameters": {
