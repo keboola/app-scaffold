@@ -35,14 +35,43 @@
                 "after": [
                     {
                         "definition": {
-                            "component": "keboola.processor-create-manifest"
+                            "component": "keboola.processor-create-empty-table"
                         },
                         "parameters": {
-                            "delimiter": ",",
-                            "enclosure": "\"",
-                            "incremental": false,
-                            "primary_key": [],
-                            "columns_from": "header"
+                            "tables": [
+                                {
+                                    "tableName": "facebook_ads_insights_monthly_insights",
+                                    "columns": [
+                                        "ex_account_id",
+                                        "fb_graph_node",
+                                        "parent_id",
+                                        "ad_id",
+                                        "ad_name",
+                                        "clicks",
+                                        "date_start",
+                                        "date_stop",
+                                        "impressions",
+                                        "reach",
+                                        "spend"
+                                    ]
+                                },
+                                {
+                                    "tableName": "facebook_ads_insights_last_90d_insights",
+                                    "columns": [
+                                        "ex_account_id",
+                                        "fb_graph_node",
+                                        "parent_id",
+                                        "ad_id",
+                                        "ad_name",
+                                        "clicks",
+                                        "date_start",
+                                        "date_stop",
+                                        "impressions",
+                                        "reach",
+                                        "spend"
+                                    ]
+                                }
+                            ]
                         }
                     },
                     {
