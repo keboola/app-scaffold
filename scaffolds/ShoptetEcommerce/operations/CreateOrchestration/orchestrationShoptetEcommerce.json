@@ -45,7 +45,7 @@
                 "timeoutMinutes": null,
                 "active": true,
                 "continueOnFailure": false,
-                "phase": "Create BDM"
+                "phase": "Create BDM - Facebook Ads"
             },
             {
                 "component": "keboola.snowflake-transformation",
@@ -54,7 +54,7 @@
                 "timeoutMinutes": null,
                 "active": true,
                 "continueOnFailure": false,
-                "phase": "Create BDM"
+                "phase": "Create BDM - Google Ads"
             },
             {
                 "component": "keboola.snowflake-transformation",
@@ -63,7 +63,7 @@
                 "timeoutMinutes": null,
                 "active": true,
                 "continueOnFailure": false,
-                "phase": "Create BDM"
+                "phase": "Create BDM - Sklik"
             },
             {
                 "component": "keboola.snowflake-transformation",
@@ -72,7 +72,7 @@
                 "timeoutMinutes": null,
                 "active": true,
                 "continueOnFailure": false,
-                "phase": "Create BDM"
+                "phase": "Create BDM - Shoptet"
             },
             {
                 "component": "keboola.snowflake-transformation",
