@@ -15,18 +15,18 @@
     "inputs": [
         {
             "id": "htnsExSalesforceSalesforceCRM",
-            "componentId": "htns.ex-salesforce",
+            "componentId": "kds-team.ex-salesforce-v2",
             "name": "Salesforce CRM",
             "required": true,
             "schema": {
                 "type": "object",
                 "required": [
-                    "loginname",
+                    "username",
                     "#password",
-                    "#securitytoken"
+                    "#security_token"
                 ],
                 "properties": {
-                    "loginname": {
+                    "username": {
                         "title": "Login Name",
                         "type": "string",
                         "description": "Fill in your Salesforce Login Email."
@@ -37,7 +37,7 @@
                         "format": "password",
                         "description": "Fill in your Salesforce Password."
                     },
-                    "#securitytoken": {
+                    "#security_token": {
                         "title": "Security Token",
                         "type": "string",
                         "format": "password",
