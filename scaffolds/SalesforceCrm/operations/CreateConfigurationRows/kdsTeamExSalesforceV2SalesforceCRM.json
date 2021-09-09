@@ -28,7 +28,7 @@
                                     "metadata": [
                                         {
                                             "key": "bdm.scaffold.table.tag",
-                                            "value": "SalesforceCrm.internal.inHtnsExSalesforceAccount"
+                                            "value": "SalesforceCrm.internal.inKdsTeamExSalesforceV2Account"
                                         },
                                         {
                                             "key": "scaffold.id",
@@ -76,7 +76,7 @@
                                     "metadata": [
                                         {
                                             "key": "bdm.scaffold.table.tag",
-                                            "value": "SalesforceCrm.internal.inHtnsExSalesforceContact"
+                                            "value": "SalesforceCrm.internal.inKdsTeamExSalesforceV2Contact"
                                         },
                                         {
                                             "key": "scaffold.id",
@@ -124,7 +124,7 @@
                                     "metadata": [
                                         {
                                             "key": "bdm.scaffold.table.tag",
-                                            "value": "SalesforceCrm.internal.inHtnsExSalesforceEvent"
+                                            "value": "SalesforceCrm.internal.inKdsTeamExSalesforceV2Event"
                                         },
                                         {
                                             "key": "scaffold.id",
@@ -172,7 +172,7 @@
                                     "metadata": [
                                         {
                                             "key": "bdm.scaffold.table.tag",
-                                            "value": "SalesforceCrm.internal.inHtnsExSalesforceLead"
+                                            "value": "SalesforceCrm.internal.inKdsTeamExSalesforceV2Lead"
                                         },
                                         {
                                             "key": "scaffold.id",
@@ -220,7 +220,7 @@
                                     "metadata": [
                                         {
                                             "key": "bdm.scaffold.table.tag",
-                                            "value": "SalesforceCrm.internal.inHtnsExSalesforceOpportunity"
+                                            "value": "SalesforceCrm.internal.inKdsTeamExSalesforceV2Opportunity"
                                         },
                                         {
                                             "key": "scaffold.id",
@@ -268,7 +268,7 @@
                                     "metadata": [
                                         {
                                             "key": "bdm.scaffold.table.tag",
-                                            "value": "SalesforceCrm.internal.inHtnsExSalesforceOpportunitycontactrole"
+                                            "value": "SalesforceCrm.internal.inKdsTeamExSalesforceV2Opportunitycontactrole"
                                         },
                                         {
                                             "key": "scaffold.id",
@@ -316,7 +316,7 @@
                                     "metadata": [
                                         {
                                             "key": "bdm.scaffold.table.tag",
-                                            "value": "SalesforceCrm.internal.inHtnsExSalesforceOpportunitystage"
+                                            "value": "SalesforceCrm.internal.inKdsTeamExSalesforceV2Opportunitystage"
                                         },
                                         {
                                             "key": "scaffold.id",
@@ -364,7 +364,7 @@
                                     "metadata": [
                                         {
                                             "key": "bdm.scaffold.table.tag",
-                                            "value": "SalesforceCrm.internal.inHtnsExSalesforceUser"
+                                            "value": "SalesforceCrm.internal.inKdsTeamExSalesforceV2User"
                                         },
                                         {
                                             "key": "scaffold.id",

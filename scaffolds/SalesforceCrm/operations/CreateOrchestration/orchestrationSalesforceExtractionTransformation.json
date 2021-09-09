@@ -4,7 +4,7 @@
         "tasks": [
             {
                 "component": "kds-team.ex-salesforce-v2",
-                "operationReferenceId": "htnsExSalesforceSalesforceCRM",
+                "operationReferenceId": "kdsTeamExSalesforceV2SalesforceCRM",
                 "action": "run",
                 "timeoutMinutes": null,
                 "active": true,

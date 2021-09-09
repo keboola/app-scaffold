@@ -14,7 +14,7 @@
     ],
     "inputs": [
         {
-            "id": "htnsExSalesforceSalesforceCRM",
+            "id": "kdsTeamExSalesforceV2SalesforceCRM",
             "componentId": "kds-team.ex-salesforce-v2",
             "name": "Salesforce CRM",
             "required": true,
