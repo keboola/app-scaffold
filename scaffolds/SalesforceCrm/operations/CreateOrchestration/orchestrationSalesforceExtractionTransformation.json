@@ -3,7 +3,7 @@
         "name": "Salesforce Extraction & Transformation",
         "tasks": [
             {
-                "component": "htns.ex-salesforce",
+                "component": "kds-team.ex-salesforce-v2",
                 "operationReferenceId": "htnsExSalesforceSalesforceCRM",
                 "action": "run",
                 "timeoutMinutes": null,

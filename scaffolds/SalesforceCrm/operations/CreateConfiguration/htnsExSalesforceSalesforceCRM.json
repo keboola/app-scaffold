@@ -1,10 +1,11 @@
 {
-    "componentId": "htns.ex-salesforce",
+    "componentId": "kds-team.ex-salesforce-v2",
     "payload": {
         "name": "Salesforce CRM",
         "configuration": {
             "parameters": {
-                "sandbox": false
+                "sandbox": false,
+                "api_version": "42.0"
             }
         }
     }
