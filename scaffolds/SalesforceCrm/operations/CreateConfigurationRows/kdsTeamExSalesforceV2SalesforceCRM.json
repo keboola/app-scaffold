@@ -24,7 +24,7 @@
                         "parameters": {
                             "tables": [
                                 {
-                                    "table": "account.csv",
+                                    "table": "account",
                                     "metadata": [
                                         {
                                             "key": "bdm.scaffold.table.tag",
@@ -72,7 +72,7 @@
                         "parameters": {
                             "tables": [
                                 {
-                                    "table": "contact.csv",
+                                    "table": "contact",
                                     "metadata": [
                                         {
                                             "key": "bdm.scaffold.table.tag",
@@ -120,7 +120,7 @@
                         "parameters": {
                             "tables": [
                                 {
-                                    "table": "event.csv",
+                                    "table": "event",
                                     "metadata": [
                                         {
                                             "key": "bdm.scaffold.table.tag",
@@ -168,7 +168,7 @@
                         "parameters": {
                             "tables": [
                                 {
-                                    "table": "lead.csv",
+                                    "table": "lead",
                                     "metadata": [
                                         {
                                             "key": "bdm.scaffold.table.tag",
@@ -216,7 +216,7 @@
                         "parameters": {
                             "tables": [
                                 {
-                                    "table": "opportunity.csv",
+                                    "table": "opportunity",
                                     "metadata": [
                                         {
                                             "key": "bdm.scaffold.table.tag",
@@ -264,7 +264,7 @@
                         "parameters": {
                             "tables": [
                                 {
-                                    "table": "opportunitycontactrole.csv",
+                                    "table": "opportunitycontactrole",
                                     "metadata": [
                                         {
                                             "key": "bdm.scaffold.table.tag",
@@ -312,7 +312,7 @@
                         "parameters": {
                             "tables": [
                                 {
-                                    "table": "opportunitystage.csv",
+                                    "table": "opportunitystage",
                                     "metadata": [
                                         {
                                             "key": "bdm.scaffold.table.tag",
@@ -360,7 +360,7 @@
                         "parameters": {
                             "tables": [
                                 {
-                                    "table": "user.csv",
+                                    "table": "user",
                                     "metadata": [
                                         {
                                             "key": "bdm.scaffold.table.tag",
