@@ -44,7 +44,7 @@
                             "columns": [],
                             "source_search": {
                                 "key": "bdm.scaffold.table.tag",
-                                "value": "SalesforceCrm.internal.inHtnsExSalesforceAccount"
+                                "value": "SalesforceCrm.internal.inKdsTeamExSalesforceV2Account"
                             }
                         },
                         {
@@ -55,7 +55,7 @@
                             "columns": [],
                             "source_search": {
                                 "key": "bdm.scaffold.table.tag",
-                                "value": "SalesforceCrm.internal.inHtnsExSalesforceContact"
+                                "value": "SalesforceCrm.internal.inKdsTeamExSalesforceV2Contact"
                             }
                         },
                         {
@@ -66,7 +66,7 @@
                             "columns": [],
                             "source_search": {
                                 "key": "bdm.scaffold.table.tag",
-                                "value": "SalesforceCrm.internal.inHtnsExSalesforceEvent"
+                                "value": "SalesforceCrm.internal.inKdsTeamExSalesforceV2Event"
                             }
                         },
                         {
@@ -77,7 +77,7 @@
                             "columns": [],
                             "source_search": {
                                 "key": "bdm.scaffold.table.tag",
-                                "value": "SalesforceCrm.internal.inHtnsExSalesforceLead"
+                                "value": "SalesforceCrm.internal.inKdsTeamExSalesforceV2Lead"
                             }
                         },
                         {
@@ -88,7 +88,7 @@
                             "columns": [],
                             "source_search": {
                                 "key": "bdm.scaffold.table.tag",
-                                "value": "SalesforceCrm.internal.inHtnsExSalesforceOpportunity"
+                                "value": "SalesforceCrm.internal.inKdsTeamExSalesforceV2Opportunity"
                             }
                         },
                         {
@@ -99,7 +99,7 @@
                             "columns": [],
                             "source_search": {
                                 "key": "bdm.scaffold.table.tag",
-                                "value": "SalesforceCrm.internal.inHtnsExSalesforceOpportunitycontactrole"
+                                "value": "SalesforceCrm.internal.inKdsTeamExSalesforceV2Opportunitycontactrole"
                             }
                         },
                         {
@@ -110,7 +110,7 @@
                             "columns": [],
                             "source_search": {
                                 "key": "bdm.scaffold.table.tag",
-                                "value": "SalesforceCrm.internal.inHtnsExSalesforceOpportunitystage"
+                                "value": "SalesforceCrm.internal.inKdsTeamExSalesforceV2Opportunitystage"
                             }
                         },
                         {
@@ -121,7 +121,7 @@
                             "columns": [],
                             "source_search": {
                                 "key": "bdm.scaffold.table.tag",
-                                "value": "SalesforceCrm.internal.inHtnsExSalesforceUser"
+                                "value": "SalesforceCrm.internal.inKdsTeamExSalesforceV2User"
                             }
                         }
                     ]
